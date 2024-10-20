@@ -2,74 +2,44 @@ import React from "react";
 import { FloatingDock } from "@/components/ui/floating-dock";
 import {
     IconBrandGithub,
-    IconBrandX,
-    IconExchange,
-    IconHome,
-    IconNewSection,
-    IconTerminal2,
+    IconBrandLinkedin,
+    IconFileCv,
+    IconMail,
 } from "@tabler/icons-react";
-import Image from "next/image";
 
-export function FloatingDockDemo() {
+export function FloatingDockPort() {
     const links = [
         {
-            title: "Home",
+            title: "Contact Me",
             icon: (
-                <IconHome className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+                <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
             ),
-            href: "#",
-        },
-
-        {
-            title: "Products",
-            icon: (
-                <IconTerminal2 className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-            ),
-            href: "#",
+            href: "mailto:hey@hectormendoza.me",
         },
         {
-            title: "Components",
+            title: "CV/Resume",
             icon: (
-                <IconNewSection className="h-full w-full text-neutral-500 dark:text-neutral-300" />
+                <IconFileCv className="h-full w-full text-neutral-500 dark:text-neutral-300" />
             ),
-            href: "#",
+            href: "https://cv.hectormendoza.me/",
         },
         {
-            title: "Aceternity UI",
+            title: "LinkedIn",
             icon: (
-                <Image
-                    src="https://assets.aceternity.com/logo-dark.png"
-                    width={20}
-                    height={20}
-                    alt="Aceternity Logo" />
+                <IconBrandLinkedin className="h-full w-full text-neutral-500 dark:text-neutral-300" />
             ),
-            href: "#",
-        },
-        {
-            title: "Changelog",
-            icon: (
-                <IconExchange className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-            ),
-            href: "#",
-        },
-
-        {
-            title: "Twitter",
-            icon: (
-                <IconBrandX className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-            ),
-            href: "#",
+            href: "https://www.linkedin.com/in/hector-mendoza-m/",
         },
         {
             title: "GitHub",
             icon: (
                 <IconBrandGithub className="h-full w-full text-neutral-500 dark:text-neutral-300" />
             ),
-            href: "#",
+            href: "https://github.com/hector-mendoza",
         },
     ];
     return (
-        (<div className="flex items-center justify-center h-[35rem] w-full">
+        (<div className="flex items-center justify-center w-full animate-fadeInUp">
             <FloatingDock
                 mobileClassName="translate-y-20"
                 items={links} />
