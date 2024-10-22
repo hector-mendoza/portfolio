@@ -10,7 +10,7 @@ export default function Home() {
           <Logo />
           <div className="flex flex-col gap-3">
             <h1 className="text-4xl font-bold text-center leading-relaxed animate-fadeInUp max-w-md">
-              Hello!👋
+              Hello! 👋
             </h1>
           </div>
           <h2 className="text-2xl font-bold text-center leading-relaxed animate-fadeInUp max-w-md">

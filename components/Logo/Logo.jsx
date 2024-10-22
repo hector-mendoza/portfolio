@@ -6,7 +6,7 @@ const Logo = () => {
             width={140}
             height={140}
             alt="HM - Logo"
-            className="animate-fadeInUp fixed top-0 left-1/2 transform -translate-x-1/2 z-10 p-4"
+            className="fixed top-0 left-1/2 transform -translate-x-1/2 z-10 p-4"
         />
     )
 }
