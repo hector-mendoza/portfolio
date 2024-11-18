@@ -13,6 +13,9 @@ export default function Home() {
               Hello! 👋
             </h1>
           </div>
+          <h2 className="text-2xl font-bold text-center leading-relaxed animate-fadeInUp max-w-md">
+            My personal website is currently under development...
+          </h2>
           <div className="flex flex-col gap-4">
             <p className="text-[1.2rem] text-center">
               For now, you can check out some useful links below.
