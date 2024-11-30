@@ -8,7 +8,7 @@ export function AnimmatedPin() {
         (<div className="h-[40rem] w-full flex items-center justify-center text-center">
             <PinContainer title="Work with me" href="mailto:hey@hectormendoza.me">
                 <div
-                    className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem]">
+                    className="flex basis-full justify-center flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem]">
                     <div className="flex justify-center mb-4 ">
                         <Image src="/profile.jpg" width={150} height={150}
                             alt="Profile Image" priority
