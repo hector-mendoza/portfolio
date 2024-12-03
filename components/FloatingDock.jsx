@@ -41,7 +41,7 @@ export function FloatingDockPort() {
     return (
         (<div className="flex items-center justify-center w-full animate-fadeInUp">
             <FloatingDock
-                mobileClassName="translate-y-20"
+                mobileClassName="translate-y-10"
                 items={links} />
         </div>)
     );
