@@ -21,18 +21,9 @@ export default function Home() {
   }, [isDarkTheme]);
 
   return (
-    <>
-      <Snowfall style={{
-        position: 'fixed',
-        width: '100vw',
-        height: '100vh',
-        zIndex: 1
-      }}
-        snowflakeCount={100} />
-      <AuroraBackground>
-        <AnimmatedPin />
-        <FloatingDockPort />
-      </AuroraBackground>
-    </>
+    <AuroraBackground>
+      <AnimmatedPin />
+      <FloatingDockPort />
+    </AuroraBackground>
   );
 }
