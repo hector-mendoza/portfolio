@@ -15,7 +15,7 @@ export function AnimmatedPin() {
                             className="object-contain rounded-full" />
                     </div>
                     <h3 className="max-w-xs !pb-2 !m-0 font-bold  text-2xl text-slate-100">
-                        Héctor Mendoza 😅
+                        Héctor Mendoza
                     </h3>
                     <div className="text-lg  !m-0 !p-0 font-normal">
                         <span className="text-white ">
