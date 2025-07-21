@@ -69,10 +69,12 @@
   }
 }
 
-.main-layout .pc-card {
-  aspect-ratio: .75;
-}
-
 .has-canvas canvas {
   height: 100dvh !important;
+}
+
+@media (max-width: 640px) {
+  .main-layout .pc-card {
+    aspect-ratio: .75;
+  }
 }
