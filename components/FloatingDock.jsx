@@ -10,13 +10,6 @@ import {
 export function FloatingDockPort() {
     const links = [
         {
-            title: "Contact Me",
-            icon: (
-                <IconMail className="h-full w-full text-neutral-500 dark:text-neutral-300" />
-            ),
-            href: "mailto:hey@hectormendoza.me",
-        },
-        {
             title: "CV/Resume",
             icon: (
                 <IconFileCv className="h-full w-full text-neutral-500 dark:text-neutral-300" />
