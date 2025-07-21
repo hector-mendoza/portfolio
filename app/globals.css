@@ -63,7 +63,12 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.has-canvas canvas {
+  height: 100dvh !important;
 }
