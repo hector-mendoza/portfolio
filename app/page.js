@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { FloatingDockPort } from "@/components/FloatingDock";
-import { AnimmatedPin } from "@/components/AnimatedPin";
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import Image from "next/image";
+import LetterGlitch from "@/components/LetterGlitch/LetterGlitch";
+import ProfileCard from "@/components/ProfileCard/ProfileCard";
 
 export default function Home() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -21,12 +20,29 @@ export default function Home() {
   }, [isDarkTheme]);
 
   return (
-    <AuroraBackground>
-      <Image src="/logo.png" width={120} height={120}
-        alt="HM" priority
-        className="object-contain rounded-full max-sm:w-[80px] max-sm:h-[80px]" quality={100} />
-      <AnimmatedPin />
+    <main className="w-full h-screen flex flex-col items-center justify-center gap-5 relative">
+      <LetterGlitch
+        glitchSpeed={50}
+        centerVignette={true}
+        outerVignette={false}
+        smooth={true}
+      />
+      <ProfileCard
+        name="Héctor Mendoza"
+        title="Software Engineer"
+        handle="hector_mendoza"
+        status="Online"
+        contactText="Contact Me"
+        avatarUrl="/profile-transp.png"
+        miniAvatarUrl="/profile.jpg"
+        iconUrl="/iconpattern.png"
+        showUserInfo={true}
+        enableTilt={true}
+        onContactClick={() => {
+          window.location.href = "mailto:hey@hectormendoza.me";
+        }}
+      />
       <FloatingDockPort />
-    </AuroraBackground>
+    </main>
   );
 }
