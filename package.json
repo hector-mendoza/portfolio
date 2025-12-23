@@ -19,8 +19,10 @@
     "ogl": "^1.0.11",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "shadcn": "^3.6.2",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.167.1"
   },
   "devDependencies": {
     "eslint": "^8",
