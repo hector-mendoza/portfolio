@@ -25,43 +25,36 @@ const FloatingDockMobile = ({
   return (
     (<div className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
-        {open && (
-          <motion.div
-            layoutId="nav"
-            className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2">
-            {items.map((item, idx) => (
-              <motion.div
+        <motion.div
+          layoutId="nav"
+          className="flex gap-6">
+          {items.map((item, idx) => (
+            <motion.div
+              key={item.title}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: 10,
+                transition: {
+                  delay: idx * 0.05,
+                },
+              }}
+              transition={{ delay: (items.length - 1 - idx) * 0.05 }}>
+              <Link
+                href={item.href}
                 key={item.title}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: 10,
-                  transition: {
-                    delay: idx * 0.05,
-                  },
-                }}
-                transition={{ delay: (items.length - 1 - idx) * 0.05 }}>
-                <Link
-                  href={item.href}
-                  key={item.title}
-                  target="_blank"
-                  className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center">
-                  <div className="h-4 w-4">{item.icon}</div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+                target="_blank"
+                className="h-14 w-14 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.3),0_0_40px_rgba(59,130,246,0.2)] dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.1),0_0_40px_rgba(59,130,246,0.3)] transition-shadow duration-300 animate-float">
+                <div className="h-7 w-7">{item.icon}</div>
+              </Link>
+            </motion.div>
+          ))}
+        </motion.div>
       </AnimatePresence>
-      <button
-        onClick={() => setOpen(!open)}
-        className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-800 flex items-center justify-center">
-        <IconLayoutNavbarCollapse className="h-5 w-5 text-neutral-500 dark:text-neutral-400" />
-      </button>
     </div>)
   );
 };
@@ -76,7 +69,7 @@ const FloatingDockDesktop = ({
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
       className={cn(
-        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3",
+        "mx-auto hidden md:flex h-16 gap-4 items-end  rounded-2xl bg-gray-50 dark:bg-neutral-900 px-4 pb-3 shadow-sm",
         className
       )}>
       {items.map((item) => (
@@ -137,7 +130,7 @@ function IconContainer({
         style={{ width, height }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative">
+        className="aspect-square rounded-full bg-gray-200 dark:bg-neutral-800 flex items-center justify-center relative shadow-lg hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(59,130,246,0.3)] dark:hover:shadow-[0_0_30px_rgba(255,255,255,0.15),0_0_60px_rgba(59,130,246,0.4)] transition-shadow duration-300">
         <AnimatePresence>
           {hovered && (
             <motion.div
@@ -151,7 +144,7 @@ function IconContainer({
         </AnimatePresence>
         <motion.div
           style={{ width: widthIcon, height: heightIcon }}
-          className="flex items-center justify-center">
+          className="flex items-center justify-center shadow-sm">
           {icon}
         </motion.div>
       </motion.div>
