@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { FloatingDockPort } from "@/components/FloatingDock";
-import LetterGlitch from "@/components/LetterGlitch/LetterGlitch";
 import ProfileCard from "@/components/ProfileCard/ProfileCard";
-import PixelSnow from "@/components/PixelSnow/PixelSnow";
+import Silk from "@/components/Silk";
 
 export default function Home() {
   const [isDarkTheme, setIsDarkTheme] = useState(true);
@@ -22,16 +21,15 @@ export default function Home() {
 
   return (
     <main className="main-layout w-full h-screen flex flex-col items-center justify-center gap-8 relative bg-[#060010] overflow-hidden">
-      <PixelSnow
-        flakeSize={0.01}
-        minFlakeSize={1.25}
-        pixelResolution={200}
-        speed={1.25}
-        density={0.42}
-        direction={125}
-        brightness={1}
-        variant="snowflake"
-      />
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <Silk
+          speed={5}
+          scale={1}
+          color="#5227ff"
+          noiseIntensity={1.5}
+          rotation={0}
+        />
+      </div>
       <ProfileCard
         name="Héctor Mendoza"
         title="Software Engineer"
@@ -47,7 +45,7 @@ export default function Home() {
           window.location.href = "mailto:hey@hectormendoza.me";
         }}
       />
-      <FloatingDockPort />
+      <FloatingDockPort theme={isDarkTheme ? "dark" : "light"} />
     </main>
   );
 }

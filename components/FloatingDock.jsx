@@ -32,9 +32,10 @@ export function FloatingDockPort() {
         },
     ];
     return (
-        (<div className="flex items-center justify-center w-full animate-fadeInUp">
+        (<div className="flex items-center justify-center w-full animate-fadeInUp absolute bottom-8 inset-x-0">
             <FloatingDock
-                mobileClassName="translate-y-10"
+                mobileClassName="dark flex justify-center"
+                desktopClassName="dark"
                 items={links} />
         </div>)
     );
