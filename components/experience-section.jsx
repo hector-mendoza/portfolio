@@ -82,19 +82,17 @@ export default function ExperienceSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: i * 0.15 }}
-              className={`relative mb-16 pl-8 md:w-1/2 md:pl-0 ${
-                i % 2 === 0
-                  ? "md:pr-16"
-                  : "md:ml-auto md:pl-16"
-              }`}
+              className={`relative mb-16 pl-8 md:w-1/2 md:pl-0 ${i % 2 === 0
+                ? "md:pr-16"
+                : "md:ml-auto md:pl-16"
+                }`}
             >
               {/* Timeline dot */}
               <div
-                className={`absolute top-2 left-0 md:left-auto ${
-                  i % 2 === 0
-                    ? "md:-right-[5px]"
-                    : "md:-left-[5px]"
-                }`}
+                className={`absolute top-2 left-0 ${i % 2 === 0
+                  ? "md:-right-[5px] md:left-auto "
+                  : "md:-left-[5px]"
+                  }`}
               >
                 <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
               </div>

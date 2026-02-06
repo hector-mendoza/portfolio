@@ -35,7 +35,7 @@ export default function ScrollTextReveal() {
                 key={`${word}-${i}`}
                 word={word}
                 progress={scrollYProgress}
-                range={[start * 0.8, end * 0.8 + 0.1]}
+                range={[start * .55, end * .55 + 0.1]}
               />
             );
           })}
