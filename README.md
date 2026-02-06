@@ -1,36 +1,218 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hector Mendoza - Personal Portfolio Website
 
-## Getting Started
+A modern, interactive personal portfolio website built with **Next.js**, **React**, **Three.js**, and **Tailwind CSS**. Featuring animated 3D graphics, smooth scrolling animations, and a fully functional contact form with captcha protection.
 
-First, run the development server:
+**Live Demo**: [hectormendoza.me](https://hectormendoza.me)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Features
+
+- **3D Interactive Graphics** - Animated 3D models and particles using Three.js and react-three-fiber
+- **Smooth Animations** - Framer Motion powered scroll and entrance animations
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Contact Form** - Fully functional contact form with:
+  - hCaptcha spam protection
+  - Email notifications via Resend
+  - Form validation
+  - Success/error messages
+- **Dark Mode Ready** - Custom CSS variables for easy theming
+- **Performance Optimized** - Code splitting, image optimization, dynamic imports
+- **Shadcn UI Components** - Pre-built, customizable component library
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Next.js 16.1.6** - React framework with App Router
+- **React 19** - UI library
+- **TypeScript & JavaScript** - Type safety and flexibility
+- **Tailwind CSS 3.4** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **React Three Fiber** - React renderer for Three.js
+- **Three.js** - 3D graphics library
+
+### UI Components & Tools
+- **Shadcn UI** - High-quality, accessible components
+- **Lucide React** - Icon library
+- **React Hook Form** - Form state management
+- **Zod** - TypeScript-first schema validation
+
+### Backend & Services
+- **Resend** - Email delivery service
+- **hCaptcha** - CAPTCHA protection
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+ and npm/pnpm
+- Resend API key ([get one free](https://resend.com))
+- hCaptcha keys ([get free keys](https://dashboard.hcaptcha.com))
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/hectormendoza/portfolio.git
+   cd portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   pnpm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory:
+   ```env
+   RESEND_API_KEY=your_resend_api_key
+   HCAPTCHA_SECRET_KEY=your_hcaptcha_secret_key
+   NEXT_PUBLIC_HCAPTCHA_SITE_KEY=your_hcaptcha_site_key
+   CONTACT_EMAIL=your_email@example.com
+   ```
+   
+   See [CONTACT_FORM_SETUP.md](CONTACT_FORM_SETUP.md) for detailed setup instructions.
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 📁 Project Structure
+
+```
+portfolio/
+├── app/
+│   ├── api/
+│   │   └── contact/
+│   │       └── route.js          # Contact form API endpoint
+│   ├── globals.css               # Global styles
+│   ├── layout.jsx                # Root layout
+│   └── page.jsx                  # Home page
+├── components/
+│   ├── about-section.jsx         # About section with profile image
+│   ├── contact-section.jsx       # Contact form with captcha
+│   ├── experience-section.jsx    # Work experience
+│   ├── hero-section.jsx          # Hero with 3D background
+│   ├── navbar.jsx                # Navigation bar
+│   ├── projects-section.jsx      # Portfolio projects
+│   ├── scene-3d.jsx              # Three.js 3D scene
+│   └── ui/                       # Shadcn UI components
+├── hooks/                        # Custom React hooks
+├── lib/                          # Utility functions
+├── public/                       # Static assets
+│   └── logos/                    # Logo files
+├── styles/                       # Additional styles
+├── .env.local.example            # Environment variables template
+├── CONTACT_FORM_SETUP.md         # Contact form setup guide
+├── tailwind.config.ts            # Tailwind configuration
+└── tsconfig.json                 # TypeScript configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Customization
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Colors
+Edit CSS variables in [app/globals.css](app/globals.css):
+```css
+:root {
+  --primary: 145 65% 52%;      /* Green primary color */
+  --accent: 340 65% 55%;       /* Purple accent */
+  --background: 240 8% 6%;     /* Dark background */
+  /* ... more variables */
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Content
+- **Hero Section**: [components/hero-section.jsx](components/hero-section.jsx)
+- **About Section**: [components/about-section.jsx](components/about-section.jsx)
+- **Projects**: [components/projects-section.jsx](components/projects-section.jsx)
+- **Experience**: [components/experience-section.jsx](components/experience-section.jsx)
+- **Contact**: [components/contact-section.jsx](components/contact-section.jsx)
 
-## Learn More
+### 3D Scene
+Customize 3D models and animations in [components/scene-3d.jsx](components/scene-3d.jsx)
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Building for Production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run build
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+The production build will be optimized for performance:
+- Code splitting
+- Image optimization
+- CSS minification
+- JavaScript minification
 
-## Deploy on Vercel
+## 🚀 Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Vercel (Recommended)
+1. Push your code to GitHub
+2. Connect repository to [Vercel](https://vercel.com)
+3. Add environment variables in Vercel dashboard
+4. Deploy!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Other Platforms
+- **Netlify**: Build command: `npm run build`, Publish: `.next`
+- **Docker**: See `next.config.mjs` for Docker configuration
+
+## 📋 Available Scripts
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## 🛡️ Security Features
+
+- hCaptcha integration prevents bot submissions
+- Server-side form validation
+- Email verification via Resend
+- Environment variables for sensitive data
+- CSRF protection with Next.js built-in features
+
+## 🎯 Performance Optimizations
+
+- Dynamic imports for heavy components
+- Image optimization with Next.js Image component
+- Lazy loading for sections
+- Optimized Three.js scene rendering
+- CSS-in-JS with Tailwind for minimal bundle size
+
+## 🤝 Contributing
+
+This is a personal portfolio, but feel free to:
+- Fork and create your own portfolio
+- Use components as reference
+- Report issues
+
+## 📝 License
+
+This project is open source. Feel free to use it as a template for your own portfolio!
+
+## 📧 Contact
+
+- **Email**: [hey@hectormendoza.me](mailto:hey@hectormendoza.me)
+- **Location**: Morelia, Mexico
+- **Website**: [hectormendoza.me](https://hectormendoza.me)
+
+### Social Links
+- [GitHub](https://github.com/hectormendoza)
+- [LinkedIn](https://linkedin.com/in/hectormendoza)
+- [X/Twitter](https://x.com/hectormendoza)
+
+## 🙏 Acknowledgments
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Shadcn UI](https://ui.shadcn.com)
+- [Three.js](https://threejs.org)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Vercel](https://vercel.com)
+
+---
+
+**Built with ❤️ by Hector Mendoza**
