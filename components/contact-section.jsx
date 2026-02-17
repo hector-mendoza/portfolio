@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { sileo } from "sileo";
 
 const socialLinks = [
   {
@@ -48,7 +49,6 @@ export default function ContactSection() {
   });
   const [captchaToken, setCaptchaToken] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
   const captchaRef = useRef(null);
 
   const handleChange = (e) => {
@@ -64,14 +64,22 @@ export default function ContactSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!captchaToken) {
       setSubmitStatus({ type: "error", message: "Please complete the captcha" });
+      sileo.error({
+        title: "Captcha incomplete",
+        description: "Please complete the captcha",
+        fill: "black",
+        styles: {
+          title: "text-white!",
+          description: "text-white/75!",
+        },
+      });
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
 
     try {
       const response = await fetch("/api/contact", {
@@ -88,9 +96,14 @@ export default function ContactSection() {
       const data = await response.json();
 
       if (response.ok) {
-        setSubmitStatus({
-          type: "success",
-          message: "Message sent successfully! I'll get back to you soon.",
+        sileo.success({
+          title: "Message sent",
+          description: "Thank you for reaching out! I'll get back to you soon.",
+          fill: "black",
+          styles: {
+            title: "text-white!",
+            description: "text-white/75!",
+          },
         });
         setFormData({
           name: "",
@@ -101,15 +114,26 @@ export default function ContactSection() {
         setCaptchaToken(null);
         captchaRef.current?.resetCaptcha();
       } else {
-        setSubmitStatus({
-          type: "error",
-          message: data.error || "Failed to send message. Please try again.",
+        // sileo.error(data.error || "Failed to send message. Please try again.");
+        sileo.error({
+          title: "Failed to send message",
+          description: "Please try again later.",
+          fill: "black",
+          styles: {
+            title: "text-white!",
+            description: "text-white/75!",
+          },
         });
       }
     } catch (error) {
-      setSubmitStatus({
-        type: "error",
-        message: "An error occurred. Please try again later.",
+      sileo.error({
+        title: "An error occurred",
+        description: "Please try again later.",
+        fill: "black",
+        styles: {
+          title: "text-white!",
+          description: "text-white/75!",
+        },
       });
     } finally {
       setIsSubmitting(false);
@@ -288,18 +312,6 @@ export default function ContactSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <form onSubmit={handleSubmit} className="space-y-6 rounded-2xl border border-border bg-card p-8">
-              {submitStatus && (
-                <div
-                  className={`rounded-lg p-4 ${
-                    submitStatus.type === "success"
-                      ? "bg-primary/10 text-primary border border-primary/20"
-                      : "bg-destructive/10 text-destructive border border-destructive/20"
-                  }`}
-                >
-                  <p className="text-sm">{submitStatus.message}</p>
-                </div>
-              )}
-
               <div className="grid gap-6 sm:grid-cols-2">
                 <div>
                   <label
