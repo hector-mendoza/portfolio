@@ -200,3 +200,40 @@ body {
 .animate-horizontal-scroll {
   animation: horizontal-scroll 40s linear infinite;
 }
+
+/* Sileo Toast Styling */
+.sileo-container {
+  --sileo-success-bg: hsl(240 8% 9%);
+  --sileo-success-border: hsl(145 65% 52%);
+  --sileo-success-text: hsl(40 20% 94%);
+  --sileo-error-bg: hsl(240 8% 9%);
+  --sileo-error-border: hsl(0 84.2% 60.2%);
+  --sileo-error-text: hsl(40 20% 94%);
+  --sileo-info-bg: hsl(240 8% 9%);
+  --sileo-info-border: hsl(145 65% 52%);
+  --sileo-info-text: hsl(40 20% 94%);
+}
+
+.sileo-toast {
+  background-color: hsl(240 8% 9%) !important;
+  border: 1.5px solid hsl(145 65% 52%) !important;
+  border-radius: 0.75rem;
+  color: hsl(40 20% 94%) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sileo-toast.success {
+  border-color: hsl(145 65% 52%) !important;
+}
+
+.sileo-toast.success::before {
+  background-color: hsl(145 65% 52%) !important;
+}
+
+.sileo-toast.error {
+  border-color: hsl(0 84.2% 60.2%) !important;
+}
+
+.sileo-toast.error::before {
+  background-color: hsl(0 84.2% 60.2%) !important;
+}
