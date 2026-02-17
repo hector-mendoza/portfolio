@@ -1,5 +1,6 @@
 import React from "react"
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { ToasterProvider } from "@/components/toaster-provider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -39,6 +40,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
+        <ToasterProvider />
         {children}
       </body>
     </html>
