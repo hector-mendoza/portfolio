@@ -66,7 +66,6 @@ export default function ContactSection() {
     e.preventDefault();
 
     if (!captchaToken) {
-      setSubmitStatus({ type: "error", message: "Please complete the captcha" });
       sileo.error({
         title: "Captcha incomplete",
         description: "Please complete the captcha",
@@ -114,7 +113,6 @@ export default function ContactSection() {
         setCaptchaToken(null);
         captchaRef.current?.resetCaptcha();
       } else {
-        // sileo.error(data.error || "Failed to send message. Please try again.");
         sileo.error({
           title: "Failed to send message",
           description: "Please try again later.",
