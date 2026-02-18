@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { fadeSlideUp, scaleIn, staggerContainer } from "@/lib/animations";
 
 const stats = [
   { value: "8+", label: "Years Experience" },
@@ -15,32 +16,6 @@ const techStack = [
   "Node.js", "Tailwind CSS", "Three.js", "GSAP", "Figma",
   "WooCommerce", "SEO",
 ];
-
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
-  },
-};
-
-const fadeSlideUp = {
-  hidden: { opacity: 0, y: 60, filter: "blur(6px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 export default function AboutSection() {
   const containerRef = useRef(null);
