@@ -31,7 +31,7 @@ export async function POST(request) {
 
         // Validate input with Zod
         const validationResult = contactSchema.safeParse(body);
-        
+
         if (!validationResult.success) {
             return NextResponse.json(
                 { error: 'Validation failed', details: validationResult.error.errors },
@@ -42,12 +42,17 @@ export async function POST(request) {
         const { name, email, subject, message, captchaToken } = validationResult.data;
 
         // Verify hCaptcha token
+        const captchaPayload = new URLSearchParams({
+            response: captchaToken,
+            secret: process.env.HCAPTCHA_SECRET_KEY || '',
+        });
+
         const captchaResponse = await fetch('https://hcaptcha.com/siteverify', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `response=${captchaToken}&secret=${process.env.HCAPTCHA_SECRET_KEY}`,
+            body: captchaPayload.toString(),
         });
 
         if (!captchaResponse.ok) {
@@ -98,7 +103,7 @@ export async function POST(request) {
         if (process.env.NODE_ENV === 'development') {
             console.error('Contact form error:', error);
         }
-        
+
         return NextResponse.json(
             { error: 'Failed to send message. Please try again.' },
             { status: 500 }
