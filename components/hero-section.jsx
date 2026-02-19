@@ -4,7 +4,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import dynamic from "next/dynamic";
 
-const Scene3D = dynamic(() => import("./scene-3d"), { ssr: false });
+const Scene3D = dynamic(() => import("./scene-3d"), { 
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full bg-gradient-to-b from-background via-background/95 to-background" />
+  ),
+});
 
 const charVariants = {
   hidden: { opacity: 0, y: 80, rotateX: 90 },
@@ -123,6 +128,7 @@ export default function HeroSection() {
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -158,7 +164,7 @@ export default function HeroSection() {
               animate={{ y: [0, 8, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
               </svg>
             </motion.div>
