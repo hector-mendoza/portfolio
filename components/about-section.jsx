@@ -24,7 +24,9 @@ export default function AboutSection() {
     offset: ["start end", "end start"],
   });
 
-  const maskProgress = useTransform(scrollYProgress, [0, 0.3], [100, 0]);
+  const logoMaskSize = useTransform(scrollYProgress, [0, 0.55], ["10%", "145%"]);
+  const maskedImageOpacity = useTransform(scrollYProgress, [0, 0.62, 0.85], [1, 1, 0]);
+  const fullImageOpacity = useTransform(scrollYProgress, [0.55, 0.85], [0, 1]);
   const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.3, 1]);
   const parallaxY = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const rotateX = useTransform(scrollYProgress, [0, 0.3], [15, 0]);
@@ -75,7 +77,6 @@ export default function AboutSection() {
           >
             <motion.div
               style={{
-                clipPath: useTransform(maskProgress, (v) => `inset(${v}% 0 0 0)`),
                 rotateX,
               }}
               className="relative overflow-hidden rounded-2xl"
@@ -84,10 +85,27 @@ export default function AboutSection() {
                 style={{ scale: imageScale }}
                 className="aspect-[4/5] relative overflow-hidden"
               >
-                <img
-                  src="/profile.jpg"
+                <motion.img
+                  src="/cartoon-tech-profile.webp"
                   alt="Hector Mendoza"
-                  className="h-full w-full object-cover"
+                  style={{ opacity: fullImageOpacity }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <motion.img
+                  src="/cartoon-tech-profile.webp"
+                  alt="Hector Mendoza"
+                  style={{
+                    opacity: maskedImageOpacity,
+                    WebkitMaskImage: "url('/apple-logo.png')",
+                    maskImage: "url('/apple-logo.png')",
+                    WebkitMaskRepeat: "no-repeat",
+                    maskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                    maskPosition: "center",
+                    WebkitMaskSize: logoMaskSize,
+                    maskSize: logoMaskSize,
+                  }}
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                 <motion.div
