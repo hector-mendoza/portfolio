@@ -15,6 +15,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL("https://hectormendoza.com"),
   title: "Hector Mendoza | Senior Software Engineer",
   description:
     "Senior Web Developer with 8+ years of experience specializing in Next.js, WordPress, and Shopify. Based in Morelia, Mexico.",
@@ -27,6 +28,23 @@ export const metadata = {
     "WordPress",
     "Shopify",
   ],
+  canonical: "https://hectormendoza.com",
+  openGraph: {
+    title: "Hector Mendoza | Senior Software Engineer",
+    description:
+      "Senior Web Developer with 8+ years of experience specializing in Next.js, WordPress, and Shopify. Based in Morelia, Mexico.",
+    url: "https://hectormendoza.com",
+    siteName: "Hector Mendoza",
+    type: "website",
+    images: [
+      {
+        url: "/cartoon-tech-profile.webp",
+        width: 1200,
+        height: 630,
+        alt: "Hector Mendoza - Senior Software Engineer",
+      },
+    ],
+  },
 };
 
 export const viewport = {
