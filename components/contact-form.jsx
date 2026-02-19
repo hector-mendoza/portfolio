@@ -12,6 +12,7 @@ const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   subject: z.string().min(5, "Subject must be at least 5 characters").max(200),
   message: z.string().min(10, "Message must be at least 10 characters").max(5000),
+  captchaToken: z.string().min(1, "Please complete the captcha"),
 });
 
 export default function ContactForm() {
@@ -30,13 +31,18 @@ export default function ContactForm() {
       email: "",
       subject: "",
       message: "",
+      captchaToken: "",
     },
   });
 
   const captchaToken = watch("captchaToken");
 
   const handleCaptchaVerify = (token) => {
-    setValue("captchaToken", token);
+    setValue("captchaToken", token, { shouldValidate: true });
+  };
+
+  const handleCaptchaExpire = () => {
+    setValue("captchaToken", "", { shouldValidate: true });
   };
 
   const onSubmit = async (data) => {
@@ -178,13 +184,19 @@ export default function ContactForm() {
       </div>
 
       <div className="flex justify-center">
+        <input type="hidden" {...register("captchaToken")} />
         <HCaptcha
           ref={captchaRef}
           sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
           onVerify={handleCaptchaVerify}
+          onExpire={handleCaptchaExpire}
+          onError={handleCaptchaExpire}
           theme="dark"
         />
       </div>
+      {errors.captchaToken && (
+        <p className="text-center text-xs text-destructive">{errors.captchaToken.message}</p>
+      )}
 
       <button
         type="submit"
