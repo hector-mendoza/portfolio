@@ -363,6 +363,10 @@ export default function Scene3D() {
       performance={{ min: 0.5 }}
       style={{ background: "transparent" }}
       className="w-full h-full"
+      onCreated={({ gl }) => {
+        // Harmless HLSL float-precision warnings on Windows/ANGLE (MeshDistortMaterial, etc.)
+        gl.debug.checkShaderErrors = false;
+      }}
     >
       <WebGLContextGuard onContextLost={handleContextLost} />
       <SceneContent />
