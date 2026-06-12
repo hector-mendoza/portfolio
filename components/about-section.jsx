@@ -1,238 +1,182 @@
-"use client";
+'use client';
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { fadeSlideUp, scaleIn, staggerContainer } from "@/lib/animations";
+import { useRef } from 'react';
+import Image from 'next/image';
+import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, splitChars } from '@/lib/gsap';
 
 const stats = [
-  { value: "8+", label: "Years Experience" },
-  { value: "20+", label: "Projects Delivered" },
-  { value: "10+", label: "Happy Clients" },
-  { value: "3", label: "Countries" },
+  { value: '8+',  label: 'Years Experience' },
+  { value: '20+', label: 'Projects Delivered' },
+  { value: '10+', label: 'Happy Clients' },
+  { value: '3',   label: 'Countries' },
 ];
 
 const techStack = [
-  "Next.js", "React", "TypeScript", "WordPress", "Shopify",
-  "Node.js", "Tailwind CSS", "Three.js", "GSAP", "Figma",
-  "WooCommerce", "SEO",
+  'Next.js', 'React', 'TypeScript', 'WordPress', 'Shopify',
+  'Node.js', 'Tailwind CSS', 'Three.js', 'GSAP', 'Figma',
+  'WooCommerce', 'SEO',
 ];
 
 export default function AboutSection() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+  const sectionRef  = useRef(null);
+  const ghostRef    = useRef(null);
+  const headlineRef = useRef(null);
+  const imageRef    = useRef(null);
+  const statsRef    = useRef(null);
+  const pillsRef    = useRef(null);
 
-  const logoMaskSize = useTransform(scrollYProgress, [0, 0.55], ["10%", "145%"]);
-  const maskedImageOpacity = useTransform(scrollYProgress, [0, 0.62, 0.85], [1, 1, 0]);
-  const fullImageOpacity = useTransform(scrollYProgress, [0.55, 0.85], [0, 1]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5], [1.3, 1]);
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.3], [15, 0]);
-  const sectionOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  useGSAP(() => {
+    const section = sectionRef.current;
+
+    ScrollTrigger.create({
+      trigger:    section,
+      pin:        true,
+      pinSpacing: true,
+      start:      'top top',
+      end:        '+=150%',
+    });
+
+    const defaults = { scrollTrigger: { trigger: section, start: 'top 70%', once: true } };
+
+    gsap.from(ghostRef.current, {
+      scale: 1.4, opacity: 0, duration: 1.2, ease: 'power3.out',
+      ...defaults,
+    });
+
+    const chars = splitChars(headlineRef.current);
+    gsap.from(chars, {
+      y: 50, opacity: 0, rotateX: 80, stagger: 0.025,
+      duration: 0.7, ease: 'power3.out',
+      transformOrigin: 'bottom center',
+      ...defaults,
+    });
+
+    gsap.from(imageRef.current, {
+      clipPath: 'inset(100% 0 0 0)',
+      duration: 1.2, ease: 'power3.out',
+      delay: 0.2,
+      ...defaults,
+    });
+
+    const statEls = statsRef.current.querySelectorAll('[data-stat-value]');
+    statEls.forEach((el) => {
+      const target = parseInt(el.dataset.statValue, 10);
+      gsap.from({ val: 0 }, {
+        val: target, duration: 1.5, ease: 'power2.out',
+        snap: { val: 1 },
+        onUpdate() { el.textContent = Math.round(this.targets()[0].val) + (el.dataset.statSuffix ?? ''); },
+        scrollTrigger: { trigger: section, start: 'top 60%', once: true },
+      });
+    });
+
+    gsap.from(pillsRef.current.children, {
+      scale: 0.5, opacity: 0, stagger: 0.04, duration: 0.4, ease: 'back.out(1.7)',
+      scrollTrigger: { trigger: pillsRef.current, start: 'top 85%', once: true },
+    });
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section
+      ref={sectionRef}
       id="about"
-      ref={containerRef}
-      className="relative py-32 overflow-hidden"
+      className="relative min-h-screen overflow-hidden bg-background"
     >
-      {/* Horizontal scrolling background text */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 pointer-events-none overflow-hidden whitespace-nowrap opacity-[0.02]">
-        <motion.div style={{ x: parallaxY }} className="flex gap-16">
-          {[...Array(3)].map((_, i) => (
-            <span key={i} className="text-[15vw] font-bold leading-none text-foreground">
-              ABOUT ME ABOUT ME
-            </span>
-          ))}
-        </motion.div>
-      </div>
+      <div className="mx-auto flex h-screen max-w-7xl flex-col justify-center px-6 lg:flex-row lg:items-center lg:gap-20">
 
-      <motion.div style={{ opacity: sectionOpacity }} className="mx-auto max-w-7xl px-6">
-        {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mb-20"
-        >
-          <motion.span variants={fadeSlideUp} className="mb-4 inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary">
-            01 / About
-          </motion.span>
-          <motion.h2 variants={fadeSlideUp} className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-7xl">
-            <span className="block text-balance">
-              {"A bit about "}
-              <span className="text-gradient">me</span>
-            </span>
-          </motion.h2>
-        </motion.div>
-
-        <div className="grid items-start gap-16 lg:grid-cols-2">
-          {/* Image with mask reveal + perspective */}
-          <motion.div
-            className="relative"
-            style={{ perspective: "1000px" }}
+        {/* ── Left column ── */}
+        <div className="relative flex-1">
+          <span
+            ref={ghostRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-10 -left-4 font-mono text-[10rem] font-black leading-none text-foreground opacity-[0.04] select-none"
           >
-            <motion.div
-              style={{
-                rotateX,
-              }}
-              className="relative overflow-hidden rounded-2xl"
-            >
-              <motion.div
-                style={{ scale: imageScale }}
-                className="aspect-[4/5] relative overflow-hidden"
-              >
-                <motion.img
-                  src="/cartoon-tech-profile.webp"
-                  alt="Hector Mendoza"
-                  style={{ opacity: fullImageOpacity }}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <motion.img
-                  src="/cartoon-tech-profile.webp"
-                  alt="Hector Mendoza"
-                  style={{
-                    opacity: maskedImageOpacity,
-                    WebkitMaskImage: "url('/apple-logo.png')",
-                    maskImage: "url('/apple-logo.png')",
-                    WebkitMaskRepeat: "no-repeat",
-                    maskRepeat: "no-repeat",
-                    WebkitMaskPosition: "center",
-                    maskPosition: "center",
-                    WebkitMaskSize: logoMaskSize,
-                    maskSize: logoMaskSize,
-                  }}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                  className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center hidden md:block"
-                >
-                  <p className="font-mono text-sm text-primary">
-                    Morelia, Mexico
-                  </p>
-                </motion.div>
-              </motion.div>
-            </motion.div>
+            02
+          </span>
 
-            {/* Floating badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, x: 30, y: 30 }}
-              whileInView={{ opacity: 1, scale: 1, x: 30, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="hidden sm:block absolute -right-4 -bottom-4 rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-8 sm:-bottom-8"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-foreground">{"Master's Degree"}</p>
-                  <p className="text-xs text-muted-foreground">Computer Science</p>
-                </div>
+          <p className="mb-3 font-mono text-[0.6rem] uppercase tracking-[0.25em] text-primary">
+            02 / About
+          </p>
+          <h2
+            ref={headlineRef}
+            className="mb-6 font-sans font-black leading-[0.9] tracking-tight text-foreground"
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', perspective: '500px' }}
+          >
+            A bit about me.
+          </h2>
+
+          <p className="mb-4 max-w-lg text-base leading-relaxed text-muted-foreground" data-cursor="text">
+            I'm a{' '}
+            <span className="font-bold text-foreground">Senior Software Engineer</span>{' '}
+            based in Morelia, Mexico, with over 8 years of experience building digital
+            products that make an impact.
+          </p>
+          <p className="mb-10 max-w-lg text-base leading-relaxed text-muted-foreground" data-cursor="text">
+            From leading the web team at{' '}
+            <span className="font-bold text-foreground">Once Interactive</span>{' '}
+            (100+ international clients) to earning my Master's in Computer Science, I
+            bring both craft and strategy to every project.
+          </p>
+
+          <div ref={statsRef} className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="rounded-xl border border-border bg-card p-4 text-center"
+              >
+                <p
+                  className="text-2xl font-black text-primary"
+                  data-stat-value={parseInt(s.value)}
+                  data-stat-suffix={s.value.replace(/\d+/, '')}
+                >
+                  {s.value}
+                </p>
+                <p className="mt-1 font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
+                  {s.label}
+                </p>
               </div>
-            </motion.div>
-          </motion.div>
+            ))}
+          </div>
 
-          {/* Text Content */}
-          <div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <motion.p variants={fadeSlideUp} className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                {"I'm a "}
-                <span className="text-foreground font-medium">Senior Software Engineer</span>
-                {" based in Morelia, Mexico, with over 8 years of experience building digital products that make an impact. I specialize in creating performant, accessible, and visually stunning web applications."}
-              </motion.p>
-              <motion.p variants={fadeSlideUp} className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                {"From leading the web team at "}
-                <span className="text-foreground font-medium">Once Interactive</span>
-                {" where I worked with 100+ international companies, to earning my Master's degree in Computer Science with a focus on Mobile App Development, I bring both depth and breadth to every project."}
-              </motion.p>
-              <motion.p variants={fadeSlideUp} className="mb-10 text-lg leading-relaxed text-muted-foreground">
-                {"My approach combines clean code with thoughtful design. I believe every pixel matters and every interaction should feel intentional."}
-              </motion.p>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-4"
-            >
-              {stats.map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  variants={scaleIn}
-                  whileHover={{ scale: 1.05, borderColor: "hsl(24 85% 62% / 0.5)" }}
-                  className="rounded-xl border border-border bg-card p-4 text-center transition-colors"
-                >
-                  <p className="text-2xl font-bold text-primary">{stat.value}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Tech Stack */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Tech Stack
-              </p>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{ visible: { transition: { staggerChildren: 0.04 } } }}
-                className="flex flex-wrap gap-2"
+          <div ref={pillsRef} className="mt-8 flex flex-wrap gap-2">
+            {techStack.map((t) => (
+              <span
+                key={t}
+                data-cursor="link"
+                data-cursor-label={t}
+                className="cursor-default rounded-full border border-border bg-secondary px-3 py-1.5 font-sans text-xs font-medium text-secondary-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                {techStack.map((tech) => (
-                  <motion.span
-                    key={tech}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.5 },
-                      visible: { opacity: 1, scale: 1 },
-                    }}
-                    whileHover={{ scale: 1.1, backgroundColor: "hsl(24 85% 62% / 0.15)" }}
-                    className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all hover:border-primary/50 hover:text-primary cursor-default"
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </motion.div>
+                {t}
+              </span>
+            ))}
           </div>
         </div>
-      </motion.div>
+
+        {/* ── Right column — profile image ── */}
+        <div className="hidden lg:block lg:w-80 xl:w-96">
+          <div ref={imageRef} className="overflow-hidden rounded-2xl shadow-2xl shadow-foreground/10">
+            <Image
+              src="/cartoon-tech-profile.webp"
+              alt="Hector Mendoza"
+              width={400}
+              height={500}
+              className="h-full w-full object-cover"
+              sizes="(max-width: 1024px) 0vw, 400px"
+            />
+          </div>
+        </div>
+
+      </div>
 
       {/* Marquee strip */}
-      <div className="mt-32 overflow-hidden border-y border-border bg-card/50 py-5">
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-border bg-card/60 py-4">
         <div className="animate-marquee flex whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
+          {[0, 1].map((i) => (
             <div key={i} className="flex items-center gap-8 px-4">
-              {["NEXT.JS", "REACT", "TYPESCRIPT", "WORDPRESS", "SHOPIFY", "NODE.JS", "TAILWIND", "THREE.JS", "GSAP", "FIGMA"].map((item) => (
-                <span key={`${item}-${i}`} className="flex items-center gap-8 font-mono text-sm tracking-widest text-muted-foreground">
+              {['NEXT.JS','REACT','TYPESCRIPT','WORDPRESS','SHOPIFY','NODE.JS','TAILWIND','THREE.JS','GSAP','FIGMA'].map((item) => (
+                <span key={item} className="flex items-center gap-8 font-mono text-xs tracking-widest text-muted-foreground">
                   <span>{item}</span>
-                  <span className="text-primary">{"///"}</span>
+                  <span className="text-primary">///</span>
                 </span>
               ))}
             </div>
