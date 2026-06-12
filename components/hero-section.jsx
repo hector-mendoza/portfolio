@@ -1,178 +1,132 @@
-"use client";
+'use client';
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import dynamic from "next/dynamic";
+import { useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger, splitChars } from '@/lib/gsap';
+import MagneticButton from './magnetic-button';
 
-const Scene3D = dynamic(() => import("./scene-3d"), { 
+const InkScene = dynamic(() => import('./ink-scene'), {
   ssr: false,
-  loading: () => (
-    <div className="h-full w-full bg-gradient-to-b from-background via-background/95 to-background" />
-  ),
+  loading: () => <div style={{ background: '#F0EAD6', width: '100%', height: '100%' }} />,
 });
 
-const charVariants = {
-  hidden: { opacity: 0, y: 80, rotateX: 90 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: {
-      delay: 0.8 + i * 0.04,
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-};
-
-function AnimatedText({ text, className, startDelay = 0 }) {
-  const chars = text.split("");
-  return (
-    <span className={className} aria-label={text}>
-      {chars.map((char, i) => (
-        <motion.span
-          key={`${char}-${i}`}
-          custom={i + startDelay}
-          variants={charVariants}
-          initial="hidden"
-          animate="visible"
-          className="inline-block"
-          style={{ perspective: "500px" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
-
 export default function HeroSection() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
+  const sectionRef   = useRef(null);
+  const line1Ref     = useRef(null);
+  const line2Ref     = useRef(null);
+  const subRef       = useRef(null);
+  const ctaRef       = useRef(null);
+  const hintRef      = useRef(null);
+  const [inkVisible, setInkVisible] = useState(true);
 
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
+  useGSAP(() => {
+    const section = sectionRef.current;
+
+    ScrollTrigger.create({
+      trigger: section,
+      pin:        true,
+      pinSpacing: true,
+      start:      'top top',
+      end:        '+=100%',
+    });
+
+    ScrollTrigger.create({
+      trigger:     section,
+      start:       'top top',
+      end:         'bottom top',
+      onLeave:     () => setInkVisible(false),
+      onEnterBack: () => setInkVisible(true),
+    });
+
+    const chars1 = splitChars(line1Ref.current);
+    const chars2 = splitChars(line2Ref.current);
+
+    const tl = gsap.timeline({ delay: 0.4 });
+    tl.from(chars1, {
+        y: 70, opacity: 0, rotateX: 90,
+        stagger: 0.028, duration: 0.75, ease: 'power3.out',
+        transformOrigin: 'bottom center',
+      })
+      .from(chars2, {
+        y: 70, opacity: 0, rotateX: 90,
+        stagger: 0.028, duration: 0.75, ease: 'power3.out',
+        transformOrigin: 'bottom center',
+      }, '-=0.55')
+      .from(subRef.current, { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .from(ctaRef.current.children, { y: 20, opacity: 0, stagger: 0.12, duration: 0.5 }, '-=0.3')
+      .from(hintRef.current,  { opacity: 0, duration: 0.5 }, '-=0.1');
+  }, { scope: sectionRef, dependencies: [] });
 
   return (
     <section
-      id="hero"
       ref={sectionRef}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      id="hero"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background"
     >
-      <div className="fixed inset-0 z-0">
-        <Scene3D />
-      </div>
+      {inkVisible && (
+        <div className="fixed inset-0 z-0">
+          <InkScene />
+        </div>
+      )}
 
-      <div className="absolute inset-0 bg-background/50 z-[1] pointer-events-none" />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-radial from-transparent to-background/30" />
 
-      <motion.div
-        style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="relative z-10 mx-auto max-w-7xl px-6 text-center"
-      >
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5"
+      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
+        <p className="mb-10 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-primary">
+          01 / Introduction
+        </p>
+
+        <h1
+          className="mb-6 font-sans font-black leading-[0.88] tracking-tight text-foreground"
+          style={{ fontSize: 'clamp(3.2rem, 10vw, 8rem)', perspective: '600px' }}
         >
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-mono text-xs text-primary">
-            Available for new projects
-          </span>
-        </motion.div>
-
-        <h1 className="mb-8 text-5xl font-bold leading-none tracking-tight text-foreground sm:text-7xl lg:text-9xl">
-          <span className="block overflow-hidden">
-            <AnimatedText text="Crafting" className="text-foreground" />
-            {" "}
-            <AnimatedText text="Digital" className="text-gradient" startDelay={8} />
-          </span>
-          <span className="block overflow-hidden mt-2">
-            <AnimatedText text="Experiences" className="text-foreground" startDelay={16} />
-          </span>
+          <span ref={line1Ref} className="block" aria-hidden="true">Making the web</span>
+          <span ref={line2Ref} className="block italic text-primary" aria-hidden="true">move.</span>
+          <span className="sr-only">Making the web move.</span>
         </h1>
 
-        <motion.p
-          initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
+        <p
+          ref={subRef}
+          className="mx-auto mb-12 max-w-md font-mono text-xs uppercase tracking-widest text-muted-foreground"
+          data-cursor="text"
         >
-          {"Senior Software Engineer with 8+ years building performant web applications. Specializing in "}
-          <span className="text-foreground font-medium">Next.js</span>
-          {", "}
-          <span className="text-foreground font-medium">React</span>
-          {", and modern web technologies."}
-        </motion.p>
+          Senior Software Engineer &nbsp;·&nbsp; 8+ years &nbsp;·&nbsp; Morelia, Mexico
+        </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.9 }}
-          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <motion.a
-            href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/25"
-          >
-            View My Work
-            <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              aria-hidden="true"
+        <div ref={ctaRef} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <MagneticButton>
+            <a
+              href="#projects"
+              data-cursor="link"
+              data-cursor-label="View"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-sans text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-shadow hover:shadow-xl hover:shadow-primary/30"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </motion.a>
-          <motion.a
-            href="#about"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5"
-          >
-            About Me
-          </motion.a>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 1 }}
-          className="mt-24"
-        >
-          <a
-            href="#about"
-            className="group inline-flex flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.3em]">
-              Scroll
-            </span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              View Work
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </motion.div>
-          </a>
-        </motion.div>
-      </motion.div>
+            </a>
+          </MagneticButton>
 
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-10" />
+          <MagneticButton>
+            <a
+              href="#contact"
+              data-cursor="link"
+              data-cursor-label="Talk"
+              className="inline-flex items-center gap-2 rounded-full border-2 border-foreground px-8 py-4 font-sans text-sm font-bold text-foreground transition-all hover:border-primary hover:text-primary"
+            >
+              Let's Talk
+            </a>
+          </MagneticButton>
+        </div>
+
+        <div ref={hintRef} className="absolute bottom-10 left-1/2 -translate-x-1/2">
+          <span className="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted-foreground">
+            Scroll →
+          </span>
+        </div>
+      </div>
     </section>
   );
 }
