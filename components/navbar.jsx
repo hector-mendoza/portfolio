@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 import MagneticButton from './magnetic-button';
@@ -16,6 +16,7 @@ const links = [
 export default function Navbar() {
   const [scrolled,    setScrolled]    = useState(false);
   const [mobileOpen,  setMobileOpen]  = useState(false);
+  const navRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -24,12 +25,13 @@ export default function Navbar() {
   }, []);
 
   useGSAP(() => {
-    gsap.from('nav', { y: -80, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.1 });
-  }, []);
+    gsap.from(navRef.current, { y: -80, opacity: 0, duration: 0.9, ease: 'power3.out', delay: 0.1 });
+  }, { scope: navRef });
 
   return (
     <>
       <nav
+        ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? 'bg-background/90 backdrop-blur-md border-b border-border'

@@ -76,8 +76,15 @@ function InkPlane() {
       mouseRef.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
       mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     }
+    function onResize() {
+      uniforms.current.uResolution.value.set(window.innerWidth, window.innerHeight);
+    }
     window.addEventListener('mousemove', onMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMove);
+    window.addEventListener('resize', onResize, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   const uniforms = useRef({

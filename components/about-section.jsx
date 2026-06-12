@@ -29,16 +29,14 @@ export default function AboutSection() {
   useGSAP(() => {
     const section = sectionRef.current;
 
-    ScrollTrigger.matchMedia({
-      '(min-width: 768px)': function () {
-        ScrollTrigger.create({
-          trigger: section,
-          pin: true,
-          pinSpacing: true,
-          start: 'top top',
-          end: '+=150%',
-        });
-      },
+    gsap.matchMedia().add('(min-width: 768px)', () => {
+      ScrollTrigger.create({
+        trigger: section,
+        pin: true,
+        pinSpacing: true,
+        start: 'top top',
+        end: '+=150%',
+      });
     });
 
     const defaults = { scrollTrigger: { trigger: section, start: 'top 70%', once: true } };
