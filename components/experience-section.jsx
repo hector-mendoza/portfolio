@@ -6,6 +6,15 @@ import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 const experiences = [
   {
+    period: '2024 – Present',
+    role: 'Head of Web Integrations',
+    company: 'UrVenue',
+    location: 'Remote',
+    description:
+      'Leading web integration strategy and front-end architecture for a global hospitality tech platform. Promoted from Developer after delivering key integrations across enterprise clients.',
+    tags: ['Next.js', 'React', 'TypeScript', 'Integrations', 'Leadership'],
+  },
+  {
     period: '2019 – 2023',
     role: 'Office Manager & Lead Developer',
     company: 'Once Interactive Inc.',
@@ -22,15 +31,6 @@ const experiences = [
     description:
       'Full-time front-end development for clients across e-commerce, corporate, and SaaS. Built custom themes, plugins, and integrations using WordPress, WooCommerce, and Shopify.',
     tags: ['WordPress', 'WooCommerce', 'Shopify', 'JavaScript', 'CSS'],
-  },
-  {
-    period: '2017',
-    role: 'Web Developer',
-    company: 'COPARMEX',
-    location: 'Morelia, Mexico',
-    description:
-      'Managed and maintained the web platform. First professional role — contributed to social and business event sites using WordPress.',
-    tags: ['WordPress', 'PHP', 'Web Maintenance'],
   },
 ];
 

@@ -108,16 +108,17 @@ export default function AboutSection() {
           </h2>
 
           <p className="mb-4 max-w-lg text-base leading-relaxed text-muted-foreground" data-cursor="text">
-            I'm a{' '}
-            <span className="font-bold text-foreground">Senior Software Engineer</span>{' '}
-            based in Morelia, Mexico, with over 8 years of experience building digital
-            products that make an impact.
+            I'm the{' '}
+            <span className="font-bold text-foreground">Head of Web Integrations</span>{' '}
+            at{' '}
+            <span className="font-bold text-foreground">UrVenue</span>
+            {' '}— based in Morelia, Mexico, with over 8 years of experience building
+            digital products that make an impact.
           </p>
           <p className="mb-10 max-w-lg text-base leading-relaxed text-muted-foreground" data-cursor="text">
-            From leading the web team at{' '}
+            From driving web integrations at UrVenue to leading the web team at{' '}
             <span className="font-bold text-foreground">Once Interactive</span>{' '}
-            (100+ international clients) to earning my Master's in Computer Science, I
-            bring both craft and strategy to every project.
+            (100+ international clients), I bring both craft and strategy to every project.
           </p>
 
           <div ref={statsRef} className="grid grid-cols-2 gap-4 sm:grid-cols-4">

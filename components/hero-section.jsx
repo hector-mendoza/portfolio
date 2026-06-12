@@ -60,7 +60,7 @@ export default function HeroSection() {
       }, '-=0.55')
       .from(subRef.current, { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
       .from(ctaRef.current.children, { y: 20, opacity: 0, stagger: 0.12, duration: 0.5 }, '-=0.3')
-      .from(hintRef.current,  { opacity: 0, duration: 0.5 }, '-=0.1');
+      .from(hintRef.current, { opacity: 0, duration: 0.5 }, '-=0.1');
   }, { scope: sectionRef, dependencies: [] });
 
   return (
@@ -77,6 +77,7 @@ export default function HeroSection() {
 
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-radial from-transparent to-background/30" />
 
+      {/* Main content — no absolute children so layout height is correct */}
       <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
         <p className="mb-10 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-primary">
           01 / Introduction
@@ -96,7 +97,7 @@ export default function HeroSection() {
           className="mx-auto mb-12 max-w-md font-mono text-xs uppercase tracking-widest text-muted-foreground"
           data-cursor="text"
         >
-          Senior Software Engineer &nbsp;·&nbsp; 8+ years &nbsp;·&nbsp; Morelia, Mexico
+          Head of Web Integrations &nbsp;·&nbsp; UrVenue &nbsp;·&nbsp; Morelia, Mexico
         </p>
 
         <div ref={ctaRef} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -128,12 +129,16 @@ export default function HeroSection() {
             </a>
           </MagneticButton>
         </div>
+      </div>
 
-        <div ref={hintRef} className="absolute bottom-10 left-1/2 -translate-x-1/2">
-          <span className="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted-foreground">
-            Scroll →
-          </span>
-        </div>
+      {/* Scroll hint — direct child of section so absolute bottom-10 is relative to section height */}
+      <div
+        ref={hintRef}
+        className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2"
+      >
+        <span className="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted-foreground">
+          Scroll →
+        </span>
       </div>
     </section>
   );
