@@ -13,14 +13,14 @@ const InkScene = dynamic(() => import('./ink-scene'), {
 });
 
 export default function HeroSection() {
-  const sectionRef   = useRef(null);
-  const line1Ref     = useRef(null);
-  const line2Ref     = useRef(null);
-  const subRef       = useRef(null);
-  const ctaRef       = useRef(null);
-  const hintRef      = useRef(null);
-  const sendIconRef  = useRef(null);
-  const msgIconRef   = useRef(null);
+  const sectionRef = useRef(null);
+  const line1Ref = useRef(null);
+  const line2Ref = useRef(null);
+  const subRef = useRef(null);
+  const ctaRef = useRef(null);
+  const hintRef = useRef(null);
+  const sendIconRef = useRef(null);
+  const msgIconRef = useRef(null);
   const [inkVisible, setInkVisible] = useState(true);
 
   useGSAP(() => {
@@ -37,10 +37,10 @@ export default function HeroSection() {
     });
 
     ScrollTrigger.create({
-      trigger:     section,
-      start:       'top top',
-      end:         'bottom top',
-      onLeave:     () => setInkVisible(false),
+      trigger: section,
+      start: 'top top',
+      end: 'bottom top',
+      onLeave: () => setInkVisible(false),
       onEnterBack: () => setInkVisible(true),
     });
 
@@ -49,10 +49,10 @@ export default function HeroSection() {
 
     const tl = gsap.timeline({ delay: 0.4 });
     tl.from(chars1, {
-        y: 70, opacity: 0, rotateX: 90,
-        stagger: 0.028, duration: 0.75, ease: 'power3.out',
-        transformOrigin: 'bottom center',
-      })
+      y: 70, opacity: 0, rotateX: 90,
+      stagger: 0.028, duration: 0.75, ease: 'power3.out',
+      transformOrigin: 'bottom center',
+    })
       .from(chars2, {
         y: 70, opacity: 0, rotateX: 90,
         stagger: 0.028, duration: 0.75, ease: 'power3.out',
@@ -94,7 +94,7 @@ export default function HeroSection() {
 
         <p
           ref={subRef}
-          className="mx-auto mb-12 max-w-md font-mono text-xs uppercase tracking-widest text-muted-foreground"
+          className="mx-auto mb-12 max-w-lg font-mono text-xs uppercase tracking-widest text-muted-foreground"
           data-cursor="text"
         >
           Head of Web Integrations &nbsp;·&nbsp; UrVenue &nbsp;·&nbsp; Morelia, Mexico

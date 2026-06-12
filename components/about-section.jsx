@@ -6,10 +6,10 @@ import { useGSAP } from '@gsap/react';
 import { gsap, ScrollTrigger, splitChars } from '@/lib/gsap';
 
 const stats = [
-  { value: '8+',  label: 'Years Experience' },
-  { value: '20+', label: 'Projects Delivered' },
-  { value: '10+', label: 'Happy Clients' },
-  { value: '3',   label: 'Countries' },
+  { value: '8+',  label: 'Years Experience',   num: 8,   suffix: '+' },
+  { value: '∞',   label: 'Projects Delivered', symbol: true },
+  { value: '9k',  label: 'Happy Clients',      num: 9,   suffix: 'k' },
+  { value: '8',   label: 'Countries',          num: 8,   suffix: ''  },
 ];
 
 const techStack = [
@@ -64,10 +64,20 @@ export default function AboutSection() {
     const statEls = statsRef.current.querySelectorAll('[data-stat-value]');
     statEls.forEach((el) => {
       const target = parseInt(el.dataset.statValue, 10);
-      gsap.from({ val: 0 }, {
+      const suffix = el.dataset.statSuffix ?? '';
+      el.textContent = '0' + suffix;
+      gsap.to({ val: 0 }, {
         val: target, duration: 1.5, ease: 'power2.out',
         snap: { val: 1 },
-        onUpdate() { el.textContent = Math.round(this.targets()[0].val) + (el.dataset.statSuffix ?? ''); },
+        onUpdate() { el.textContent = Math.round(this.targets()[0].val) + suffix; },
+        scrollTrigger: { trigger: section, start: 'top 60%', once: true },
+      });
+    });
+
+    const symbolEls = statsRef.current.querySelectorAll('[data-stat-symbol]');
+    symbolEls.forEach((el) => {
+      gsap.from(el, {
+        scale: 0.5, opacity: 0, duration: 0.8, ease: 'back.out(2)',
         scrollTrigger: { trigger: section, start: 'top 60%', once: true },
       });
     });
@@ -129,8 +139,10 @@ export default function AboutSection() {
               >
                 <p
                   className="text-2xl font-black text-primary"
-                  data-stat-value={parseInt(s.value)}
-                  data-stat-suffix={s.value.replace(/\d+/, '')}
+                  {...(s.symbol
+                    ? { 'data-stat-symbol': s.value }
+                    : { 'data-stat-value': s.num, 'data-stat-suffix': s.suffix }
+                  )}
                 >
                   {s.value}
                 </p>

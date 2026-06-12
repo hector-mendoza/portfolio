@@ -48,14 +48,14 @@ const fragmentShader = /* glsl */`
   void main() {
     vec2 uv = vUv;
 
-    float t = uTime * 0.1;
+    float t = uTime * 0.22;
 
-    // Layer 1: broad slow drift
-    float n1 = fbm(uv * 2.0 + vec2(t * 0.8, t * 0.45));
+    // Layer 1: broad drift
+    float n1 = fbm(uv * 2.0 + vec2(t * 1.2, t * 0.7));
     // Layer 2: counter-direction turbulence warped by layer 1
-    float n2 = fbm(uv * 1.6 - vec2(t * 0.35, t * 0.55) + n1 * 0.75);
+    float n2 = fbm(uv * 1.6 - vec2(t * 0.6, t * 0.85) + n1 * 0.45);
     // Layer 3: fine detail with swirl
-    float n3 = fbm(uv * 3.0 + vec2(-t * 0.5, t * 0.28) + n2 * 0.45);
+    float n3 = fbm(uv * 3.0 + vec2(-t * 0.8, t * 0.45) + n2 * 0.35);
 
     float ink = smoothstep(0.28, 0.68, n2 * 0.55 + n3 * 0.45);
 
@@ -67,7 +67,7 @@ const fragmentShader = /* glsl */`
     vec3 bg      = mix(lightBg,  darkBg,  uDark);
     vec3 fgColor = mix(lightInk, darkInk, uDark);
 
-    float maxBlend = mix(0.28, 0.22, uDark);
+    float maxBlend = mix(0.38, 0.28, uDark);
     vec3 col = mix(bg, fgColor, ink * maxBlend);
     gl_FragColor = vec4(col, 1.0);
   }
@@ -112,6 +112,7 @@ export default function InkScene() {
     <Canvas
       camera={{ position: [0, 0, 1], fov: 75 }}
       dpr={[1, 1.5]}
+      frameloop="always"
       gl={{ antialias: false, alpha: false }}
       style={{ background: isDark ? '#111313' : '#F0EAD6' }}
     >
