@@ -64,22 +64,25 @@ export default function ExperienceSection() {
     const lineLength = line.getTotalLength?.() ?? 400;
     gsap.set(line, { strokeDasharray: lineLength, strokeDashoffset: lineLength });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger:    section,
-        pin:        true,
-        pinSpacing: true,
-        start:      'top top',
-        end:        '+=200%',
-        scrub:      1,
+    ScrollTrigger.matchMedia({
+      '(min-width: 768px)': function () {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            pin: true,
+            pinSpacing: true,
+            start: 'top top',
+            end: '+=200%',
+            scrub: 1,
+          },
+        });
+        tl.to(line, { strokeDashoffset: 0, ease: 'none', duration: 3 }, 0)
+          .from(card0Ref.current, { x: -80, opacity: 0, duration: 1 }, 0.8)
+          .from(card1Ref.current, { x:  80, opacity: 0, duration: 1 }, 1.6)
+          .from(card2Ref.current, { x: -80, opacity: 0, duration: 1 }, 2.4)
+          .from(eduRef.current.children, { y: 40, opacity: 0, stagger: 0.4, duration: 0.8 }, 3.2);
       },
     });
-
-    tl.to(line, { strokeDashoffset: 0, ease: 'none', duration: 3 }, 0)
-      .from(card0Ref.current, { x: -80, opacity: 0, duration: 1 }, 0.8)
-      .from(card1Ref.current, { x:  80, opacity: 0, duration: 1 }, 1.6)
-      .from(card2Ref.current, { x: -80, opacity: 0, duration: 1 }, 2.4)
-      .from(eduRef.current.children, { y: 40, opacity: 0, stagger: 0.4, duration: 0.8 }, 3.2);
   }, { scope: sectionRef, dependencies: [] });
 
   const cardRefs = [card0Ref, card1Ref, card2Ref];

@@ -23,12 +23,16 @@ export default function HeroSection() {
   useGSAP(() => {
     const section = sectionRef.current;
 
-    ScrollTrigger.create({
-      trigger: section,
-      pin:        true,
-      pinSpacing: true,
-      start:      'top top',
-      end:        '+=100%',
+    ScrollTrigger.matchMedia({
+      '(min-width: 768px)': function () {
+        ScrollTrigger.create({
+          trigger: section,
+          pin: true,
+          pinSpacing: true,
+          start: 'top top',
+          end: '+=100%',
+        });
+      },
     });
 
     ScrollTrigger.create({

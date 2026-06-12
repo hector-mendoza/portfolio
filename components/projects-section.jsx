@@ -56,6 +56,9 @@ export default function ProjectsSection() {
     const inner   = innerRef.current;
     if (!section || !inner) return;
 
+    // Skip horizontal reel on mobile; let CSS stack cards vertically
+    if (window.innerWidth < 768) return;
+
     const ctx = gsap.context(() => {
       const totalWidth = inner.scrollWidth - window.innerWidth;
 
@@ -81,8 +84,7 @@ export default function ProjectsSection() {
     <section
       ref={sectionRef}
       id="projects"
-      className="overflow-hidden bg-background"
-      style={{ height: '100vh' }}
+      className="overflow-hidden bg-background md:h-screen"
     >
       <div className="absolute top-8 left-6 z-10">
         <p className="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-primary">
@@ -99,7 +101,7 @@ export default function ProjectsSection() {
 
       <div
         ref={innerRef}
-        className="flex h-full items-center gap-8 px-8 pt-32"
+        className="flex h-full items-start gap-8 px-8 pt-24 md:flex-nowrap md:items-center md:pt-32 flex-wrap"
         style={{ width: 'max-content' }}
       >
         {projects.map((project, i) => (
