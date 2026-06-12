@@ -107,7 +107,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-2xl border border-border bg-card p-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label
@@ -120,7 +120,7 @@ export default function ContactForm() {
             type="text"
             id="name"
             {...register("name")}
-            className="w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+            className="w-full border-0 border-b border-border bg-transparent px-0 py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-primary"
             placeholder="Your name"
           />
           {errors.name && (
@@ -138,7 +138,7 @@ export default function ContactForm() {
             type="email"
             id="email"
             {...register("email")}
-            className="w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+            className="w-full border-0 border-b border-border bg-transparent px-0 py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-primary"
             placeholder="you@email.com"
           />
           {errors.email && (
@@ -175,7 +175,7 @@ export default function ContactForm() {
           id="message"
           rows={5}
           {...register("message")}
-          className="w-full resize-none rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+          className="w-full border-0 border-b border-border bg-transparent px-0 py-3 font-sans text-sm text-foreground placeholder:text-muted-foreground/50 outline-none transition-colors focus:border-primary"
           placeholder="Tell me about your project..."
         />
         {errors.message && (
@@ -191,7 +191,7 @@ export default function ContactForm() {
           onVerify={handleCaptchaVerify}
           onExpire={handleCaptchaExpire}
           onError={handleCaptchaExpire}
-          theme="dark"
+          theme="light"
         />
       </div>
       {errors.captchaToken && (
@@ -201,7 +201,9 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting || !captchaToken}
-        className="group flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex w-full items-center justify-center gap-2 rounded-full bg-primary px-8 py-4 font-sans text-sm font-bold text-primary-foreground shadow-md shadow-primary/20 transition-all hover:shadow-lg hover:shadow-primary/30 disabled:cursor-not-allowed disabled:opacity-50"
+        data-cursor="link"
+        data-cursor-label="Send"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
         <svg
