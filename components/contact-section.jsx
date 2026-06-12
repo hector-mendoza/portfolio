@@ -39,7 +39,7 @@ export default function ContactSection() {
           <h2
             ref={headlineRef}
             className="font-sans font-black leading-[0.88] tracking-tight text-foreground"
-            style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)', perspective: '500px' }}
+            style={{ fontSize: 'clamp(2rem, 5.5vw, 5rem)', perspective: '500px' }}
           >
             {"Let's build something together."}
           </h2>

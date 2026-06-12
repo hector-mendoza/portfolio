@@ -71,7 +71,7 @@ export default function ExperienceSection() {
           pin: true,
           pinSpacing: true,
           start: 'top top',
-          end: '+=200%',
+          end: '+=120%',
           scrub: 1,
         },
       });

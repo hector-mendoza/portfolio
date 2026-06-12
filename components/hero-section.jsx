@@ -5,10 +5,11 @@ import dynamic from 'next/dynamic';
 import { useGSAP } from '@gsap/react';
 import { gsap, ScrollTrigger, splitChars } from '@/lib/gsap';
 import MagneticButton from './magnetic-button';
+import { SendIcon, MessageCircleIcon } from '@animateicons/react/lucide';
 
 const InkScene = dynamic(() => import('./ink-scene'), {
   ssr: false,
-  loading: () => <div style={{ background: '#F0EAD6', width: '100%', height: '100%' }} />,
+  loading: () => <div className="h-full w-full bg-background" />,
 });
 
 export default function HeroSection() {
@@ -29,7 +30,7 @@ export default function HeroSection() {
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: '+=100%',
+        end: '+=60%',
       });
     });
 
@@ -81,7 +82,7 @@ export default function HeroSection() {
 
         <h1
           className="mb-6 font-sans font-black leading-[0.88] tracking-tight text-foreground"
-          style={{ fontSize: 'clamp(3.2rem, 10vw, 8rem)', perspective: '600px' }}
+          style={{ fontSize: 'clamp(2.8rem, 8vw, 6.5rem)', perspective: '600px' }}
         >
           <span ref={line1Ref} className="block" aria-hidden="true">Making the web</span>
           <span ref={line2Ref} className="block italic text-primary" aria-hidden="true">move.</span>
@@ -105,9 +106,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-sans text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-shadow hover:shadow-xl hover:shadow-primary/30"
             >
               View Work
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
+              <SendIcon size={16} color="currentColor" />
             </a>
           </MagneticButton>
 
@@ -119,6 +118,7 @@ export default function HeroSection() {
               className="inline-flex items-center gap-2 rounded-full border-2 border-foreground px-8 py-4 font-sans text-sm font-bold text-foreground transition-all hover:border-primary hover:text-primary"
             >
               Let's Talk
+              <MessageCircleIcon size={16} color="currentColor" />
             </a>
           </MagneticButton>
         </div>

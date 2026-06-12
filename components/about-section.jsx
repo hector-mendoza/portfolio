@@ -35,7 +35,7 @@ export default function AboutSection() {
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: '+=150%',
+        end: '+=80%',
       });
     });
 

@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 import MagneticButton from './magnetic-button';
+import ThemeToggle from './theme-toggle';
 import Image from 'next/image';
+import { MessageCircleIcon } from '@animateicons/react/lucide';
 
 const links = [
   { label: 'Work',       href: '#projects'   },
@@ -60,15 +62,18 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA + hamburger */}
+          {/* CTA + theme toggle + hamburger */}
           <div className="flex items-center gap-3">
+            <ThemeToggle />
+
             <MagneticButton className="hidden md:block">
               <a
                 href="#contact"
                 data-cursor="link"
                 data-cursor-label="Talk"
-                className="rounded-full border-2 border-primary px-5 py-2 font-sans text-sm font-bold text-primary transition-all hover:bg-primary hover:text-primary-foreground"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-5 py-2 font-sans text-sm font-bold text-primary transition-all hover:bg-primary hover:text-primary-foreground"
               >
+                <MessageCircleIcon size={15} />
                 Let's Talk
               </a>
             </MagneticButton>

@@ -3,6 +3,7 @@ import SmoothScroll from '@/components/smooth-scroll';
 import CustomCursor from '@/components/custom-cursor';
 import ErrorBoundary from '@/components/error-boundary';
 import { ToasterProvider } from '@/components/toaster-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 const rubik = Rubik({
@@ -48,15 +49,21 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${rubik.variable} ${spaceMono.variable}`}>
+    <html
+      lang="en"
+      className={`${rubik.variable} ${spaceMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans antialiased">
-        <ErrorBoundary>
-          <SmoothScroll>
-            <CustomCursor />
-            <ToasterProvider />
-            {children}
-          </SmoothScroll>
-        </ErrorBoundary>
+        <ThemeProvider>
+          <ErrorBoundary>
+            <SmoothScroll>
+              <CustomCursor />
+              <ToasterProvider />
+              {children}
+            </SmoothScroll>
+          </ErrorBoundary>
+        </ThemeProvider>
       </body>
     </html>
   );

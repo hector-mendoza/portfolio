@@ -29,12 +29,41 @@
     --ink:       #0F0F0F;
     --green:     #2A6B45;
   }
+
+  .dark {
+    --background:        220 16%  9%;
+    --foreground:         38 40% 88%;
+    --card:              220 14% 13%;
+    --card-foreground:    38 40% 88%;
+    --popover:           220 16%  9%;
+    --popover-foreground: 38 40% 88%;
+    --primary:          145 46% 52%;
+    --primary-foreground: 220 16%  9%;
+    --secondary:         220 12% 17%;
+    --secondary-foreground: 38 20% 75%;
+    --muted:             220 12% 18%;
+    --muted-foreground:  220  8% 55%;
+    --accent:           145 46% 52%;
+    --accent-foreground: 220 16%  9%;
+    --destructive:        0 62%  55%;
+    --destructive-foreground: 38 40% 88%;
+    --border:            220 12% 22%;
+    --input:             220 12% 22%;
+    --ring:             145 46% 52%;
+
+    --parchment: #1C1F1C;
+    --ink:       #EDE3CB;
+    --green:     #4DAB70;
+  }
 }
 
 @layer base {
   * { @apply border-border; }
 
-  html { cursor: none; }
+  html {
+    cursor: none;
+    transition: background-color 0.35s ease, color 0.35s ease;
+  }
   @media (hover: none) { html { cursor: auto; } }
 
   body { @apply bg-background text-foreground; }
@@ -62,7 +91,7 @@ body { overflow-x: hidden; }
 
 ::selection {
   background: rgba(42, 107, 69, 0.2);
-  color: #0F0F0F;
+  color: inherit;
 }
 
 /* ─── Marquee (used in AboutSection) ─── */
