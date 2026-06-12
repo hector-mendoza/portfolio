@@ -12,15 +12,14 @@ export default function SmoothScroll({ children }) {
       smoothWheel: true,
     });
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    const tick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     lenis.on('scroll', ScrollTrigger.update);
 
     return () => {
-      gsap.ticker.remove((time) => lenis.raf(time * 1000));
+      gsap.ticker.remove(tick);
       lenis.destroy();
     };
   }, []);
