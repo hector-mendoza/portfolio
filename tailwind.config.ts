@@ -63,8 +63,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-jetbrains)', 'monospace'],
+        sans: ['var(--font-rubik)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-space-mono)', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',
