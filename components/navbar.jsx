@@ -18,7 +18,8 @@ const links = [
 export default function Navbar() {
   const [scrolled,    setScrolled]    = useState(false);
   const [mobileOpen,  setMobileOpen]  = useState(false);
-  const navRef = useRef(null);
+  const navRef    = useRef(null);
+  const msgIconRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -71,9 +72,11 @@ export default function Navbar() {
                 href="#contact"
                 data-cursor="link"
                 data-cursor-label="Talk"
+                onMouseEnter={() => msgIconRef.current?.startAnimation()}
+                onMouseLeave={() => msgIconRef.current?.stopAnimation()}
                 className="inline-flex items-center gap-2 rounded-full border-2 border-primary px-5 py-2 font-sans text-sm font-bold text-primary transition-all hover:bg-primary hover:text-primary-foreground"
               >
-                <MessageCircleIcon size={15} />
+                <MessageCircleIcon ref={msgIconRef} size={15} color="currentColor" />
                 Let's Talk
               </a>
             </MagneticButton>

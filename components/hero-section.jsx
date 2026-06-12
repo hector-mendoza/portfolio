@@ -19,6 +19,8 @@ export default function HeroSection() {
   const subRef       = useRef(null);
   const ctaRef       = useRef(null);
   const hintRef      = useRef(null);
+  const sendIconRef  = useRef(null);
+  const msgIconRef   = useRef(null);
   const [inkVisible, setInkVisible] = useState(true);
 
   useGSAP(() => {
@@ -103,10 +105,12 @@ export default function HeroSection() {
               href="#projects"
               data-cursor="link"
               data-cursor-label="View"
+              onMouseEnter={() => sendIconRef.current?.startAnimation()}
+              onMouseLeave={() => sendIconRef.current?.stopAnimation()}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 font-sans text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-shadow hover:shadow-xl hover:shadow-primary/30"
             >
               View Work
-              <SendIcon size={16} color="currentColor" />
+              <SendIcon ref={sendIconRef} size={16} color="currentColor" />
             </a>
           </MagneticButton>
 
@@ -115,10 +119,12 @@ export default function HeroSection() {
               href="#contact"
               data-cursor="link"
               data-cursor-label="Talk"
+              onMouseEnter={() => msgIconRef.current?.startAnimation()}
+              onMouseLeave={() => msgIconRef.current?.stopAnimation()}
               className="inline-flex items-center gap-2 rounded-full border-2 border-foreground px-8 py-4 font-sans text-sm font-bold text-foreground transition-all hover:border-primary hover:text-primary"
             >
               Let's Talk
-              <MessageCircleIcon size={16} color="currentColor" />
+              <MessageCircleIcon ref={msgIconRef} size={16} color="currentColor" />
             </a>
           </MagneticButton>
         </div>
