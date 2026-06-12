@@ -15,8 +15,6 @@ const vertexShader = /* glsl */`
 const fragmentShader = /* glsl */`
   precision highp float;
   uniform float uTime;
-  uniform vec2  uMouse;
-  uniform vec2  uResolution;
   uniform float uDark;
   varying vec2  vUv;
 
@@ -50,18 +48,14 @@ const fragmentShader = /* glsl */`
   void main() {
     vec2 uv = vUv;
 
-    vec2  mouse     = uMouse * 0.5 + 0.5;
-    float mouseDist = distance(uv, mouse);
-    float pull      = smoothstep(0.5, 0.0, mouseDist) * 0.5;
-
     float t = uTime * 0.1;
 
     // Layer 1: broad slow drift
-    float n1 = fbm(uv * 2.0 + vec2(t * 0.8, t * 0.45) + pull);
+    float n1 = fbm(uv * 2.0 + vec2(t * 0.8, t * 0.45));
     // Layer 2: counter-direction turbulence warped by layer 1
     float n2 = fbm(uv * 1.6 - vec2(t * 0.35, t * 0.55) + n1 * 0.75);
     // Layer 3: fine detail with swirl
-    float n3 = fbm(uv * 3.0 + vec2(-t * 0.5, t * 0.28) + n2 * 0.45 + pull * 0.5);
+    float n3 = fbm(uv * 3.0 + vec2(-t * 0.5, t * 0.28) + n2 * 0.45);
 
     float ink = smoothstep(0.28, 0.68, n2 * 0.55 + n3 * 0.45);
 
@@ -80,43 +74,24 @@ const fragmentShader = /* glsl */`
 `;
 
 function InkPlane() {
-  const meshRef  = useRef(null);
-  const mouseRef = useRef(new THREE.Vector2(0, 0));
+  const meshRef = useRef(null);
   const { viewport } = useThree();
 
   const uniforms = useRef({
-    uTime:       { value: 0 },
-    uMouse:      { value: mouseRef.current },
-    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
-    uDark:       { value: document.documentElement.classList.contains('dark') ? 1.0 : 0.0 },
+    uTime: { value: 0 },
+    uDark: { value: document.documentElement.classList.contains('dark') ? 1.0 : 0.0 },
   });
 
   useEffect(() => {
-    function onMove(e) {
-      mouseRef.current.x =  (e.clientX / window.innerWidth)  * 2 - 1;
-      mouseRef.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    }
-    function onResize() {
-      uniforms.current.uResolution.value.set(window.innerWidth, window.innerHeight);
-    }
-    window.addEventListener('mousemove', onMove,  { passive: true });
-    window.addEventListener('resize',   onResize, { passive: true });
-
     const observer = new MutationObserver(() => {
       uniforms.current.uDark.value = document.documentElement.classList.contains('dark') ? 1.0 : 0.0;
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('resize',   onResize);
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   useFrame(({ clock }) => {
-    uniforms.current.uTime.value  = clock.getElapsedTime();
-    uniforms.current.uMouse.value = mouseRef.current;
+    uniforms.current.uTime.value = clock.getElapsedTime();
   });
 
   return (
