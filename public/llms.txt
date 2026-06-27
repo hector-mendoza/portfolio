@@ -1,0 +1,48 @@
+# Hector Mendoza
+
+> Senior Software Engineer & Lead Developer based in Morelia, Mexico. Head of Web Integrations at UrVenue. 8+ years crafting performant, accessible, and visually polished web experiences.
+
+## About
+
+Hector Mendoza is a Senior Web Developer and Lead Developer with 8+ years of experience. Currently serving as Head of Web Integrations at UrVenue, where he leads web integrations strategy and execution for enterprise venue technology clients. Previously Lead Developer and Office Manager at Once Interactive Inc., collaborating with 50+ international companies across e-commerce, hospitality, and corporate sectors. Holds a Master's degree in Computer Science (Mobile App Development) from Universidad Vasco de Quiroga.
+
+## Experience
+
+- Head of Web Integrations — UrVenue (2024–Present), Morelia, Mexico
+- Web Services Developer — UrVenue (2023–2024), Morelia, Mexico
+- Office Manager & Lead Developer — Once Interactive Inc. (2019–2023), Remote
+- Senior Web Developer — Once Interactive Inc. (2017–2023), Remote
+- Web Developer — COPARMEX Michoacán (2017), Morelia, Mexico
+
+## Skills
+
+- **Frontend:** React, Next.js, TypeScript, Tailwind CSS, Three.js, GSAP
+- **CMS & E-Commerce:** WordPress, WooCommerce, Shopify, Headless CMS
+- **Design & UX:** Figma, Responsive Design, Pixel-Perfect implementation
+- **Backend & Integrations:** Node.js, Firebase, APIs, Pipedream, SEO
+
+## Projects
+
+- [Cantera Diez Hotel](https://canteradiezhotel.com) — Hotel & Hospitality website built with AngularJS & Firebase, featuring i18n bilingual support and room showcasing (2025)
+- [Vibe Theme](https://vibetheme.hectormendoza.me) — VS Code & Cursor theme collection, 8 premium dark themes, MIT licensed, free forever (2026)
+- [Astes](https://astes.com.mx) — Corporate website built with WordPress, SEO-optimized (2024)
+- [Mojito Cocktails](https://gsap-cocktails-hm.vercel.app) — GSAP animation showcase with scroll-driven animations and 3D transforms (2026)
+- [Our Wedding](http://wedding.hectormendoza.me) — Personal wedding website with RSVP management and countdown timer (2025)
+
+## Education
+
+- Master's Degree in Computer Science, Specialty in Mobile App Development — Universidad Vasco de Quiroga (2018–2020)
+- Engineer's Degree in Computer Science — Universidad Vasco de Quiroga (2013–2017)
+
+## Contact
+
+- Email: hey@hectormendoza.me
+- Location: Morelia, Mexico (UTC−6, 19.70° N · 101.19° W)
+- Website: https://hectormendoza.com
+- GitHub: https://github.com/hector-mendoza
+- LinkedIn: https://www.linkedin.com/in/hector-mendoza-m/
+- Threads: https://www.threads.com/@hectormendozax2
+
+## Availability
+
+Open to new projects and collaborations. Specializes in performant, accessible web experiences for hospitality, e-commerce, and corporate clients.
