@@ -1,18 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/components/theme-provider";
+import { MoonIcon, SunIcon } from "@animateicons/react/lucide";
 
 const navLinks = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
+  { label: "Home",       href: "#hero" },
+  { label: "About",      href: "#about" },
+  { label: "Projects",   href: "#projects" },
   { label: "Experience", href: "#experience" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact",    href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const themeIconRef = useRef(null);
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+
+  const toggleTheme = (e) => {
+    const next = isDark ? "light" : "dark";
+    const x = e.clientX;
+    const y = e.clientY;
+    document.documentElement.style.setProperty("--vt-x", `${x}px`);
+    document.documentElement.style.setProperty("--vt-y", `${y}px`);
+
+    if (!document.startViewTransition) {
+      setTheme(next);
+      return;
+    }
+    document.startViewTransition(() => setTheme(next));
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,22 +46,21 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border"
-          : "bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-background/75 backdrop-blur-xl border-b border-border"
+            : "bg-transparent"
+        }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          {/* Logo */}
           <a href="#hero" className="group flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 transition-transform group-hover:rotate-12">
-              <img
-                src="/logos/logo.svg"
-                alt="HM logo"
-                className="h-10 w-10"
-              />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 border border-primary/30 transition-all group-hover:bg-primary/30">
+              <img src="/logos/logo.svg" alt="HM logo" className="h-10 w-10" />
             </div>
           </a>
 
+          {/* Desktop links */}
           <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
               <a
@@ -50,15 +69,30 @@ export default function Navbar() {
                 className="group relative px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 <span className="relative z-10">{link.label}</span>
-                <span className="absolute inset-0 rounded-lg bg-green-500/5 opacity-0 transition-opacity group-hover:opacity-100" />
+                <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
               </a>
             ))}
           </div>
 
+          {/* CTA + theme toggle + hamburger */}
           <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              onMouseEnter={() => themeIconRef.current?.startAnimation()}
+              onMouseLeave={() => themeIconRef.current?.stopAnimation()}
+              aria-label="Toggle theme"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/50 text-muted-foreground transition-all hover:border-primary/40 hover:text-primary"
+            >
+              {isDark ? (
+                <SunIcon ref={themeIconRef} size={16} color="currentColor" />
+              ) : (
+                <MoonIcon ref={themeIconRef} size={16} color="currentColor" />
+              )}
+            </button>
             <a
               href="#contact"
-              className="hidden rounded-full bg-green-500 px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-green-500/25 md:block"
+              className="hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/30 md:block"
             >
               {"Let's Talk"}
             </a>
@@ -69,7 +103,7 @@ export default function Navbar() {
               aria-label="Toggle menu"
             >
               <motion.span
-                animate={mobileOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
+                animate={mobileOpen ? { rotate: 45, y: 7.5 }  : { rotate: 0, y: 0 }}
                 transition={{ duration: 0.3 }}
                 className="block h-0.5 w-6 bg-foreground"
               />
@@ -88,6 +122,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -103,8 +138,8 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="text-2xl font-semibold text-foreground transition-colors hover:text-green-500"
+                transition={{ delay: i * 0.08 }}
+                className="text-2xl font-semibold text-foreground transition-colors hover:text-primary"
               >
                 {link.label}
               </motion.a>

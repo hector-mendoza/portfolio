@@ -16,7 +16,7 @@ export default function ScrollTextReveal() {
     );
 
   return (
-    <section ref={containerRef} className="relative py-40 overflow-hidden">
+    <section ref={containerRef} className="relative py-20 md:py-40 overflow-hidden bg-background/90">
       {/* Large masked background text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.03]">
         <span className="text-[20vw] font-bold leading-none text-foreground whitespace-nowrap">
