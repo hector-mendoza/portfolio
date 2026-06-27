@@ -9,8 +9,8 @@ const projects = [
     title: "Cantera Diez Hotel",
     subtitle: "Hotel & Hospitality",
     description:
-      "Elegant digital presence for a boutique hotel in Morelia. Designed for conversions — rich imagery, room showcasing, and a seamless contact experience.",
-    tags: ["Next.js", "Tailwind CSS", "Design", "SEO"],
+      "Elegant digital presence for a boutique hotel in Morelia. Built with AngularJS & Firebase, featuring i18n bilingual support, room showcasing, and a seamless contact experience.",
+    tags: ["AngularJS", "Firebase", "i18n", "SEO"],
     url: "https://canteradiezhotel.com",
     year: "2025",
     category: "Hospitality",
