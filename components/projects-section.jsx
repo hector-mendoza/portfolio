@@ -1,179 +1,291 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo } from "react";
+import VibeEasterEgg from "./vibe-easter-egg";
 
 const projects = [
   {
-    title: "E-Commerce Platform",
-    subtitle: "Shopify & Custom Integration",
+    title: "Cantera Diez Hotel",
+    subtitle: "Hotel & Hospitality",
     description:
-      "A full-featured e-commerce solution built on Shopify with custom theme development, advanced filtering, and seamless checkout flow. Increased client revenue by 40%.",
-    tags: ["Shopify", "Liquid", "JavaScript", "CSS"],
-    image: "/images/project-ecommerce.jpg",
-    year: "2023",
-    category: "E-Commerce",
+      "Elegant digital presence for a boutique hotel in Morelia. Designed for conversions — rich imagery, room showcasing, and a seamless contact experience.",
+    tags: ["Next.js", "Tailwind CSS", "Design", "SEO"],
+    url: "https://canteradiezhotel.com",
+    year: "2025",
+    category: "Hospitality",
+    accent: "#D97706",
+    gradient: "from-amber-950 via-stone-900 to-amber-900/60",
+    preview: {
+      bar: "canteradiezhotel.com",
+      lines: ["85%", "100%", "70%", "55%"],
+      btnColor: "#D97706",
+    },
   },
   {
-    title: "Corporate Website Redesign",
-    subtitle: "Next.js & Headless CMS",
+    title: "Vibe Theme",
+    subtitle: "VS Code Theme Collection",
     description:
-      "Complete redesign and rebuild of a Fortune 500 company's web presence. Implemented headless CMS architecture with Next.js for blazing-fast performance.",
-    tags: ["Next.js", "TypeScript", "Tailwind", "Sanity"],
-    image: "/images/project-corporate.jpg",
-    year: "2022",
+      "8 premium dark themes for VS Code & Cursor. Built from scratch with deliberate contrast ratios and full TextMate grammar coverage. MIT licensed, free forever.",
+    tags: ["Design", "VS Code", "Color Theory", "Branding"],
+    url: "https://vibetheme.hectormendoza.me/",
+    year: "2026",
+    category: "Design Tool",
+    accent: "#8B5CF6",
+    gradient: "from-violet-950 via-purple-900 to-violet-900/60",
+    preview: {
+      bar: "vibetheme.hectormendoza.me",
+      lines: ["90%", "75%", "85%", "60%"],
+      btnColor: "#8B5CF6",
+    },
+  },
+  {
+    title: "Astes",
+    subtitle: "Corporate Website",
+    description:
+      "Clean, conversion-focused corporate site for a professional services company. Fast-loading, SEO-optimized, and built to generate qualified leads.",
+    tags: ["WordPress", "PHP", "SEO", "UI Design"],
+    url: "https://astes.com.mx/",
+    year: "2024",
     category: "Corporate",
+    accent: "#0EA5E9",
+    gradient: "from-sky-950 via-slate-900 to-cyan-900/60",
+    preview: {
+      bar: "astes.com.mx",
+      lines: ["100%", "80%", "65%", "90%"],
+      btnColor: "#0EA5E9",
+    },
   },
   {
-    title: "Analytics Dashboard",
-    subtitle: "React & Real-time Data",
+    title: "Mojito Cocktails",
+    subtitle: "GSAP Animation Showcase",
     description:
-      "Interactive analytics dashboard with real-time data visualization, custom charting, and comprehensive reporting tools for a SaaS product.",
-    tags: ["React", "D3.js", "Node.js", "PostgreSQL"],
-    image: "/images/project-webapp.jpg",
-    year: "2022",
-    category: "Web App",
+      "An immersive cocktail experience featuring scroll-driven animations, 3D perspective transforms, and silky liquid physics — all in the browser.",
+    tags: ["GSAP", "Next.js", "CSS Animations", "WebGL"],
+    url: "https://gsap-cocktails-hm.vercel.app/",
+    year: "2026",
+    category: "Creative Dev",
+    accent: "#10B981",
+    gradient: "from-emerald-950 via-green-900 to-teal-900/60",
+    preview: {
+      bar: "gsap-cocktails-hm.vercel.app",
+      lines: ["75%", "95%", "80%", "70%"],
+      btnColor: "#10B981",
+    },
   },
   {
-    title: "Fitness Mobile App",
-    subtitle: "React Native & Cloud",
+    title: "Our Wedding",
+    subtitle: "Personal Project · ♡",
     description:
-      "Cross-platform mobile application for fitness tracking with workout planning, progress visualization, and social features.",
-    tags: ["React Native", "Firebase", "TypeScript", "Expo"],
-    image: "/images/project-mobile.jpg",
-    year: "2021",
-    category: "Mobile",
+      "A personal milestone: a custom wedding website built with love. RSVP management, countdown timer, event details, and a touch of magic for the big day.",
+    tags: ["Next.js", "Tailwind CSS", "Design", "RSVP"],
+    url: "http://wedding.hectormendoza.me/",
+    year: "2025",
+    category: "Personal",
+    accent: "#F43F5E",
+    gradient: "from-rose-950 via-pink-900 to-rose-900/60",
+    preview: {
+      bar: "wedding.hectormendoza.me",
+      lines: ["80%", "65%", "90%", "55%"],
+      btnColor: "#F43F5E",
+    },
   },
 ];
 
-function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
+const FILTERS = [
+  { label: "Recent",      value: "recent" },
+  { label: "All",         value: "all" },
+  { label: "Hospitality", value: "Hospitality" },
+  { label: "Design Tool", value: "Design Tool" },
+  { label: "Corporate",   value: "Corporate" },
+  { label: "Creative Dev",value: "Creative Dev" },
+  { label: "Personal",    value: "Personal" },
+];
 
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
+function ProjectPreview({ project, hovered }) {
+  const isVibe = project.title === "Vibe Theme";
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.3, 1, 1.1]);
+  return (
+    <div className={`relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-gradient-to-br ${project.gradient}`}>
+      {/* Vibe Theme rainbow overlay */}
+      {isVibe && (
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-500"
+          style={{ opacity: hovered ? 1 : 0 }}
+        >
+          <div className="vibe-rainbow-glow absolute inset-0" />
+        </div>
+      )}
+
+      {/* Mock browser chrome */}
+      <div className="absolute inset-3 rounded-xl overflow-hidden border border-white/10 bg-black/30 backdrop-blur-sm flex flex-col">
+        {/* Title bar */}
+        <div className="flex items-center gap-2 border-b border-white/10 px-4 py-2.5 shrink-0">
+          <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
+          <div className="mx-3 flex-1 rounded-full bg-white/10 px-3 py-1">
+            <span className="font-mono text-[10px] text-white/40 truncate block">{project.preview.bar}</span>
+          </div>
+        </div>
+        {/* Page skeleton */}
+        <div className="flex-1 p-4 space-y-2.5">
+          <div className="h-3 rounded-full bg-white/25" style={{ width: project.preview.lines[0] }} />
+          <div className="h-2 rounded-full bg-white/12" style={{ width: project.preview.lines[1] }} />
+          <div className="h-2 rounded-full bg-white/12" style={{ width: project.preview.lines[2] }} />
+          <div className="mt-4 flex gap-2">
+            <div className="h-7 w-24 rounded-lg" style={{ background: project.accent + "90" }} />
+            <div className="h-7 w-16 rounded-lg bg-white/10" />
+          </div>
+          <div className="mt-2 h-2 rounded-full bg-white/10" style={{ width: project.preview.lines[3] }} />
+        </div>
+      </div>
+
+      {/* Accent glow */}
+      <div
+        className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-24 w-48 rounded-full blur-2xl opacity-50 pointer-events-none transition-all duration-500"
+        style={{
+          background: isVibe && hovered
+            ? "linear-gradient(90deg, #007acc, #e879f9, #FF6B35, #A3E635, #8B5CF6, #2DD4BF)"
+            : project.accent,
+        }}
+      />
+    </div>
+  );
+}
+
+function ProjectCard({ project, index, onVibeHover }) {
+  const [hovered, setHovered] = useState(false);
+  const isVibe = project.title === "Vibe Theme";
+
+  const handleEnter = () => {
+    setHovered(true);
+    onVibeHover?.(true);
+  };
+  const handleLeave = () => {
+    setHovered(false);
+    onVibeHover?.(false);
+  };
 
   return (
     <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 80 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      layout
+      initial={{ opacity: 0, y: 60 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 30, scale: 0.97 }}
+      transition={{ duration: 0.5, delay: index * 0.07 }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
       className="group"
     >
-      <div className="overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5">
-        {/* Image container with mask effect */}
-        <div className="relative aspect-[16/10] overflow-hidden">
-          <motion.div style={{ scale: imageScale }} className="h-full w-full">
-            <Image
-              src={project.image || "/placeholder.svg"}
-              alt={project.title}
-              fill
-              className="object-cover transition-all duration-700"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </motion.div>
+      <div
+        className="overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:shadow-2xl"
+        style={{
+          borderColor: hovered ? project.accent + "44" : undefined,
+          boxShadow: hovered ? `0 24px 60px ${project.accent}18` : undefined,
+        }}
+      >
+        {/* no border ring for Vibe — easter egg handles the magic */}
 
-          {/* Overlay */}
+        {/* Preview */}
+        <div className="relative">
+          <ProjectPreview project={project} hovered={hovered} />
+
+          {/* Hover overlay */}
           <motion.div
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            className="absolute inset-0 bg-background/60 backdrop-blur-sm flex items-center justify-center"
+            animate={{ opacity: hovered ? 1 : 0 }}
+            className="absolute inset-0 flex items-center justify-center"
+            style={{
+              background: `radial-gradient(ellipse at center, ${project.accent}30 0%, rgba(0,0,0,0.55) 100%)`,
+              backdropFilter: "blur(4px)",
+            }}
           >
-            <motion.div
-              animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-              className="flex items-center gap-3 rounded-full border border-primary bg-primary/10 px-6 py-3 text-sm font-semibold text-primary"
+            <motion.a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              animate={{ scale: hovered ? 1 : 0.8, opacity: hovered ? 1 : 0 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-2.5 rounded-full px-7 py-3 text-sm font-bold text-white"
+              style={{
+                background: project.accent,
+                boxShadow: `0 8px 30px ${project.accent}70, 0 0 0 1px ${project.accent}40`,
+              }}
+              onClick={(e) => e.stopPropagation()}
             >
-              View Project
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-                />
+              Visit Site
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
               </svg>
-            </motion.div>
+            </motion.a>
           </motion.div>
 
           {/* Category badge */}
-          <div className="absolute top-4 left-4 z-10">
-            <span className="rounded-full bg-background/80 backdrop-blur-sm px-3 py-1.5 font-mono text-xs text-foreground">
+          <div className="absolute top-6 left-6 z-10">
+            <span className="rounded-full bg-background/70 backdrop-blur-sm px-3 py-1.5 font-mono text-xs text-foreground/80 border border-white/10">
               {project.category}
             </span>
           </div>
-
-          {/* Year badge */}
-          <div className="absolute top-4 right-4 z-10">
-            <span className="font-mono text-xs text-foreground/60">
-              {project.year}
-            </span>
+          <div className="absolute top-6 right-6 z-10">
+            <span className="font-mono text-xs text-white/50">{project.year}</span>
           </div>
         </div>
 
         {/* Content */}
-        <motion.div style={{ y: useTransform(y, (v) => v * 0.1) }} className="p-6 sm:p-8">
-          <h3 className="mb-1 text-xl font-bold text-foreground sm:text-2xl">
-            {project.title}
-          </h3>
-          <p className="mb-3 text-sm font-medium text-primary">
-            {project.subtitle}
-          </p>
-          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
-            {project.description}
-          </p>
+        <div className="p-6 sm:p-8">
+          <h3 className="mb-1 text-xl font-bold text-foreground sm:text-2xl">{project.title}</h3>
+          <p className="mb-3 text-sm font-semibold" style={{ color: project.accent }}>{project.subtitle}</p>
+          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors group-hover:border-primary/30 group-hover:text-primary"
+                className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors group-hover:border-primary/25 group-hover:text-primary/80"
               >
                 {tag}
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );
 }
 
 export default function ProjectsSection() {
-  const sectionRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState("recent");
+  const [vibeHovered, setVibeHovered] = useState(false);
+
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === "recent") {
+      return [...projects].sort((a, b) => parseInt(b.year) - parseInt(a.year));
+    }
+    if (activeFilter === "all") {
+      return projects;
+    }
+    return projects.filter((p) => p.category === activeFilter);
+  }, [activeFilter]);
 
   return (
-    <section id="projects" ref={sectionRef} className="relative py-32">
-      {/* Background accent */}
+    <section id="projects" className="relative py-16 md:py-32 bg-background/90">
+      <VibeEasterEgg active={vibeHovered} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
         <div className="absolute bottom-1/4 -right-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-20 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"
+          className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"
         >
           <div>
             <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-              03 / Projects
+              02 / Projects
             </span>
             <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               <span className="text-balance block">
@@ -183,16 +295,54 @@ export default function ProjectsSection() {
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-            {"A selection of projects I've built for clients across various industries. Each one crafted with attention to detail and performance."}
+            {"Real projects. Real clients. Crafted with care — from hotel websites to animated cocktail showcases."}
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid gap-8 md:grid-cols-2">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
+        {/* Filter pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mb-10 flex flex-wrap gap-2"
+        >
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              type="button"
+              onClick={() => setActiveFilter(f.value)}
+              className={`rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
+                activeFilter === f.value
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                  : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
+              }`}
+            >
+              {f.label}
+            </button>
           ))}
-        </div>
+        </motion.div>
+
+        {/* Grid */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="grid gap-8 md:grid-cols-2"
+          >
+            {filteredProjects.map((project, i) => (
+              <ProjectCard
+                key={project.title}
+                project={project}
+                index={i}
+                onVibeHover={project.title === "Vibe Theme" ? setVibeHovered : undefined}
+              />
+            ))}
+          </motion.div>
+        </AnimatePresence>
 
         {/* CTA */}
         <motion.div
@@ -201,26 +351,14 @@ export default function ProjectsSection() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <p className="mb-4 text-sm text-muted-foreground">
-            Want to see more of my work?
-          </p>
+          <p className="mb-4 text-sm text-muted-foreground">Have a project in mind?</p>
           <a
             href="#contact"
             className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
           >
-            {"Let's discuss your project"}
-            <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
+            {"Let's build it together"}
+            <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </a>
         </motion.div>

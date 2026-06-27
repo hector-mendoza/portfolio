@@ -2,6 +2,7 @@ import React from "react"
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -55,14 +56,16 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <ErrorBoundary>
-          <ToasterProvider />
-          {children}
-        </ErrorBoundary>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <ErrorBoundary>
+            <ToasterProvider />
+            {children}
+          </ErrorBoundary>
+        </ThemeProvider>
       </body>
     </html>
   );

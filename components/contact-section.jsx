@@ -6,7 +6,7 @@ import ContactForm from "./contact-form";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative py-32">
+    <section id="contact" className="relative py-16 md:py-32 bg-background/90">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
       </div>
@@ -20,7 +20,7 @@ export default function ContactSection() {
           className="mb-20"
         >
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-            03 / Contact
+            05 / Contact
           </span>
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance block">

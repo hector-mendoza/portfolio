@@ -1,178 +1,218 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
+import { MapPinIcon, MailIcon } from "@animateicons/react/lucide";
 
-const Scene3D = dynamic(() => import("./scene-3d"), { 
-  ssr: false,
-  loading: () => (
-    <div className="h-full w-full bg-gradient-to-b from-background via-background/95 to-background" />
-  ),
-});
-
-const charVariants = {
-  hidden: { opacity: 0, y: 80, rotateX: 90 },
-  visible: (i) => ({
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: {
-      delay: 0.8 + i * 0.04,
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
 };
 
-function AnimatedText({ text, className, startDelay = 0 }) {
-  const chars = text.split("");
-  return (
-    <span className={className} aria-label={text}>
-      {chars.map((char, i) => (
-        <motion.span
-          key={`${char}-${i}`}
-          custom={i + startDelay}
-          variants={charVariants}
-          initial="hidden"
-          animate="visible"
-          className="inline-block"
-          style={{ perspective: "500px" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
+const card = {
+  hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const techStack = ["Next.js", "React", "TypeScript", "WordPress", "Shopify", "Figma"];
 
 export default function HeroSection() {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
-  const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
+  const locationIconRef = useRef(null);
+  const ctaIconRef = useRef(null);
 
   return (
     <section
       id="hero"
-      ref={sectionRef}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-4 py-20 md:py-28"
     >
-      <div className="fixed inset-0 z-0">
-        <Scene3D />
-      </div>
-
-      <div className="absolute inset-0 bg-background/50 z-[1] pointer-events-none" />
-
       <motion.div
-        style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
-        className="relative z-10 mx-auto max-w-7xl px-6 text-center"
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3"
       >
+        {/* ── Name / Identity — tall left card (2×2) ── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-5 py-2.5"
+          variants={card}
+          className="col-span-2 row-span-2 rounded-3xl border border-border bg-card p-8 md:p-10 flex flex-col justify-between"
+          style={{ minHeight: "340px" }}
         >
-          <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-          <span className="font-mono text-xs text-primary">
-            Available for new projects
-          </span>
+          <div>
+            <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
+              Software Engineer
+            </span>
+            <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+              Hector
+              <br />
+              <span className="text-gradient">Mendoza</span>
+            </h1>
+          </div>
+
+          <div>
+            <p className="mb-6 text-sm leading-relaxed text-muted-foreground md:text-base">
+              Head of Web Integrations at{" "}
+              <span className="font-medium text-foreground">UrVenue</span>
+              {" · "}Lead Developer · 8+ years crafting performant web
+              experiences.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground transition-all hover:opacity-90 hover:shadow-lg hover:shadow-primary/30 md:text-sm"
+              >
+                View Work →
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-xs font-medium text-foreground transition-colors hover:border-primary/40 md:text-sm"
+              >
+                Contact
+              </a>
+            </div>
+          </div>
         </motion.div>
 
-        <h1 className="mb-8 text-5xl font-bold leading-none tracking-tight text-foreground sm:text-7xl lg:text-9xl">
-          <span className="block overflow-hidden">
-            <AnimatedText text="Crafting" className="text-foreground" />
-            {" "}
-            <AnimatedText text="Digital" className="text-gradient" startDelay={8} />
-          </span>
-          <span className="block overflow-hidden mt-2">
-            <AnimatedText text="Experiences" className="text-foreground" startDelay={16} />
-          </span>
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.2, delay: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-        >
-          {"Senior Software Engineer with 8+ years building performant web applications. Specializing in "}
-          <span className="text-foreground font-medium">Next.js</span>
-          {", "}
-          <span className="text-foreground font-medium">React</span>
-          {", and modern web technologies."}
-        </motion.p>
-
+        {/* ── Available (1×1) ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1.9 }}
-          className="flex flex-col items-center justify-center gap-4 sm:flex-row"
+          variants={card}
+          className="col-span-1 rounded-3xl border border-primary/25 bg-primary/10 p-5 flex flex-col"
+          style={{ minHeight: "160px" }}
         >
-          <motion.a
-            href="#projects"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="group flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-semibold text-primary-foreground transition-all hover:shadow-xl hover:shadow-primary/25"
-          >
-            View My Work
+          <div className="flex items-center gap-2 mb-auto">
+            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-widest text-primary">
+              Available
+            </span>
+          </div>
+
+          {/* Big pulsing status ring */}
+          <div className="flex items-center justify-center py-3">
+            <div className="relative flex items-center justify-center">
+              <span className="absolute h-14 w-14 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
+              <span className="absolute h-10 w-10 rounded-full bg-primary/15 animate-ping" style={{ animationDuration: "1.8s", animationDelay: "0.3s" }} />
+              <span className="relative h-6 w-6 rounded-full bg-primary/60 shadow-lg shadow-primary/40" />
+            </div>
+          </div>
+
+          <p className="mt-auto text-xs leading-snug text-muted-foreground">
+            Open to new projects &amp; collaborations
+          </p>
+        </motion.div>
+
+        {/* ── Location (1×1) ── */}
+        <motion.div
+          variants={card}
+          className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center"
+          style={{ minHeight: "160px" }}
+          onMouseEnter={() => locationIconRef.current?.startAnimation()}
+          onMouseLeave={() => locationIconRef.current?.stopAnimation()}
+        >
+          <MapPinIcon ref={locationIconRef} size={36} color="hsl(var(--primary))" />
+          <div>
+            <p className="text-base font-bold text-foreground">Morelia, Mexico</p>
+            <p className="text-xs text-muted-foreground">UTC−6</p>
+            <p className="mt-1 font-mono text-[10px] text-muted-foreground/50 tracking-wide">19.70° N · 101.19° W</p>
+          </div>
+        </motion.div>
+
+        {/* ── Stats (2×1) ── */}
+        <motion.div
+          variants={card}
+          className="col-span-2 rounded-3xl border border-border bg-card p-6 grid grid-cols-3 gap-4 items-center"
+        >
+          {[
+            { value: "8+", label: "Years Exp." },
+            { value: "20+", label: "Projects" },
+            { value: "50+", label: "Clients" },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <p className="text-3xl font-bold text-primary md:text-4xl lg:text-5xl">{s.value}</p>
+              <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* ── Featured project: Vibe Theme (2×1) ── */}
+        <motion.a
+          variants={card}
+          href="https://vibetheme.hectormendoza.me"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
+          style={{ minHeight: "180px" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-purple-900 to-indigo-950 transition-all duration-500 group-hover:from-violet-900 group-hover:via-purple-800 group-hover:to-indigo-900" />
+          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_hsl(280_90%_65%/0.4),transparent_60%)]" />
+          <div className="relative flex items-start justify-between">
+            <span className="font-mono text-xs uppercase tracking-widest text-purple-300/80">
+              Featured Project
+            </span>
             <svg
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
+              className="h-4 w-4 text-purple-300/60 transition-colors group-hover:text-purple-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
               strokeWidth={2}
-              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
               />
             </svg>
-          </motion.a>
-          <motion.a
-            href="#about"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 rounded-full border border-border px-8 py-4 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5"
-          >
-            About Me
-          </motion.a>
-        </motion.div>
+          </div>
+          <div className="relative">
+            <p className="text-2xl font-bold text-white md:text-3xl">Vibe Theme</p>
+            <p className="text-xs text-purple-300/70 mt-1">
+              VS Code Theme Collection · 8 dark themes · MIT licensed
+            </p>
+          </div>
+        </motion.a>
 
+        {/* ── Tech Stack (1×1) ── */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 1 }}
-          className="mt-24"
+          variants={card}
+          className="col-span-1 rounded-3xl border border-border bg-card p-5"
+          style={{ minHeight: "160px" }}
         >
-          <a
-            href="#about"
-            className="group inline-flex flex-col items-center gap-2 text-muted-foreground transition-colors hover:text-primary"
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.3em]">
-              Scroll
-            </span>
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </motion.div>
-          </a>
+          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            Stack
+          </p>
+          <div className="flex flex-wrap gap-1.5">
+            {techStack.map((t) => (
+              <span
+                key={t}
+                className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+              >
+                {t}
+              </span>
+            ))}
+          </div>
         </motion.div>
-      </motion.div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background to-transparent z-10" />
+        {/* ── CTA (1×1) ── */}
+        <motion.a
+          variants={card}
+          href="#contact"
+          className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center group hover:border-primary/40 hover:bg-primary/5 transition-all"
+          style={{ minHeight: "160px" }}
+          onMouseEnter={() => ctaIconRef.current?.startAnimation()}
+          onMouseLeave={() => ctaIconRef.current?.stopAnimation()}
+        >
+          <MailIcon ref={ctaIconRef} size={36} color="hsl(var(--primary))" />
+          <div>
+            <p className="text-sm font-bold text-foreground transition-colors group-hover:text-primary md:text-base">
+              Let&apos;s build something great
+            </p>
+            <p className="mt-1 font-mono text-xs text-primary">Get in touch →</p>
+          </div>
+        </motion.a>
+      </motion.div>
     </section>
   );
 }
