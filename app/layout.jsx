@@ -54,9 +54,33 @@ export const viewport = {
   initialScale: 1,
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Hector Mendoza",
+  jobTitle: "Head of Web Integrations",
+  description: "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
+  url: "https://hectormendoza.com",
+  email: "hey@hectormendoza.me",
+  sameAs: [
+    "https://github.com/hector-mendoza",
+    "https://www.linkedin.com/in/hector-mendoza-m/",
+    "https://www.threads.com/@hectormendozax2",
+  ],
+  address: { "@type": "PostalAddress", addressLocality: "Morelia", addressCountry: "MX" },
+  knowsAbout: ["React", "Next.js", "TypeScript", "WordPress", "Shopify", "Node.js", "Tailwind CSS", "Figma"],
+  worksFor: { "@type": "Organization", name: "UrVenue" },
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
