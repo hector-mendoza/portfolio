@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPinIcon, MailIcon } from "@animateicons/react/lucide";
+import GeometryWarsGame from "./geometry-wars-game";
 
 const container = {
   hidden: {},
@@ -24,6 +25,7 @@ const techStack = ["Next.js", "React", "TypeScript", "WordPress", "Shopify", "Fi
 export default function HeroSection() {
   const locationIconRef = useRef(null);
   const ctaIconRef = useRef(null);
+  const [gameOpen, setGameOpen] = useState(false);
 
   return (
     <section
@@ -39,6 +41,7 @@ export default function HeroSection() {
         {/* ── Name / Identity — tall left card (2×2) ── */}
         <motion.div
           variants={card}
+          data-game-target
           className="col-span-2 row-span-2 rounded-3xl border border-border bg-card p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
@@ -80,6 +83,7 @@ export default function HeroSection() {
         {/* ── Available (1×1) ── */}
         <motion.div
           variants={card}
+          data-game-target
           className="col-span-1 rounded-3xl border border-primary/25 bg-primary/10 p-5 flex flex-col"
           style={{ minHeight: "160px" }}
         >
@@ -107,6 +111,7 @@ export default function HeroSection() {
         {/* ── Location (1×1) ── */}
         <motion.div
           variants={card}
+          data-game-target
           className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center"
           style={{ minHeight: "160px" }}
           onMouseEnter={() => locationIconRef.current?.startAnimation()}
@@ -123,6 +128,7 @@ export default function HeroSection() {
         {/* ── Stats (2×1) ── */}
         <motion.div
           variants={card}
+          data-game-target
           className="col-span-2 rounded-3xl border border-border bg-card p-6 grid grid-cols-3 gap-4 items-center"
         >
           {[
@@ -140,6 +146,7 @@ export default function HeroSection() {
         {/* ── Featured project: Vibe Theme (2×1) ── */}
         <motion.a
           variants={card}
+          data-game-target
           href="https://vibetheme.hectormendoza.me"
           target="_blank"
           rel="noopener noreferrer"
@@ -177,9 +184,24 @@ export default function HeroSection() {
         {/* ── Tech Stack (1×1) ── */}
         <motion.div
           variants={card}
-          className="col-span-1 rounded-3xl border border-border bg-card p-5"
+          data-game-target
+          className="relative col-span-1 rounded-3xl border border-border bg-card p-5"
           style={{ minHeight: "160px" }}
         >
+          <button
+            onClick={() => setGameOpen(true)}
+            aria-label="Play a hidden mini-game"
+            title="Psst — play a mini-game"
+            className="group absolute right-3 top-3 flex items-center justify-center"
+          >
+            <span className="absolute h-9 w-9 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/25 bg-primary/10 text-primary transition-all group-hover:scale-110 group-hover:border-primary/50 group-hover:bg-primary/20">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4m-2-2v4m8-3h.01M17 13h.01M7.5 7h9A4.5 4.5 0 0121 11.5v3a3 3 0 01-5.6 1.5l-.9-1.5H9.5l-.9 1.5A3 3 0 013 14.5v-3A4.5 4.5 0 017.5 7z" />
+              </svg>
+            </span>
+          </button>
+
           <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Stack
           </p>
@@ -198,6 +220,7 @@ export default function HeroSection() {
         {/* ── CTA (1×1) ── */}
         <motion.a
           variants={card}
+          data-game-target
           href="#contact"
           className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center group hover:border-primary/40 hover:bg-primary/5 transition-all"
           style={{ minHeight: "160px" }}
@@ -213,6 +236,8 @@ export default function HeroSection() {
           </div>
         </motion.a>
       </motion.div>
+
+      <GeometryWarsGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </section>
   );
 }

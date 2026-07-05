@@ -74,6 +74,40 @@ const projects = [
     },
   },
   {
+    title: "Milestone Massage Therapy",
+    subtitle: "Wellness & Therapeutic Massage",
+    description:
+      "Therapeutic and prenatal massage studio in Spanish Fork, Utah. Built on WordPress with Vagaro booking integration, mobile in-home service info, and a membership program.",
+    tags: ["WordPress", "PHP", "Booking", "SEO"],
+    url: "https://milestonemassage.com/",
+    year: "2025",
+    category: "Wellness",
+    accent: "#E8844C",
+    gradient: "from-orange-950 via-stone-900 to-amber-900/60",
+    preview: {
+      bar: "milestonemassage.com",
+      lines: ["85%", "70%", "60%", "90%"],
+      btnColor: "#E8844C",
+    },
+  },
+  {
+    title: "Michoacán Auto",
+    subtitle: "Tire Shop & Auto Repair",
+    description:
+      "Bilingual WordPress site for a family-owned tire shop and repair facility in Las Vegas, with appointment booking, financing details, and a tire brand directory.",
+    tags: ["WordPress", "PHP", "Bilingual", "SEO"],
+    url: "https://michoacanautolv.com/",
+    year: "2025",
+    category: "Automotive",
+    accent: "#DC2626",
+    gradient: "from-red-950 via-neutral-900 to-red-900/60",
+    preview: {
+      bar: "michoacanautolv.com",
+      lines: ["90%", "75%", "65%", "80%"],
+      btnColor: "#DC2626",
+    },
+  },
+  {
     title: "Our Wedding",
     subtitle: "Personal Project · ♡",
     description:
@@ -99,6 +133,8 @@ const FILTERS = [
   { label: "Design Tool", value: "Design Tool" },
   { label: "Corporate",   value: "Corporate" },
   { label: "Creative Dev",value: "Creative Dev" },
+  { label: "Wellness",    value: "Wellness" },
+  { label: "Automotive",  value: "Automotive" },
   { label: "Personal",    value: "Personal" },
 ];
 
