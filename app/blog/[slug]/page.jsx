@@ -1,6 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import BlogPortableText from "@/components/blog-portable-text";
+import BlogBackLink from "@/components/blog-back-link";
+import BlogShare from "@/components/blog-share";
 import {
   formatPostDate,
   getPostAccent,
@@ -63,15 +64,7 @@ export default async function BlogPostPage({ params }) {
       </div>
 
       <article className="relative mx-auto max-w-3xl px-6">
-        <Link
-          href="/blog"
-          className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
-        >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-          </svg>
-          Back to blog
-        </Link>
+        <BlogBackLink />
 
         <header className="mb-10">
           <div className="mb-4 flex flex-wrap items-center gap-3">
@@ -107,6 +100,12 @@ export default async function BlogPostPage({ params }) {
               ))}
             </div>
           ) : null}
+
+          <BlogShare
+            title={post.title}
+            url={`https://hectormendoza.com/blog/${post.slug}`}
+            description={post.description}
+          />
         </header>
 
         {coverUrl ? (

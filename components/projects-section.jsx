@@ -31,12 +31,12 @@ const projects = [
     url: "https://vibetheme.hectormendoza.me/",
     year: "2026",
     category: "Design Tool",
-    accent: "#157A55",
-    gradient: "from-emerald-950 via-green-900 to-emerald-900/60",
+    accent: "#D946EF",
+    gradient: "from-violet-950 via-fuchsia-950 to-purple-900/60",
     preview: {
       bar: "vibetheme.hectormendoza.me",
       lines: ["90%", "75%", "85%", "60%"],
-      btnColor: "#157A55",
+      btnColor: "#D946EF",
     },
   },
   {
@@ -182,7 +182,7 @@ function ProjectPreview({ project, hovered }) {
         className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-24 w-48 rounded-full blur-2xl opacity-50 pointer-events-none transition-all duration-500"
         style={{
           background: isVibe && hovered
-            ? "linear-gradient(90deg, #065F46, #157A55, #A3E635, #10B981, #2DD4BF, #84CC16)"
+            ? "linear-gradient(90deg, #4C1D95, #7C3AED, #D946EF, #EC4899, #22D3EE, #818CF8)"
             : project.accent,
         }}
       />
@@ -321,7 +321,7 @@ export default function ProjectsSection() {
         >
           <div>
             <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-              02 / Projects
+              Projects
             </span>
             <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               <span className="text-balance block">
