@@ -6,11 +6,12 @@ import { useTheme } from "@/components/theme-provider";
 import { MoonIcon, SunIcon } from "@animateicons/react/lucide";
 
 const navLinks = [
-  { label: "Home",       href: "#hero" },
-  { label: "About",      href: "#about" },
-  { label: "Projects",   href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Contact",    href: "#contact" },
+  { label: "Home",       href: "/#hero" },
+  { label: "About",      href: "/#about" },
+  { label: "Projects",   href: "/#projects" },
+  { label: "Blog",       href: "/blog" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Contact",    href: "/#contact" },
 ];
 
 export default function Navbar() {

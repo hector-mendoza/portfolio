@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ["sanity", "@sanity/vision", "@sanity/code-input"],
   async rewrites() {
     return {
       beforeFiles: [
