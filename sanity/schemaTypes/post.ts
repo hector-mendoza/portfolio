@@ -72,8 +72,8 @@ export const post = defineType({
       name: "accent",
       title: "Accent color",
       type: "string",
-      description: "Hex color for card accents, e.g. #8B5CF6",
-      initialValue: "#8B5CF6",
+      description: "Hex color for card accents, e.g. #157A55",
+      initialValue: "#157A55",
       validation: (rule) =>
         rule.regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, {
           name: "hex color",

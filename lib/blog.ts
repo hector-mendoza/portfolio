@@ -67,7 +67,7 @@ export function getPostYear(date: string) {
   return new Intl.DateTimeFormat("en-US", { year: "numeric" }).format(new Date(date));
 }
 
-export const DEFAULT_ACCENT = "#8B5CF6";
+export const DEFAULT_ACCENT = "#157A55";
 
 export function getPostAccent(accent?: string) {
   return accent && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(accent)
