@@ -153,14 +153,14 @@ export default function HeroSection() {
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
           style={{ minHeight: "180px" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-purple-900 to-indigo-950 transition-all duration-500 group-hover:from-violet-900 group-hover:via-purple-800 group-hover:to-indigo-900" />
-          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_hsl(280_90%_65%/0.4),transparent_60%)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-teal-950 transition-all duration-500 group-hover:from-emerald-900 group-hover:via-green-800 group-hover:to-teal-900" />
+          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_hsl(152_58%_48%/0.4),transparent_60%)]" />
           <div className="relative flex items-start justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-purple-300/80">
+            <span className="font-mono text-xs uppercase tracking-widest text-emerald-300/80">
               Featured Project
             </span>
             <svg
-              className="h-4 w-4 text-purple-300/60 transition-colors group-hover:text-purple-200"
+              className="h-4 w-4 text-emerald-300/60 transition-colors group-hover:text-emerald-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -175,7 +175,7 @@ export default function HeroSection() {
           </div>
           <div className="relative">
             <p className="text-2xl font-bold text-white md:text-3xl">Vibe Theme</p>
-            <p className="text-xs text-purple-300/70 mt-1">
+            <p className="text-xs text-emerald-300/70 mt-1">
               VS Code Theme Collection · 8 dark themes · MIT licensed
             </p>
           </div>

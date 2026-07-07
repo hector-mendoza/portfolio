@@ -3,14 +3,14 @@
 import { useEffect, useRef } from "react";
 
 const PALETTE = [
-  "#007acc", // Vibe Theme
-  "#e879f9", // AI Iridescence
-  "#FF6B35", // Arid Stone
-  "#A3E635", // Midnight Moss
-  "#8B5CF6", // Mood Mode Dark
-  "#C084FC", // Soft Tech Pastel
+  "#065F46", // Deep Forest
+  "#157A55", // Boardroom Pine
+  "#A3E635", // Digital Lime
+  "#10B981", // Emerald Signal
+  "#047857", // Midnight Loam
+  "#84CC16", // Bioluminescent
   "#2DD4BF", // Transformative Teal
-  "#FB923C", // Warm Biophilic
+  "#047857", // Forest Anchor
 ];
 
 const STAR_COUNT = 140;
