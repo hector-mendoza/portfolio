@@ -18,7 +18,7 @@ export default async function BlogPage() {
         <div className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-              06 / Blog
+              Blog
             </span>
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               <span className="text-balance block">

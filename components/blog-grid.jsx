@@ -14,12 +14,12 @@ const FILTERS = [
 
 function BlogCardPreview({ post, hovered, accent }) {
   const coverUrl = post.coverImage
-    ? urlForImage(post.coverImage)?.width(900).height(520).url()
+    ? urlForImage(post.coverImage)?.width(900).height(506).url()
     : null;
 
   if (coverUrl) {
     return (
-      <div className="relative aspect-[16/10] overflow-hidden">
+      <div className="relative aspect-[16/9] overflow-hidden">
         <img
           src={coverUrl}
           alt={post.coverImage?.alt ?? post.title}
@@ -38,7 +38,7 @@ function BlogCardPreview({ post, hovered, accent }) {
 
   return (
     <div
-      className="relative aspect-[16/10] overflow-hidden"
+      className="relative aspect-[16/9] overflow-hidden"
       style={{ background: getPostGradient(accent) }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_55%)]" />
