@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }) {
             <img
               src={coverUrl}
               alt={post.coverImage?.alt ?? post.title}
-              className="aspect-[16/10] w-full object-cover"
+              className="aspect-[16/9] w-full object-cover"
             />
           </div>
         ) : null}
