@@ -3,8 +3,26 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
+import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 
 const projects = [
+  {
+    title: "Emoji of the Day",
+    subtitle: "Mood Tracker & Easter Egg",
+    description:
+      "A single-page mood tracker that assigns you a daily emoji and a hilariously unscientific diagnosis. Date-seeded results, a 30-day history, a slot-machine randomizer, and a secret easter egg for the curious. Zero dependencies.",
+    tags: ["Vanilla JS", "CSS", "View Transitions", "i18n"],
+    url: "https://emoji-day-hm.vercel.app/",
+    year: "2026",
+    category: "Fun",
+    accent: "#FACC15",
+    gradient: "from-yellow-950 via-amber-900 to-orange-900/60",
+    preview: {
+      bar: "emoji-day-hm.vercel.app",
+      lines: ["70%", "55%", "80%", "65%"],
+      btnColor: "#FACC15",
+    },
+  },
   {
     title: "Cantera Diez Hotel",
     subtitle: "Hotel & Hospitality",
@@ -136,10 +154,12 @@ const FILTERS = [
   { label: "Wellness",    value: "Wellness" },
   { label: "Automotive",  value: "Automotive" },
   { label: "Personal",    value: "Personal" },
+  { label: "Fun",         value: "Fun" },
 ];
 
 function ProjectPreview({ project, hovered }) {
   const isVibe = project.title === "Vibe Theme";
+  const isEmojiDay = project.title === "Emoji of the Day";
 
   return (
     <div className={`relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-gradient-to-br ${project.gradient}`}>
@@ -150,6 +170,16 @@ function ProjectPreview({ project, hovered }) {
           style={{ opacity: hovered ? 1 : 0 }}
         >
           <div className="vibe-rainbow-glow absolute inset-0" />
+        </div>
+      )}
+
+      {/* Emoji of the Day floating emoji overlay */}
+      {isEmojiDay && (
+        <div
+          className="absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden text-4xl transition-opacity duration-500"
+          style={{ opacity: hovered ? 1 : 0 }}
+        >
+          <span className="animate-bounce">🎉</span>
         </div>
       )}
 
@@ -183,6 +213,8 @@ function ProjectPreview({ project, hovered }) {
         style={{
           background: isVibe && hovered
             ? "linear-gradient(90deg, #4C1D95, #7C3AED, #D946EF, #EC4899, #22D3EE, #818CF8)"
+            : isEmojiDay && hovered
+            ? "linear-gradient(90deg, #FACC15, #FB923C, #F472B6, #FACC15)"
             : project.accent,
         }}
       />
@@ -190,17 +222,18 @@ function ProjectPreview({ project, hovered }) {
   );
 }
 
-function ProjectCard({ project, index, onVibeHover }) {
+function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
   const [hovered, setHovered] = useState(false);
-  const isVibe = project.title === "Vibe Theme";
 
   const handleEnter = () => {
     setHovered(true);
     onVibeHover?.(true);
+    onEmojiDayHover?.(true);
   };
   const handleLeave = () => {
     setHovered(false);
     onVibeHover?.(false);
+    onEmojiDayHover?.(false);
   };
 
   return (
@@ -291,6 +324,7 @@ function ProjectCard({ project, index, onVibeHover }) {
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("recent");
   const [vibeHovered, setVibeHovered] = useState(false);
+  const [emojiDayHovered, setEmojiDayHovered] = useState(false);
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "recent") {
@@ -305,6 +339,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="relative py-16 md:py-32 bg-background/90">
       <VibeEasterEgg active={vibeHovered} />
+      <EmojiDayEasterEgg active={emojiDayHovered} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
         <div className="absolute bottom-1/4 -right-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
@@ -375,6 +410,7 @@ export default function ProjectsSection() {
                 project={project}
                 index={i}
                 onVibeHover={project.title === "Vibe Theme" ? setVibeHovered : undefined}
+                onEmojiDayHover={project.title === "Emoji of the Day" ? setEmojiDayHovered : undefined}
               />
             ))}
           </motion.div>
