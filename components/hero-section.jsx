@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { MapPinIcon, MailIcon } from "@animateicons/react/lucide";
+import { MapPinIcon } from "@animateicons/react/lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 
 const container = {
@@ -20,11 +20,11 @@ const card = {
   },
 };
 
-const techStack = ["Next.js", "React", "TypeScript", "WordPress", "Shopify", "Figma"];
+const primaryStack = ["Next.js", "React", "TypeScript", "WordPress"];
+const moreStack = ["Shopify", "Figma"];
 
 export default function HeroSection() {
   const locationIconRef = useRef(null);
-  const ctaIconRef = useRef(null);
   const [gameOpen, setGameOpen] = useState(false);
 
   return (
@@ -38,7 +38,7 @@ export default function HeroSection() {
         animate="show"
         className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3"
       >
-        {/* ── Name / Identity — tall left card (2×2) ── */}
+        {/* ── Identity (2×2) ── */}
         <motion.div
           variants={card}
           data-game-target
@@ -63,20 +63,12 @@ export default function HeroSection() {
               {" · "}Lead Developer · 8+ years crafting performant web
               experiences.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="#projects"
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground transition-all hover:opacity-90 hover:shadow-lg hover:shadow-primary/30 md:text-sm"
-              >
-                View Work →
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-xs font-medium text-foreground transition-colors hover:border-primary/40 md:text-sm"
-              >
-                Contact
-              </a>
-            </div>
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground transition-all hover:opacity-90 hover:shadow-lg hover:shadow-primary/30 md:text-sm"
+            >
+              View Work →
+            </a>
           </div>
         </motion.div>
 
@@ -94,7 +86,6 @@ export default function HeroSection() {
             </span>
           </div>
 
-          {/* Big pulsing status ring */}
           <div className="flex items-center justify-center py-3">
             <div className="relative flex items-center justify-center">
               <span className="absolute h-14 w-14 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
@@ -125,23 +116,70 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* ── Stats (2×1) ── */}
-        <motion.div
+        {/* ── Currently at UrVenue (2×1) — fills row 2 gap ── */}
+        <motion.a
           variants={card}
           data-game-target
-          className="col-span-2 rounded-3xl border border-border bg-card p-6 grid grid-cols-3 gap-4 items-center"
+          href="#experience"
+          className="col-span-2 md:col-start-3 rounded-3xl border border-border bg-card p-5 flex flex-col justify-between group transition-all hover:border-primary/30 hover:bg-primary/[0.03]"
+          style={{ minHeight: "160px" }}
         >
-          {[
-            { value: "8+", label: "Years Exp." },
-            { value: "20+", label: "Projects" },
-            { value: "50+", label: "Clients" },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="text-3xl font-bold text-primary md:text-4xl lg:text-5xl">{s.value}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{s.label}</p>
-            </div>
-          ))}
-        </motion.div>
+          <div className="flex items-start justify-between gap-3">
+            <span className="font-mono text-xs uppercase tracking-widest text-primary">
+              Currently
+            </span>
+            <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 font-mono text-[10px] text-muted-foreground">
+              2024 — Present
+            </span>
+          </div>
+          <div>
+            <p className="text-xl font-bold text-foreground transition-colors group-hover:text-primary md:text-2xl">
+              UrVenue
+            </p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground md:text-sm">
+              Head of Web Integrations · Venue tech, APIs &amp; enterprise web delivery
+            </p>
+          </div>
+          <span className="font-mono text-xs text-primary">View experience →</span>
+        </motion.a>
+
+        {/* ── Latest build: Cantera Diez (2×1) ── */}
+        <motion.a
+          variants={card}
+          data-game-target
+          href="https://canteradiezhotel.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
+          style={{ minHeight: "180px" }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-stone-900 to-amber-900/80 transition-all duration-500 group-hover:from-amber-900 group-hover:via-stone-800 group-hover:to-amber-800/80" />
+          <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_bottom_left,_hsl(32_95%_55%/0.35),transparent_60%)]" />
+          <div className="relative flex items-start justify-between">
+            <span className="font-mono text-xs uppercase tracking-widest text-amber-300/80">
+              Latest Build
+            </span>
+            <svg
+              className="h-4 w-4 text-amber-300/60 transition-colors group-hover:text-amber-200"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </div>
+          <div className="relative">
+            <p className="text-2xl font-bold text-white md:text-3xl">Cantera Diez Hotel</p>
+            <p className="text-xs text-amber-200/70 mt-1">
+              Boutique hospitality · AngularJS · Firebase · i18n
+            </p>
+          </div>
+        </motion.a>
 
         {/* ── Featured project: Vibe Theme (2×1) ── */}
         <motion.a
@@ -153,14 +191,14 @@ export default function HeroSection() {
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
           style={{ minHeight: "180px" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-950 via-green-900 to-teal-950 transition-all duration-500 group-hover:from-emerald-900 group-hover:via-green-800 group-hover:to-teal-900" />
-          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_hsl(152_58%_48%/0.4),transparent_60%)]" />
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-fuchsia-950 to-purple-950 transition-all duration-500 group-hover:from-violet-900 group-hover:via-fuchsia-900 group-hover:to-purple-900" />
+          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_hsl(300_90%_65%/0.4),transparent_60%)]" />
           <div className="relative flex items-start justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-emerald-300/80">
+            <span className="font-mono text-xs uppercase tracking-widest text-fuchsia-300/80">
               Featured Project
             </span>
             <svg
-              className="h-4 w-4 text-emerald-300/60 transition-colors group-hover:text-emerald-200"
+              className="h-4 w-4 text-fuchsia-300/60 transition-colors group-hover:text-fuchsia-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -175,18 +213,47 @@ export default function HeroSection() {
           </div>
           <div className="relative">
             <p className="text-2xl font-bold text-white md:text-3xl">Vibe Theme</p>
-            <p className="text-xs text-emerald-300/70 mt-1">
+            <p className="text-xs text-fuchsia-300/70 mt-1">
               VS Code Theme Collection · 8 dark themes · MIT licensed
             </p>
           </div>
         </motion.a>
 
-        {/* ── Tech Stack (1×1) ── */}
+        {/* ── About / profile (2×1) ── */}
+        <motion.a
+          variants={card}
+          data-game-target
+          href="#about"
+          className="col-span-2 rounded-3xl border border-border bg-card p-5 flex items-center gap-5 group transition-all hover:border-primary/30 hover:bg-primary/[0.03]"
+          style={{ minHeight: "140px" }}
+        >
+          <div
+            className="h-20 w-20 shrink-0 overflow-hidden border border-border/60 shadow-lg shadow-primary/10 sm:h-24 sm:w-24"
+            style={{ borderRadius: "20px" }}
+          >
+            <img
+              src="/pp.png"
+              alt="Hector Mendoza"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div className="min-w-0">
+            <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              About
+            </span>
+            <p className="mt-1 text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
+              Builder, lead dev &amp; design-minded engineer
+            </p>
+            <p className="mt-1 text-xs text-primary">Read my story →</p>
+          </div>
+        </motion.a>
+
+        {/* ── Tech Stack (2×1) ── */}
         <motion.div
           variants={card}
           data-game-target
-          className="relative col-span-1 rounded-3xl border border-border bg-card p-5"
-          style={{ minHeight: "160px" }}
+          className="relative col-span-2 rounded-3xl border border-border bg-card p-5 flex flex-col justify-between"
+          style={{ minHeight: "140px" }}
         >
           <button
             onClick={() => setGameOpen(true)}
@@ -202,39 +269,23 @@ export default function HeroSection() {
             </span>
           </button>
 
-          <p className="mb-3 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
             Stack
           </p>
-          <div className="flex flex-wrap gap-1.5">
-            {techStack.map((t) => (
+          <div className="flex flex-wrap gap-2">
+            {primaryStack.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-border px-2.5 py-1 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 {t}
               </span>
             ))}
+            <span className="rounded-full border border-dashed border-border px-3 py-1.5 text-xs font-medium text-muted-foreground">
+              {moreStack.join(" · ")}
+            </span>
           </div>
         </motion.div>
-
-        {/* ── CTA (1×1) ── */}
-        <motion.a
-          variants={card}
-          data-game-target
-          href="#contact"
-          className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center group hover:border-primary/40 hover:bg-primary/5 transition-all"
-          style={{ minHeight: "160px" }}
-          onMouseEnter={() => ctaIconRef.current?.startAnimation()}
-          onMouseLeave={() => ctaIconRef.current?.stopAnimation()}
-        >
-          <MailIcon ref={ctaIconRef} size={36} color="hsl(var(--primary))" />
-          <div>
-            <p className="text-sm font-bold text-foreground transition-colors group-hover:text-primary md:text-base">
-              Let&apos;s build something great
-            </p>
-            <p className="mt-1 font-mono text-xs text-primary">Get in touch →</p>
-          </div>
-        </motion.a>
       </motion.div>
 
       <GeometryWarsGame open={gameOpen} onClose={() => setGameOpen(false)} />

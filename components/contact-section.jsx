@@ -20,7 +20,7 @@ export default function ContactSection() {
           className="mb-20"
         >
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-            05 / Contact
+            Contact
           </span>
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance block">

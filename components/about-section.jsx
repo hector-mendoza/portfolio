@@ -54,7 +54,7 @@ export default function AboutSection() {
           className="mb-10 md:mb-20"
         >
           <motion.span variants={fadeSlideUp} className="mb-4 inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary">
-            03 / About
+            About
           </motion.span>
           <motion.h2 variants={fadeSlideUp} className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-7xl">
             <span className="block text-balance">
@@ -79,7 +79,7 @@ export default function AboutSection() {
                 style={{ borderRadius: "32px" }}
               >
                 <img
-                  src="/404-face.png"
+                  src="/pp.png"
                   alt="Hector Mendoza"
                   className="h-full w-full object-cover"
                 />
@@ -143,7 +143,7 @@ export default function AboutSection() {
                 <motion.div
                   key={stat.label}
                   variants={scaleIn}
-                  whileHover={{ scale: 1.05, borderColor: "hsl(160 65% 30% / 0.5)" }}
+                  whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary) / 0.5)" }}
                   className="rounded-xl border border-border bg-card p-4 text-center transition-colors"
                 >
                   <p className="text-2xl font-bold text-primary">{stat.value}</p>
@@ -176,7 +176,7 @@ export default function AboutSection() {
                       hidden: { opacity: 0, scale: 0.5 },
                       visible: { opacity: 1, scale: 1 },
                     }}
-                    whileHover={{ scale: 1.1, backgroundColor: "hsl(160 65% 30% / 0.15)" }}
+                    whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.15)" }}
                     className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all hover:border-primary/50 hover:text-primary cursor-default"
                   >
                     {tech}

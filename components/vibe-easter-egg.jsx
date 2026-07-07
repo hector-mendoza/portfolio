@@ -3,14 +3,14 @@
 import { useEffect, useRef } from "react";
 
 const PALETTE = [
-  "#065F46", // Deep Forest
-  "#157A55", // Boardroom Pine
-  "#A3E635", // Digital Lime
-  "#10B981", // Emerald Signal
-  "#047857", // Midnight Loam
-  "#84CC16", // Bioluminescent
-  "#2DD4BF", // Transformative Teal
-  "#047857", // Forest Anchor
+  "#4C1D95", // Deep Violet
+  "#7C3AED", // Electric Violet
+  "#A855F7", // Bright Violet
+  "#D946EF", // Fuchsia Pulse
+  "#EC4899", // Hot Pink
+  "#22D3EE", // Cyan Spark
+  "#818CF8", // Indigo Haze
+  "#C026D3", // Magenta Glow
 ];
 
 const STAR_COUNT = 140;

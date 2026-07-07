@@ -55,9 +55,13 @@ export default function Navbar() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           {/* Logo */}
-          <a href="#hero" className="group flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20 border border-primary/30 transition-all group-hover:bg-primary/30">
-              <img src="/logos/logo.svg" alt="HM logo" className="h-10 w-10" />
+          <a href="/" className="group flex items-center gap-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/10 dark:border-primary/30 dark:bg-primary/15">
+              <img
+                src="/logos/logo.svg"
+                alt="HM logo"
+                className="h-7 w-7 dark:invert dark:brightness-110"
+              />
             </div>
           </a>
 

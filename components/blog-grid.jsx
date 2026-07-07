@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import { ChevronRightIcon } from "@animateicons/react/lucide";
 import { formatPostDate, getPostAccent, getPostGradient, getPostYear } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
 
@@ -49,8 +50,7 @@ function BlogCardPreview({ post, hovered, accent }) {
         <div className="h-3 rounded-full bg-foreground/10" style={{ width: "80%" }} />
       </div>
       <div
-        className="absolute bottom-8 left-8 rounded-full px-4 py-2 text-xs font-semibold text-white"
-        style={{ background: accent }}
+        className="absolute bottom-8 left-8 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
       >
         Read article
       </div>
@@ -60,6 +60,7 @@ function BlogCardPreview({ post, hovered, accent }) {
 
 function BlogCard({ post, index, featured = false }) {
   const [hovered, setHovered] = useState(false);
+  const readIconRef = useRef(null);
   const accent = getPostAccent(post.accent);
   const year = getPostYear(post.publishedAt);
 
@@ -96,16 +97,12 @@ function BlogCard({ post, index, featured = false }) {
               <motion.span
                 animate={{ scale: hovered ? 1 : 0.8, opacity: hovered ? 1 : 0 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center gap-2.5 rounded-full px-7 py-3 text-sm font-bold text-white"
-                style={{
-                  background: accent,
-                  boxShadow: `0 8px 30px ${accent}70, 0 0 0 1px ${accent}40`,
-                }}
+                className="flex items-center gap-2.5 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/30"
+                onMouseEnter={() => readIconRef.current?.startAnimation()}
+                onMouseLeave={() => readIconRef.current?.stopAnimation()}
               >
                 Read Post
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <ChevronRightIcon ref={readIconRef} size={16} color="currentColor" />
               </motion.span>
             </motion.div>
 

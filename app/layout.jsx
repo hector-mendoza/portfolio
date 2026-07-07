@@ -39,7 +39,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/cartoon-tech-profile.webp",
+        url: "/pp.png",
         width: 1200,
         height: 630,
         alt: "Hector Mendoza - Senior Software Engineer",
@@ -49,7 +49,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0A110E",
+  themeColor: "#0F0A09",
   width: "device-width",
   initialScale: 1,
 };

@@ -38,8 +38,12 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-6">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 border border-primary/30">
-              <img src="/logos/logo.svg" alt="HM logo" className="h-8 w-8" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card dark:border-primary/30 dark:bg-primary/15">
+              <img
+                src="/logos/logo.svg"
+                alt="HM logo"
+                className="h-5 w-5 dark:invert dark:brightness-110"
+              />
             </div>
             <span className="text-sm font-semibold text-foreground">Hector Mendoza</span>
           </div>

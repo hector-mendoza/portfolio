@@ -67,12 +67,23 @@ export function getPostYear(date: string) {
   return new Intl.DateTimeFormat("en-US", { year: "numeric" }).format(new Date(date));
 }
 
-export const DEFAULT_ACCENT = "#157A55";
+export const DEFAULT_ACCENT = "#E15A3D";
+
+const LEGACY_GREEN_ACCENTS = new Set([
+  "#157A55",
+  "#157a55",
+  "#10B981",
+  "#10b981",
+  "#065F46",
+  "#065f46",
+]);
 
 export function getPostAccent(accent?: string) {
-  return accent && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(accent)
-    ? accent
-    : DEFAULT_ACCENT;
+  if (accent && /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(accent)) {
+    return LEGACY_GREEN_ACCENTS.has(accent) ? DEFAULT_ACCENT : accent;
+  }
+
+  return DEFAULT_ACCENT;
 }
 
 export function getPostGradient(accent: string) {
