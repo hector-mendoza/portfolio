@@ -31,12 +31,12 @@ const projects = [
     url: "https://vibetheme.hectormendoza.me/",
     year: "2026",
     category: "Design Tool",
-    accent: "#8B5CF6",
-    gradient: "from-violet-950 via-purple-900 to-violet-900/60",
+    accent: "#157A55",
+    gradient: "from-emerald-950 via-green-900 to-emerald-900/60",
     preview: {
       bar: "vibetheme.hectormendoza.me",
       lines: ["90%", "75%", "85%", "60%"],
-      btnColor: "#8B5CF6",
+      btnColor: "#157A55",
     },
   },
   {
@@ -182,7 +182,7 @@ function ProjectPreview({ project, hovered }) {
         className="absolute -bottom-8 left-1/2 -translate-x-1/2 h-24 w-48 rounded-full blur-2xl opacity-50 pointer-events-none transition-all duration-500"
         style={{
           background: isVibe && hovered
-            ? "linear-gradient(90deg, #007acc, #e879f9, #FF6B35, #A3E635, #8B5CF6, #2DD4BF)"
+            ? "linear-gradient(90deg, #065F46, #157A55, #A3E635, #10B981, #2DD4BF, #84CC16)"
             : project.accent,
         }}
       />

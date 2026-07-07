@@ -143,7 +143,7 @@ export default function AboutSection() {
                 <motion.div
                   key={stat.label}
                   variants={scaleIn}
-                  whileHover={{ scale: 1.05, borderColor: "hsl(24 85% 62% / 0.5)" }}
+                  whileHover={{ scale: 1.05, borderColor: "hsl(160 65% 30% / 0.5)" }}
                   className="rounded-xl border border-border bg-card p-4 text-center transition-colors"
                 >
                   <p className="text-2xl font-bold text-primary">{stat.value}</p>
