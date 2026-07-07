@@ -176,7 +176,7 @@ export default function AboutSection() {
                       hidden: { opacity: 0, scale: 0.5 },
                       visible: { opacity: 1, scale: 1 },
                     }}
-                    whileHover={{ scale: 1.1, backgroundColor: "hsl(24 85% 62% / 0.15)" }}
+                    whileHover={{ scale: 1.1, backgroundColor: "hsl(160 65% 30% / 0.15)" }}
                     className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all hover:border-primary/50 hover:text-primary cursor-default"
                   >
                     {tech}
