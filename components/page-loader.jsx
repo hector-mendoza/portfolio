@@ -24,7 +24,10 @@ export default function PageLoader() {
           transition={{ duration: 0.55, ease: EASE }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background"
         >
-          {/* WebGL shader orb */}
+          {/* WebGL shader orb. backgroundColor only feeds the shader's
+              internal luminance mixing (canvas is alpha-transparent) — it's
+              not a visible layer, so keep it #000000 regardless of theme;
+              matching it to the page background washes out the color. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
