@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPinIcon } from "@animateicons/react/lucide";
 import GeometryWarsGame from "./geometry-wars-game";
+import { Map, MapMarker, MarkerContent } from "@/components/ui/map";
 
 const container = {
   hidden: {},
@@ -24,7 +24,6 @@ const primaryStack = ["Next.js", "React", "TypeScript", "WordPress"];
 const moreStack = ["Shopify", "Figma"];
 
 export default function HeroSection() {
-  const locationIconRef = useRef(null);
   const [gameOpen, setGameOpen] = useState(false);
 
   return (
@@ -103,16 +102,18 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="col-span-1 rounded-3xl border border-border bg-card p-5 flex flex-col items-center justify-center gap-3 text-center"
+          className="col-span-1 relative rounded-3xl border border-border overflow-hidden"
           style={{ minHeight: "160px" }}
-          onMouseEnter={() => locationIconRef.current?.startAnimation()}
-          onMouseLeave={() => locationIconRef.current?.stopAnimation()}
         >
-          <MapPinIcon ref={locationIconRef} size={36} color="hsl(var(--primary))" />
-          <div>
-            <p className="text-base font-bold text-foreground">Morelia, Mexico</p>
-            <p className="text-xs text-muted-foreground">UTC−6</p>
-            <p className="mt-1 font-mono text-[10px] text-muted-foreground/50 tracking-wide">19.70° N · 101.19° W</p>
+          <div className="absolute inset-0 pointer-events-none">
+            <Map center={[-101.19, 19.7]} zoom={11} className="h-full w-full">
+              <MapMarker longitude={-101.19} latitude={19.7}>
+                <MarkerContent />
+              </MapMarker>
+            </Map>
+          </div>
+          <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 pt-10">
+            <p className="text-base font-bold text-white">Morelia, Mexico</p>
           </div>
         </motion.div>
 
