@@ -53,9 +53,10 @@ light/dark style switching).
   `pointer-events-none`, no `MapControls`, no pan/zoom/drag.
 - Card retains its existing shell (`rounded-3xl border border-border`,
   `160px` min-height, `col-span-1`); map fills it with `overflow-hidden`.
-- Existing text (`Morelia, Mexico` / `UTC−6` /
-  `19.70° N · 101.19° W`) stays as an overlay, positioned bottom-left,
-  over a subtle gradient scrim for legibility against map tiles.
+- Only the city/country label (`Morelia, Mexico`) stays as an overlay,
+  positioned bottom-left, over a subtle gradient scrim for legibility
+  against map tiles. The UTC offset and coordinate lines are dropped —
+  the map itself now conveys location.
 - A single `Marker` marks the city location.
 - Relies on mapcn's built-in automatic theme switching to track the
   site's light/dark mode — no custom dark-mode wiring needed.
