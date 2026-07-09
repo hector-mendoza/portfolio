@@ -108,7 +108,9 @@ export default function HeroSection() {
           <div className="absolute inset-0 pointer-events-none">
             <Map center={[-101.19, 19.7]} zoom={11} className="h-full w-full">
               <MapMarker longitude={-101.19} latitude={19.7}>
-                <MarkerContent />
+                <MarkerContent>
+                  <div className="h-4 w-4 rounded-full border-2 border-white bg-primary shadow-lg" />
+                </MarkerContent>
               </MapMarker>
             </Map>
           </div>
