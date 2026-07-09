@@ -2,15 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTheme } from "@/components/theme-provider";
 import Orb from "@/components/Orb";
 
 const EASE = [0.22, 1, 0.36, 1];
 
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
-  const { resolvedTheme } = useTheme();
-  const orbBackground = resolvedTheme === "dark" ? "#0e0e11" : "#fafafa";
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(false), 1600);
@@ -34,7 +31,7 @@ export default function PageLoader() {
             transition={{ duration: 0.5, ease: EASE }}
             className="mb-8 h-64 w-64"
           >
-            <Orb hue={160} backgroundColor={orbBackground} />
+            <Orb hue={-115} backgroundColor="#000000" />
           </motion.div>
 
           {/* Name */}
