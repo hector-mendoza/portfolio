@@ -48,11 +48,14 @@ animation — the combination is what should read as "agent thinking"
 rather than a static graphic. Exact scale range/duration tuned visually
 (starting guess: scale oscillating roughly `0.95 ↔ 1.05` over ~2-3s).
 
+### 4. Remove the name caption
+The "Hector Mendoza" italic text below the orb is removed entirely — the
+orb is now the loader's sole content.
+
 ### Sequence (~1.6s total loader duration, unchanged)
 - Orb mounts and both its internal shader animation and the new breathing
   scale start immediately.
-- "Hector Mendoza" name caption below is unchanged (position, timing,
-  font).
+- No name caption below it anymore.
 - Exit unchanged (`opacity: 0, y: -16`, `duration: 0.55`).
 
 ## Implementation
@@ -60,7 +63,8 @@ rather than a static graphic. Exact scale range/duration tuned visually
   tune `innerRadius` (and related blending terms if needed) for a filled
   look.
 - `components/page-loader.jsx`: wrap `<Orb />` in a breathing
-  `motion.div`, drop/ignore the `hue` prop usage.
+  `motion.div`, drop/ignore the `hue` prop usage, remove the name
+  `<motion.p>` block entirely.
 - No other files touched. No new dependencies (still just `ogl`, already
   installed).
 - All color/radius/breathing values require live visual tuning in the
