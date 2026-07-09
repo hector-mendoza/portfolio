@@ -102,10 +102,10 @@ export default function Orb({
       return vec4(colorIn.rgb / (a + 1e-5), a);
     }
 
-    const vec3 baseColor1 = vec3(0.611765, 0.262745, 0.996078);
-    const vec3 baseColor2 = vec3(0.298039, 0.760784, 0.913725);
-    const vec3 baseColor3 = vec3(0.062745, 0.078431, 0.600000);
-    const float innerRadius = 0.6;
+    const vec3 baseColor1 = vec3(0.980000, 0.650000, 0.450000);
+    const vec3 baseColor2 = vec3(0.894000, 0.400000, 0.267000);
+    const vec3 baseColor3 = vec3(0.450000, 0.150000, 0.350000);
+    const float innerRadius = 0.15;
     const float noiseScale = 0.65;
 
     float light1(float intensity, float attenuation, float dist) {
@@ -150,6 +150,10 @@ export default function Orb({
       vec3 darkCol = mix(color3, colBase, v0);
       darkCol = (darkCol + v1) * v2 * v3;
       darkCol = clamp(darkCol, 0.0, 1.0);
+
+      float fillGlow = light1(1.3, 1.1, len) * smoothstep(1.15, 0.0, len);
+      vec3 fillColor = mix(color2, color1, n0);
+      darkCol = max(darkCol, fillColor * fillGlow);
       
       vec3 lightCol = (colBase + v1) * mix(1.0, v2 * v3, fadeAmount);
       lightCol = mix(backgroundColor, lightCol, v0);

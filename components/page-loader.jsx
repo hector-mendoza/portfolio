@@ -30,23 +30,23 @@ export default function PageLoader() {
               matching it to the page background washes out the color. */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: EASE }}
-            className="mb-8 h-64 w-64"
+            animate={{
+              opacity: 1,
+              scale: [0.95, 1.05, 0.95],
+            }}
+            transition={{
+              opacity: { duration: 0.5, ease: EASE },
+              scale: {
+                duration: 2.6,
+                ease: "easeInOut",
+                repeat: Infinity,
+                delay: 0.5,
+              },
+            }}
+            className="h-64 w-64"
           >
-            <Orb hue={-115} backgroundColor="#000000" />
+            <Orb backgroundColor="#000000" />
           </motion.div>
-
-          {/* Name */}
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE, delay: 0.5 }}
-            className="text-2xl italic text-foreground"
-            style={{ fontFamily: "var(--font-instrument-serif)" }}
-          >
-            Hector Mendoza
-          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>
