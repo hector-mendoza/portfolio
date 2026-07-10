@@ -131,7 +131,7 @@ export default function HeroSection() {
           style={{ minHeight: "160px" }}
         >
           <div className="absolute inset-0 pointer-events-none">
-            <Map center={[-101.19, 19.7]} zoom={11} className="h-full w-full">
+            <Map center={[-101.19, 19.7]} zoom={13} className="h-full w-full">
               <MapMarker longitude={-101.19} latitude={19.7}>
                 <MarkerContent>
                   <div className="h-4 w-4 rounded-full border-2 border-white bg-primary shadow-lg" />
@@ -139,7 +139,7 @@ export default function HeroSection() {
               </MapMarker>
             </Map>
           </div>
-          <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-4 pt-10">
+          <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/70 via-black/20 to-transparent p-4 pt-10">
             <p className="text-base font-bold text-white">Morelia, Mexico</p>
           </div>
         </motion.div>
