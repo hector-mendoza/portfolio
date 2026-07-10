@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import GeometryWarsGame from "./geometry-wars-game";
 import { Map, MapMarker, MarkerContent } from "@/components/ui/map";
@@ -25,6 +25,30 @@ const moreStack = ["Shopify", "Figma"];
 
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
+  const mapCardRef = useRef(null);
+
+  useEffect(() => {
+    const container = mapCardRef.current;
+    if (!container) return;
+
+    // MapLibre auto-opens its attribution disclosure on load. The map
+    // layer here is pointer-events-none (static preview), so nothing
+    // ever closes it back — keep it closed to a small icon instead.
+    const closeAttribution = () => {
+      container
+        .querySelectorAll(".maplibregl-ctrl-attrib[open]")
+        .forEach((el) => el.removeAttribute("open"));
+    };
+
+    closeAttribution();
+    const observer = new MutationObserver(closeAttribution);
+    observer.observe(container, {
+      attributes: true,
+      attributeFilter: ["open"],
+      subtree: true,
+    });
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -100,6 +124,7 @@ export default function HeroSection() {
 
         {/* ── Location (1×1) ── */}
         <motion.div
+          ref={mapCardRef}
           variants={card}
           data-game-target
           className="col-span-1 relative rounded-3xl border border-border overflow-hidden"
