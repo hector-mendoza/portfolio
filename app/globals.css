@@ -73,6 +73,12 @@
     --sidebar-border: 240 6% 16%;
     --sidebar-ring: 13 75% 58%;
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
 }
 
 @layer base {
@@ -213,26 +219,12 @@ body {
   }
 }
 
-@keyframes spin-slow {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
 .animate-marquee {
   animation: marquee 30s linear infinite;
-}
-
-.animate-spin-slow {
-  animation: spin-slow 20s linear infinite;
 }
 
 .mask-gradient-bottom {
