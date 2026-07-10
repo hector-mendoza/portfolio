@@ -22,18 +22,27 @@ export default function BounceCards({
   enableHover = false
 }) {
   const containerRef = useRef(null);
+  const hasAnimatedRef = useRef(false);
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.card',
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: animationStagger,
-          ease: easeType,
-          delay: animationDelay
-        }
-      );
+      if (!hasAnimatedRef.current) {
+        hasAnimatedRef.current = true;
+        gsap.fromTo(
+          '.card',
+          { scale: 0 },
+          {
+            scale: 1,
+            stagger: animationStagger,
+            ease: easeType,
+            delay: animationDelay
+          }
+        );
+      } else {
+        // React StrictMode (dev only) double-invokes this effect, which
+        // would otherwise replay the bounce-in from scale 0 a second
+        // time. Once it's played, just hold the settled state.
+        gsap.set('.card', { scale: 1 });
+      }
     }, containerRef);
     return () => ctx.revert();
   }, [animationStagger, easeType, animationDelay]);
