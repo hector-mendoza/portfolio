@@ -107,7 +107,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-2xl border border-border bg-card p-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-2xl glass-card p-8">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label
@@ -201,7 +201,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting || !captchaToken}
-        className="group flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="group flex w-full items-center justify-center gap-2 btn-juicy btn-juicy-md px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
         <svg

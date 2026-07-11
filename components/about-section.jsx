@@ -144,7 +144,7 @@ export default function AboutSection() {
                   key={stat.label}
                   variants={scaleIn}
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary) / 0.5)" }}
-                  className="rounded-xl border border-border bg-card p-4 text-center transition-colors"
+                  className="rounded-xl glass-card p-4 text-center"
                 >
                   <p className="text-2xl font-bold text-primary">{stat.value}</p>
                   <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>

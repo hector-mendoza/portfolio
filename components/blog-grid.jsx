@@ -50,7 +50,7 @@ function BlogCardPreview({ post, hovered, accent }) {
         <div className="h-3 rounded-full bg-foreground/10" style={{ width: "80%" }} />
       </div>
       <div
-        className="absolute bottom-8 left-8 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground"
+        className="absolute bottom-8 left-8 btn-juicy btn-juicy-pill px-4 py-2 text-xs font-semibold"
       >
         Read article
       </div>
@@ -77,7 +77,7 @@ function BlogCard({ post, index, featured = false }) {
     >
       <Link href={`/blog/${post.slug}`} className="block">
         <div
-          className="overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:shadow-2xl"
+          className="overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-2xl"
           style={{
             borderColor: hovered ? `${accent}44` : undefined,
             boxShadow: hovered ? `0 24px 60px ${accent}18` : undefined,
@@ -97,7 +97,7 @@ function BlogCard({ post, index, featured = false }) {
               <motion.span
                 animate={{ scale: hovered ? 1 : 0.8, opacity: hovered ? 1 : 0 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center gap-2.5 rounded-full bg-primary px-7 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/30"
+                className="flex items-center gap-2.5 btn-juicy btn-juicy-pill px-7 py-3 text-sm font-bold"
                 onMouseEnter={() => readIconRef.current?.startAnimation()}
                 onMouseLeave={() => readIconRef.current?.stopAnimation()}
               >

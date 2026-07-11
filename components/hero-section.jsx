@@ -65,7 +65,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="col-span-2 row-span-2 rounded-3xl border border-border bg-card p-8 md:p-10 flex flex-col justify-between"
+          className="col-span-2 row-span-2 rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
           <div>
@@ -88,7 +88,7 @@ export default function HeroSection() {
             </p>
             <a
               href="#projects"
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-xs font-semibold text-primary-foreground transition-all hover:opacity-90 hover:shadow-lg hover:shadow-primary/30 md:text-sm"
+              className="inline-flex items-center gap-2 btn-juicy btn-juicy-pill px-5 py-2.5 text-xs font-semibold md:text-sm"
             >
               View Work →
             </a>
@@ -149,7 +149,7 @@ export default function HeroSection() {
           variants={card}
           data-game-target
           href="#experience"
-          className="col-span-2 md:col-start-3 rounded-3xl border border-border bg-card p-5 flex flex-col justify-between group transition-all hover:border-primary/30 hover:bg-primary/[0.03]"
+          className="col-span-2 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-start justify-between gap-3">
@@ -252,7 +252,7 @@ export default function HeroSection() {
           variants={card}
           data-game-target
           href="#about"
-          className="col-span-2 rounded-3xl border border-border bg-card p-5 flex items-center gap-5 group transition-all hover:border-primary/30 hover:bg-primary/[0.03]"
+          className="col-span-2 rounded-3xl glass-card p-5 flex items-center gap-5 group"
           style={{ minHeight: "140px" }}
         >
           <div
@@ -280,7 +280,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="relative col-span-2 rounded-3xl border border-border bg-card p-5 flex flex-col justify-between"
+          className="relative col-span-2 rounded-3xl glass-card p-5 flex flex-col justify-between"
           style={{ minHeight: "140px" }}
         >
           <button

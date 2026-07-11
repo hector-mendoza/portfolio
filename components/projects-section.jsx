@@ -248,7 +248,7 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
       className="group"
     >
       <div
-        className="overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:shadow-2xl"
+        className="overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-2xl"
         style={{
           borderColor: hovered ? project.accent + "44" : undefined,
           boxShadow: hovered ? `0 24px 60px ${project.accent}18` : undefined,

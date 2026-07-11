@@ -75,7 +75,7 @@ function SkillCard({ skill, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="group rounded-2xl border border-border bg-card p-8 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
+      className="group rounded-2xl glass-card p-8"
       onMouseEnter={() => ref.current?.startAnimation()}
       onMouseLeave={() => ref.current?.stopAnimation()}
     >
@@ -145,7 +145,7 @@ export default function ExperienceSection() {
                 <div className="h-2.5 w-2.5 rounded-full bg-primary shadow-lg shadow-primary/50" />
               </div>
 
-              <div className="group rounded-2xl border border-border bg-card p-6 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 sm:p-8">
+              <div className="group rounded-2xl glass-card p-6 sm:p-8">
                 <div className="mb-3 flex flex-wrap items-center gap-3">
                   <span className="rounded-full bg-primary/10 px-3 py-1 font-mono text-xs text-primary">
                     {exp.period}
@@ -201,7 +201,7 @@ export default function ExperienceSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="group rounded-2xl border border-border bg-card p-8 transition-all hover:border-primary/30"
+                className="group rounded-2xl glass-card p-8"
               >
                 <span className="mb-4 inline-block rounded-full bg-primary/10 px-3 py-1 font-mono text-xs text-primary">
                   {edu.period}

@@ -61,7 +61,7 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/25"
+              className="inline-flex items-center gap-2 btn-juicy btn-juicy-md px-6 py-3 text-sm font-semibold"
             >
               Refresh Page
             </button>

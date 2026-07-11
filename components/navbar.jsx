@@ -54,7 +54,7 @@ export default function Navbar() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-background/75 backdrop-blur-xl border-b border-border"
+            ? "glass-subtle border-b border-border"
             : "bg-transparent"
         }`}
       >
@@ -102,7 +102,7 @@ export default function Navbar() {
             </button>
             <a
               href="#contact"
-              className="hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition-all hover:shadow-lg hover:shadow-primary/30 md:block"
+              className="hidden btn-juicy btn-juicy-pill px-5 py-2 text-sm md:block"
             >
               {"Let's Talk"}
             </a>
