@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/components/theme-provider";
 import { MoonIcon, SunIcon } from "@animateicons/react/lucide";
@@ -15,12 +16,15 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const themeIconRef = useRef(null);
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = mounted && resolvedTheme === "dark";
+  const isHome = pathname === "/";
+  const showSolidNav = scrolled || !isHome;
 
   useEffect(() => {
     setMounted(true);
@@ -42,7 +46,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -53,9 +58,7 @@ export default function Navbar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "glass-subtle border-b border-border"
-            : "bg-transparent"
+          showSolidNav ? "navbar-scrolled" : "bg-transparent"
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -77,7 +80,11 @@ export default function Navbar() {
                 key={link.label}
                 href={link.href}
                 data-cuelume-hover="tick"
-                className="group relative px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className={`group relative px-4 py-2 text-sm transition-colors ${
+                  showSolidNav
+                    ? "font-medium text-foreground/90 hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 <span className="relative z-10">{link.label}</span>
                 <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
@@ -94,7 +101,11 @@ export default function Navbar() {
               onMouseEnter={() => themeIconRef.current?.startAnimation()}
               onMouseLeave={() => themeIconRef.current?.stopAnimation()}
               aria-label="Toggle theme"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/50 text-muted-foreground transition-all hover:border-primary/40 hover:text-primary"
+              className={`flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all hover:border-primary/40 hover:text-primary ${
+                showSolidNav
+                  ? "bg-card text-foreground shadow-sm"
+                  : "bg-background/50 text-muted-foreground"
+              }`}
             >
               {isDark ? (
                 <SunIcon ref={themeIconRef} size={16} color="currentColor" />
