@@ -8,6 +8,7 @@ import {
   TwitterIcon,
 } from "@animateicons/react/lucide";
 import { sileo } from "sileo";
+import { play } from "cuelume";
 
 function ShareButton({ label, href, onClick, Icon }) {
   const ref = useRef(null);
@@ -43,6 +44,7 @@ function ShareButton({ label, href, onClick, Icon }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
+        data-cuelume-hover="tick"
         className={className}
         {...handlers}
       >
@@ -52,7 +54,15 @@ function ShareButton({ label, href, onClick, Icon }) {
   }
 
   return (
-    <button type="button" aria-label={label} className={className} onClick={onClick} {...handlers}>
+    <button
+      type="button"
+      aria-label={label}
+      data-cuelume-press
+      data-cuelume-release
+      className={className}
+      onClick={onClick}
+      {...handlers}
+    >
       {content}
     </button>
   );
@@ -85,6 +95,7 @@ export default function BlogShare({ title, url, description }) {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(url);
+      play("success");
       sileo.success({
         title: "Link copied",
         description: "Ready to paste anywhere.",
@@ -127,6 +138,7 @@ export default function BlogShare({ title, url, description }) {
         ) : null}
         <a
           href={`mailto:?subject=${encodedTitle}&body=${encodedText}%0A%0A${encodedUrl}`}
+          data-cuelume-hover="tick"
           className="ml-1 text-xs font-medium text-muted-foreground transition-colors hover:text-primary"
         >
           Email

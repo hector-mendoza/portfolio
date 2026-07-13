@@ -88,6 +88,8 @@ export default function HeroSection() {
             </p>
             <a
               href="#projects"
+              data-cuelume-press
+              data-cuelume-release
               className="inline-flex items-center gap-2 btn-juicy btn-juicy-pill px-5 py-2.5 text-xs font-semibold md:text-sm"
             >
               View Work →
@@ -149,6 +151,7 @@ export default function HeroSection() {
           variants={card}
           data-game-target
           href="#experience"
+          data-cuelume-hover="tick"
           className="col-span-2 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
           style={{ minHeight: "160px" }}
         >
@@ -178,6 +181,7 @@ export default function HeroSection() {
           href="https://canteradiezhotel.com"
           target="_blank"
           rel="noopener noreferrer"
+          data-cuelume-hover="tick"
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
           style={{ minHeight: "180px" }}
         >
@@ -216,6 +220,7 @@ export default function HeroSection() {
           href="https://vibetheme.hectormendoza.me"
           target="_blank"
           rel="noopener noreferrer"
+          data-cuelume-hover="tick"
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
           style={{ minHeight: "180px" }}
         >
@@ -252,6 +257,7 @@ export default function HeroSection() {
           variants={card}
           data-game-target
           href="#about"
+          data-cuelume-hover="tick"
           className="col-span-2 rounded-3xl glass-card p-5 flex items-center gap-5 group"
           style={{ minHeight: "140px" }}
         >
@@ -285,6 +291,8 @@ export default function HeroSection() {
         >
           <button
             onClick={() => setGameOpen(true)}
+            data-cuelume-press
+            data-cuelume-release
             aria-label="Play a hidden mini-game"
             title="Psst — play a mini-game"
             className="group absolute right-3 top-3 flex items-center justify-center"

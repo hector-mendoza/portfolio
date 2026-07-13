@@ -10,6 +10,7 @@ export default function BlogBackLink() {
   return (
     <Link
       href="/blog"
+      data-cuelume-hover="tick"
       className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
       onMouseEnter={() => ref.current?.startAnimation()}
       onMouseLeave={() => ref.current?.stopAnimation()}

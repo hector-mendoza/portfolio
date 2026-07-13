@@ -40,6 +40,7 @@ export default function ContactInfo() {
         <ContactRow Icon={MailIcon} label="Email">
           <a
             href="mailto:hey@hectormendoza.me"
+            data-cuelume-hover="tick"
             className="text-sm font-medium text-foreground transition-colors hover:text-primary"
           >
             hey@hectormendoza.me
@@ -55,6 +56,7 @@ export default function ContactInfo() {
             href="https://hectormendoza.me"
             target="_blank"
             rel="noopener noreferrer"
+            data-cuelume-hover="tick"
             className="text-sm font-medium text-foreground transition-colors hover:text-primary"
           >
             hectormendoza.me

@@ -3,6 +3,7 @@ import { Space_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/googl
 import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import { ThemeProvider } from "@/components/theme-provider";
+import CuelumeProvider from "@/components/cuelume-provider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -93,6 +94,7 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           <ErrorBoundary>
+            <CuelumeProvider />
             <ToasterProvider />
             {children}
           </ErrorBoundary>
