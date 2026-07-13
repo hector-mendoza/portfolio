@@ -99,7 +99,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="col-span-1 rounded-3xl border border-primary/25 bg-primary/10 p-5 flex flex-col"
+          className="col-span-1 rounded-3xl glass-card-primary p-5 flex flex-col"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-center gap-2 mb-auto">
@@ -127,7 +127,7 @@ export default function HeroSection() {
           ref={mapCardRef}
           variants={card}
           data-game-target
-          className="col-span-1 relative rounded-3xl border border-border overflow-hidden"
+          className="col-span-1 relative rounded-3xl glass-card overflow-hidden"
           style={{ minHeight: "160px" }}
         >
           <div className="absolute inset-0 pointer-events-none">
@@ -156,7 +156,7 @@ export default function HeroSection() {
             <span className="font-mono text-xs uppercase tracking-widest text-primary">
               Currently
             </span>
-            <span className="rounded-full border border-border bg-background/80 px-2.5 py-1 font-mono text-[10px] text-muted-foreground">
+            <span className="glass-subtle rounded-full px-2.5 py-1 font-mono text-[10px] text-muted-foreground">
               2024 — Present
             </span>
           </div>
@@ -168,7 +168,9 @@ export default function HeroSection() {
               Head of Web Integrations · Venue tech, APIs &amp; enterprise web delivery
             </p>
           </div>
-          <span className="font-mono text-xs text-primary">View experience →</span>
+          <span className="inline-flex w-fit items-center gap-1.5 btn-juicy-outline btn-juicy-pill px-3 py-1.5 font-mono text-xs">
+            View experience →
+          </span>
         </motion.a>
 
         {/* ── Latest build: Cantera Diez (2×1) ── */}
@@ -178,7 +180,7 @@ export default function HeroSection() {
           href="https://canteradiezhotel.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
+          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
           style={{ minHeight: "180px" }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-stone-900 to-amber-900/80 transition-all duration-500 group-hover:from-amber-900 group-hover:via-stone-800 group-hover:to-amber-800/80" />
@@ -216,7 +218,7 @@ export default function HeroSection() {
           href="https://vibetheme.hectormendoza.me"
           target="_blank"
           rel="noopener noreferrer"
-          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6"
+          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
           style={{ minHeight: "180px" }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-fuchsia-950 to-purple-950 transition-all duration-500 group-hover:from-violet-900 group-hover:via-fuchsia-900 group-hover:to-purple-900" />
@@ -272,7 +274,11 @@ export default function HeroSection() {
             <p className="mt-1 text-lg font-bold text-foreground transition-colors group-hover:text-primary sm:text-xl">
               Builder, lead dev &amp; design-minded engineer
             </p>
-            <p className="mt-1 text-xs text-primary">Read my story →</p>
+            <p className="mt-1 text-xs text-primary">
+              <span className="inline-flex items-center btn-juicy-outline btn-juicy-pill px-3 py-1 font-mono text-[10px]">
+                Read my story →
+              </span>
+            </p>
           </div>
         </motion.a>
 
@@ -290,7 +296,7 @@ export default function HeroSection() {
             className="group absolute right-3 top-3 flex items-center justify-center"
           >
             <span className="absolute h-9 w-9 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
-            <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-primary/25 bg-primary/10 text-primary transition-all group-hover:scale-110 group-hover:border-primary/50 group-hover:bg-primary/20">
+            <span className="relative flex h-8 w-8 items-center justify-center rounded-full glass-subtle text-primary transition-all group-hover:scale-110 group-hover:border-primary/50">
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4m-2-2v4m8-3h.01M17 13h.01M7.5 7h9A4.5 4.5 0 0121 11.5v3a3 3 0 01-5.6 1.5l-.9-1.5H9.5l-.9 1.5A3 3 0 013 14.5v-3A4.5 4.5 0 017.5 7z" />
               </svg>
@@ -304,12 +310,12 @@ export default function HeroSection() {
             {primaryStack.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+                className="glass-pill rounded-full px-3 py-1.5 text-xs font-medium text-foreground"
               >
                 {t}
               </span>
             ))}
-            <span className="rounded-full border border-dashed border-border px-3 py-1.5 text-xs font-medium text-muted-foreground">
+            <span className="glass-pill rounded-full border-dashed px-3 py-1.5 text-xs font-medium text-muted-foreground">
               {moreStack.join(" · ")}
             </span>
           </div>
