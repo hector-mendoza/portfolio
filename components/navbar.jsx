@@ -103,7 +103,7 @@ export default function Navbar() {
               )}
             </button>
             <a
-              href="#contact"
+              href="/#contact"
               data-cuelume-press
               data-cuelume-release
               className="hidden btn-juicy btn-juicy-pill px-5 py-2 text-sm md:block"
