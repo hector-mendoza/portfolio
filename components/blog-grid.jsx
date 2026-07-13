@@ -75,7 +75,7 @@ function BlogCard({ post, index, featured = false }) {
       onMouseLeave={() => setHovered(false)}
       className={`group ${featured ? "md:col-span-2" : ""}`}
     >
-      <Link href={`/blog/${post.slug}`} className="block">
+      <Link href={`/blog/${post.slug}`} className="block" data-cuelume-hover="whisper">
         <div
           className="overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-2xl"
           style={{
@@ -196,6 +196,8 @@ export default function BlogGrid({ posts, showSetupState = false }) {
         </p>
         <Link
           href="/studio"
+          data-cuelume-press
+          data-cuelume-release
           className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
         >
           Open Sanity Studio
@@ -215,6 +217,8 @@ export default function BlogGrid({ posts, showSetupState = false }) {
         </p>
         <Link
           href="/studio"
+          data-cuelume-press
+          data-cuelume-release
           className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
         >
           Open Sanity Studio
@@ -236,6 +240,7 @@ export default function BlogGrid({ posts, showSetupState = false }) {
           <button
             key={filter.value}
             type="button"
+            data-cuelume-toggle
             onClick={() => setActiveFilter(filter.value)}
             className={`rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
               activeFilter === filter.value

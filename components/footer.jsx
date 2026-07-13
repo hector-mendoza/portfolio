@@ -13,6 +13,7 @@ function FooterSocialLink({ href, label, Icon }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
+      data-cuelume-hover="tick"
       className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-primary font-mono"
       onMouseEnter={() => { setHovered(true); ref.current?.startAnimation(); }}
       onMouseLeave={() => { setHovered(false); ref.current?.stopAnimation(); }}
@@ -54,6 +55,7 @@ export default function Footer() {
               href="https://vibetheme.hectormendoza.me"
               target="_blank"
               rel="noopener noreferrer"
+              data-cuelume-hover="tick"
               className="text-primary hover:underline"
             >
               Vibe Theme

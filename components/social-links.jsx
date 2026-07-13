@@ -24,6 +24,7 @@ function SocialIconLink({ label, href, Icon, customSvgPath }) {
       href={href}
       target={href.startsWith("mailto") ? undefined : "_blank"}
       rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+      data-cuelume-hover="tick"
       className="group flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:bg-primary/10"
       aria-label={label}
       onMouseEnter={() => { setHovered(true); ref.current?.startAnimation(); }}

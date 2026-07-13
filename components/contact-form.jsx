@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { sileo } from "sileo";
+import { play } from "cuelume";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -71,6 +72,7 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok) {
+        play("success");
         sileo.success({
           title: "Message sent",
           description: "Thank you for reaching out! I'll get back to you soon.",
@@ -201,6 +203,8 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting || !captchaToken}
+        data-cuelume-press
+        data-cuelume-release
         className="group flex w-full items-center justify-center gap-2 btn-juicy btn-juicy-md px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"
       >
         {isSubmitting ? "Sending..." : "Send Message"}

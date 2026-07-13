@@ -60,7 +60,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           {/* Logo */}
-          <a href="/" className="group flex items-center gap-2">
+          <a href="/" className="group flex items-center gap-2" data-cuelume-hover="tick">
             <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/10 dark:border-primary/30 dark:bg-primary/15">
               <img
                 src="/logos/logo.svg"
@@ -76,6 +76,7 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
+                data-cuelume-hover="tick"
                 className="group relative px-4 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
               >
                 <span className="relative z-10">{link.label}</span>
@@ -89,6 +90,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={toggleTheme}
+              data-cuelume-toggle
               onMouseEnter={() => themeIconRef.current?.startAnimation()}
               onMouseLeave={() => themeIconRef.current?.stopAnimation()}
               aria-label="Toggle theme"
@@ -102,6 +104,8 @@ export default function Navbar() {
             </button>
             <a
               href="#contact"
+              data-cuelume-press
+              data-cuelume-release
               className="hidden btn-juicy btn-juicy-pill px-5 py-2 text-sm md:block"
             >
               {"Let's Talk"}
@@ -109,6 +113,8 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
+              data-cuelume-press
+              data-cuelume-release
               className="flex flex-col gap-1.5 p-2 md:hidden"
               aria-label="Toggle menu"
             >
@@ -145,6 +151,7 @@ export default function Navbar() {
               <motion.a
                 key={link.label}
                 href={link.href}
+                data-cuelume-hover="tick"
                 onClick={() => setMobileOpen(false)}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

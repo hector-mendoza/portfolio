@@ -273,6 +273,8 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
+              data-cuelume-press
+              data-cuelume-release
               animate={{ scale: hovered ? 1 : 0.8, opacity: hovered ? 1 : 0 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-2.5 rounded-full px-7 py-3 text-sm font-bold text-white"
@@ -382,6 +384,7 @@ export default function ProjectsSection() {
             <button
               key={f.value}
               type="button"
+              data-cuelume-toggle
               onClick={() => setActiveFilter(f.value)}
               className={`rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
                 activeFilter === f.value
@@ -426,6 +429,8 @@ export default function ProjectsSection() {
           <p className="mb-4 text-sm text-muted-foreground">Have a project in mind?</p>
           <a
             href="#contact"
+            data-cuelume-press
+            data-cuelume-release
             className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
           >
             {"Let's build it together"}
