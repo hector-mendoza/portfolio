@@ -7,6 +7,23 @@ import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 
 const projects = [
   {
+    title: "Agent Ready",
+    subtitle: "npm Package · AI Crawler Toolkit",
+    description:
+      "Makes your web app readable by AI agents and crawlers, automatically. A typed config generates robots.txt (with Content-Signal directives), llms.txt, sitemap.xml, an MCP server card, and an API catalog — plus a CLI to audit any live site. MIT licensed monorepo with core, Next.js, and CLI packages.",
+    tags: ["TypeScript", "npm", "Next.js", "CLI", "Monorepo"],
+    url: "https://github.com/hector-mendoza/agent-ready",
+    year: "2026",
+    category: "Dev Tool",
+    accent: "#EF4444",
+    gradient: "from-red-950 via-orange-900 to-rose-900/60",
+    preview: {
+      bar: "npm i @is-agent-ready/next",
+      lines: ["65%", "90%", "50%", "75%"],
+      btnColor: "#EF4444",
+    },
+  },
+  {
     title: "Emoji of the Day",
     subtitle: "Mood Tracker & Easter Egg",
     description:
@@ -149,6 +166,7 @@ const FILTERS = [
   { label: "All",         value: "all" },
   { label: "Hospitality", value: "Hospitality" },
   { label: "Design Tool", value: "Design Tool" },
+  { label: "Dev Tool",    value: "Dev Tool" },
   { label: "Corporate",   value: "Corporate" },
   { label: "Creative Dev",value: "Creative Dev" },
   { label: "Wellness",    value: "Wellness" },
