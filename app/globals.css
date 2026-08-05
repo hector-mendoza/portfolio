@@ -730,3 +730,86 @@ body {
   line-height: 1.7;
   color: hsl(var(--foreground));
 }
+
+/* ── Ambient fog (auto-moving, fixed) ── */
+@keyframes fog-drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.45; }
+  33% { transform: translate(6vw, -4vh) scale(1.08); opacity: 0.55; }
+  66% { transform: translate(-4vw, 5vh) scale(0.95); opacity: 0.4; }
+}
+
+@keyframes fog-drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.35; }
+  50% { transform: translate(-8vw, -3vh) scale(1.12); opacity: 0.5; }
+}
+
+@keyframes fog-drift-c {
+  0%, 100% { transform: translate(0, 0) scale(1.05); opacity: 0.3; }
+  40% { transform: translate(5vw, 6vh) scale(0.92); opacity: 0.45; }
+  80% { transform: translate(-3vw, -2vh) scale(1.1); opacity: 0.35; }
+}
+
+.ambient-fog {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform, opacity;
+}
+
+.ambient-fog-1 {
+  top: -10%;
+  left: -5%;
+  width: 55vw;
+  height: 55vh;
+  background: hsl(152 45% 28% / 0.12);
+  animation: fog-drift-a 22s ease-in-out infinite;
+}
+
+.ambient-fog-2 {
+  top: 30%;
+  right: -10%;
+  width: 45vw;
+  height: 45vh;
+  background: hsl(158 40% 45% / 0.1);
+  animation: fog-drift-b 28s ease-in-out infinite;
+}
+
+.ambient-fog-3 {
+  bottom: -5%;
+  left: 20%;
+  width: 50vw;
+  height: 40vh;
+  background: hsl(150 30% 60% / 0.08);
+  animation: fog-drift-c 32s ease-in-out infinite;
+}
+
+.ambient-fog-4 {
+  top: 55%;
+  left: -8%;
+  width: 35vw;
+  height: 35vh;
+  background: hsl(152 45% 28% / 0.07);
+  animation: fog-drift-b 26s ease-in-out infinite reverse;
+}
+
+.dark .ambient-fog-1 { background: hsl(152 48% 45% / 0.15); }
+.dark .ambient-fog-2 { background: hsl(158 42% 52% / 0.12); }
+.dark .ambient-fog-3 { background: hsl(150 30% 40% / 0.1); }
+.dark .ambient-fog-4 { background: hsl(152 48% 45% / 0.1); }
+
+/* ── ASCII drift (auto-moving, fixed) ── */
+@keyframes ascii-float {
+  0% { transform: translateX(-8vw) translateY(0); opacity: 0; }
+  8% { opacity: 0.35; }
+  92% { opacity: 0.35; }
+  100% { transform: translateX(108vw) translateY(-12vh); opacity: 0; }
+}
+
+.ascii-drift {
+  animation: ascii-float linear infinite;
+  user-select: none;
+}
+
+.dark .ascii-drift {
+  color: hsl(152 48% 45% / 0.15);
+}

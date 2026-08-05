@@ -41,13 +41,12 @@ export default function ContactSection() {
           <ContactInfo />
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-5">
+        <div className="grid gap-6 lg:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="lg:col-span-3"
           >
             <ContactForm />
           </motion.div>

@@ -5,13 +5,12 @@ import { motion } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import {
   ArrowUpRight,
-  Circle,
-  CircleDot,
   Gamepad2,
   Sparkles,
   SquareArrowOutUpRight,
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
+import BentoSocialGrid from "./bento-social-grid";
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
@@ -80,39 +79,8 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        {/* ── Available (1×1) ── */}
-        <motion.div
-          variants={card}
-          data-game-target
-          onMouseEnter={() => setHoveredCard("available")}
-          onMouseLeave={() => setHoveredCard(null)}
-          className="col-span-2 md:col-span-2 rounded-3xl glass-card-primary p-5 flex flex-col"
-          style={{ minHeight: "160px" }}
-        >
-          <div className="flex items-center gap-2 mb-auto">
-            <MorphIcon
-              icon={hoveredCard === "available" ? CircleDot : Circle}
-              size={14}
-              color="hsl(var(--primary))"
-              spring="snappy"
-            />
-            <span className="font-mono text-xs uppercase tracking-widest text-primary">
-              Available
-            </span>
-          </div>
-
-          <div className="flex items-center justify-center py-3">
-            <div className="relative flex items-center justify-center">
-              <span className="absolute h-14 w-14 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
-              <span className="absolute h-10 w-10 rounded-full bg-primary/15 animate-ping" style={{ animationDuration: "1.8s", animationDelay: "0.3s" }} />
-              <span className="relative h-6 w-6 rounded-full bg-primary/60 shadow-lg shadow-primary/40" />
-            </div>
-          </div>
-
-          <p className="mt-auto text-xs leading-snug text-muted-foreground">
-            Open to new projects &amp; collaborations
-          </p>
-        </motion.div>
+        {/* ── Social bento (2×2) ── */}
+        <BentoSocialGrid cardVariant={card} />
 
         {/* ── Currently at UrVenue (2×1) — fills row 2 gap ── */}
         <motion.a

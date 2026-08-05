@@ -1,8 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { MailIcon, GlobeIcon } from "@animateicons/react/lucide";
-import SocialLinks from "./social-links";
+import { MailIcon } from "@animateicons/react/lucide";
 
 function ContactRow({ Icon, label, children }) {
   const ref = useRef(null);
@@ -25,7 +24,7 @@ function ContactRow({ Icon, label, children }) {
 
 export default function ContactInfo() {
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+    <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-10">
       <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
         {"Interested in working together? Whether you need a "}
         <span className="font-medium text-foreground">new website</span>
@@ -36,33 +35,15 @@ export default function ContactInfo() {
         {", I'd love to hear about your project."}
       </p>
 
-      <div className="flex flex-col gap-6 sm:flex-row sm:flex-wrap lg:flex-col xl:flex-row xl:items-center xl:gap-10">
-        <div className="flex flex-wrap gap-x-8 gap-y-4">
-          <ContactRow Icon={MailIcon} label="Email">
-            <a
-              href="mailto:hey@hectormendoza.me"
-              data-cuelume-hover="tick"
-              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
-            >
-              hey@hectormendoza.me
-            </a>
-          </ContactRow>
-
-          <ContactRow Icon={GlobeIcon} label="Website">
-            <a
-              href="https://hectormendoza.me"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cuelume-hover="tick"
-              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
-            >
-              hectormendoza.me
-            </a>
-          </ContactRow>
-        </div>
-
-        <SocialLinks />
-      </div>
+      <ContactRow Icon={MailIcon} label="Email">
+        <a
+          href="mailto:hey@hectormendoza.me"
+          data-cuelume-hover="tick"
+          className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+        >
+          hey@hectormendoza.me
+        </a>
+      </ContactRow>
     </div>
   );
 }
