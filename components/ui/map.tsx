@@ -18,7 +18,8 @@ import {
   type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
+import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide";
+import { MorphIcon } from "morphicons/react";
 
 import { cn } from "@/lib/utils";
 
@@ -604,7 +605,7 @@ function PopupCloseButton({ onClick }: { onClick: () => void }) {
       aria-label="Close popup"
       className="focus-visible:ring-ring hover:bg-muted text-foreground absolute top-1 right-1 z-10 inline-flex size-5 cursor-pointer items-center justify-center rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-inset"
     >
-      <X className="size-3.5" />
+      <MorphIcon icon={X} size={14} color="currentColor" className="size-3.5" />
     </button>
   );
 }
@@ -914,10 +915,10 @@ function MapControls({
       {showZoom && (
         <ControlGroup>
           <ControlButton onClick={handleZoomIn} label="Zoom in">
-            <Plus className="size-4" />
+            <MorphIcon icon={Plus} size={16} color="currentColor" className="size-4" />
           </ControlButton>
           <ControlButton onClick={handleZoomOut} label="Zoom out">
-            <Minus className="size-4" />
+            <MorphIcon icon={Minus} size={16} color="currentColor" className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}
@@ -934,9 +935,14 @@ function MapControls({
             disabled={waitingForLocation}
           >
             {waitingForLocation ? (
-              <Loader2 className="size-4 animate-spin" />
+              <MorphIcon
+                icon={Loader2}
+                size={16}
+                color="currentColor"
+                className="size-4 animate-spin"
+              />
             ) : (
-              <Locate className="size-4" />
+              <MorphIcon icon={Locate} size={16} color="currentColor" className="size-4" />
             )}
           </ControlButton>
         </ControlGroup>
@@ -944,7 +950,7 @@ function MapControls({
       {showFullscreen && (
         <ControlGroup>
           <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
-            <Maximize className="size-4" />
+            <MorphIcon icon={Maximize} size={16} color="currentColor" className="size-4" />
           </ControlButton>
         </ControlGroup>
       )}

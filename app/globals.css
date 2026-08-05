@@ -22,20 +22,7 @@
     --border: 240 6% 88%;
     --input: 240 6% 88%;
     --ring: 13 71% 50%;
-    --chart-1: 145 65% 42%;
-    --chart-2: 340 65% 50%;
-    --chart-3: 197 37% 35%;
-    --chart-4: 43 74% 55%;
-    --chart-5: 27 87% 57%;
     --radius: 0.75rem;
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 240 10% 10%;
-    --sidebar-primary: 13 71% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 93%;
-    --sidebar-accent-foreground: 240 10% 20%;
-    --sidebar-border: 240 6% 88%;
-    --sidebar-ring: 13 71% 50%;
   }
 
   .dark {
@@ -58,20 +45,7 @@
     --border: 240 6% 16%;
     --input: 240 6% 16%;
     --ring: 13 75% 58%;
-    --chart-1: 145 65% 52%;
-    --chart-2: 340 65% 55%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
     --radius: 0.75rem;
-    --sidebar-background: 240 7% 9%;
-    --sidebar-foreground: 40 20% 94%;
-    --sidebar-primary: 13 75% 58%;
-    --sidebar-primary-foreground: 240 8% 6%;
-    --sidebar-accent: 240 6% 14%;
-    --sidebar-accent-foreground: 40 20% 94%;
-    --sidebar-border: 240 6% 16%;
-    --sidebar-ring: 13 75% 58%;
   }
   .maplibregl-popup-content {
     @apply bg-transparent! shadow-none! p-0! rounded-none!;

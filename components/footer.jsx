@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { GithubIcon, LinkedinIcon } from "@animateicons/react/lucide";
+import { useState } from "react";
+import { Github, Linkedin } from "@/lib/brand-icons";
+import { MorphIconHover } from "@/components/morph-icon-hover";
 
-function FooterSocialLink({ href, label, Icon }) {
-  const ref = useRef(null);
+function FooterSocialLink({ href, label, icon }) {
   const [hovered, setHovered] = useState(false);
+  const muted = "hsl(var(--muted-foreground))";
+  const primary = "hsl(var(--primary))";
+
   return (
     <a
       href={href}
@@ -15,10 +17,16 @@ function FooterSocialLink({ href, label, Icon }) {
       aria-label={label}
       data-cuelume-hover="tick"
       className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-primary font-mono"
-      onMouseEnter={() => { setHovered(true); ref.current?.startAnimation(); }}
-      onMouseLeave={() => { setHovered(false); ref.current?.stopAnimation(); }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <Icon ref={ref} size={14} color={hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"} />
+      <MorphIconHover
+        icon={icon}
+        hovered={hovered}
+        size={14}
+        color={muted}
+        hoverColor={primary}
+      />
       {label}
     </a>
   );
@@ -27,8 +35,8 @@ function FooterSocialLink({ href, label, Icon }) {
 function FooterSocialLinks() {
   return (
     <div className="flex items-center gap-4">
-      <FooterSocialLink href="https://github.com/hector-mendoza" label="GitHub" Icon={GithubIcon} />
-      <FooterSocialLink href="https://www.linkedin.com/in/hector-mendoza-m/" label="LinkedIn" Icon={LinkedinIcon} />
+      <FooterSocialLink href="https://github.com/hector-mendoza" label="GitHub" icon={Github} />
+      <FooterSocialLink href="https://www.linkedin.com/in/hector-mendoza-m/" label="LinkedIn" icon={Linkedin} />
     </div>
   );
 }
