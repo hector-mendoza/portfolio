@@ -2,6 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { MorphIcon } from "morphicons/react";
+import {
+  ArrowUpRight,
+  Circle,
+  CircleDot,
+  Gamepad2,
+  Sparkles,
+  SquareArrowOutUpRight,
+} from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import { Map, MapMarker, MarkerContent } from "@/components/ui/map";
 
@@ -25,6 +34,7 @@ const moreStack = ["Shopify", "Figma"];
 
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
+  const [hoveredCard, setHoveredCard] = useState(null);
   const mapCardRef = useRef(null);
 
   useEffect(() => {
@@ -101,11 +111,18 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
+          onMouseEnter={() => setHoveredCard("available")}
+          onMouseLeave={() => setHoveredCard(null)}
           className="col-span-1 rounded-3xl glass-card-primary p-5 flex flex-col"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-center gap-2 mb-auto">
-            <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <MorphIcon
+              icon={hoveredCard === "available" ? CircleDot : Circle}
+              size={14}
+              color="hsl(var(--primary))"
+              spring="snappy"
+            />
             <span className="font-mono text-xs uppercase tracking-widest text-primary">
               Available
             </span>
@@ -184,6 +201,8 @@ export default function HeroSection() {
           target="_blank"
           rel="noopener noreferrer"
           data-cuelume-hover="tick"
+          onMouseEnter={() => setHoveredCard("cantera")}
+          onMouseLeave={() => setHoveredCard(null)}
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
           style={{ minHeight: "180px" }}
         >
@@ -193,19 +212,13 @@ export default function HeroSection() {
             <span className="font-mono text-xs uppercase tracking-widest text-amber-300/80">
               Latest Build
             </span>
-            <svg
-              className="h-4 w-4 text-amber-300/60 transition-colors group-hover:text-amber-200"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-              />
-            </svg>
+            <MorphIcon
+              icon={hoveredCard === "cantera" ? SquareArrowOutUpRight : ArrowUpRight}
+              size={16}
+              color="hsl(43 96% 76% / 0.8)"
+              spring="snappy"
+              className="transition-opacity group-hover:opacity-100"
+            />
           </div>
           <div className="relative">
             <p className="text-2xl font-bold text-white md:text-3xl">Cantera Diez Hotel</p>
@@ -223,6 +236,8 @@ export default function HeroSection() {
           target="_blank"
           rel="noopener noreferrer"
           data-cuelume-hover="tick"
+          onMouseEnter={() => setHoveredCard("vibe")}
+          onMouseLeave={() => setHoveredCard(null)}
           className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
           style={{ minHeight: "180px" }}
         >
@@ -232,19 +247,13 @@ export default function HeroSection() {
             <span className="font-mono text-xs uppercase tracking-widest text-fuchsia-300/80">
               Featured Project
             </span>
-            <svg
-              className="h-4 w-4 text-fuchsia-300/60 transition-colors group-hover:text-fuchsia-200"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-              />
-            </svg>
+            <MorphIcon
+              icon={hoveredCard === "vibe" ? SquareArrowOutUpRight : ArrowUpRight}
+              size={16}
+              color="hsl(292 91% 83% / 0.8)"
+              spring="snappy"
+              className="transition-opacity group-hover:opacity-100"
+            />
           </div>
           <div className="relative">
             <p className="text-2xl font-bold text-white md:text-3xl">Vibe Theme</p>
@@ -297,6 +306,8 @@ export default function HeroSection() {
         >
           <button
             onClick={() => setGameOpen(true)}
+            onMouseEnter={() => setHoveredCard("gamepad")}
+            onMouseLeave={() => setHoveredCard(null)}
             data-cuelume-press
             data-cuelume-release
             aria-label="Play a hidden mini-game"
@@ -305,9 +316,12 @@ export default function HeroSection() {
           >
             <span className="absolute h-9 w-9 rounded-full bg-primary/10 animate-ping" style={{ animationDuration: "2.4s" }} />
             <span className="relative flex h-8 w-8 items-center justify-center rounded-full glass-subtle text-primary transition-all group-hover:scale-110 group-hover:border-primary/50">
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4m-2-2v4m8-3h.01M17 13h.01M7.5 7h9A4.5 4.5 0 0121 11.5v3a3 3 0 01-5.6 1.5l-.9-1.5H9.5l-.9 1.5A3 3 0 013 14.5v-3A4.5 4.5 0 017.5 7z" />
-              </svg>
+              <MorphIcon
+                icon={hoveredCard === "gamepad" ? Sparkles : Gamepad2}
+                size={16}
+                color="hsl(var(--primary))"
+                spring="bouncy"
+              />
             </span>
           </button>
 

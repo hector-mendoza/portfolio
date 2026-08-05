@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { MorphIcon } from "morphicons/react";
+import { Menu, Moon, Sun, X } from "lucide";
 import { useTheme } from "@/components/theme-provider";
-import { MoonIcon, SunIcon } from "@animateicons/react/lucide";
 
 const navLinks = [
   { label: "Home",       href: "/#hero" },
@@ -20,7 +21,6 @@ export default function Navbar() {
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const themeIconRef = useRef(null);
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = mounted && resolvedTheme === "dark";
   const isHome = pathname === "/";
@@ -98,8 +98,6 @@ export default function Navbar() {
               type="button"
               onClick={toggleTheme}
               data-cuelume-toggle
-              onMouseEnter={() => themeIconRef.current?.startAnimation()}
-              onMouseLeave={() => themeIconRef.current?.stopAnimation()}
               aria-label="Toggle theme"
               className={`flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all hover:border-primary/40 hover:text-primary ${
                 showSolidNav
@@ -107,11 +105,12 @@ export default function Navbar() {
                   : "bg-background/50 text-muted-foreground"
               }`}
             >
-              {isDark ? (
-                <SunIcon ref={themeIconRef} size={16} color="currentColor" />
-              ) : (
-                <MoonIcon ref={themeIconRef} size={16} color="currentColor" />
-              )}
+              <MorphIcon
+                icon={mounted && isDark ? Sun : Moon}
+                size={16}
+                color="currentColor"
+                spring="snappy"
+              />
             </button>
             <a
               href="/#contact"
@@ -123,26 +122,18 @@ export default function Navbar() {
             </a>
             <button
               type="button"
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={() => setMobileOpen((open) => !open)}
               data-cuelume-press
               data-cuelume-release
-              className="flex flex-col gap-1.5 p-2 md:hidden"
+              className="flex h-9 w-9 items-center justify-center rounded-full text-foreground md:hidden"
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
-              <motion.span
-                animate={mobileOpen ? { rotate: 45, y: 7.5 }  : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="block h-0.5 w-6 bg-foreground"
-              />
-              <motion.span
-                animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="block h-0.5 w-6 bg-foreground"
-              />
-              <motion.span
-                animate={mobileOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="block h-0.5 w-6 bg-foreground"
+              <MorphIcon
+                icon={mobileOpen ? X : Menu}
+                size={22}
+                color="currentColor"
+                spring="snappy"
               />
             </button>
           </div>
