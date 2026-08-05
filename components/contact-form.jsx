@@ -109,7 +109,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-3xl border border-border/60 bg-card p-8 shadow-sm">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex h-full min-h-[420px] w-full flex-col space-y-6 rounded-3xl border border-border/60 bg-card p-8 shadow-sm">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label

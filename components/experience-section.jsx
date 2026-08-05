@@ -97,7 +97,7 @@ function SkillCard({ skill, index }) {
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="relative py-16 md:py-32 bg-background/90">
+    <section id="experience" className="relative py-16 md:py-32">
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <motion.div

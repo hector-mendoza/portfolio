@@ -10,6 +10,8 @@ export default function AmbientBackground() {
       <div className="ambient-fog ambient-fog-2" />
       <div className="ambient-fog ambient-fog-3" />
       <div className="ambient-fog ambient-fog-4" />
+      <div className="ambient-fog ambient-fog-5" />
+      <div className="ambient-fog ambient-fog-6" />
     </div>
   );
 }

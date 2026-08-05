@@ -31,7 +31,7 @@ export default function AboutSection() {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-16 md:py-32 overflow-hidden bg-background/90"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       {/* Horizontal scrolling background text */}
       <div className="absolute top-1/2 -translate-y-1/2 left-0 pointer-events-none overflow-hidden whitespace-nowrap opacity-[0.02]">

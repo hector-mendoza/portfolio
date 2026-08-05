@@ -49,7 +49,7 @@ export default function LocationMap() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative h-[420px] overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm lg:h-[540px]"
+      className="relative flex h-full min-h-[420px] overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm"
     >
       <div className="absolute inset-0 z-0 [&_.maplibregl-ctrl-group]:shadow-md">
         <Map

@@ -7,12 +7,7 @@ import LocationMap from "./location-map";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative py-16 md:py-32 bg-background/90">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute top-1/4 right-0 h-80 w-80 rounded-full bg-accent/5 blur-3xl" />
-      </div>
-
+    <section id="contact" className="relative py-16 md:py-32">
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -42,12 +37,13 @@ export default function ContactSection() {
           <ContactInfo />
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
+            className="flex min-h-[420px] h-full"
           >
             <ContactForm />
           </motion.div>
