@@ -1,12 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { MorphIconHover } from "@/components/morph-icon-hover";
 import { socialLinks } from "./social-links";
 
-function BentoSocialTile({ label, href, Icon, customSvgPath, index }) {
-  const ref = useRef(null);
+function BentoSocialTile({ label, href, icon, customSvgPath, index }) {
   const [hovered, setHovered] = useState(false);
+  const muted = "hsl(var(--muted-foreground))";
+  const primary = "hsl(var(--primary))";
 
   return (
     <motion.a
@@ -16,14 +18,8 @@ function BentoSocialTile({ label, href, Icon, customSvgPath, index }) {
       data-cuelume-hover="tick"
       data-game-target
       aria-label={label}
-      onMouseEnter={() => {
-        setHovered(true);
-        ref.current?.startAnimation?.();
-      }}
-      onMouseLeave={() => {
-        setHovered(false);
-        ref.current?.stopAnimation?.();
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-border/50 bg-card/80 p-3 transition-all hover:border-primary/35 hover:bg-primary/5 hover:shadow-md hover:shadow-primary/10"
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
@@ -31,16 +27,18 @@ function BentoSocialTile({ label, href, Icon, customSvgPath, index }) {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.1 + index * 0.05, duration: 0.4 }}
     >
-      {Icon ? (
-        <Icon
-          ref={ref}
+      {icon ? (
+        <MorphIconHover
+          icon={icon}
+          hovered={hovered}
           size={22}
-          color={hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
+          color={muted}
+          hoverColor={primary}
         />
       ) : (
         <svg
           className="h-[22px] w-[22px] transition-colors"
-          style={{ color: hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}
+          style={{ color: hovered ? primary : muted }}
           fill="currentColor"
           viewBox="0 0 24 24"
           aria-hidden="true"
