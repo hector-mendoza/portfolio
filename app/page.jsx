@@ -10,7 +10,7 @@ import ProjectsSection from "@/components/projects-section";
 
 export default function Page() {
   return (
-    <main className="relative">
+    <main className="relative z-10">
       <PageLoader />
       <Navbar />
       <HeroSection />

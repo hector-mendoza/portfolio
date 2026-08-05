@@ -357,7 +357,7 @@ export default function ProjectsSection() {
   }, [activeFilter]);
 
   return (
-    <section id="projects" className="relative py-16 md:py-32 bg-background/90">
+    <section id="projects" className="relative py-16 md:py-32">
       <VibeEasterEgg active={vibeHovered} />
       <EmojiDayEasterEgg active={emojiDayHovered} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

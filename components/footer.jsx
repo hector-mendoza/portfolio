@@ -1,50 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Github, Linkedin } from "@/lib/brand-icons";
-import { MorphIconHover } from "@/components/morph-icon-hover";
-
-function FooterSocialLink({ href, label, icon }) {
-  const [hovered, setHovered] = useState(false);
-  const muted = "hsl(var(--muted-foreground))";
-  const primary = "hsl(var(--primary))";
-
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={label}
-      data-cuelume-hover="tick"
-      className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-primary font-mono"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <MorphIconHover
-        icon={icon}
-        hovered={hovered}
-        size={14}
-        color={muted}
-        hoverColor={primary}
-      />
-      {label}
-    </a>
-  );
-}
-
-function FooterSocialLinks() {
-  return (
-    <div className="flex items-center gap-4">
-      <FooterSocialLink href="https://github.com/hector-mendoza" label="GitHub" icon={Github} />
-      <FooterSocialLink href="https://www.linkedin.com/in/hector-mendoza-m/" label="LinkedIn" icon={Linkedin} />
-    </div>
-  );
-}
+import { motion } from "framer-motion";
+import SocialLinks from "./social-links";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto max-w-7xl px-6 py-6">
+    <footer className="relative z-10 border-t border-border/60 bg-background/50 backdrop-blur-xl">
+      <div className="mx-auto max-w-7xl px-6 py-8">
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card dark:border-primary/30 dark:bg-primary/15">
@@ -70,7 +32,14 @@ export default function Footer() {
             </a>
           </p>
 
-          <FooterSocialLinks />
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <SocialLinks />
+          </motion.div>
         </div>
       </div>
     </footer>

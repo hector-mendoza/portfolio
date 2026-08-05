@@ -1,14 +1,16 @@
 import React from "react"
-import { Space_Grotesk, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Outfit, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import { ThemeProvider } from "@/components/theme-provider";
 import CuelumeProvider from "@/components/cuelume-provider";
+import AmbientBackground from "@/components/ambient-background";
+import AsciiDrift from "@/components/ascii-drift";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-outfit",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -57,7 +59,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0F0A09",
+  themeColor: "#1A5F6E",
   width: "device-width",
   initialScale: 1,
 };
@@ -90,9 +92,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
+        className={`${outfit.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+          <AmbientBackground />
+          <AsciiDrift />
           <ErrorBoundary>
             <CuelumeProvider />
             <ToasterProvider />
