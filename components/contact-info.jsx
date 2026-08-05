@@ -1,19 +1,33 @@
 "use client";
 
-import { useRef } from "react";
-import { MailIcon, MapPinIcon, GlobeIcon } from "@animateicons/react/lucide";
+import { useState } from "react";
+import { Mail, MapPin, Globe, MailOpen, Navigation, ExternalLink } from "lucide";
+import { MorphIconHover } from "@/components/morph-icon-hover";
 import SocialLinks from "./social-links";
 
-function ContactRow({ Icon, label, children }) {
-  const ref = useRef(null);
+const contactRows = [
+  { icon: Mail, hoverIcon: MailOpen, label: "Email" },
+  { icon: MapPin, hoverIcon: Navigation, label: "Location" },
+  { icon: Globe, hoverIcon: ExternalLink, label: "Website" },
+];
+
+function ContactRow({ icon, hoverIcon, label, children }) {
+  const [hovered, setHovered] = useState(false);
+
   return (
     <div
       className="flex items-center gap-3 group"
-      onMouseEnter={() => ref.current?.startAnimation()}
-      onMouseLeave={() => ref.current?.stopAnimation()}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
-        <Icon ref={ref} size={20} color="hsl(var(--primary))" />
+        <MorphIconHover
+          icon={icon}
+          hoverIcon={hoverIcon}
+          hovered={hovered}
+          size={20}
+          color="hsl(var(--primary))"
+        />
       </div>
       <div>
         <p className="text-xs text-muted-foreground">{label}</p>
@@ -37,7 +51,7 @@ export default function ContactInfo() {
       </p>
 
       <div className="mb-10 space-y-4">
-        <ContactRow Icon={MailIcon} label="Email">
+        <ContactRow {...contactRows[0]}>
           <a
             href="mailto:hey@hectormendoza.me"
             data-cuelume-hover="tick"
@@ -47,11 +61,11 @@ export default function ContactInfo() {
           </a>
         </ContactRow>
 
-        <ContactRow Icon={MapPinIcon} label="Location">
+        <ContactRow {...contactRows[1]}>
           <p className="text-sm font-medium text-foreground">Morelia, Mexico</p>
         </ContactRow>
 
-        <ContactRow Icon={GlobeIcon} label="Website">
+        <ContactRow {...contactRows[2]}>
           <a
             href="https://hectormendoza.me"
             target="_blank"

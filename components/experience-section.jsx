@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { CodeXmlIcon, ShoppingBagIcon, FigmaIcon } from "@animateicons/react/lucide";
+import { CodeXml, ShoppingBag, PenTool, Terminal, ShoppingCart, Palette } from "lucide";
+import { MorphIconHover } from "@/components/morph-icon-hover";
 
 const experiences = [
   {
@@ -68,7 +69,8 @@ const education = [
 ];
 
 function SkillCard({ skill, index }) {
-  const ref = useRef(null);
+  const [hovered, setHovered] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -76,11 +78,17 @@ function SkillCard({ skill, index }) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       className="group rounded-2xl glass-card p-8"
-      onMouseEnter={() => ref.current?.startAnimation()}
-      onMouseLeave={() => ref.current?.stopAnimation()}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-all group-hover:bg-primary/20">
-        <skill.Icon ref={ref} size={24} color="hsl(var(--primary))" />
+        <MorphIconHover
+          icon={skill.icon}
+          hoverIcon={skill.hoverIcon}
+          hovered={hovered}
+          size={24}
+          color="hsl(var(--primary))"
+        />
       </div>
       <h4 className="mb-4 text-lg font-bold text-foreground">{skill.title}</h4>
       <ul className="space-y-2">
@@ -233,9 +241,9 @@ export default function ExperienceSection() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { title: "Frontend Development", Icon: CodeXmlIcon,    items: ["React / Next.js", "TypeScript", "Tailwind CSS", "Three.js / R3F"] },
-              { title: "CMS & E-Commerce",     Icon: ShoppingBagIcon, items: ["WordPress", "Shopify", "WooCommerce", "Headless CMS"] },
-              { title: "Design & UX",          Icon: FigmaIcon,       items: ["Figma", "Adobe XD", "Responsive Design", "Pixel Perfect"] },
+              { title: "Frontend Development", icon: CodeXml, hoverIcon: Terminal, items: ["React / Next.js", "TypeScript", "Tailwind CSS", "Three.js / R3F"] },
+              { title: "CMS & E-Commerce", icon: ShoppingBag, hoverIcon: ShoppingCart, items: ["WordPress", "Shopify", "WooCommerce", "Headless CMS"] },
+              { title: "Design & UX", icon: PenTool, hoverIcon: Palette, items: ["Figma", "Adobe XD", "Responsive Design", "Pixel Perfect"] },
             ].map((skill, i) => (
               <SkillCard key={skill.title} skill={skill} index={i} />
             ))}
