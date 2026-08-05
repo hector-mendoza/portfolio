@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import {
@@ -12,8 +12,6 @@ import {
   SquareArrowOutUpRight,
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
-import { Map, MapMarker, MarkerContent } from "@/components/ui/map";
-
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
@@ -35,31 +33,6 @@ const moreStack = ["Shopify", "Figma"];
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const mapCardRef = useRef(null);
-
-  useEffect(() => {
-    const container = mapCardRef.current;
-    if (!container) return;
-
-    // MapLibre auto-opens its attribution disclosure on load. The map
-    // layer here is pointer-events-none (static preview), so nothing
-    // ever closes it back — keep it closed to a small icon instead.
-    const closeAttribution = () => {
-      container
-        .querySelectorAll(".maplibregl-ctrl-attrib[open]")
-        .forEach((el) => el.removeAttribute("open"));
-    };
-
-    closeAttribution();
-    const observer = new MutationObserver(closeAttribution);
-    observer.observe(container, {
-      attributes: true,
-      attributeFilter: ["open"],
-      subtree: true,
-    });
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <section
       id="hero"
@@ -113,7 +86,7 @@ export default function HeroSection() {
           data-game-target
           onMouseEnter={() => setHoveredCard("available")}
           onMouseLeave={() => setHoveredCard(null)}
-          className="col-span-1 rounded-3xl glass-card-primary p-5 flex flex-col"
+          className="col-span-2 md:col-span-2 rounded-3xl glass-card-primary p-5 flex flex-col"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-center gap-2 mb-auto">
@@ -139,28 +112,6 @@ export default function HeroSection() {
           <p className="mt-auto text-xs leading-snug text-muted-foreground">
             Open to new projects &amp; collaborations
           </p>
-        </motion.div>
-
-        {/* ── Location (1×1) ── */}
-        <motion.div
-          ref={mapCardRef}
-          variants={card}
-          data-game-target
-          className="col-span-1 relative rounded-3xl glass-card overflow-hidden"
-          style={{ minHeight: "160px" }}
-        >
-          <div className="absolute inset-0 pointer-events-none">
-            <Map center={[-101.19, 19.7]} zoom={13} className="h-full w-full">
-              <MapMarker longitude={-101.19} latitude={19.7}>
-                <MarkerContent>
-                  <div className="h-4 w-4 rounded-full border-2 border-white bg-primary shadow-lg" />
-                </MarkerContent>
-              </MapMarker>
-            </Map>
-          </div>
-          <div className="absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-black/70 via-black/20 to-transparent p-4 pt-10">
-            <p className="text-base font-bold text-white">Morelia, Mexico</p>
-          </div>
         </motion.div>
 
         {/* ── Currently at UrVenue (2×1) — fills row 2 gap ── */}

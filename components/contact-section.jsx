@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ContactInfo from "./contact-info";
 import ContactForm from "./contact-form";
+import LocationMap from "./location-map";
 
 export default function ContactSection() {
   return (
@@ -40,14 +41,18 @@ export default function ContactSection() {
             <ContactInfo />
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <ContactForm />
-          </motion.div>
+          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="h-full"
+            >
+              <ContactForm />
+            </motion.div>
+            <LocationMap />
+          </div>
         </div>
       </div>
     </section>

@@ -109,7 +109,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-2xl glass-card p-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="h-full space-y-6 rounded-2xl glass-card p-8">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label
@@ -193,7 +193,7 @@ export default function ContactForm() {
           onVerify={handleCaptchaVerify}
           onExpire={handleCaptchaExpire}
           onError={handleCaptchaExpire}
-          theme="dark"
+          theme="light"
         />
       </div>
       {errors.captchaToken && (
