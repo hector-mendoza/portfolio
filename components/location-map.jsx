@@ -67,8 +67,8 @@ export default function LocationMap() {
           </MapMarker>
         </Map>
       </div>
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-primary/[0.06]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-primary via-primary/70 to-transparent p-5 pt-20">
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-linear-to-br from-primary/[0.07] via-transparent to-accent/[0.08]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-primary via-accent/80 to-transparent p-5 pt-20">
         <p className="text-base font-bold text-white">Morelia, Mexico</p>
         <p className="mt-0.5 text-xs text-white/80">Available for remote &amp; local work</p>
       </div>

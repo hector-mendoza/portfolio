@@ -17,7 +17,7 @@ export default function AsciiDrift() {
       {ASCII_SNIPPETS.map((text, index) => (
         <pre
           key={index}
-          className="ascii-drift absolute font-mono text-[10px] leading-relaxed whitespace-pre text-primary/20 sm:text-xs"
+          className="ascii-drift absolute font-mono text-[10px] leading-relaxed whitespace-pre sm:text-xs"
           style={{
             top: `${8 + index * 11}%`,
             left: `${-5 + (index % 4) * 24}%`,
