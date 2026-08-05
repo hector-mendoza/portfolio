@@ -83,8 +83,8 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.5.4",
     "postcss": "^8.5",
-    "shadcn": "^4.16.0",
+    "shadcn": "^4.16.1",
     "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }
