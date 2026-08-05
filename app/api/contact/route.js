@@ -2,7 +2,13 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+        throw new Error('RESEND_API_KEY is not configured');
+    }
+    return new Resend(apiKey);
+}
 
 // Validation schema
 const contactSchema = z.object({
@@ -78,6 +84,7 @@ export async function POST(request) {
         const escapedMessage = escapeHtml(message).replace(/\n/g, '<br>');
 
         // Send email using Resend
+        const resend = getResend();
         const data = await resend.emails.send({
             from: `Portfolio Contact <${process.env.CONTACT_EMAIL || 'contact@hectormendoza.me'}>`,
             to: [process.env.CONTACT_EMAIL || 'hey@hectormendoza.me'],
