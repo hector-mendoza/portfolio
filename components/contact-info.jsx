@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { MailIcon, MapPinIcon, GlobeIcon } from "@animateicons/react/lucide";
+import { MailIcon, GlobeIcon } from "@animateicons/react/lucide";
 import SocialLinks from "./social-links";
 
 function ContactRow({ Icon, label, children }) {
@@ -12,7 +12,7 @@ function ContactRow({ Icon, label, children }) {
       onMouseEnter={() => ref.current?.startAnimation()}
       onMouseLeave={() => ref.current?.stopAnimation()}
     >
-      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-colors group-hover:bg-primary/20">
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/15">
         <Icon ref={ref} size={20} color="hsl(var(--primary))" />
       </div>
       <div>
@@ -25,46 +25,44 @@ function ContactRow({ Icon, label, children }) {
 
 export default function ContactInfo() {
   return (
-    <div>
-      <p className="mb-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
+    <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-12">
+      <p className="max-w-2xl text-lg leading-relaxed text-muted-foreground">
         {"Interested in working together? Whether you need a "}
-        <span className="text-foreground font-medium">new website</span>
+        <span className="font-medium text-foreground">new website</span>
         {", an "}
-        <span className="text-foreground font-medium">e-commerce platform</span>
+        <span className="font-medium text-foreground">e-commerce platform</span>
         {", or a "}
-        <span className="text-foreground font-medium">custom web application</span>
+        <span className="font-medium text-foreground">custom web application</span>
         {", I'd love to hear about your project."}
       </p>
 
-      <div className="mb-10 space-y-4">
-        <ContactRow Icon={MailIcon} label="Email">
-          <a
-            href="mailto:hey@hectormendoza.me"
-            data-cuelume-hover="tick"
-            className="text-sm font-medium text-foreground transition-colors hover:text-primary"
-          >
-            hey@hectormendoza.me
-          </a>
-        </ContactRow>
+      <div className="flex flex-col gap-6 sm:flex-row sm:flex-wrap lg:flex-col xl:flex-row xl:items-center xl:gap-10">
+        <div className="flex flex-wrap gap-x-8 gap-y-4">
+          <ContactRow Icon={MailIcon} label="Email">
+            <a
+              href="mailto:hey@hectormendoza.me"
+              data-cuelume-hover="tick"
+              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+            >
+              hey@hectormendoza.me
+            </a>
+          </ContactRow>
 
-        <ContactRow Icon={MapPinIcon} label="Location">
-          <p className="text-sm font-medium text-foreground">Morelia, Mexico</p>
-        </ContactRow>
+          <ContactRow Icon={GlobeIcon} label="Website">
+            <a
+              href="https://hectormendoza.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cuelume-hover="tick"
+              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+            >
+              hectormendoza.me
+            </a>
+          </ContactRow>
+        </div>
 
-        <ContactRow Icon={GlobeIcon} label="Website">
-          <a
-            href="https://hectormendoza.me"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-cuelume-hover="tick"
-            className="text-sm font-medium text-foreground transition-colors hover:text-primary"
-          >
-            hectormendoza.me
-          </a>
-        </ContactRow>
+        <SocialLinks />
       </div>
-
-      <SocialLinks />
     </div>
   );
 }

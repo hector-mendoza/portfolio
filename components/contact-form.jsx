@@ -109,7 +109,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full space-y-6 rounded-2xl glass-card p-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 rounded-3xl border border-border/60 bg-card p-8 shadow-sm">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <label
@@ -122,7 +122,7 @@ export default function ContactForm() {
             type="text"
             id="name"
             {...register("name")}
-            className="w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+            className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/15"
             placeholder="Your name"
           />
           {errors.name && (
@@ -140,7 +140,7 @@ export default function ContactForm() {
             type="email"
             id="email"
             {...register("email")}
-            className="w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+            className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/15"
             placeholder="you@email.com"
           />
           {errors.email && (
@@ -159,7 +159,7 @@ export default function ContactForm() {
           type="text"
           id="subject"
           {...register("subject")}
-          className="w-full rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+          className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/15"
           placeholder="Project inquiry"
         />
         {errors.subject && (
@@ -177,7 +177,7 @@ export default function ContactForm() {
           id="message"
           rows={5}
           {...register("message")}
-          className="w-full resize-none rounded-lg border border-border bg-secondary px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary/50 focus:ring-1 focus:ring-primary/25"
+          className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder-muted-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/15"
           placeholder="Tell me about your project..."
         />
         {errors.message && (
@@ -205,7 +205,7 @@ export default function ContactForm() {
         disabled={isSubmitting || !captchaToken}
         data-cuelume-press
         data-cuelume-release
-        className="group flex w-full items-center justify-center gap-2 btn-juicy btn-juicy-md px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"
+        className="group flex w-full items-center justify-center gap-2 rounded-full btn-juicy btn-juicy-pill px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
         <svg

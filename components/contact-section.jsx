@@ -18,7 +18,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-20"
+          className="mb-12 md:mb-14"
         >
           <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
             Contact
@@ -31,28 +31,27 @@ export default function ContactSection() {
           </h2>
         </motion.div>
 
-        <div className="grid gap-16 lg:grid-cols-2">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-10"
+        >
+          <ContactInfo />
+        </motion.div>
+
+        <div className="grid gap-6 lg:grid-cols-5">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="lg:col-span-3"
           >
-            <ContactInfo />
+            <ContactForm />
           </motion.div>
-
-          <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="h-full"
-            >
-              <ContactForm />
-            </motion.div>
-            <LocationMap />
-          </div>
+          <LocationMap />
         </div>
       </div>
     </section>
