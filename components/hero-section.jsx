@@ -47,7 +47,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="col-span-2 row-span-2 rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
+          className="order-1 col-span-2 row-span-2 rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
           <div>
@@ -88,7 +88,7 @@ export default function HeroSection() {
           data-game-target
           href="#experience"
           data-cuelume-hover="tick"
-          className="col-span-2 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
+          className="order-4 col-span-2 md:order-3 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-start justify-between gap-3">
@@ -122,7 +122,7 @@ export default function HeroSection() {
           data-cuelume-hover="tick"
           onMouseEnter={() => setHoveredCard("cantera")}
           onMouseLeave={() => setHoveredCard(null)}
-          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
+          className="order-5 col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient md:order-4"
           style={{ minHeight: "180px" }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-amber-950 via-stone-900 to-amber-900/80 transition-all duration-500 group-hover:from-amber-900 group-hover:via-stone-800 group-hover:to-amber-800/80" />
@@ -157,7 +157,7 @@ export default function HeroSection() {
           data-cuelume-hover="tick"
           onMouseEnter={() => setHoveredCard("vibe")}
           onMouseLeave={() => setHoveredCard(null)}
-          className="col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient"
+          className="order-6 col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient md:order-5"
           style={{ minHeight: "180px" }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-violet-950 via-fuchsia-950 to-purple-950 transition-all duration-500 group-hover:from-violet-900 group-hover:via-fuchsia-900 group-hover:to-purple-900" />
@@ -182,13 +182,13 @@ export default function HeroSection() {
           </div>
         </motion.a>
 
-        {/* ── About / profile (2×1) ── */}
+        {/* ── About / profile (2×1) — first after identity on mobile ── */}
         <motion.a
           variants={card}
           data-game-target
           href="#about"
           data-cuelume-hover="tick"
-          className="col-span-2 rounded-3xl glass-card p-5 flex items-center gap-5 group"
+          className="order-2 col-span-2 rounded-3xl glass-card p-5 flex items-center gap-5 group md:order-6"
           style={{ minHeight: "140px" }}
         >
           <div
@@ -220,7 +220,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="relative col-span-2 rounded-3xl glass-card p-5 flex flex-col justify-between"
+          className="relative order-7 col-span-2 rounded-3xl glass-card p-5 flex flex-col justify-between"
           style={{ minHeight: "140px" }}
         >
           <button

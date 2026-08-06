@@ -59,7 +59,7 @@ export default function BentoSocialGrid({ cardVariant }) {
   return (
     <motion.div
       variants={cardVariant}
-      className="col-span-2 rounded-3xl glass-card p-4 flex flex-col"
+      className="order-3 col-span-2 rounded-3xl glass-card p-4 flex flex-col md:order-2"
       style={{ minHeight: "160px" }}
     >
       <span className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">
