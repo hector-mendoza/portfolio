@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThinkingOrb } from "thinking-orbs";
 import { MorphLoader } from "@/components/morph-loader";
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -50,23 +49,9 @@ export default function PageLoader() {
             initial={{ opacity: 0, y: 20, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, ease: EASE }}
-            className="relative flex flex-col items-center gap-8 rounded-3xl glass-card px-12 py-10"
+            className="relative flex flex-col items-center gap-6 rounded-3xl glass-card px-12 py-10"
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: EASE }}
-            >
-              <ThinkingOrb state="shaping" size={72} aria-label="Loading" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25, ease: EASE }}
-            >
-              <MorphLoader size="md" loop={false} />
-            </motion.div>
+            <MorphLoader size="lg" loop={false} />
 
             <motion.p
               initial={{ opacity: 0 }}
