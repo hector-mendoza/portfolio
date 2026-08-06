@@ -193,7 +193,7 @@ export default function ContactForm() {
           onVerify={handleCaptchaVerify}
           onExpire={handleCaptchaExpire}
           onError={handleCaptchaExpire}
-          theme="light"
+          theme="dark"
         />
       </div>
       {errors.captchaToken && (
