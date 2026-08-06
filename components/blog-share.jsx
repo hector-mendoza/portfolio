@@ -1,27 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Copy, Share, Share2, X } from "lucide";
-import { Linkedin } from "@/lib/brand-icons";
-import { MorphIconHover } from "@/components/morph-icon-hover";
+import { useEffect, useRef, useState } from "react";
+import {
+  CopyIcon,
+  LinkedinIcon,
+  ShareIcon,
+  TwitterIcon,
+} from "@animateicons/react/lucide";
 import { sileo } from "sileo";
 import { play } from "cuelume";
 
-function ShareButton({ label, href, onClick, icon, hoverIcon }) {
+function ShareButton({ label, href, onClick, Icon }) {
+  const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const muted = "hsl(var(--muted-foreground))";
-  const primary = "hsl(var(--primary))";
+
+  const iconColor = hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))";
 
   const content = (
     <>
-      <MorphIconHover
-        icon={icon}
-        hoverIcon={hoverIcon}
-        hovered={hovered}
-        size={18}
-        color={muted}
-        hoverColor={primary}
-      />
+      <Icon ref={ref} size={18} color={iconColor} />
       <span className="sr-only">{label}</span>
     </>
   );
@@ -30,8 +27,14 @@ function ShareButton({ label, href, onClick, icon, hoverIcon }) {
     "group flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:bg-primary/10";
 
   const handlers = {
-    onMouseEnter: () => setHovered(true),
-    onMouseLeave: () => setHovered(false),
+    onMouseEnter: () => {
+      setHovered(true);
+      ref.current?.startAnimation();
+    },
+    onMouseLeave: () => {
+      setHovered(false);
+      ref.current?.stopAnimation();
+    },
   };
 
   if (href) {
@@ -80,13 +83,12 @@ export default function BlogShare({ title, url, description }) {
     {
       label: "Share on X",
       href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-      icon: X,
-      hoverIcon: Share2,
+      Icon: TwitterIcon,
     },
     {
       label: "Share on LinkedIn",
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
-      icon: Linkedin,
+      Icon: LinkedinIcon,
     },
   ];
 
@@ -130,9 +132,9 @@ export default function BlogShare({ title, url, description }) {
         {shareLinks.map((item) => (
           <ShareButton key={item.label} {...item} />
         ))}
-        <ShareButton label="Copy link" onClick={copyLink} icon={Copy} />
+        <ShareButton label="Copy link" onClick={copyLink} Icon={CopyIcon} />
         {canNativeShare ? (
-          <ShareButton label="Share" onClick={nativeShare} icon={Share} hoverIcon={Share2} />
+          <ShareButton label="Share" onClick={nativeShare} Icon={ShareIcon} />
         ) : null}
         <a
           href={`mailto:?subject=${encodedTitle}&body=${encodedText}%0A%0A${encodedUrl}`}

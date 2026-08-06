@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
-import { ChevronRight, ArrowRight } from "lucide";
-import { MorphIconHover } from "@/components/morph-icon-hover";
+import { useMemo, useRef, useState } from "react";
+import { ChevronRightIcon } from "@animateicons/react/lucide";
 import { formatPostDate, getPostAccent, getPostGradient, getPostYear } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
 
@@ -61,6 +60,7 @@ function BlogCardPreview({ post, hovered, accent }) {
 
 function BlogCard({ post, index, featured = false }) {
   const [hovered, setHovered] = useState(false);
+  const readIconRef = useRef(null);
   const accent = getPostAccent(post.accent);
   const year = getPostYear(post.publishedAt);
 
@@ -98,15 +98,11 @@ function BlogCard({ post, index, featured = false }) {
                 animate={{ scale: hovered ? 1 : 0.8, opacity: hovered ? 1 : 0 }}
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 className="flex items-center gap-2.5 btn-juicy btn-juicy-pill px-7 py-3 text-sm font-bold"
+                onMouseEnter={() => readIconRef.current?.startAnimation()}
+                onMouseLeave={() => readIconRef.current?.stopAnimation()}
               >
                 Read Post
-                <MorphIconHover
-                  icon={ChevronRight}
-                  hoverIcon={ArrowRight}
-                  hovered={hovered}
-                  size={16}
-                  color="currentColor"
-                />
+                <ChevronRightIcon ref={readIconRef} size={16} color="currentColor" />
               </motion.span>
             </motion.div>
 
