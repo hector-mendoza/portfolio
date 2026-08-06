@@ -71,9 +71,9 @@ export default function BentoSocialGrid({ cardVariant }) {
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="flex w-[88px] shrink-0 items-center justify-center self-stretch rounded-2xl glass-subtle shadow-[0_0_24px_hsl(var(--primary)/0.1)]"
+          className="flex w-[72px] shrink-0 items-center justify-center self-stretch rounded-2xl glass-subtle shadow-[0_0_24px_hsl(var(--primary)/0.1)]"
         >
-          <ThinkingOrb state="shaping" size={56} aria-label="Building ideas" />
+          <ThinkingOrb state="shaping" size={64} aria-label="Building ideas" />
         </motion.div>
         <div className="grid min-w-0 flex-1 grid-cols-2 gap-2">
           {socialLinks.map((social, index) => (

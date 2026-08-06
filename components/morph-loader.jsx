@@ -139,16 +139,14 @@ export function MorphLoader({
             {STAGES.map((s, i) => (
               <motion.span
                 key={s.label}
-                className="block size-1 rounded-full"
-                animate={{
-                  scale: i === stageIndex ? 1.4 : 1,
-                  backgroundColor:
-                    i === stageIndex
-                      ? "hsl(var(--primary))"
-                      : i < stageIndex
-                        ? "hsl(var(--primary) / 0.45)"
-                        : "hsl(var(--muted-foreground) / 0.35)",
-                }}
+                className={`block size-1 rounded-full ${
+                  i === stageIndex
+                    ? "bg-primary"
+                    : i < stageIndex
+                      ? "bg-primary/45"
+                      : "bg-muted-foreground/35"
+                }`}
+                animate={{ scale: i === stageIndex ? 1.4 : 1 }}
                 transition={{ duration: 0.3, ease: EASE }}
               />
             ))}
