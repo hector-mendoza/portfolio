@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
-import { Menu, Moon, Sun, X } from "lucide";
-import { useTheme } from "@/components/theme-provider";
+import { Menu, X } from "lucide";
 
 const navLinks = [
   { label: "Home",       href: "/#hero" },
@@ -18,31 +17,10 @@ const navLinks = [
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled]     = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
-  const isDark = mounted && resolvedTheme === "dark";
   const isHome = pathname === "/";
   const showSolidNav = scrolled || !isHome;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const toggleTheme = (e) => {
-    const next = isDark ? "light" : "dark";
-    const x = e.clientX;
-    const y = e.clientY;
-    document.documentElement.style.setProperty("--vt-x", `${x}px`);
-    document.documentElement.style.setProperty("--vt-y", `${y}px`);
-
-    if (!document.startViewTransition) {
-      setTheme(next);
-      return;
-    }
-    document.startViewTransition(() => setTheme(next));
-  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -62,18 +40,16 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          {/* Logo */}
           <a href="/" className="group flex items-center gap-2" data-cuelume-hover="tick">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/10 dark:border-primary/30 dark:bg-primary/15">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/15 shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/20">
               <img
                 src="/logos/logo.svg"
                 alt="HM logo"
-                className="h-7 w-7 dark:invert dark:brightness-110"
+                className="h-7 w-7 invert brightness-110"
               />
             </div>
           </a>
 
-          {/* Desktop links */}
           <div className="hidden items-center gap-1 md:flex">
             {navLinks.map((link) => (
               <a
@@ -92,26 +68,7 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA + theme toggle + hamburger */}
           <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              data-cuelume-toggle
-              aria-label="Toggle theme"
-              className={`flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all hover:border-primary/40 hover:text-primary ${
-                showSolidNav
-                  ? "bg-card text-foreground shadow-sm"
-                  : "bg-background/50 text-muted-foreground"
-              }`}
-            >
-              <MorphIcon
-                icon={mounted && isDark ? Sun : Moon}
-                size={16}
-                color="currentColor"
-                spring="snappy"
-              />
-            </button>
             <a
               href="/#contact"
               data-cuelume-press
@@ -140,7 +97,6 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div

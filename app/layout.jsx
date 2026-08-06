@@ -59,7 +59,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#1A5F6E",
+  themeColor: "#0B1412",
   width: "device-width",
   initialScale: 1,
 };
@@ -84,7 +84,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -94,7 +94,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
           <AmbientBackground />
           <AsciiDrift />
           <ErrorBoundary>

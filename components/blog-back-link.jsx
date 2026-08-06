@@ -1,28 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { ChevronLeft, ArrowLeft } from "lucide";
-import { MorphIconHover } from "@/components/morph-icon-hover";
+import { useRef } from "react";
+import { ChevronLeftIcon } from "@animateicons/react/lucide";
 
 export default function BlogBackLink() {
-  const [hovered, setHovered] = useState(false);
+  const ref = useRef(null);
 
   return (
     <Link
       href="/blog"
       data-cuelume-hover="tick"
       className="mb-8 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground transition-colors hover:text-primary"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => ref.current?.startAnimation()}
+      onMouseLeave={() => ref.current?.stopAnimation()}
     >
-      <MorphIconHover
-        icon={ChevronLeft}
-        hoverIcon={ArrowLeft}
-        hovered={hovered}
-        size={16}
-        color="currentColor"
-      />
+      <ChevronLeftIcon ref={ref} size={16} color="currentColor" />
       Back to blog
     </Link>
   );
