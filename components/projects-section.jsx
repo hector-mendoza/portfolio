@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 
@@ -161,6 +161,22 @@ const projects = [
   },
 ];
 
+const MOBILE_PROJECT_LIMIT = 4;
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener("change", update);
+    return () => mediaQuery.removeEventListener("change", update);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 const FILTERS = [
   { label: "Recent",      value: "recent" },
   { label: "All",         value: "all" },
@@ -180,7 +196,7 @@ function ProjectPreview({ project, hovered }) {
   const isEmojiDay = project.title === "Emoji of the Day";
 
   return (
-    <div className={`relative aspect-[16/10] overflow-hidden rounded-t-2xl bg-gradient-to-br ${project.gradient}`}>
+    <div className={`relative aspect-[2/1] overflow-hidden rounded-t-2xl bg-gradient-to-br sm:aspect-[16/10] ${project.gradient}`}>
       {/* Vibe Theme rainbow overlay */}
       {isVibe && (
         <div
@@ -278,10 +294,10 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
         <div className="relative">
           <ProjectPreview project={project} hovered={hovered} />
 
-          {/* Hover overlay */}
+          {/* Hover overlay — desktop only; mobile uses inline link below */}
           <motion.div
             animate={{ opacity: hovered ? 1 : 0 }}
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute inset-0 hidden items-center justify-center sm:flex"
             style={{
               background: `radial-gradient(ellipse at center, ${project.accent}30 0%, rgba(0,0,0,0.55) 100%)`,
               backdropFilter: "blur(4px)",
@@ -321,12 +337,28 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
         </div>
 
         {/* Content */}
-        <div className="p-6 sm:p-8">
-          <h3 className="mb-1 text-xl font-bold text-foreground sm:text-2xl">{project.title}</h3>
-          <p className="mb-3 text-sm font-semibold" style={{ color: project.accent }}>{project.subtitle}</p>
-          <p className="mb-5 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
+        <div className="p-4 sm:p-6 md:p-8">
+          <div className="flex items-start justify-between gap-3">
+            <h3 className="mb-1 text-lg font-bold text-foreground sm:text-xl md:text-2xl">{project.title}</h3>
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cuelume-press
+              data-cuelume-release
+              className="shrink-0 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold text-white sm:hidden"
+              style={{ background: project.accent }}
+            >
+              Visit
+              <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+              </svg>
+            </a>
+          </div>
+          <p className="mb-2 text-sm font-semibold sm:mb-3" style={{ color: project.accent }}>{project.subtitle}</p>
+          <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground sm:mb-5 sm:line-clamp-none">{project.description}</p>
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
+            {project.tags.slice(0, 3).map((tag) => (
               <span
                 key={tag}
                 className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors group-hover:border-primary/25 group-hover:text-primary/80"
@@ -334,6 +366,21 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
                 {tag}
               </span>
             ))}
+            {project.tags.length > 3 && (
+              <>
+                {project.tags.slice(3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="hidden rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground transition-colors group-hover:border-primary/25 group-hover:text-primary/80 sm:inline-flex"
+                  >
+                    {tag}
+                  </span>
+                ))}
+                <span className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground sm:hidden">
+                  +{project.tags.length - 3}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -343,8 +390,14 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("recent");
+  const [showAll, setShowAll] = useState(false);
   const [vibeHovered, setVibeHovered] = useState(false);
   const [emojiDayHovered, setEmojiDayHovered] = useState(false);
+  const isMobile = useIsMobile();
+
+  useEffect(() => {
+    setShowAll(false);
+  }, [activeFilter]);
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "recent") {
@@ -356,8 +409,14 @@ export default function ProjectsSection() {
     return projects.filter((p) => p.category === activeFilter);
   }, [activeFilter]);
 
+  const shouldLimit = isMobile && !showAll && filteredProjects.length > MOBILE_PROJECT_LIMIT;
+  const displayedProjects = shouldLimit
+    ? filteredProjects.slice(0, MOBILE_PROJECT_LIMIT)
+    : filteredProjects;
+  const hiddenCount = filteredProjects.length - MOBILE_PROJECT_LIMIT;
+
   return (
-    <section id="projects" className="relative py-16 md:py-32">
+    <section id="projects" className="relative py-10 md:py-32">
       <VibeEasterEgg active={vibeHovered} />
       <EmojiDayEasterEgg active={emojiDayHovered} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -372,20 +431,20 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-12 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"
+          className="mb-6 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:gap-6 sm:flex-row sm:items-end"
         >
           <div>
-            <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
+            <span className="mb-3 inline-block font-mono text-xs uppercase tracking-widest text-primary sm:mb-4">
               Projects
             </span>
-            <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
               <span className="text-balance block">
                 {"Featured "}
                 <span className="text-gradient">work</span>
               </span>
             </h2>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
+          <p className="hidden max-w-md text-sm leading-relaxed text-muted-foreground sm:block">
             {"Real projects. Real clients. Crafted with care — from hotel websites to animated cocktail showcases."}
           </p>
         </motion.div>
@@ -396,7 +455,7 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-10 flex flex-wrap gap-2"
+          className="-mx-6 mb-6 flex gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:mx-0 sm:mb-10 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
         >
           {FILTERS.map((f) => (
             <button
@@ -404,7 +463,7 @@ export default function ProjectsSection() {
               type="button"
               data-cuelume-toggle
               onClick={() => setActiveFilter(f.value)}
-              className={`rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
+              className={`shrink-0 rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
                 activeFilter === f.value
                   ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
                   : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
@@ -423,9 +482,9 @@ export default function ProjectsSection() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="grid gap-8 md:grid-cols-2"
+            className="grid gap-4 sm:gap-8 md:grid-cols-2"
           >
-            {filteredProjects.map((project, i) => (
+            {displayedProjects.map((project, i) => (
               <ProjectCard
                 key={project.title}
                 project={project}
@@ -437,12 +496,29 @@ export default function ProjectsSection() {
           </motion.div>
         </AnimatePresence>
 
+        {shouldLimit && (
+          <div className="mt-6 text-center sm:hidden">
+            <button
+              type="button"
+              data-cuelume-press
+              data-cuelume-release
+              onClick={() => setShowAll(true)}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+            >
+              Show {hiddenCount} more project{hiddenCount !== 1 ? "s" : ""}
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+        )}
+
         {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 text-center"
+          className="mt-10 text-center sm:mt-16"
         >
           <p className="mb-4 text-sm text-muted-foreground">Have a project in mind?</p>
           <a
