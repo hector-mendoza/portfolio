@@ -11,6 +11,7 @@ import {
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
+import GradientButton from "@/components/kokonutui/gradient-button";
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
@@ -68,14 +69,16 @@ export default function HeroSection() {
               {" · "}Lead Developer · 8+ years crafting performant web
               experiences.
             </p>
-            <a
-              href="#projects"
+            <GradientButton
+              label="View Work →"
+              variant="emerald"
               data-cuelume-press
               data-cuelume-release
-              className="inline-flex items-center gap-2 btn-juicy btn-juicy-pill px-5 py-2.5 text-xs font-semibold md:text-sm"
-            >
-              View Work →
-            </a>
+              className="h-auto rounded-full px-5 py-2.5 text-xs font-semibold md:text-sm"
+              onClick={() => {
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }}
+            />
           </div>
         </motion.div>
 

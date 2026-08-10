@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { sileo } from "sileo";
 import { play } from "cuelume";
+import ParticleButton from "@/components/kokonutui/particle-button";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -18,6 +19,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
   const captchaRef = useRef(null);
+  const [celebrateKey, setCelebrateKey] = useState(0);
   const {
     register,
     handleSubmit,
@@ -73,6 +75,7 @@ export default function ContactForm() {
 
       if (response.ok) {
         play("success");
+        setCelebrateKey((key) => key + 1);
         sileo.success({
           title: "Message sent",
           description: "Thank you for reaching out! I'll get back to you soon.",
@@ -200,12 +203,13 @@ export default function ContactForm() {
         <p className="text-center text-xs text-destructive">{errors.captchaToken.message}</p>
       )}
 
-      <button
+      <ParticleButton
         type="submit"
         disabled={isSubmitting || !captchaToken}
+        celebrateKey={celebrateKey}
         data-cuelume-press
         data-cuelume-release
-        className="group flex w-full items-center justify-center gap-2 rounded-full btn-juicy btn-juicy-pill px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"
+        className="group flex w-full items-center justify-center gap-2 rounded-full btn-juicy btn-juicy-pill px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed h-auto"
       >
         {isSubmitting ? "Sending..." : "Send Message"}
         <svg
@@ -222,7 +226,7 @@ export default function ContactForm() {
             d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5"
           />
         </svg>
-      </button>
+      </ParticleButton>
     </form>
   );
 }
