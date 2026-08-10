@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { useState, useMemo, useEffect } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";

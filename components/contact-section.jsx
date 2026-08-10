@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import ContactInfo from "./contact-info";
 import ContactForm from "./contact-form";
 import LocationMap from "./location-map";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { MorphIcon } from "morphicons/react";
 import { Code2, Loader, Rocket, Sparkles } from "lucide";
 import { cn } from "@/lib/utils";

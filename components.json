@@ -18,6 +18,7 @@
     "lib": "@/lib"
   },
   "registries": {
+    "@kokonutui": "https://kokonutui.com/r/{name}.json",
     "@mapcn": "https://mapcn.dev/r/{name}.json",
     "@react-bits": "https://reactbits.dev/r/{name}.json"
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 const MAP_EMBED =
   "https://www.openstreetmap.org/export/embed.html?bbox=-101.35%2C19.65%2C-101.03%2C19.85&layer=mapnik&marker=19.7%2C-101.19";

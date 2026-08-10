@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useMemo, useRef, useState } from "react";
 import { ChevronRightIcon } from "@animateicons/react/lucide";
 import { formatPostDate, getPostAccent, getPostGradient, getPostYear } from "@/lib/blog";

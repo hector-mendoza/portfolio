@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import { MorphLoader } from "@/components/morph-loader";
 
 const EASE = [0.22, 1, 0.36, 1];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { CodeXmlIcon, ShoppingBagIcon, FigmaIcon } from "@animateicons/react/lucide";
 
 const experiences = [

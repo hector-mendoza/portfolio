@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 
 const CHASE_SPEED_MIN = 1.9;
 const CHASE_SPEED_MAX = 3.2;
