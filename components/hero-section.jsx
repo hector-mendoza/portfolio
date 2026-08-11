@@ -11,7 +11,8 @@ import {
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
-import GradientButton from "@/components/kokonutui/gradient-button";
+import HeroPathsBackground from "./hero-paths-background";
+import GlitchText from "@/components/kokonutui/glitch-text";
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
@@ -36,13 +37,15 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 py-20 md:py-28"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20 md:py-28"
     >
+      <HeroPathsBackground />
+
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3"
+        className="relative z-10 w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3"
       >
         {/* ── Identity (2×2) ── */}
         <motion.div
@@ -58,7 +61,14 @@ export default function HeroSection() {
             <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
               Hector
               <br />
-              <span className="text-gradient">Mendoza</span>
+              <GlitchText
+                text="Mendoza"
+                inline
+                color="cyan"
+                glitchIntensity="heavy"
+                letterSpacing={-1}
+                textClassName="text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
+              />
             </h1>
           </div>
 
@@ -69,16 +79,14 @@ export default function HeroSection() {
               {" · "}Lead Developer · 8+ years crafting performant web
               experiences.
             </p>
-            <GradientButton
-              label="View Work →"
-              variant="emerald"
+            <a
+              href="#projects"
               data-cuelume-press
               data-cuelume-release
-              className="h-auto rounded-full px-5 py-2.5 text-xs font-semibold md:text-sm"
-              onClick={() => {
-                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-              }}
-            />
+              className="inline-flex items-center gap-2 btn-juicy btn-juicy-pill px-5 py-2.5 text-xs font-semibold md:text-sm"
+            >
+              View Work →
+            </a>
           </div>
         </motion.div>
 

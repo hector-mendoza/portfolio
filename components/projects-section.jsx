@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useMemo, useEffect } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
+import ProjectCardStack from "./project-card-stack";
+import { BackgroundPathsLayer } from "@/components/kokonutui/background-paths";
 
 const projects = [
   {
@@ -416,7 +418,8 @@ export default function ProjectsSection() {
   const hiddenCount = filteredProjects.length - MOBILE_PROJECT_LIMIT;
 
   return (
-    <section id="projects" className="relative py-10 md:py-32">
+    <section id="projects" className="relative overflow-hidden py-10 md:py-32">
+      <BackgroundPathsLayer intensity="hero" className="opacity-30" />
       <VibeEasterEgg active={vibeHovered} />
       <EmojiDayEasterEgg active={emojiDayHovered} />
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -448,6 +451,8 @@ export default function ProjectsSection() {
             {"Real projects. Real clients. Crafted with care — from hotel websites to animated cocktail showcases."}
           </p>
         </motion.div>
+
+        <ProjectCardStack />
 
         {/* Filter pills */}
         <motion.div

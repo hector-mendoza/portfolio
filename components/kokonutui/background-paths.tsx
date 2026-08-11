@@ -89,16 +89,19 @@ const generateUniqueId = (prefix: string): string =>
 // Memoized FloatingPaths component
 const FloatingPaths = memo(function FloatingPaths({
   position,
+  intensity = "normal",
 }: {
   position: number;
+  intensity?: "subtle" | "normal" | "hero";
 }) {
+  const opacityBoost = intensity === "hero" ? 2.2 : intensity === "subtle" ? 0.8 : 1;
   // Increased number of paths while maintaining optimization
   const primaryPaths: PathData[] = useMemo(
     () =>
       Array.from({ length: 12 }, (_, i) => ({
         id: generateUniqueId("primary"),
         d: generateAestheticPath(i, position, "primary"),
-        opacity: 0.15 + i * 0.02,
+        opacity: (0.15 + i * 0.02) * opacityBoost,
         width: 4 + i * 0.3,
         duration: 25,
         delay: 0,
@@ -111,7 +114,7 @@ const FloatingPaths = memo(function FloatingPaths({
       Array.from({ length: 15 }, (_, i) => ({
         id: generateUniqueId("secondary"),
         d: generateAestheticPath(i, position, "secondary"),
-        opacity: 0.12 + i * 0.015,
+        opacity: (0.12 + i * 0.015) * opacityBoost,
         width: 3 + i * 0.25,
         duration: 20,
         delay: 0,
@@ -124,7 +127,7 @@ const FloatingPaths = memo(function FloatingPaths({
       Array.from({ length: 10 }, (_, i) => ({
         id: generateUniqueId("accent"),
         d: generateAestheticPath(i, position, "accent"),
-        opacity: 0.08 + i * 0.12,
+        opacity: (0.08 + i * 0.012) * opacityBoost,
         width: 2 + i * 0.2,
         duration: 15,
         delay: 0,
@@ -247,13 +250,18 @@ const FloatingPaths = memo(function FloatingPaths({
 export const BackgroundPathsLayer = memo(function BackgroundPathsLayer({
   position = 1,
   className,
+  intensity = "normal",
 }: {
   position?: number;
   className?: string;
+  intensity?: "subtle" | "normal" | "hero";
 }) {
+  const opacityClass =
+    intensity === "hero" ? "opacity-100" : intensity === "subtle" ? "opacity-25" : "opacity-40";
+
   return (
-    <div className={cn("pointer-events-none absolute inset-0 overflow-hidden opacity-40", className)}>
-      <FloatingPaths position={position} />
+    <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", opacityClass, className)}>
+      <FloatingPaths position={position} intensity={intensity} />
     </div>
   );
 });

@@ -4,13 +4,13 @@ import { motion } from "motion/react";
 import ContactInfo from "./contact-info";
 import ContactForm from "./contact-form";
 import LocationMap from "./location-map";
-import ShimmerText from "@/components/kokonutui/shimmer-text";
+import GlitchText from "@/components/kokonutui/glitch-text";
 import { BackgroundPathsLayer } from "@/components/kokonutui/background-paths";
 
 export default function ContactSection() {
   return (
     <section id="contact" className="relative py-16 md:py-32 overflow-hidden">
-      <BackgroundPathsLayer className="opacity-25" />
+      <BackgroundPathsLayer intensity="hero" className="opacity-50" />
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -25,7 +25,14 @@ export default function ContactSection() {
           <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             <span className="text-balance block">
               {"Let's build "}
-              <ShimmerText text="together" inline className="font-bold" />
+              <GlitchText
+                text="together"
+                inline
+                color="purple"
+                glitchIntensity="medium"
+                letterSpacing={0}
+                textClassName="text-4xl font-bold sm:text-5xl lg:text-6xl"
+              />
             </span>
           </h2>
         </motion.div>
