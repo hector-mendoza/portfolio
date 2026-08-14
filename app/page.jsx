@@ -7,12 +7,14 @@ import ExperienceSection from "@/components/experience-section";
 import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ProjectsSection from "@/components/projects-section";
+import ScrollProgress from "@/components/scroll-progress";
 
 export default function Page() {
   return (
     <main className="relative z-10">
       <PageLoader />
       <Navbar />
+      <ScrollProgress />
       <HeroSection />
       <AboutSection />
       <ProjectsSection />

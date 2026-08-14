@@ -11,6 +11,8 @@ import {
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
+import HeroMouseGlow from "./hero-mouse-glow";
+import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
@@ -37,11 +39,12 @@ export default function HeroSection() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center px-4 py-20 md:py-28"
     >
+      <HeroMouseGlow className="relative w-full max-w-5xl mx-auto">
       <motion.div
         variants={container}
         initial="hidden"
         animate="show"
-        className="w-full max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-3"
+        className="w-full grid grid-cols-2 md:grid-cols-4 gap-3"
       >
         {/* ── Identity (2×2) ── */}
         <motion.div
@@ -68,14 +71,12 @@ export default function HeroSection() {
               {" · "}Lead Developer · 8+ years crafting performant web
               experiences.
             </p>
-            <a
+            <Link005
               href="#projects"
-              data-cuelume-press
-              data-cuelume-release
-              className="inline-flex items-center gap-2 btn-juicy btn-juicy-pill px-5 py-2.5 text-xs font-semibold md:text-sm"
+              className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
             >
-              View Work →
-            </a>
+              View Work
+            </Link005>
           </div>
         </motion.div>
 
@@ -262,6 +263,7 @@ export default function HeroSection() {
           </div>
         </motion.div>
       </motion.div>
+      </HeroMouseGlow>
 
       <GeometryWarsGame open={gameOpen} onClose={() => setGameOpen(false)} />
     </section>
