@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo, useEffect } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
+import ProjectCardSwipe from "./project-card-swipe";
 
 const projects = [
   {
@@ -414,6 +415,13 @@ export default function ProjectsSection() {
     ? filteredProjects.slice(0, MOBILE_PROJECT_LIMIT)
     : filteredProjects;
   const hiddenCount = filteredProjects.length - MOBILE_PROJECT_LIMIT;
+  const swipeProjects = useMemo(
+    () =>
+      [...projects]
+        .sort((a, b) => parseInt(b.year) - parseInt(a.year))
+        .slice(0, 6),
+    [],
+  );
 
   return (
     <section id="projects" className="relative py-10 md:py-32">
@@ -448,6 +456,8 @@ export default function ProjectsSection() {
             {"Real projects. Real clients. Crafted with care — from hotel websites to animated cocktail showcases."}
           </p>
         </motion.div>
+
+        <ProjectCardSwipe projects={swipeProjects} />
 
         {/* Filter pills */}
         <motion.div

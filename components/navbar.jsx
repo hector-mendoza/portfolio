@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import { Menu, X } from "lucide";
+import { Link000 } from "@/components/ui/skiper-ui/skiper40";
 
 const navLinks = [
   { label: "Home",       href: "/#hero" },
@@ -50,21 +51,19 @@ export default function Navbar() {
             </div>
           </a>
 
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-5 md:flex">
             {navLinks.map((link) => (
-              <a
+              <Link000
                 key={link.label}
                 href={link.href}
-                data-cuelume-hover="tick"
-                className={`group relative px-4 py-2 text-sm transition-colors ${
+                className={`text-sm transition-colors ${
                   showSolidNav
                     ? "font-medium text-foreground/90 hover:text-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                <span className="relative z-10">{link.label}</span>
-                <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
-              </a>
+                {link.label}
+              </Link000>
             ))}
           </div>
 

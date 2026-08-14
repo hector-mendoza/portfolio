@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
+import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
   return (
@@ -21,15 +22,19 @@ export default function Footer() {
 
           <p className="text-center text-xs text-muted-foreground">
             {"Designed & Built with Next.js & Framer Motion · "}
-            <a
+            <Link001
               href="https://vibetheme.hectormendoza.me"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cuelume-hover="tick"
-              className="text-primary hover:underline"
+              className="inline-flex text-xs text-primary"
             >
               Vibe Theme
-            </a>
+            </Link001>
+            <span className="mx-1.5 text-border">·</span>
+            <Link001
+              href="https://skiper-ui.com"
+              className="inline-flex text-xs text-muted-foreground hover:text-foreground"
+            >
+              Motion by Skiper UI
+            </Link001>
           </p>
 
           <motion.div
