@@ -9,7 +9,7 @@ export const metadata = {
     title: "Blog | Hector Mendoza",
     description:
       "Articles on web development, design, and building products.",
-    url: "https://hectormendoza.com/blog",
+    url: "https://www.hectormendoza.me/blog",
     type: "website",
   },
 };

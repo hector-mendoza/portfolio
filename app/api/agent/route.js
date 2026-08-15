@@ -6,7 +6,7 @@ const payload = {
   jobTitle: "Head of Web Integrations",
   description:
     "Senior Software Engineer & Lead Developer with 8+ years of experience crafting performant, accessible web experiences. Based in Morelia, Mexico.",
-  url: "https://hectormendoza.com",
+  url: "https://www.hectormendoza.me",
   email: "hey@hectormendoza.me",
   location: {
     city: "Morelia",
@@ -44,7 +44,7 @@ const payload = {
     linkedin: "https://www.linkedin.com/in/hector-mendoza-m/",
     threads: "https://www.threads.com/@hectormendozax2",
   },
-  llmsTxt: "https://hectormendoza.com/llms.txt",
+  llmsTxt: "https://www.hectormendoza.me/llms.txt",
 };
 
 export function GET() {

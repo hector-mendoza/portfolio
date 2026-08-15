@@ -26,7 +26,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://hectormendoza.com"),
+  metadataBase: new URL("https://www.hectormendoza.me"),
   title: "Hector Mendoza | Senior Software Engineer",
   description:
     "Senior Web Developer with 8+ years of experience specializing in Next.js, WordPress, and Shopify. Based in Morelia, Mexico.",
@@ -39,12 +39,12 @@ export const metadata = {
     "WordPress",
     "Shopify",
   ],
-  canonical: "https://hectormendoza.com",
+  canonical: "https://www.hectormendoza.me",
   openGraph: {
     title: "Hector Mendoza | Senior Software Engineer",
     description:
       "Senior Web Developer with 8+ years of experience specializing in Next.js, WordPress, and Shopify. Based in Morelia, Mexico.",
-    url: "https://hectormendoza.com",
+    url: "https://www.hectormendoza.me",
     siteName: "Hector Mendoza",
     type: "website",
     images: [
@@ -70,7 +70,7 @@ const jsonLd = {
   name: "Hector Mendoza",
   jobTitle: "Head of Web Integrations",
   description: "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
-  url: "https://hectormendoza.com",
+  url: "https://www.hectormendoza.me",
   email: "hey@hectormendoza.me",
   sameAs: [
     "https://github.com/hector-mendoza",

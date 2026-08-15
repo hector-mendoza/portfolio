@@ -44,8 +44,8 @@ Allow: /
 
 Content-Signal: ai-train=no, search=yes, ai-input=yes
 
-Sitemap: https://hectormendoza.com/sitemap.xml
-Host: https://hectormendoza.com
+Sitemap: https://www.hectormendoza.me/sitemap.xml
+Host: https://www.hectormendoza.me
 `;
 
 export function GET() {

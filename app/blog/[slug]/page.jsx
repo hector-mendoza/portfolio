@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
       description: post.description,
       type: "article",
       publishedTime: post.publishedAt,
-      url: `https://hectormendoza.com/blog/${post.slug}`,
+      url: `https://www.hectormendoza.me/blog/${post.slug}`,
       ...(coverImage ? { images: [{ url: coverImage, width: 1200, height: 630, alt: post.title }] } : {}),
     },
   };
@@ -103,7 +103,7 @@ export default async function BlogPostPage({ params }) {
 
           <BlogShare
             title={post.title}
-            url={`https://hectormendoza.com/blog/${post.slug}`}
+            url={`https://www.hectormendoza.me/blog/${post.slug}`}
             description={post.description}
           />
         </header>

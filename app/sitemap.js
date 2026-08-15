@@ -1,7 +1,7 @@
 import { getPostSlugs } from "@/lib/blog";
 
 export default async function sitemap() {
-  const base = "https://hectormendoza.com";
+  const base = "https://www.hectormendoza.me";
   const posts = await getPostSlugs();
 
   return [
