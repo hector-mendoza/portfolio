@@ -10,6 +10,21 @@
     "sanity": "sanity dev",
     "sanity:deploy": "sanity deploy"
   },
+  "overrides": {
+    "@sanity/workbench-cli": {
+      "@module-federation/vite": {
+        "@module-federation/dts-plugin": {
+          "undici": "^7.29.0"
+        }
+      }
+    },
+    "@vercel/frameworks": {
+      "smol-toml": "^1.7.2"
+    },
+    "typeid-js": {
+      "uuid": "^11.1.1"
+    }
+  },
   "dependencies": {
     "@animateicons/react": "^0.4.1",
     "@hcaptcha/react-hcaptcha": "^2.1.0",
