@@ -73,7 +73,17 @@ export async function POST(request) {
             to: [process.env.CONTACT_EMAIL || 'hey@hectormendoza.me'],
             subject: `Portfolio Contact: ${subject}`,
             replyTo: email,
-            react: ContactEmail({ name, email, subject, message }),
+            react: ContactEmail({
+                name,
+                email,
+                subject,
+                message,
+                submittedAt: new Date().toLocaleString('en-US', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short',
+                    timeZone: 'America/Mexico_City',
+                }),
+            }),
         });
 
         return NextResponse.json(
