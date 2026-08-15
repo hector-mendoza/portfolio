@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "email:dev": "email dev --dir emails --port 3010",
     "sanity": "sanity dev",
     "sanity:deploy": "sanity deploy"
   },
@@ -32,6 +33,7 @@
     "@number-flow/react": "^0.6.2",
     "@portabletext/react": "^7.0.1",
     "@radix-ui/react-scroll-area": "^1.2.18",
+    "@react-email/components": "^1.0.12",
     "@sanity/code-input": "^7.3.3",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^6.9.1",
@@ -58,6 +60,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@react-email/ui": "^6.9.2",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^26",
@@ -65,6 +68,7 @@
     "@types/react-dom": "^19",
     "autoprefixer": "^10.5.4",
     "postcss": "^8.5",
+    "react-email": "^6.9.2",
     "tailwindcss": "^4.3.0",
     "typescript": "^7.0.2"
   }

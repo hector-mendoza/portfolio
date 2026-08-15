@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import ContactEmail from '@/emails/contact-email';
 
 function getResend() {
     const apiKey = process.env.RESEND_API_KEY;
@@ -18,18 +19,6 @@ const contactSchema = z.object({
     message: z.string().min(10, 'Message must be at least 10 characters').max(5000, 'Message is too long'),
     captchaToken: z.string().min(1, 'Captcha token is required'),
 });
-
-// HTML escape function to prevent XSS
-function escapeHtml(text) {
-    const map = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-    };
-    return text.replace(/[&<>"']/g, (m) => map[m]);
-}
 
 export async function POST(request) {
     try {
@@ -77,28 +66,14 @@ export async function POST(request) {
             );
         }
 
-        // Escape HTML to prevent XSS in email
-        const escapedName = escapeHtml(name);
-        const escapedEmail = escapeHtml(email);
-        const escapedSubject = escapeHtml(subject);
-        const escapedMessage = escapeHtml(message).replace(/\n/g, '<br>');
-
-        // Send email using Resend
+        // Send email using Resend (JSX auto-escapes values, preventing XSS)
         const resend = getResend();
         const data = await resend.emails.send({
             from: `Portfolio Contact <${process.env.CONTACT_EMAIL || 'contact@hectormendoza.me'}>`,
             to: [process.env.CONTACT_EMAIL || 'hey@hectormendoza.me'],
-            subject: `Portfolio Contact: ${escapedSubject}`,
+            subject: `Portfolio Contact: ${subject}`,
             replyTo: email,
-            html: `
-                <h2>New Contact Form Submission</h2>
-                <p><strong>From:</strong> ${escapedName}</p>
-                <p><strong>Email:</strong> ${escapedEmail}</p>
-                <p><strong>Subject:</strong> ${escapedSubject}</p>
-                <hr />
-                <p><strong>Message:</strong></p>
-                <p>${escapedMessage}</p>
-            `,
+            react: ContactEmail({ name, email, subject, message }),
         });
 
         return NextResponse.json(
