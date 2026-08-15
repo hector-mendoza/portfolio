@@ -7,12 +7,15 @@ import {
     Heading,
     Hr,
     Html,
+    Img,
     Link,
     Preview,
     Row,
     Section,
     Text,
 } from '@react-email/components';
+
+const SITE_URL = 'https://www.hectormendoza.me';
 
 interface ContactEmailProps {
     name: string;
@@ -57,6 +60,16 @@ export default function ContactEmail({
             <Preview>New portfolio contact from {name}: {subject}</Preview>
             <Body style={styles.main}>
                 <Container style={styles.container}>
+                    <Section style={styles.logoWrap}>
+                        <Img
+                            src={`${SITE_URL}/logos/logo.png`}
+                            width="40"
+                            height="40"
+                            alt="Hector Mendoza"
+                            style={styles.logo}
+                        />
+                    </Section>
+
                     <Section style={styles.header}>
                         <Text style={styles.headerEyebrow}>PORTFOLIO CONTACT FORM</Text>
                         <Heading style={styles.headerTitle}>New message received</Heading>
@@ -122,6 +135,17 @@ const styles = {
         maxWidth: '520px',
         margin: '0 auto',
     },
+    logoWrap: {
+        textAlign: 'center' as const,
+        marginBottom: '16px',
+    },
+    logo: {
+        backgroundColor: '#ffffff',
+        borderRadius: '999px',
+        display: 'inline-block',
+        margin: '0 auto',
+        padding: '8px',
+    },
     header: {
         backgroundColor: brand.primary,
         backgroundImage: `linear-gradient(135deg, ${brand.primary}, ${brand.primaryDark})`,
@@ -176,7 +200,6 @@ const styles = {
     messagePanel: {
         backgroundColor: brand.mutedBg,
         border: `1px solid ${brand.border}`,
-        borderLeft: `3px solid ${brand.primary}`,
         borderRadius: '8px',
         margin: '8px 0 20px',
         padding: '16px 18px',
