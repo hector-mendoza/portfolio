@@ -69,7 +69,7 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3">
             <a
-              href="/#contact"
+              href="mailto:hey@hectormendoza.me"
               data-cuelume-press
               data-cuelume-release
               className="hidden btn-juicy btn-juicy-pill px-5 py-2 text-sm md:block"
