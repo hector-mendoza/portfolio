@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import ContactInfo from "./contact-info";
-import ContactForm from "./contact-form";
+import SocialLinks from "./social-links";
 import LocationMap from "./location-map";
 
-export default function ContactSection({ hcaptchaSiteKey }) {
+export default function ContactSection() {
   return (
     <section id="contact" className="relative py-16 md:py-32">
       <div className="relative mx-auto max-w-7xl px-6">
@@ -32,23 +32,13 @@ export default function ContactSection({ hcaptchaSiteKey }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-10"
+          className="mb-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"
         >
           <ContactInfo />
+          <SocialLinks />
         </motion.div>
 
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex min-h-[420px] h-full"
-          >
-            <ContactForm hcaptchaSiteKey={hcaptchaSiteKey} />
-          </motion.div>
-          <LocationMap />
-        </div>
+        <LocationMap />
       </div>
     </section>
   );

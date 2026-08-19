@@ -12,7 +12,7 @@ export default function LocationMap() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, delay: 0.2 }}
-      className="relative h-full min-h-[420px] overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm"
+      className="relative min-h-[320px] overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm md:min-h-[420px]"
     >
       <iframe
         title="Map showing Morelia, Mexico"

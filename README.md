@@ -1,6 +1,6 @@
 # Hector Mendoza - Personal Portfolio Website
 
-A modern, interactive personal portfolio website built with **Next.js**, **React**, **Three.js**, and **Tailwind CSS**. Featuring animated 3D graphics, smooth scrolling animations, and a fully functional contact form with captcha protection.
+A modern, interactive personal portfolio website built with **Next.js**, **React**, **Three.js**, and **Tailwind CSS**. Featuring animated 3D graphics, smooth scrolling animations, and direct contact links via email and social icons.
 
 **Live Demo**: [hectormendoza.me](https://hectormendoza.me)
 
@@ -9,11 +9,7 @@ A modern, interactive personal portfolio website built with **Next.js**, **React
 - **3D Interactive Graphics** - Animated 3D models and particles using Three.js and react-three-fiber
 - **Smooth Animations** - Framer Motion powered scroll and entrance animations
 - **Responsive Design** - Mobile-first approach with Tailwind CSS
-- **Contact Form** - Fully functional contact form with:
-  - hCaptcha spam protection
-  - Email notifications via Resend
-  - Form validation
-  - Success/error messages
+- **Direct Contact Links** - Email and social icons in the hero, contact section, and footer
 - **Dark Mode Ready** - Custom CSS variables for easy theming
 - **Performance Optimized** - Code splitting, image optimization, dynamic imports
 - **Shadcn UI Components** - Pre-built, customizable component library
@@ -32,19 +28,12 @@ A modern, interactive personal portfolio website built with **Next.js**, **React
 ### UI Components & Tools
 - **Shadcn UI** - High-quality, accessible components
 - **Lucide React** - Icon library
-- **React Hook Form** - Form state management
-- **Zod** - TypeScript-first schema validation
-
-### Backend & Services
-- **Resend** - Email delivery service
-- **hCaptcha** - CAPTCHA protection
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - Node.js 18+ and npm/pnpm
-- Resend API key ([get one free](https://resend.com))
-- hCaptcha keys ([get free keys](https://dashboard.hcaptcha.com))
+- Sanity project for blog content (optional)
 
 ### Installation
 
@@ -62,15 +51,7 @@ A modern, interactive personal portfolio website built with **Next.js**, **React
    ```
 
 3. **Set up environment variables**
-   Create a `.env.local` file in the root directory:
-   ```env
-   RESEND_API_KEY=your_resend_api_key
-   HCAPTCHA_SECRET_KEY=your_hcaptcha_secret_key
-   NEXT_PUBLIC_HCAPTCHA_SITE_KEY=your_hcaptcha_site_key
-   CONTACT_EMAIL=your_email@example.com
-   ```
-   
-   See [CONTACT_FORM_SETUP.md](CONTACT_FORM_SETUP.md) for detailed setup instructions.
+   Create a `.env.local` file in the root directory for Sanity CMS (see `.env.local.example`).
 
 4. **Run the development server**
    ```bash
@@ -83,15 +64,13 @@ A modern, interactive personal portfolio website built with **Next.js**, **React
 ```
 portfolio/
 ├── app/
-│   ├── api/
-│   │   └── contact/
-│   │       └── route.js          # Contact form API endpoint
+│   ├── api/                      # API routes
 │   ├── globals.css               # Global styles
 │   ├── layout.jsx                # Root layout
 │   └── page.jsx                  # Home page
 ├── components/
 │   ├── about-section.jsx         # About section with profile image
-│   ├── contact-section.jsx       # Contact form with captcha
+│   ├── contact-section.jsx       # Contact links and location map
 │   ├── experience-section.jsx    # Work experience
 │   ├── hero-section.jsx          # Hero with 3D background
 │   ├── navbar.jsx                # Navigation bar
@@ -104,7 +83,6 @@ portfolio/
 │   └── logos/                    # Logo files
 ├── styles/                       # Additional styles
 ├── .env.local.example            # Environment variables template
-├── CONTACT_FORM_SETUP.md         # Contact form setup guide
 ├── tailwind.config.ts            # Tailwind configuration
 └── tsconfig.json                 # TypeScript configuration
 ```
@@ -168,9 +146,6 @@ npm run lint     # Run ESLint
 
 ## 🛡️ Security Features
 
-- hCaptcha integration prevents bot submissions
-- Server-side form validation
-- Email verification via Resend
 - Environment variables for sensitive data
 - CSRF protection with Next.js built-in features
 
