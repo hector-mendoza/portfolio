@@ -16,7 +16,15 @@ const formSchema = z.object({
   captchaToken: z.string().min(1, "Please complete the captcha"),
 });
 
-export default function ContactForm() {
+const captchaErrorMessages = {
+  captcha: "Captcha verification failed. Please complete the captcha again.",
+  captcha_expired: "Captcha expired. Please complete the captcha again.",
+  captcha_not_configured: "Contact form is temporarily unavailable. Please email directly.",
+  captcha_unavailable: "Captcha service is unavailable. Please try again shortly.",
+  send_failed: "Failed to send message. Please try again later.",
+};
+
+export default function ContactForm({ hcaptchaSiteKey }) {
   const captchaRef = useRef(null);
   const {
     register,
@@ -85,9 +93,14 @@ export default function ContactForm() {
         reset();
         captchaRef.current?.resetCaptcha();
       } else {
+        if (result.error?.startsWith("captcha")) {
+          setValue("captchaToken", "", { shouldValidate: true });
+          captchaRef.current?.resetCaptcha();
+        }
+
         sileo.error({
           title: "Failed to send message",
-          description: result.error || "Please try again later.",
+          description: captchaErrorMessages[result.error] || "Please try again later.",
           fill: "black",
           styles: {
             title: "text-white!",
@@ -187,14 +200,20 @@ export default function ContactForm() {
 
       <div className="flex justify-center">
         <input type="hidden" {...register("captchaToken")} />
-        <HCaptcha
-          ref={captchaRef}
-          sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY}
-          onVerify={handleCaptchaVerify}
-          onExpire={handleCaptchaExpire}
-          onError={handleCaptchaExpire}
-          theme="dark"
-        />
+        {hcaptchaSiteKey ? (
+          <HCaptcha
+            ref={captchaRef}
+            sitekey={hcaptchaSiteKey}
+            onVerify={handleCaptchaVerify}
+            onExpire={handleCaptchaExpire}
+            onError={handleCaptchaExpire}
+            theme="dark"
+          />
+        ) : (
+          <p className="text-center text-xs text-destructive">
+            Captcha is not configured. Please use the email link above.
+          </p>
+        )}
       </div>
       {errors.captchaToken && (
         <p className="text-center text-xs text-destructive">{errors.captchaToken.message}</p>
@@ -202,7 +221,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        disabled={isSubmitting || !captchaToken}
+        disabled={isSubmitting || !captchaToken || !hcaptchaSiteKey}
         data-cuelume-press
         data-cuelume-release
         className="group flex w-full items-center justify-center gap-2 rounded-full btn-juicy btn-juicy-pill px-6 py-3.5 text-sm font-semibold disabled:cursor-not-allowed"

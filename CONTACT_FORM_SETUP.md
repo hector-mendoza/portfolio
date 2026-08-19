@@ -24,7 +24,8 @@ Create a `.env.local` file in your project root:
 # Resend API Key
 RESEND_API_KEY=re_xxxxxxxxxxxxx
 
-# hCaptcha Keys
+# hCaptcha Keys (must be from the same site entry in your hCaptcha dashboard)
+HCAPTCHA_SITE_KEY=10000000-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 HCAPTCHA_SECRET_KEY=0x000000000xxxxxxxxxxxxx
 NEXT_PUBLIC_HCAPTCHA_SITE_KEY=10000000-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 
@@ -73,8 +74,15 @@ For production use, verify your own domain in Resend:
 
 ## Troubleshooting
 
+### Captcha verification always fails (`{"success":false,"error":"captcha"}`)?
+- Ensure `HCAPTCHA_SECRET_KEY` is set in your hosting provider (Vercel → Settings → Environment Variables). The secret is server-only and is the most common missing variable.
+- Use matching **site key** and **secret key** from the same hCaptcha site entry. A mismatch returns `error: "captcha"`.
+- Prefer `HCAPTCHA_SITE_KEY` (runtime) over `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` so key updates do not require a rebuild.
+- Register both `hectormendoza.me` and `www.hectormendoza.me` in your hCaptcha site hostnames if you use both.
+- After changing env vars in Vercel, redeploy the app.
+
 ### Captcha not showing?
-- Make sure `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` is set
+- Make sure `HCAPTCHA_SITE_KEY` or `NEXT_PUBLIC_HCAPTCHA_SITE_KEY` is set
 - Restart your dev server after adding env variables
 
 ### Emails not sending?

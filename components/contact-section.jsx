@@ -5,7 +5,7 @@ import ContactInfo from "./contact-info";
 import ContactForm from "./contact-form";
 import LocationMap from "./location-map";
 
-export default function ContactSection() {
+export default function ContactSection({ hcaptchaSiteKey }) {
   return (
     <section id="contact" className="relative py-16 md:py-32">
       <div className="relative mx-auto max-w-7xl px-6">
@@ -45,7 +45,7 @@ export default function ContactSection() {
             transition={{ duration: 0.8, delay: 0.1 }}
             className="flex min-h-[420px] h-full"
           >
-            <ContactForm />
+            <ContactForm hcaptchaSiteKey={hcaptchaSiteKey} />
           </motion.div>
           <LocationMap />
         </div>
