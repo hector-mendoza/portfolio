@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import ContactEmail from '@/emails/contact-email';
+import { verifyHcaptchaToken } from '@/lib/hcaptcha';
 
 function getResend() {
     const apiKey = process.env.RESEND_API_KEY;
@@ -29,46 +30,46 @@ export async function POST(request) {
 
         if (!validationResult.success) {
             return NextResponse.json(
-                { error: 'Validation failed', details: validationResult.error.errors },
+                { success: false, error: 'validation', details: validationResult.error.errors },
                 { status: 400 }
             );
         }
 
         const { name, email, subject, message, captchaToken } = validationResult.data;
 
-        // Verify hCaptcha token
-        const captchaPayload = new URLSearchParams({
-            response: captchaToken,
-            secret: process.env.HCAPTCHA_SECRET_KEY || '',
+        const captchaResult = await verifyHcaptchaToken({
+            token: captchaToken,
+            request,
         });
 
-        const captchaResponse = await fetch('https://hcaptcha.com/siteverify', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: captchaPayload.toString(),
-        });
+        if (!captchaResult.success) {
+            if (process.env.NODE_ENV === 'development') {
+                console.error('hCaptcha verification failed:', captchaResult.errorCodes);
+            }
 
-        if (!captchaResponse.ok) {
+            if (captchaResult.error === 'captcha_not_configured') {
+                return NextResponse.json(
+                    { success: false, error: 'captcha_not_configured' },
+                    { status: 503 }
+                );
+            }
+
+            if (captchaResult.error === 'captcha_unavailable') {
+                return NextResponse.json(
+                    { success: false, error: 'captcha_unavailable' },
+                    { status: 503 }
+                );
+            }
+
             return NextResponse.json(
-                { error: 'Captcha service unavailable' },
-                { status: 503 }
-            );
-        }
-
-        const captchaData = await captchaResponse.json();
-
-        if (!captchaData?.success) {
-            return NextResponse.json(
-                { error: 'Captcha verification failed' },
+                { success: false, error: captchaResult.error },
                 { status: 400 }
             );
         }
 
         // Send email using Resend (JSX auto-escapes values, preventing XSS)
         const resend = getResend();
-        const data = await resend.emails.send({
+        await resend.emails.send({
             from: `Portfolio Contact <${process.env.CONTACT_EMAIL || 'contact@hectormendoza.me'}>`,
             to: [process.env.CONTACT_EMAIL || 'hey@hectormendoza.me'],
             subject: `Portfolio Contact: ${subject}`,
@@ -87,7 +88,7 @@ export async function POST(request) {
         });
 
         return NextResponse.json(
-            { message: 'Email sent successfully' },
+            { success: true, message: 'Email sent successfully' },
             { status: 200 }
         );
     } catch (error) {
@@ -97,7 +98,7 @@ export async function POST(request) {
         }
 
         return NextResponse.json(
-            { error: 'Failed to send message. Please try again.' },
+            { success: false, error: 'send_failed' },
             { status: 500 }
         );
     }

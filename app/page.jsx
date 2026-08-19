@@ -8,8 +8,11 @@ import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ProjectsSection from "@/components/projects-section";
 import ScrollProgress from "@/components/scroll-progress";
+import { getHcaptchaSiteKey } from "@/lib/hcaptcha";
 
 export default function Page() {
+  const hcaptchaSiteKey = getHcaptchaSiteKey();
+
   return (
     <main className="relative z-10">
       <PageLoader />
@@ -20,7 +23,7 @@ export default function Page() {
       <ProjectsSection />
       <ScrollTextReveal />
       <ExperienceSection />
-      <ContactSection />
+      <ContactSection hcaptchaSiteKey={hcaptchaSiteKey} />
       <Footer />
     </main>
   );
