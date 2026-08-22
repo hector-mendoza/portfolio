@@ -142,7 +142,26 @@ npm run dev      # Start development server
 npm run build    # Build for production
 npm run start    # Start production server
 npm run lint     # Run ESLint
+npm test         # Run tests once
+npm run test:watch  # Run tests in watch mode
 ```
+
+## 🧪 Testing
+
+Unit tests run with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/react), configured in [`vitest.config.mjs`](vitest.config.mjs) with a `jsdom` environment and the `@/` path alias. Test files live next to the code they cover as `*.test.ts(x)`.
+
+- **Automatic**: runs in CI on every push to `master` and on every pull request via [`.github/workflows/test.yml`](.github/workflows/test.yml).
+- **Manual**: `npm test` (single run) or `npm run test:watch` (watch mode).
+
+## 🩺 Code Health Check
+
+[React Doctor](https://www.react.doctor) scans the codebase for anti-patterns, performance risks, and accessibility issues, returning a health score (0-100) with file-level diagnostics.
+
+- **Automatic**: runs in CI on every push to `master` and on every pull request via [`.github/workflows/react-doctor.yml`](.github/workflows/react-doctor.yml), posting the score and inline findings on PRs.
+- **Manual**: run it locally anytime with:
+  ```bash
+  npx react-doctor@latest .
+  ```
 
 ## 🛡️ Security Features
 
