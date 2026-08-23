@@ -73,15 +73,14 @@ export default function AboutSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex justify-center lg:justify-start"
           >
-            <div className="relative">
+            <div className="relative w-full max-w-[520px] rounded-xl">
               <div
-                className="h-80 w-80 sm:h-96 sm:w-96 overflow-hidden bg-white shadow-2xl shadow-primary/10 border border-border/60"
-                style={{ borderRadius: "32px" }}
+                className="w-full glass-card shadow-2xl shadow-primary/10 rounded-xl"
               >
                 <img
                   src="/pp.png"
                   alt="Hector Mendoza"
-                  className="h-full w-full object-cover"
+                  className="h-full w-full object-cover rounded-xl"
                 />
               </div>
 
