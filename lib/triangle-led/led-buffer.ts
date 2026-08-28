@@ -1,3 +1,4 @@
+import { BRAND_LED_EDGES } from '@/lib/brand-colors';
 import {
   HERO_STATE_MODES,
   LEDS_PER_EDGE,
@@ -17,9 +18,9 @@ const COLOR_OFFSET = 4;
 const MAX_FRAME_DELTA = 0.1;
 const CLICK_SPEED_BOOST_PEAK = 10;
 const INACTIVE_EDGE_BRIGHTNESS_FACTOR = 0.125;
-const EDGE_RED = { r: 0.896269, g: 0.027321, b: 0.051269 };
-const EDGE_GREEN = { r: 0, g: 0.40724, b: 0.048172 };
-const EDGE_BLUE = { r: 0, g: 0.278894, b: 1 };
+const EDGE_RED = BRAND_LED_EDGES.edgeRedLinear;
+const EDGE_GREEN = BRAND_LED_EDGES.edgeGreenLinear;
+const EDGE_BLUE = BRAND_LED_EDGES.edgeBlueLinear;
 const LUMA_R = 0.2126;
 const LUMA_G = 0.7152;
 const LUMA_B = 0.0722;

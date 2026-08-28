@@ -27,7 +27,7 @@ export default function PageLoader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.01, filter: "blur(6px)" }}
           transition={{ duration: 0.65, ease: EASE }}
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-black"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-background"
         >
           <VgpuLoaderCanvas onStatusChange={(status) => {
             if (status === "unavailable") setUseVgpu(false);
@@ -60,10 +60,10 @@ export default function PageLoader() {
             transition={{ duration: 0.6, delay: 0.35, ease: EASE }}
             className="pointer-events-none absolute inset-x-0 bottom-[12vh] flex flex-col items-center gap-2 px-6 text-center"
           >
-            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/35">
+            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-primary/50">
               WebGPU
             </p>
-            <p className="font-mono text-xs uppercase tracking-[0.28em] text-white/70 sm:text-sm">
+            <p className="font-mono text-xs uppercase tracking-[0.28em] text-foreground/80 sm:text-sm">
               Hector Mendoza
             </p>
           </motion.div>

@@ -44,7 +44,7 @@ export default function VgpuLoaderCanvas({ className = "", onStatusChange }) {
         className={`absolute inset-0 block h-full w-full touch-none ${className}`}
       />
       {status === "loading" && (
-        <div className="absolute inset-0 bg-black" aria-hidden />
+        <div className="absolute inset-0 bg-background" aria-hidden />
       )}
     </>
   );
