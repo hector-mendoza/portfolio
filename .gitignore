@@ -31,6 +31,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# scratch demos
+/vgpu-demo
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
