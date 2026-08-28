@@ -6,12 +6,12 @@ import { MorphIcon } from "morphicons/react";
 import {
   ArrowUpRight,
   Gamepad2,
-  Orbit,
   Sparkles,
   SquareArrowOutUpRight,
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import BlackHoleDemo from "./black-hole-demo";
+import BlackHoleShowcase from "./black-hole-showcase";
 import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
@@ -49,6 +49,8 @@ export default function HeroSection() {
         animate="show"
         className="w-full grid grid-cols-2 md:grid-cols-4 gap-3"
       >
+        <BlackHoleShowcase onExpand={() => setBlackHoleOpen(true)} />
+
         {/* ── Identity (2×2) ── */}
         <motion.div
           variants={card}
@@ -227,30 +229,6 @@ export default function HeroSection() {
           className="relative order-7 col-span-2 rounded-3xl glass-card p-5 flex flex-col justify-between"
           style={{ minHeight: "140px" }}
         >
-          <button
-            onClick={() => setBlackHoleOpen(true)}
-            onMouseEnter={() => setHoveredCard("orbit")}
-            onMouseLeave={() => setHoveredCard(null)}
-            data-cuelume-press
-            data-cuelume-release
-            aria-label="Open black hole WebGPU demo"
-            title="Raymarched black hole — WebGPU demo"
-            className="group absolute right-14 top-3 flex items-center justify-center sm:right-16"
-          >
-            <span
-              className="absolute h-9 w-9 rounded-full bg-amber-400/10 animate-ping"
-              style={{ animationDuration: "3.2s" }}
-            />
-            <span className="relative flex h-8 w-8 items-center justify-center rounded-full glass-subtle text-amber-300 transition-all group-hover:scale-110 group-hover:border-amber-300/50">
-              <MorphIcon
-                icon={hoveredCard === "orbit" ? Sparkles : Orbit}
-                size={16}
-                color="hsl(43 96% 76% / 0.9)"
-                spring="bouncy"
-              />
-            </span>
-          </button>
-
           <button
             onClick={() => setGameOpen(true)}
             onMouseEnter={() => setHoveredCard("gamepad")}
