@@ -1,3 +1,5 @@
+import { BRAND_LED_EDGES } from '@/lib/brand-colors';
+
 export interface RenderSize {
   width: number;
   height: number;
@@ -78,9 +80,9 @@ export const DEFAULT_BRUSH: BrushSettings = {
 };
 
 export const TUNABLE_DEFAULTS = {
-  ledIntensity: 1,
-  brightnessMin: 0.09,
-  brightnessMinDark: 0.05,
+  ledIntensity: 1.15,
+  brightnessMin: 0.11,
+  brightnessMinDark: 0.065,
   brightnessMax: 1,
 } as const;
 
@@ -108,9 +110,9 @@ export const HOVER_RGB_TINT_DEFAULTS: HoverRgbTintSettings = {
   radius: 173,
   power: 3,
   responseSmoothing: 0.2,
-  edgeRedLinear: { r: 0.896269, g: 0.027321, b: 0.051269 },
-  edgeGreenLinear: { r: 0, g: 0.40724, b: 0.048172 },
-  edgeBlueLinear: { r: 0, g: 0.278894, b: 1 },
+  edgeRedLinear: { ...BRAND_LED_EDGES.edgeRedLinear },
+  edgeGreenLinear: { ...BRAND_LED_EDGES.edgeGreenLinear },
+  edgeBlueLinear: { ...BRAND_LED_EDGES.edgeBlueLinear },
   edgeOverlap: 1,
 };
 
