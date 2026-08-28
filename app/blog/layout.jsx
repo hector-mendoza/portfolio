@@ -1,5 +1,6 @@
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import BoneyardProvider from "@/components/boneyard-provider";
 
 export const metadata = {
   title: "Blog | Hector Mendoza",
@@ -17,6 +18,7 @@ export const metadata = {
 export default function BlogLayout({ children }) {
   return (
     <>
+      <BoneyardProvider />
       <Navbar />
       {children}
       <Footer />

@@ -14,18 +14,20 @@ import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
 import HeroVgpuAccent from "./hero-vgpu-accent";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
+
+let heroIntroPlayed = false;
+
 const container = {
   hidden: {},
   show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
 };
 
 const card = {
-  hidden: { opacity: 0, y: 24, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 20 },
   show: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
@@ -35,6 +37,11 @@ const moreStack = ["Shopify", "Figma"];
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [playIntro] = useState(() => {
+    if (heroIntroPlayed) return false;
+    heroIntroPlayed = true;
+    return true;
+  });
   return (
     <section
       id="hero"
@@ -43,7 +50,7 @@ export default function HeroSection() {
       <HeroMouseGlow className="relative w-full max-w-5xl mx-auto">
       <motion.div
         variants={container}
-        initial="hidden"
+        initial={playIntro ? "hidden" : false}
         animate="show"
         className="w-full grid grid-cols-2 md:grid-cols-4 gap-3"
       >

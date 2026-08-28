@@ -1,6 +1,7 @@
-import { clock, effect, frameLoop, init, surface } from "vgpu";
+import { clock, effect, frameLoop, surface } from "vgpu";
 import type { FrameLoopHandle } from "vgpu";
 import ambientShader from "@/shaders/ambient.wgsl";
+import { acquireGpu } from "@/lib/vgpu-shared";
 
 export function startAmbientRenderer(
   canvas: HTMLCanvasElement,
@@ -13,13 +14,12 @@ export function startAmbientRenderer(
   const animate = options?.animate ?? true;
   let disposed = false;
   let loop: FrameLoopHandle | undefined;
-  let gpu: Awaited<ReturnType<typeof init>> | undefined;
+  let gpu: Awaited<ReturnType<typeof acquireGpu>> | undefined;
 
   void (async () => {
     try {
-      gpu = await init();
+      gpu = await acquireGpu();
       if (disposed) {
-        gpu.dispose();
         return;
       }
 
@@ -49,13 +49,11 @@ export function startAmbientRenderer(
     } catch {
       options?.onUnavailable?.();
       loop?.stop();
-      gpu?.dispose();
     }
   })();
 
   return () => {
     disposed = true;
     loop?.stop();
-    gpu?.dispose();
   };
 }
