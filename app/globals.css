@@ -636,7 +636,7 @@ body {
     radial-gradient(ellipse 38% 44% at 78% 68%, hsl(205 50% 52% / 0.22), transparent 58%),
     radial-gradient(ellipse 36% 32% at 58% 18%, hsl(195 40% 48% / 0.16), transparent 55%),
     radial-gradient(ellipse 30% 28% at 12% 78%, hsl(180 38% 42% / 0.12), transparent 50%);
-  animation: glass-gradient-drift 28s ease-in-out infinite alternate;
+  animation: glass-gradient-drift 12s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -652,7 +652,7 @@ body {
     hsl(195 40% 48% / 0.05) 300deg,
     transparent 360deg
   );
-  animation: glass-shine-drift 36s ease-in-out infinite alternate;
+  animation: glass-shine-drift 16s ease-in-out infinite alternate;
   mix-blend-mode: screen;
   will-change: transform, opacity;
 }
@@ -898,7 +898,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 60vw;
   height: 60vh;
   background: hsl(168 42% 30% / 0.14);
-  animation: fog-drift-a 22s ease-in-out infinite;
+  animation: fog-drift-a 11s ease-in-out infinite;
 }
 
 .ambient-fog-2 {
@@ -907,7 +907,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 50vw;
   height: 50vh;
   background: hsl(205 55% 42% / 0.13);
-  animation: fog-drift-b 28s ease-in-out infinite;
+  animation: fog-drift-b 14s ease-in-out infinite;
 }
 
 .ambient-fog-3 {
@@ -916,7 +916,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 55vw;
   height: 45vh;
   background: hsl(195 40% 55% / 0.11);
-  animation: fog-drift-c 32s ease-in-out infinite;
+  animation: fog-drift-c 16s ease-in-out infinite;
 }
 
 .ambient-fog-4 {
@@ -925,7 +925,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 40vw;
   height: 40vh;
   background: hsl(205 55% 42% / 0.1);
-  animation: fog-drift-b 26s ease-in-out infinite reverse;
+  animation: fog-drift-b 13s ease-in-out infinite reverse;
 }
 
 .ambient-fog-5 {
@@ -934,7 +934,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 45vw;
   height: 38vh;
   background: hsl(168 42% 30% / 0.09);
-  animation: fog-drift-c 34s ease-in-out infinite reverse;
+  animation: fog-drift-c 17s ease-in-out infinite reverse;
 }
 
 .ambient-fog-6 {
@@ -943,7 +943,7 @@ html[data-transmission-bg] .dark .navbar-scrolled {
   width: 42vw;
   height: 42vh;
   background: hsl(205 55% 42% / 0.1);
-  animation: fog-drift-a 30s ease-in-out infinite reverse;
+  animation: fog-drift-a 15s ease-in-out infinite reverse;
 }
 
 .dark .ambient-fog-1 { background: hsl(168 45% 42% / 0.18); }
