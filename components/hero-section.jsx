@@ -10,8 +10,6 @@ import {
   SquareArrowOutUpRight,
 } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
-import BlackHoleDemo from "./black-hole-demo";
-import BlackHoleShowcase from "./black-hole-showcase";
 import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
@@ -35,7 +33,6 @@ const moreStack = ["Shopify", "Figma"];
 
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
-  const [blackHoleOpen, setBlackHoleOpen] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
   return (
     <section
@@ -49,8 +46,6 @@ export default function HeroSection() {
         animate="show"
         className="w-full grid grid-cols-2 md:grid-cols-4 gap-3"
       >
-        <BlackHoleShowcase onExpand={() => setBlackHoleOpen(true)} />
-
         {/* ── Identity (2×2) ── */}
         <motion.div
           variants={card}
@@ -271,7 +266,6 @@ export default function HeroSection() {
       </HeroMouseGlow>
 
       <GeometryWarsGame open={gameOpen} onClose={() => setGameOpen(false)} />
-      <BlackHoleDemo open={blackHoleOpen} onClose={() => setBlackHoleOpen(false)} />
     </section>
   );
 }
