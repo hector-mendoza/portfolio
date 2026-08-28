@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { startGlassPrismRenderer } from "@/lib/glass-prism/renderer";
+import { createTransmissionRenderer } from "@/lib/vgpu-transmission/renderer";
 
 function CssFallback() {
   return (
@@ -17,7 +17,7 @@ function CssFallback() {
   );
 }
 
-export default function GlassPrismBackground() {
+export default function TransmissionBackground() {
   const canvasRef = useRef(null);
   const [ready, setReady] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
@@ -29,14 +29,16 @@ export default function GlassPrismBackground() {
       return;
     }
 
-    const prefersReducedMotion =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try {
+      renderer = createTransmissionRenderer({ canvas });
+      void renderer.ready
+        .then(() => setReady(true))
+        .catch(() => setUnavailable(true));
+    } catch {
+      setUnavailable(true);
+    }
 
-    return startGlassPrismRenderer(canvas, {
-      animate: !prefersReducedMotion,
-      onReady: () => setReady(true),
-      onUnavailable: () => setUnavailable(true),
-    });
+    return () => renderer?.dispose();
   }, []);
 
   return (
