@@ -57,7 +57,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
+          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl glass-card glass-card-hero p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
           <div className="relative z-10 flex h-full flex-col justify-between">

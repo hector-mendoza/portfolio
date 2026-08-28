@@ -83,7 +83,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark" data-transmission-bg="pending" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
