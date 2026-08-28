@@ -4,8 +4,7 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import { ThemeProvider } from "@/components/theme-provider";
 import CuelumeProvider from "@/components/cuelume-provider";
-import AmbientBackground from "@/components/ambient-background";
-import AsciiDrift from "@/components/ascii-drift";
+import TriangleLedBackground from "@/components/triangle-led-background";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -95,8 +94,7 @@ export default function RootLayout({ children }) {
         className={`${outfit.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
       >
         <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
-          <AmbientBackground />
-          <AsciiDrift />
+          <TriangleLedBackground />
           <ErrorBoundary>
             <CuelumeProvider />
             <ToasterProvider />

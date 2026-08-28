@@ -12,7 +12,6 @@ import {
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
-import HeroVgpuAccent from "./hero-vgpu-accent";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 
 let heroIntroPlayed = false;
@@ -61,7 +60,6 @@ export default function HeroSection() {
           className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
-          <HeroVgpuAccent />
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div>
               <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
