@@ -12,6 +12,7 @@ import {
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
+import HeroVgpuAccent from "./hero-vgpu-accent";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 const container = {
   hidden: {},
@@ -50,33 +51,36 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="order-1 col-span-2 row-span-2 rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
+          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl glass-card p-8 md:p-10 flex flex-col justify-between"
           style={{ minHeight: "340px" }}
         >
-          <div>
-            <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
-              Software Engineer
-            </span>
-            <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
-              Hector
-              <br />
-              <span className="text-gradient">Mendoza</span>
-            </h1>
-          </div>
+          <HeroVgpuAccent />
+          <div className="relative z-10 flex h-full flex-col justify-between">
+            <div>
+              <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
+                Software Engineer
+              </span>
+              <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+                Hector
+                <br />
+                <span className="text-gradient">Mendoza</span>
+              </h1>
+            </div>
 
-          <div>
-            <p className="mb-6 text-sm leading-relaxed text-muted-foreground md:text-base">
-              Head of Web Integrations at{" "}
-              <span className="font-medium text-foreground">UrVenue</span>
-              {" · "}Lead Developer · 8+ years crafting performant web
-              experiences.
-            </p>
-            <Link005
-              href="#projects"
-              className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
-            >
-              View Work
-            </Link005>
+            <div>
+              <p className="mb-6 text-sm leading-relaxed text-muted-foreground md:text-base">
+                Head of Web Integrations at{" "}
+                <span className="font-medium text-foreground">UrVenue</span>
+                {" · "}Lead Developer · 8+ years crafting performant web
+                experiences.
+              </p>
+              <Link005
+                href="#projects"
+                className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
+              >
+                View Work
+              </Link005>
+            </div>
           </div>
         </motion.div>
 
