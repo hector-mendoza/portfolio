@@ -1,22 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { createTriangleLedRenderer } from "@/lib/triangle-led/triangle-led-renderer";
+import { startGlassPrismRenderer } from "@/lib/glass-prism/renderer";
 
 function CssFallback() {
   return (
     <div
       aria-hidden
-      className="absolute inset-0 bg-[#0a0c0d]"
+      className="absolute inset-0"
       style={{
+        backgroundColor: "#e8e8e6",
         backgroundImage:
-          "radial-gradient(ellipse 80% 60% at 50% 40%, hsl(168 45% 42% / 0.12), transparent 70%), radial-gradient(ellipse 60% 50% at 20% 80%, hsl(205 50% 52% / 0.08), transparent 60%)",
+          "radial-gradient(ellipse 70% 55% at 50% 45%, rgba(255,255,255,0.65), transparent 70%), radial-gradient(ellipse 40% 30% at 75% 20%, rgba(255,255,255,0.35), transparent 60%)",
       }}
     />
   );
 }
 
-export default function TriangleLedBackground() {
+export default function GlassPrismBackground() {
   const canvasRef = useRef(null);
   const [ready, setReady] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
@@ -31,22 +32,11 @@ export default function TriangleLedBackground() {
     const prefersReducedMotion =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    let renderer;
-    try {
-      renderer = createTriangleLedRenderer({
-        canvas,
-        interactive: !prefersReducedMotion,
-        input: "window",
-        dpr: [1, 2],
-      });
-      void renderer.ready
-        .then(() => setReady(true))
-        .catch(() => setUnavailable(true));
-    } catch {
-      setUnavailable(true);
-    }
-
-    return () => renderer?.dispose();
+    return startGlassPrismRenderer(canvas, {
+      animate: !prefersReducedMotion,
+      onReady: () => setReady(true),
+      onUnavailable: () => setUnavailable(true),
+    });
   }, []);
 
   return (

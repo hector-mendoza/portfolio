@@ -1,0 +1,617 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic: "{ \"status\": \"online\" } => deploy OK ..."
+    - generic: git push origin main [████████] 100%
+    - generic: npm run build ✓ compiled
+    - generic: <Next.js /> render()
+    - generic: "const app = () => { return web; }"
+    - generic: SELECT * FROM projects LIMIT 5;
+    - generic: "HTTP/2 200 OK Content-Type: app"
+    - generic: "function build() { ship(); }"
+  - main [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - link [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img "HM logo" [ref=e7]
+        - generic [ref=e8]:
+          - link "Home" [ref=e9] [cursor=pointer]:
+            - /url: /#hero
+          - link "About" [ref=e10] [cursor=pointer]:
+            - /url: /#about
+          - link "Projects" [ref=e11] [cursor=pointer]:
+            - /url: /#projects
+          - link "Blog" [ref=e12] [cursor=pointer]:
+            - /url: /blog
+          - link "Experience" [ref=e13] [cursor=pointer]:
+            - /url: /#experience
+          - link "Contact" [ref=e14] [cursor=pointer]:
+            - /url: /#contact
+        - link "Let's Talk" [ref=e16] [cursor=pointer]:
+          - /url: mailto:hey@hectormendoza.me
+    - img [ref=e19]:
+      - generic [ref=e20]: "0"
+      - generic [ref=e23]: "%"
+    - generic [ref=e31]:
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - generic [ref=e35]: Software Engineer
+          - heading "Hector Mendoza" [level=1] [ref=e36]: HectorMendoza
+        - generic [ref=e37]:
+          - paragraph [ref=e38]: Head of Web Integrations at UrVenue · Lead Developer · 8+ years crafting performant web experiences.
+          - link "View Work" [ref=e39] [cursor=pointer]:
+            - /url: "#projects"
+      - generic [ref=e42]:
+        - generic [ref=e43]: Connect
+        - generic [ref=e44]:
+          - img "Building ideas" [ref=e46]
+          - generic [ref=e47]:
+            - link "GitHub" [ref=e48] [cursor=pointer]:
+              - /url: https://github.com/hector-mendoza
+            - link "LinkedIn" [ref=e54] [cursor=pointer]:
+              - /url: https://www.linkedin.com/in/hector-mendoza-m/
+            - link "Threads" [ref=e61] [cursor=pointer]:
+              - /url: https://www.threads.com/@hectormendozax2
+            - link "Email" [ref=e65] [cursor=pointer]:
+              - /url: mailto:hey@hectormendoza.me
+      - link "Currently 2024 — Present UrVenue Head of Web Integrations · Venue tech, APIs & enterprise web delivery View experience →" [ref=e71] [cursor=pointer]:
+        - /url: "#experience"
+        - generic [ref=e72]:
+          - generic [ref=e73]: Currently
+          - generic [ref=e74]: 2024 — Present
+        - generic [ref=e75]:
+          - paragraph [ref=e76]: UrVenue
+          - paragraph [ref=e77]: Head of Web Integrations · Venue tech, APIs & enterprise web delivery
+        - generic [ref=e78]: View experience →
+      - link "Latest Build Cantera Diez Hotel Boutique hospitality · AngularJS · Firebase · i18n" [ref=e79] [cursor=pointer]:
+        - /url: https://canteradiezhotel.com
+        - generic [ref=e82]: Latest Build
+        - generic [ref=e86]:
+          - paragraph [ref=e87]: Cantera Diez Hotel
+          - paragraph [ref=e88]: Boutique hospitality · AngularJS · Firebase · i18n
+      - link "Featured Project Vibe Theme VS Code Theme Collection · 8 dark themes · MIT licensed" [ref=e89] [cursor=pointer]:
+        - /url: https://vibetheme.hectormendoza.me
+        - generic [ref=e92]: Featured Project
+        - generic [ref=e96]:
+          - paragraph [ref=e97]: Vibe Theme
+          - paragraph [ref=e98]: VS Code Theme Collection · 8 dark themes · MIT licensed
+      - link "Hector Mendoza About Builder, lead dev & design-minded engineer Read my story →" [ref=e99] [cursor=pointer]:
+        - /url: "#about"
+        - img "Hector Mendoza" [ref=e101]
+        - generic [ref=e102]:
+          - text: About
+          - paragraph [ref=e103]: Builder, lead dev & design-minded engineer
+          - paragraph [ref=e104]:
+            - generic [ref=e105]: Read my story →
+      - generic [ref=e106]:
+        - button "Play a hidden mini-game" [ref=e107]
+        - paragraph [ref=e112]: Stack
+        - generic [ref=e113]:
+          - generic [ref=e114]: Next.js
+          - generic [ref=e115]: React
+          - generic [ref=e116]: TypeScript
+          - generic [ref=e117]: WordPress
+          - generic [ref=e118]: Shopify · Figma
+    - generic [ref=e119]:
+      - generic:
+        - generic:
+          - generic: ABOUT ME ABOUT ME
+          - generic: ABOUT ME ABOUT ME
+          - generic: ABOUT ME ABOUT ME
+      - generic [ref=e120]:
+        - generic [ref=e121]:
+          - generic [ref=e122]: About
+          - heading "A bit about me" [level=2] [ref=e123]
+        - generic [ref=e125]:
+          - generic [ref=e127]:
+            - img "Hector Mendoza" [ref=e129]
+            - generic [ref=e135]:
+              - paragraph [ref=e136]: Master's Degree
+              - paragraph [ref=e137]: Computer Science
+          - generic [ref=e138]:
+            - generic [ref=e139]:
+              - paragraph [ref=e140]: I'm currently Head of Web Integrations at UrVenue, based in Morelia, Mexico. With over 8 years of experience I specialize in building performant, accessible, and visually polished web experiences.
+              - paragraph [ref=e141]: Before UrVenue I led the web team at Once Interactive, collaborating with 50+ international companies across e-commerce, hospitality, and corporate sectors. I also hold a Master's degree in Computer Science with a focus on Mobile App Development.
+              - paragraph [ref=e142]: My approach combines clean code with thoughtful design. I believe every pixel matters and every interaction should feel intentional.
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - paragraph [ref=e145]: 8+
+                - paragraph [ref=e146]: Years Experience
+              - generic [ref=e147]:
+                - paragraph [ref=e148]: 20+
+                - paragraph [ref=e149]: Projects Delivered
+              - generic [ref=e150]:
+                - paragraph [ref=e151]: 10+
+                - paragraph [ref=e152]: Happy Clients
+              - generic [ref=e153]:
+                - paragraph [ref=e154]: "3"
+                - paragraph [ref=e155]: Countries
+            - generic [ref=e156]:
+              - paragraph [ref=e157]: Tech Stack
+              - generic [ref=e158]:
+                - generic [ref=e159]: Next.js
+                - generic [ref=e160]: React
+                - generic [ref=e161]: TypeScript
+                - generic [ref=e162]: WordPress
+                - generic [ref=e163]: Shopify
+                - generic [ref=e164]: Node.js
+                - generic [ref=e165]: Tailwind CSS
+                - generic [ref=e166]: Three.js
+                - generic [ref=e167]: GSAP
+                - generic [ref=e168]: Figma
+                - generic [ref=e169]: WooCommerce
+                - generic [ref=e170]: SEO
+      - generic [ref=e172]:
+        - generic [ref=e173]:
+          - generic [ref=e174]:
+            - generic [ref=e175]: NEXT.JS
+            - generic [ref=e176]: ///
+          - generic [ref=e177]:
+            - generic [ref=e178]: REACT
+            - generic [ref=e179]: ///
+          - generic [ref=e180]:
+            - generic [ref=e181]: TYPESCRIPT
+            - generic [ref=e182]: ///
+          - generic [ref=e183]:
+            - generic [ref=e184]: WORDPRESS
+            - generic [ref=e185]: ///
+          - generic [ref=e186]:
+            - generic [ref=e187]: SHOPIFY
+            - generic [ref=e188]: ///
+          - generic [ref=e189]:
+            - generic [ref=e190]: NODE.JS
+            - generic [ref=e191]: ///
+          - generic [ref=e192]:
+            - generic [ref=e193]: TAILWIND
+            - generic [ref=e194]: ///
+          - generic [ref=e195]:
+            - generic [ref=e196]: THREE.JS
+            - generic [ref=e197]: ///
+          - generic [ref=e198]:
+            - generic [ref=e199]: GSAP
+            - generic [ref=e200]: ///
+          - generic [ref=e201]:
+            - generic [ref=e202]: FIGMA
+            - generic [ref=e203]: ///
+        - generic [ref=e204]:
+          - generic [ref=e205]:
+            - generic [ref=e206]: NEXT.JS
+            - generic [ref=e207]: ///
+          - generic [ref=e208]:
+            - generic [ref=e209]: REACT
+            - generic [ref=e210]: ///
+          - generic [ref=e211]:
+            - generic [ref=e212]: TYPESCRIPT
+            - generic [ref=e213]: ///
+          - generic [ref=e214]:
+            - generic [ref=e215]: WORDPRESS
+            - generic [ref=e216]: ///
+          - generic [ref=e217]:
+            - generic [ref=e218]: SHOPIFY
+            - generic [ref=e219]: ///
+          - generic [ref=e220]:
+            - generic [ref=e221]: NODE.JS
+            - generic [ref=e222]: ///
+          - generic [ref=e223]:
+            - generic [ref=e224]: TAILWIND
+            - generic [ref=e225]: ///
+          - generic [ref=e226]:
+            - generic [ref=e227]: THREE.JS
+            - generic [ref=e228]: ///
+          - generic [ref=e229]:
+            - generic [ref=e230]: GSAP
+            - generic [ref=e231]: ///
+          - generic [ref=e232]:
+            - generic [ref=e233]: FIGMA
+            - generic [ref=e234]: ///
+    - generic [ref=e236]:
+      - generic [ref=e237]:
+        - generic [ref=e238]:
+          - generic [ref=e239]: Projects
+          - heading "Featured work" [level=2] [ref=e240]
+        - paragraph [ref=e242]: Real projects. Real clients. Crafted with care — from hotel websites to animated cocktail showcases.
+      - generic [ref=e243]:
+        - paragraph [ref=e244]: Swipe the stack
+        - generic [ref=e246]:
+          - generic [ref=e248]:
+            - generic [ref=e250]:
+              - generic [ref=e251]: Dev Tool
+              - generic [ref=e252]: "2026"
+            - generic [ref=e253]:
+              - generic [ref=e254]:
+                - heading "Agent Ready" [level=3] [ref=e255]
+                - paragraph [ref=e256]: npm Package · AI Crawler Toolkit
+              - paragraph [ref=e257]: Makes your web app readable by AI agents and crawlers, automatically. A typed config generates robots.txt (with Content-Signal directives), llms.txt, sitemap.xml, an MCP server card, and an API catalog — plus a CLI to audit any live site. MIT licensed monorepo with core, Next.js, and CLI packages.
+              - link "Visit site" [ref=e258] [cursor=pointer]:
+                - /url: https://github.com/hector-mendoza/agent-ready
+          - generic [ref=e262]:
+            - generic [ref=e264]:
+              - generic [ref=e265]: Fun
+              - generic [ref=e266]: "2026"
+            - generic [ref=e267]:
+              - generic [ref=e268]:
+                - heading "Emoji of the Day" [level=3] [ref=e269]
+                - paragraph [ref=e270]: Mood Tracker & Easter Egg
+              - paragraph [ref=e271]: A single-page mood tracker that assigns you a daily emoji and a hilariously unscientific diagnosis. Date-seeded results, a 30-day history, a slot-machine randomizer, and a secret easter egg for the curious. Zero dependencies.
+              - link "Visit site" [ref=e272] [cursor=pointer]:
+                - /url: https://emoji-day-hm.vercel.app/
+          - generic [ref=e276]:
+            - generic [ref=e278]:
+              - generic [ref=e279]: Design Tool
+              - generic [ref=e280]: "2026"
+            - generic [ref=e281]:
+              - generic [ref=e282]:
+                - heading "Vibe Theme" [level=3] [ref=e283]
+                - paragraph [ref=e284]: VS Code Theme Collection
+              - paragraph [ref=e285]: 8 premium dark themes for VS Code & Cursor. Built from scratch with deliberate contrast ratios and full TextMate grammar coverage. MIT licensed, free forever.
+              - link "Visit site" [ref=e286] [cursor=pointer]:
+                - /url: https://vibetheme.hectormendoza.me/
+          - generic [ref=e290]:
+            - generic [ref=e292]:
+              - generic [ref=e293]: Creative Dev
+              - generic [ref=e294]: "2026"
+            - generic [ref=e295]:
+              - generic [ref=e296]:
+                - heading "Mojito Cocktails" [level=3] [ref=e297]
+                - paragraph [ref=e298]: GSAP Animation Showcase
+              - paragraph [ref=e299]: An immersive cocktail experience featuring scroll-driven animations, 3D perspective transforms, and silky liquid physics — all in the browser.
+              - link "Visit site" [ref=e300] [cursor=pointer]:
+                - /url: https://gsap-cocktails-hm.vercel.app/
+          - generic [ref=e304]:
+            - generic [ref=e306]:
+              - generic [ref=e307]: Hospitality
+              - generic [ref=e308]: "2025"
+            - generic [ref=e309]:
+              - generic [ref=e310]:
+                - heading "Cantera Diez Hotel" [level=3] [ref=e311]
+                - paragraph [ref=e312]: Hotel & Hospitality
+              - paragraph [ref=e313]: Elegant digital presence for a boutique hotel in Morelia. Built with AngularJS & Firebase, featuring i18n bilingual support, room showcasing, and a seamless contact experience.
+              - link "Visit site" [ref=e314] [cursor=pointer]:
+                - /url: https://canteradiezhotel.com
+          - generic [ref=e318]:
+            - generic [ref=e320]:
+              - generic [ref=e321]: Wellness
+              - generic [ref=e322]: "2025"
+            - generic [ref=e323]:
+              - generic [ref=e324]:
+                - heading "Milestone Massage Therapy" [level=3] [ref=e325]
+                - paragraph [ref=e326]: Wellness & Therapeutic Massage
+              - paragraph [ref=e327]: Therapeutic and prenatal massage studio in Spanish Fork, Utah. Built on WordPress with Vagaro booking integration, mobile in-home service info, and a membership program.
+              - link "Visit site" [ref=e328] [cursor=pointer]:
+                - /url: https://milestonemassage.com/
+      - generic [ref=e331]:
+        - button "Recent" [ref=e332]
+        - button "All" [ref=e333]
+        - button "Hospitality" [ref=e334]
+        - button "Design Tool" [ref=e335]
+        - button "Dev Tool" [ref=e336]
+        - button "Corporate" [ref=e337]
+        - button "Creative Dev" [ref=e338]
+        - button "Wellness" [ref=e339]
+        - button "Automotive" [ref=e340]
+        - button "Personal" [ref=e341]
+        - button "Fun" [ref=e342]
+      - generic [ref=e343]:
+        - generic [ref=e345]:
+          - generic [ref=e346]:
+            - generic [ref=e347]: npm i @is-agent-ready/next
+            - link "Visit Site" [ref=e364] [cursor=pointer]:
+              - /url: https://github.com/hector-mendoza/agent-ready
+            - generic [ref=e367]: Dev Tool
+            - generic [ref=e368]: "2026"
+          - generic [ref=e369]:
+            - heading "Agent Ready" [level=3] [ref=e371]
+            - paragraph [ref=e372]: npm Package · AI Crawler Toolkit
+            - paragraph [ref=e373]: Makes your web app readable by AI agents and crawlers, automatically. A typed config generates robots.txt (with Content-Signal directives), llms.txt, sitemap.xml, an MCP server card, and an API catalog — plus a CLI to audit any live site. MIT licensed monorepo with core, Next.js, and CLI packages.
+            - generic [ref=e374]:
+              - generic [ref=e375]: TypeScript
+              - generic [ref=e376]: npm
+              - generic [ref=e377]: Next.js
+              - generic [ref=e378]: CLI
+              - generic [ref=e379]: Monorepo
+        - generic [ref=e381]:
+          - generic [ref=e382]:
+            - generic [ref=e383]:
+              - generic: 🎉
+              - generic [ref=e384]: emoji-day-hm.vercel.app
+            - link "Visit Site" [ref=e400] [cursor=pointer]:
+              - /url: https://emoji-day-hm.vercel.app/
+            - generic [ref=e403]: Fun
+            - generic [ref=e404]: "2026"
+          - generic [ref=e405]:
+            - heading "Emoji of the Day" [level=3] [ref=e407]
+            - paragraph [ref=e408]: Mood Tracker & Easter Egg
+            - paragraph [ref=e409]: A single-page mood tracker that assigns you a daily emoji and a hilariously unscientific diagnosis. Date-seeded results, a 30-day history, a slot-machine randomizer, and a secret easter egg for the curious. Zero dependencies.
+            - generic [ref=e410]:
+              - generic [ref=e411]: Vanilla JS
+              - generic [ref=e412]: CSS
+              - generic [ref=e413]: View Transitions
+              - generic [ref=e414]: i18n
+        - generic [ref=e416]:
+          - generic [ref=e417]:
+            - generic [ref=e418]: vibetheme.hectormendoza.me
+            - link "Visit Site" [ref=e435] [cursor=pointer]:
+              - /url: https://vibetheme.hectormendoza.me/
+            - generic [ref=e438]: Design Tool
+            - generic [ref=e439]: "2026"
+          - generic [ref=e440]:
+            - heading "Vibe Theme" [level=3] [ref=e442]
+            - paragraph [ref=e443]: VS Code Theme Collection
+            - paragraph [ref=e444]: 8 premium dark themes for VS Code & Cursor. Built from scratch with deliberate contrast ratios and full TextMate grammar coverage. MIT licensed, free forever.
+            - generic [ref=e445]:
+              - generic [ref=e446]: Design
+              - generic [ref=e447]: VS Code
+              - generic [ref=e448]: Color Theory
+              - generic [ref=e449]: Branding
+        - generic [ref=e451]:
+          - generic [ref=e452]:
+            - generic [ref=e453]: gsap-cocktails-hm.vercel.app
+            - link "Visit Site" [ref=e470] [cursor=pointer]:
+              - /url: https://gsap-cocktails-hm.vercel.app/
+            - generic [ref=e473]: Creative Dev
+            - generic [ref=e474]: "2026"
+          - generic [ref=e475]:
+            - heading "Mojito Cocktails" [level=3] [ref=e477]
+            - paragraph [ref=e478]: GSAP Animation Showcase
+            - paragraph [ref=e479]: An immersive cocktail experience featuring scroll-driven animations, 3D perspective transforms, and silky liquid physics — all in the browser.
+            - generic [ref=e480]:
+              - generic [ref=e481]: GSAP
+              - generic [ref=e482]: Next.js
+              - generic [ref=e483]: CSS Animations
+              - generic [ref=e484]: WebGL
+        - generic [ref=e486]:
+          - generic [ref=e487]:
+            - generic [ref=e488]: canteradiezhotel.com
+            - link "Visit Site" [ref=e505] [cursor=pointer]:
+              - /url: https://canteradiezhotel.com
+            - generic [ref=e508]: Hospitality
+            - generic [ref=e509]: "2025"
+          - generic [ref=e510]:
+            - heading "Cantera Diez Hotel" [level=3] [ref=e512]
+            - paragraph [ref=e513]: Hotel & Hospitality
+            - paragraph [ref=e514]: Elegant digital presence for a boutique hotel in Morelia. Built with AngularJS & Firebase, featuring i18n bilingual support, room showcasing, and a seamless contact experience.
+            - generic [ref=e515]:
+              - generic [ref=e516]: AngularJS
+              - generic [ref=e517]: Firebase
+              - generic [ref=e518]: i18n
+              - generic [ref=e519]: SEO
+        - generic [ref=e521]:
+          - generic [ref=e522]:
+            - generic [ref=e523]: milestonemassage.com
+            - link "Visit Site" [ref=e540] [cursor=pointer]:
+              - /url: https://milestonemassage.com/
+            - generic [ref=e543]: Wellness
+            - generic [ref=e544]: "2025"
+          - generic [ref=e545]:
+            - heading "Milestone Massage Therapy" [level=3] [ref=e547]
+            - paragraph [ref=e548]: Wellness & Therapeutic Massage
+            - paragraph [ref=e549]: Therapeutic and prenatal massage studio in Spanish Fork, Utah. Built on WordPress with Vagaro booking integration, mobile in-home service info, and a membership program.
+            - generic [ref=e550]:
+              - generic [ref=e551]: WordPress
+              - generic [ref=e552]: PHP
+              - generic [ref=e553]: Booking
+              - generic [ref=e554]: SEO
+        - generic [ref=e556]:
+          - generic [ref=e557]:
+            - generic [ref=e558]: michoacanautolv.com
+            - link "Visit Site" [ref=e575] [cursor=pointer]:
+              - /url: https://michoacanautolv.com/
+            - generic [ref=e578]: Automotive
+            - generic [ref=e579]: "2025"
+          - generic [ref=e580]:
+            - heading "Michoacán Auto" [level=3] [ref=e582]
+            - paragraph [ref=e583]: Tire Shop & Auto Repair
+            - paragraph [ref=e584]: Bilingual WordPress site for a family-owned tire shop and repair facility in Las Vegas, with appointment booking, financing details, and a tire brand directory.
+            - generic [ref=e585]:
+              - generic [ref=e586]: WordPress
+              - generic [ref=e587]: PHP
+              - generic [ref=e588]: Bilingual
+              - generic [ref=e589]: SEO
+        - generic [ref=e591]:
+          - generic [ref=e592]:
+            - generic [ref=e593]: wedding.hectormendoza.me
+            - link "Visit Site" [ref=e610] [cursor=pointer]:
+              - /url: http://wedding.hectormendoza.me/
+            - generic [ref=e613]: Personal
+            - generic [ref=e614]: "2025"
+          - generic [ref=e615]:
+            - heading "Our Wedding" [level=3] [ref=e617]
+            - paragraph [ref=e618]: Personal Project · ♡
+            - paragraph [ref=e619]: "A personal milestone: a custom wedding website built with love. RSVP management, countdown timer, event details, and a touch of magic for the big day."
+            - generic [ref=e620]:
+              - generic [ref=e621]: Next.js
+              - generic [ref=e622]: Tailwind CSS
+              - generic [ref=e623]: Design
+              - generic [ref=e624]: RSVP
+        - generic [ref=e626]:
+          - generic [ref=e627]:
+            - generic [ref=e628]: astes.com.mx
+            - link "Visit Site" [ref=e645] [cursor=pointer]:
+              - /url: https://astes.com.mx/
+            - generic [ref=e648]: Corporate
+            - generic [ref=e649]: "2024"
+          - generic [ref=e650]:
+            - heading "Astes" [level=3] [ref=e652]
+            - paragraph [ref=e653]: Corporate Website
+            - paragraph [ref=e654]: Clean, conversion-focused corporate site for a professional services company. Fast-loading, SEO-optimized, and built to generate qualified leads.
+            - generic [ref=e655]:
+              - generic [ref=e656]: WordPress
+              - generic [ref=e657]: PHP
+              - generic [ref=e658]: SEO
+              - generic [ref=e659]: UI Design
+      - generic [ref=e660]:
+        - paragraph [ref=e661]: Have a project in mind?
+        - link "Let's build it together" [ref=e662] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e665]:
+      - generic: CRAFT
+      - generic [ref=e667]:
+        - generic [ref=e668]: I
+        - generic [ref=e669]: build
+        - generic [ref=e670]: digital
+        - generic [ref=e671]: experiences
+        - generic [ref=e672]: that
+        - generic [ref=e673]: are
+        - generic [ref=e674]: fast,
+        - generic [ref=e675]: accessible,
+        - generic [ref=e676]: and
+        - generic [ref=e677]: beautiful.
+        - generic [ref=e678]: Every
+        - generic [ref=e679]: line
+        - generic [ref=e680]: of
+        - generic [ref=e681]: code
+        - generic [ref=e682]: is
+        - generic [ref=e683]: written
+        - generic [ref=e684]: with
+        - generic [ref=e685]: intention.
+        - generic [ref=e686]: Every
+        - generic [ref=e687]: pixel
+        - generic [ref=e688]: is
+        - generic [ref=e689]: placed
+        - generic [ref=e690]: with
+        - generic [ref=e691]: purpose.
+    - generic [ref=e693]:
+      - generic [ref=e694]:
+        - generic [ref=e695]: Experience
+        - heading "Where I've worked" [level=2] [ref=e696]
+      - generic [ref=e698]:
+        - generic [ref=e703]:
+          - generic [ref=e704]:
+            - generic [ref=e705]: 2024 - Present
+            - generic [ref=e706]: Morelia, Mexico
+          - heading "Head of Web Integrations" [level=3] [ref=e707]
+          - paragraph [ref=e708]: UrVenue
+          - paragraph [ref=e709]: Leading web integrations strategy and execution across the UrVenue platform. Overseeing technical direction, team workflows, and delivery of high-impact web projects for enterprise venue technology clients.
+          - generic [ref=e710]:
+            - generic [ref=e711]: Leadership
+            - generic [ref=e712]: Next.js
+            - generic [ref=e713]: Integrations
+            - generic [ref=e714]: Project Management
+        - generic [ref=e718]:
+          - generic [ref=e719]:
+            - generic [ref=e720]: 2023 - 2024
+            - generic [ref=e721]: Morelia, Mexico
+          - heading "Web Services Developer" [level=3] [ref=e722]
+          - paragraph [ref=e723]: UrVenue
+          - paragraph [ref=e724]: Developed and maintained web services powering venue technology solutions. Collaborated cross-functionally to ship features, integrations, and client-facing experiences.
+          - generic [ref=e725]:
+            - generic [ref=e726]: JavaScript
+            - generic [ref=e727]: React
+            - generic [ref=e728]: APIs
+            - generic [ref=e729]: Pipedream
+        - generic [ref=e733]:
+          - generic [ref=e734]:
+            - generic [ref=e735]: 2019 - 2023
+            - generic [ref=e736]: Remote
+          - heading "Office Manager & Lead Developer" [level=3] [ref=e737]
+          - paragraph [ref=e738]: Once Interactive Inc.
+          - paragraph [ref=e739]: Promoted to lead the First-Line Web Team while managing all office operations in Mexico. Oversaw development workflows, client communications, and project delivery for 50+ international companies.
+          - generic [ref=e740]:
+            - generic [ref=e741]: Leadership
+            - generic [ref=e742]: WordPress
+            - generic [ref=e743]: Shopify
+            - generic [ref=e744]: Project Management
+        - generic [ref=e748]:
+          - generic [ref=e749]:
+            - generic [ref=e750]: 2017 - 2023
+            - generic [ref=e751]: Remote
+          - heading "Senior Web Developer" [level=3] [ref=e752]
+          - paragraph [ref=e753]: Once Interactive Inc.
+          - paragraph [ref=e754]: Full-time front-end development working with clients across e-commerce, hospitality, and corporate sectors. Built solutions using WordPress, WooCommerce, and Shopify.
+          - generic [ref=e755]:
+            - generic [ref=e756]: WordPress
+            - generic [ref=e757]: WooCommerce
+            - generic [ref=e758]: Shopify
+            - generic [ref=e759]: JavaScript
+            - generic [ref=e760]: CSS
+        - generic [ref=e764]:
+          - generic [ref=e765]:
+            - generic [ref=e766]: "2017"
+            - generic [ref=e767]: Morelia, Mexico
+          - heading "Web Developer" [level=3] [ref=e768]
+          - paragraph [ref=e769]: COPARMEX Michoacán
+          - paragraph [ref=e770]: Managed and maintained the web platform. First professional role contributing to social and business events for the employers' confederation.
+          - generic [ref=e771]:
+            - generic [ref=e772]: WordPress
+            - generic [ref=e773]: PHP
+            - generic [ref=e774]: Web Maintenance
+      - generic [ref=e775]:
+        - generic [ref=e776]: Education
+        - heading "Academic Background" [level=3] [ref=e777]
+        - generic [ref=e778]:
+          - generic [ref=e779]:
+            - generic [ref=e780]: 2018 - 2020
+            - heading "Master's Degree in Computer Science" [level=4] [ref=e781]
+            - paragraph [ref=e782]: Universidad Vasco de Quiroga, A.C.
+            - paragraph [ref=e783]: Specialty in Mobile App Development
+          - generic [ref=e784]:
+            - generic [ref=e785]: 2013 - 2017
+            - heading "Engineer's Degree in Computer Science" [level=4] [ref=e786]
+            - paragraph [ref=e787]: Universidad Vasco de Quiroga, A.C.
+            - paragraph [ref=e788]: Full CS curriculum
+      - generic [ref=e789]:
+        - generic [ref=e790]: Skills
+        - heading "What I Bring" [level=3] [ref=e791]
+        - generic [ref=e792]:
+          - generic [ref=e793]:
+            - heading "Frontend Development" [level=4] [ref=e800]
+            - list [ref=e801]:
+              - listitem [ref=e802]: React / Next.js
+              - listitem [ref=e804]: TypeScript
+              - listitem [ref=e806]: Tailwind CSS
+              - listitem [ref=e808]: Three.js / R3F
+          - generic [ref=e810]:
+            - heading "CMS & E-Commerce" [level=4] [ref=e817]
+            - list [ref=e818]:
+              - listitem [ref=e819]: WordPress
+              - listitem [ref=e821]: Shopify
+              - listitem [ref=e823]: WooCommerce
+              - listitem [ref=e825]: Headless CMS
+          - generic [ref=e827]:
+            - heading "Design & UX" [level=4] [ref=e836]
+            - list [ref=e837]:
+              - listitem [ref=e838]: Figma
+              - listitem [ref=e840]: Adobe XD
+              - listitem [ref=e842]: Responsive Design
+              - listitem [ref=e844]: Pixel Perfect
+    - generic [ref=e847]:
+      - generic [ref=e848]:
+        - generic [ref=e849]: Contact
+        - heading "Let's build together" [level=2] [ref=e850]
+      - generic [ref=e852]:
+        - paragraph [ref=e853]: Interested in working together? Whether you need a new website, an e-commerce platform, or a custom web application, I'd love to hear about your project.
+        - generic [ref=e854]:
+          - link "GitHub" [ref=e855] [cursor=pointer]:
+            - /url: https://github.com/hector-mendoza
+          - link "LinkedIn" [ref=e860] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/hector-mendoza-m/
+          - link "Threads" [ref=e866] [cursor=pointer]:
+            - /url: https://www.threads.com/@hectormendozax2
+          - link "Email" [ref=e869] [cursor=pointer]:
+            - /url: mailto:hey@hectormendoza.me
+      - generic [ref=e874]:
+        - iframe [ref=e875]
+        - generic:
+          - paragraph: Morelia, Mexico
+          - paragraph: Available for remote & local work
+    - generic [ref=e878]:
+      - generic [ref=e879]:
+        - img "HM logo" [ref=e881]
+        - generic [ref=e882]: Hector Mendoza
+      - paragraph [ref=e883]:
+        - text: Designed & Built with Next.js & Framer Motion ·
+        - link "Vibe Theme" [ref=e884] [cursor=pointer]:
+          - /url: https://vibetheme.hectormendoza.me
+        - text: ·
+        - link "Motion by Skiper UI" [ref=e887] [cursor=pointer]:
+          - /url: https://skiper-ui.com
+      - generic [ref=e891]:
+        - link "GitHub" [ref=e892] [cursor=pointer]:
+          - /url: https://github.com/hector-mendoza
+        - link "LinkedIn" [ref=e897] [cursor=pointer]:
+          - /url: https://www.linkedin.com/in/hector-mendoza-m/
+        - link "Threads" [ref=e903] [cursor=pointer]:
+          - /url: https://www.threads.com/@hectormendozax2
+        - link "Email" [ref=e906] [cursor=pointer]:
+          - /url: mailto:hey@hectormendoza.me
+  - button "Open Next.js Dev Tools" [ref=e916] [cursor=pointer]
