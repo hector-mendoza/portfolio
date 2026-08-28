@@ -1,5 +1,4 @@
 import Navbar from "@/components/navbar";
-import PageLoader from "@/components/page-loader";
 import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
 import ScrollTextReveal from "@/components/scroll-text-reveal";
@@ -12,7 +11,6 @@ import ScrollProgress from "@/components/scroll-progress";
 export default function Page() {
   return (
     <main className="relative z-10">
-      <PageLoader />
       <Navbar />
       <ScrollProgress />
       <HeroSection />
