@@ -5,13 +5,19 @@ import { DEFAULT_BRUSH, canonicalTriangleGeometry, type RenderSize } from "./set
 import { brushState, heroStateForActiveClick, simulationBrushState } from "./sim-sizing";
 import { DEFAULT_TRIANGLE_LED_CONTROLS } from "./types";
 
-interface AccentRendererOptions {
+type InputMode = "canvas" | "window";
+
+interface TriangleLedRendererOptions {
   readonly canvas: HTMLCanvasElement;
   readonly interactive?: boolean;
+  readonly input?: InputMode;
+  readonly dpr?: [number, number];
 }
 
-export function createAccentRenderer(options: AccentRendererOptions) {
+export function createTriangleLedRenderer(options: TriangleLedRendererOptions) {
   const interactive = options.interactive ?? true;
+  const inputMode = options.input ?? "canvas";
+  const dpr = options.dpr ?? [1, 1.5];
   let disposed = false;
   let gpu: Gpu | undefined;
   let canvasSurface: Surface | undefined;
@@ -94,7 +100,7 @@ export function createAccentRenderer(options: AccentRendererOptions) {
     if (disposed) return;
 
     gpu = nextGpu;
-    canvasSurface = surface(gpu, options.canvas, { dpr: [1, 1.5] });
+    canvasSurface = surface(gpu, options.canvas, { dpr });
     const nextScene = createHeroRenderer(gpu, {
       theme: "dark",
       css: cssSizeOf(options.canvas, canvasSurface.dpr),
@@ -109,7 +115,10 @@ export function createAccentRenderer(options: AccentRendererOptions) {
     }
 
     if (interactive) {
-      input = installCanvasInput(options.canvas);
+      input =
+        inputMode === "window"
+          ? installWindowInput(options.canvas)
+          : installCanvasInput(options.canvas);
     } else {
       input = idleInput(options.canvas);
     }
@@ -136,12 +145,12 @@ export function createAccentRenderer(options: AccentRendererOptions) {
   return { ready, dispose };
 }
 
-function cssSizeOf(canvas: HTMLCanvasElement, dpr: Surface["dpr"]) {
+function cssSizeOf(canvas: HTMLCanvasElement, surfaceDpr: Surface["dpr"]) {
   const rect = canvas.getBoundingClientRect();
   return {
-    width: Math.max(1, rect.width || canvas.clientWidth || canvas.width / dpr),
-    height: Math.max(1, rect.height || canvas.clientHeight || canvas.height / dpr),
-    dpr,
+    width: Math.max(1, rect.width || canvas.clientWidth || canvas.width / surfaceDpr),
+    height: Math.max(1, rect.height || canvas.clientHeight || canvas.height / surfaceDpr),
+    dpr: surfaceDpr,
   };
 }
 
@@ -167,6 +176,54 @@ function idleInput(canvas: HTMLCanvasElement) {
     brush: tick,
     rgbDeployActive: () => false,
     dispose() {},
+  };
+}
+
+function installWindowInput(canvas: HTMLCanvasElement) {
+  let currentBrush = brushState(DEFAULT_BRUSH);
+  let deployActive = false;
+
+  const updateFromClient = (clientX: number, clientY: number, isMouse: boolean) => {
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(1, rect.width);
+    const height = Math.max(1, rect.height);
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    currentBrush = simulationBrushState(
+      DEFAULT_BRUSH,
+      {
+        x: Math.max(0, Math.min(width, x)),
+        y: Math.max(0, Math.min(height, y)),
+        active: true,
+        inside: isPointInsideTriangle({ x, y }, { width, height }),
+        isMouse,
+      },
+      height,
+    );
+  };
+
+  const onMove = (event: PointerEvent) => {
+    if (!event.isPrimary) return;
+    updateFromClient(event.clientX, event.clientY, event.pointerType === "mouse");
+  };
+
+  const onDown = (event: PointerEvent) => {
+    if (!event.isPrimary) return;
+    updateFromClient(event.clientX, event.clientY, event.pointerType === "mouse");
+    deployActive = !deployActive;
+  };
+
+  window.addEventListener("pointermove", onMove, { passive: true });
+  window.addEventListener("pointerdown", onDown, { passive: true });
+
+  return {
+    brush: () => currentBrush,
+    rgbDeployActive: () => deployActive,
+    dispose() {
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onDown);
+    },
   };
 }
 
