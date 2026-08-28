@@ -1,14 +1,15 @@
 import { perspectiveCamera } from "vgpu/scene";
 
 const FOV = 42;
-const TARGET = [0, 0.05, 0] as const;
+// Offset focus so the glass cube sits lower-right, away from the hero bento card.
+const TARGET = [1.35, -0.15, -0.85] as const;
 const CUBE_YAW = 0.62;
 
-export const ORBIT_RADIUS = 4.1;
+export const ORBIT_RADIUS = 4.4;
 export const MIN_RADIUS = 2.6;
 export const MAX_RADIUS = 7.5;
-export const DEFAULT_YAW = CUBE_YAW + 0.63;
-export const DEFAULT_PITCH = 0.42;
+export const DEFAULT_YAW = CUBE_YAW + 0.95;
+export const DEFAULT_PITCH = 0.28;
 
 export interface CameraView {
   readonly viewProjection: ReturnType<
@@ -80,9 +81,9 @@ export const MODEL_MATRIX = new Float32Array([
   -sp,
   cy * cp,
   0,
-  0,
-  0,
-  0,
+  1.55,
+  -0.35,
+  -1.05,
   1,
 ]);
 

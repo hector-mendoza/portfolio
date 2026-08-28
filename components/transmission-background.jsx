@@ -26,19 +26,31 @@ export default function TransmissionBackground() {
     const canvas = canvasRef.current;
     if (!canvas || typeof navigator === "undefined" || !("gpu" in navigator)) {
       setUnavailable(true);
+      document.documentElement.dataset.transmissionBg = "fallback";
       return;
     }
 
+    let renderer;
     try {
       renderer = createTransmissionRenderer({ canvas });
       void renderer.ready
-        .then(() => setReady(true))
-        .catch(() => setUnavailable(true));
+        .then(() => {
+          setReady(true);
+          document.documentElement.dataset.transmissionBg = "active";
+        })
+        .catch(() => {
+          setUnavailable(true);
+          document.documentElement.dataset.transmissionBg = "fallback";
+        });
     } catch {
       setUnavailable(true);
+      document.documentElement.dataset.transmissionBg = "fallback";
     }
 
-    return () => renderer?.dispose();
+    return () => {
+      delete document.documentElement.dataset.transmissionBg;
+      renderer?.dispose();
+    };
   }, []);
 
   return (
