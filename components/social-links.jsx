@@ -16,7 +16,7 @@ export const socialLinks = [
   { label: "Email", href: "mailto:hey@hectormendoza.me", Icon: MailIcon },
 ];
 
-export function SocialIconLink({ label, href, Icon, customSvgPath, size = "md" }) {
+function SocialIconLink({ label, href, Icon, customSvgPath, size = "md" }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
   const dim = size === "sm" ? 18 : 20;

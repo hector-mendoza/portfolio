@@ -1,212 +1,68 @@
-# Hector Mendoza - Personal Portfolio Website
+# Hector Mendoza — Personal Portfolio
 
-A modern, interactive personal portfolio website built with **Next.js**, **React**, **Three.js**, and **Tailwind CSS**. Featuring animated 3D graphics, smooth scrolling animations, and direct contact links via email and social icons.
+Personal portfolio and blog for [hectormendoza.me](https://hectormendoza.me), built with Next.js App Router, Framer Motion, Sanity, and Tailwind CSS.
 
-**Live Demo**: [hectormendoza.me](https://hectormendoza.me)
+## Features
 
-## ✨ Features
+- Animated home page (hero bento, projects, experience, contact)
+- Sanity-powered blog with portable text
+- Skeleton loading via Boneyard
+- Agent/crawl metadata (`/llms.txt`, `/api/agent`, `/robots.txt`)
 
-- **3D Interactive Graphics** - Animated 3D models and particles using Three.js and react-three-fiber
-- **Smooth Animations** - Framer Motion powered scroll and entrance animations
-- **Responsive Design** - Mobile-first approach with Tailwind CSS
-- **Direct Contact Links** - Email and social icons in the hero, contact section, and footer
-- **Dark Mode Ready** - Custom CSS variables for easy theming
-- **Performance Optimized** - Code splitting, image optimization, dynamic imports
-- **Shadcn UI Components** - Pre-built, customizable component library
+## Tech Stack
 
-## 🛠️ Tech Stack
+- **Next.js 16** + **React 19**
+- **Tailwind CSS 4** + CSS variables
+- **Framer Motion**
+- **Sanity** (CMS + Studio at `/studio`)
+- **Vitest** + Testing Library
 
-### Frontend
-- **Next.js 16.1.6** - React framework with App Router
-- **React 19** - UI library
-- **TypeScript & JavaScript** - Type safety and flexibility
-- **Tailwind CSS 3.4** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **React Three Fiber** - React renderer for Three.js
-- **Three.js** - 3D graphics library
+## Getting Started
 
-### UI Components & Tools
-- **Shadcn UI** - High-quality, accessible components
-- **Lucide React** - Icon library
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ and npm/pnpm
-- Sanity project for blog content (optional)
-
-### Installation
-
-1. **Clone the repository**
+1. Clone and install:
    ```bash
    git clone https://github.com/hectormendoza/portfolio.git
    cd portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
    npm install
-   # or
-   pnpm install
    ```
 
-3. **Set up environment variables**
-   Create a `.env.local` file in the root directory for Sanity CMS (see `.env.local.example`).
+2. Copy `.env.local.example` to `.env.local` and fill in Sanity values (optional for the static home page).
 
-4. **Run the development server**
+3. Run the app:
    ```bash
    npm run dev
    ```
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-portfolio/
-├── app/
-│   ├── api/                      # API routes
-│   ├── globals.css               # Global styles
-│   ├── layout.jsx                # Root layout
-│   └── page.jsx                  # Home page
-├── components/
-│   ├── about-section.jsx         # About section with profile image
-│   ├── contact-section.jsx       # Contact links and location map
-│   ├── experience-section.jsx    # Work experience
-│   ├── hero-section.jsx          # Hero with 3D background
-│   ├── navbar.jsx                # Navigation bar
-│   ├── projects-section.jsx      # Portfolio projects
-│   ├── scene-3d.jsx              # Three.js 3D scene
-│   └── ui/                       # Shadcn UI components
-├── hooks/                        # Custom React hooks
-├── lib/                          # Utility functions
-├── public/                       # Static assets
-│   └── logos/                    # Logo files
-├── styles/                       # Additional styles
-├── .env.local.example            # Environment variables template
-├── tailwind.config.ts            # Tailwind configuration
-└── tsconfig.json                 # TypeScript configuration
+app/           # Routes (home, blog, studio, bones, API)
+components/    # UI sections and shared pieces
+lib/           # Utils and blog helpers
+sanity/        # Schema, client, queries
+bones/         # Boneyard snapshot data
+public/        # Static assets
 ```
 
-## 🎨 Customization
-
-### Colors
-Edit CSS variables in [app/globals.css](app/globals.css):
-```css
-:root {
-  --primary: 145 65% 52%;      /* Green primary color */
-  --accent: 340 65% 55%;       /* Purple accent */
-  --background: 240 8% 6%;     /* Dark background */
-  /* ... more variables */
-}
-```
-
-### Content
-- **Hero Section**: [components/hero-section.jsx](components/hero-section.jsx)
-- **About Section**: [components/about-section.jsx](components/about-section.jsx)
-- **Projects**: [components/projects-section.jsx](components/projects-section.jsx)
-- **Experience**: [components/experience-section.jsx](components/experience-section.jsx)
-- **Contact**: [components/contact-section.jsx](components/contact-section.jsx)
-
-### 3D Scene
-Customize 3D models and animations in [components/scene-3d.jsx](components/scene-3d.jsx)
-
-## 📦 Building for Production
+## Scripts
 
 ```bash
-npm run build
-npm run start
+npm run dev           # Dev server
+npm run build         # Production build
+npm run start         # Serve production build
+npm run lint          # ESLint
+npm test              # Vitest once
+npm run test:watch    # Vitest watch
+npm run bones:build   # Rebuild Boneyard snapshots (dev server required)
+npm run sanity        # Sanity Studio
 ```
 
-The production build will be optimized for performance:
-- Code splitting
-- Image optimization
-- CSS minification
-- JavaScript minification
+## Content
 
-## 🚀 Deployment
+- Hero / about / projects / experience / contact: components under `components/`
+- Blog posts: Sanity Studio at `/studio`
+- Theme tokens: CSS variables in `app/globals.css`
 
-### Vercel (Recommended)
-1. Push your code to GitHub
-2. Connect repository to [Vercel](https://vercel.com)
-3. Add environment variables in Vercel dashboard
-4. Deploy!
+## License
 
-### Other Platforms
-- **Netlify**: Build command: `npm run build`, Publish: `.next`
-- **Docker**: See `next.config.mjs` for Docker configuration
-
-## 📋 Available Scripts
-
-```bash
-npm run dev      # Start development server
-npm run build    # Build for production
-npm run start    # Start production server
-npm run lint     # Run ESLint
-npm test         # Run tests once
-npm run test:watch  # Run tests in watch mode
-```
-
-## 🧪 Testing
-
-Unit tests run with [Vitest](https://vitest.dev) and [React Testing Library](https://testing-library.com/react), configured in [`vitest.config.mjs`](vitest.config.mjs) with a `jsdom` environment and the `@/` path alias. Test files live next to the code they cover as `*.test.ts(x)`.
-
-- **Automatic**: runs in CI on every push to `master` and on every pull request via [`.github/workflows/test.yml`](.github/workflows/test.yml).
-- **Manual**: `npm test` (single run) or `npm run test:watch` (watch mode).
-
-## 🩺 Code Health Check
-
-[React Doctor](https://www.react.doctor) scans the codebase for anti-patterns, performance risks, and accessibility issues, returning a health score (0-100) with file-level diagnostics.
-
-- **Automatic**: runs in CI on every push to `master` and on every pull request via [`.github/workflows/react-doctor.yml`](.github/workflows/react-doctor.yml), posting the score and inline findings on PRs.
-- **Manual**: run it locally anytime with:
-  ```bash
-  npx react-doctor@latest .
-  ```
-
-## 🛡️ Security Features
-
-- Environment variables for sensitive data
-- CSRF protection with Next.js built-in features
-
-## 🎯 Performance Optimizations
-
-- Dynamic imports for heavy components
-- Image optimization with Next.js Image component
-- Lazy loading for sections
-- Optimized Three.js scene rendering
-- CSS-in-JS with Tailwind for minimal bundle size
-
-## 🤝 Contributing
-
-This is a personal portfolio, but feel free to:
-- Fork and create your own portfolio
-- Use components as reference
-- Report issues
-
-## 📝 License
-
-This project is open source. Feel free to use it as a template for your own portfolio!
-
-## 📧 Contact
-
-- **Email**: [hey@hectormendoza.me](mailto:hey@hectormendoza.me)
-- **Location**: Morelia, Mexico
-- **Website**: [hectormendoza.me](https://hectormendoza.me)
-
-### Social Links
-- [GitHub](https://github.com/hectormendoza)
-- [LinkedIn](https://linkedin.com/in/hectormendoza)
-- [X/Twitter](https://x.com/hectormendoza)
-
-## 🙏 Acknowledgments
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS](https://tailwindcss.com)
-- [Shadcn UI](https://ui.shadcn.com)
-- [Three.js](https://threejs.org)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Vercel](https://vercel.com)
-
----
-
-**Built with ❤️ by Hector Mendoza**
+Open source — feel free to fork as a starting point for your own portfolio.
