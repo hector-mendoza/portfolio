@@ -53,7 +53,6 @@ export default function ProjectCardSwipe({ projects, className }) {
       <Swiper
         effect="cards"
         grabCursor
-        loop={projects.length > 2}
         pagination={{ clickable: true }}
         className="project-card-swipe h-[360px] w-[260px] sm:h-[400px] sm:w-[300px]"
         modules={[EffectCards, Pagination]}

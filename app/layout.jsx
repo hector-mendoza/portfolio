@@ -1,8 +1,6 @@
-import React from "react"
-import { Outfit, JetBrains_Mono, Instrument_Serif } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
-import { ThemeProvider } from "@/components/theme-provider";
 import CuelumeProvider from "@/components/cuelume-provider";
 import GlassGradientBackground from "@/components/glass-gradient-background";
 import "./globals.css";
@@ -15,13 +13,6 @@ const outfit = Outfit({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  variable: "--font-instrument-serif",
 });
 
 export const metadata = {
@@ -83,7 +74,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" data-transmission-bg="pending" suppressHydrationWarning>
+    <html lang="en" className="dark">
       <head>
         <script
           type="application/ld+json"
@@ -91,16 +82,14 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${outfit.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased`}
+        className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
-          <GlassGradientBackground />
-          <ErrorBoundary>
-            <CuelumeProvider />
-            <ToasterProvider />
-            {children}
-          </ErrorBoundary>
-        </ThemeProvider>
+        <GlassGradientBackground />
+        <ErrorBoundary>
+          <CuelumeProvider />
+          <ToasterProvider />
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );
