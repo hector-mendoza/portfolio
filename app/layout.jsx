@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var p=location.pathname;var a=p==='/almond'||p.startsWith('/almond/');if(!a)document.documentElement.classList.add('dark');})();`,
+            __html: `(function(){var p=location.pathname;var t='obsidian';if(p==='/theme/velvet')t='velvet';else if(p==='/theme/ember')t='ember';else if(p==='/theme/noir')t='noir';document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;})();`,
           }}
         />
         <script

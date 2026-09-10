@@ -26,8 +26,9 @@
     --radius: 0.75rem;
   }
 
-  .dark {
-    /* Color Bears — Obsidian Ink dark mode */
+  .dark,
+  .dark[data-theme="obsidian"] {
+    /* Obsidian Ink — charcoal base, velvet accents, cream text */
     --background: 30 11% 7%;
     --foreground: 29 60% 83%;
     --card: 345 18% 11%;
@@ -47,6 +48,78 @@
     --border: 345 12% 20%;
     --input: 345 12% 20%;
     --ring: 345 33% 32%;
+    --radius: 0.75rem;
+  }
+
+  .dark[data-theme="velvet"] {
+    /* Velvet Curfew — burgundy base, obsidian cards, cream text */
+    --background: 345 33% 16%;
+    --foreground: 29 60% 83%;
+    --card: 30 11% 7%;
+    --card-foreground: 29 60% 83%;
+    --popover: 30 11% 7%;
+    --popover-foreground: 29 60% 83%;
+    --primary: 29 55% 78%;
+    --primary-foreground: 30 11% 7%;
+    --secondary: 345 28% 20%;
+    --secondary-foreground: 29 50% 80%;
+    --muted: 345 25% 22%;
+    --muted-foreground: 29 30% 68%;
+    --accent: 29 60% 83%;
+    --accent-foreground: 30 11% 7%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 345 24% 28%;
+    --input: 345 24% 28%;
+    --ring: 29 55% 78%;
+    --radius: 0.75rem;
+  }
+
+  .dark[data-theme="ember"] {
+    /* Ember — charcoal base with burgundy-washed surfaces */
+    --background: 30 11% 6%;
+    --foreground: 29 60% 83%;
+    --card: 345 24% 12%;
+    --card-foreground: 29 60% 83%;
+    --popover: 345 24% 12%;
+    --popover-foreground: 29 60% 83%;
+    --primary: 345 38% 44%;
+    --primary-foreground: 29 60% 83%;
+    --secondary: 345 20% 14%;
+    --secondary-foreground: 29 45% 78%;
+    --muted: 345 18% 16%;
+    --muted-foreground: 29 28% 64%;
+    --accent: 345 42% 50%;
+    --accent-foreground: 29 60% 83%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 345 18% 22%;
+    --input: 345 18% 22%;
+    --ring: 345 38% 44%;
+    --radius: 0.75rem;
+  }
+
+  .dark[data-theme="noir"] {
+    /* Noir — deepest obsidian, cream accents, minimal burgundy */
+    --background: 30 12% 4%;
+    --foreground: 29 58% 86%;
+    --card: 30 10% 8%;
+    --card-foreground: 29 58% 86%;
+    --popover: 30 10% 8%;
+    --popover-foreground: 29 58% 86%;
+    --primary: 29 58% 86%;
+    --primary-foreground: 30 12% 4%;
+    --secondary: 30 8% 11%;
+    --secondary-foreground: 29 40% 78%;
+    --muted: 30 8% 13%;
+    --muted-foreground: 29 22% 58%;
+    --accent: 345 28% 34%;
+    --accent-foreground: 29 58% 86%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 8% 16%;
+    --input: 30 8% 16%;
+    --ring: 29 58% 86%;
     --radius: 0.75rem;
   }
 }
@@ -225,6 +298,32 @@ body {
     0 6px 0 0 hsl(345 33% 20%),
     0 12px 28px hsl(345 33% 32% / 0.38),
     0 16px 36px hsl(29 55% 78% / 0.14);
+}
+
+.dark[data-theme="velvet"] .btn-juicy,
+.dark[data-theme="noir"] .btn-juicy {
+  color: hsl(var(--primary-foreground));
+  background: linear-gradient(
+    180deg,
+    hsl(29 60% 88%) 0%,
+    hsl(var(--primary)) 45%,
+    hsl(29 45% 68%) 100%
+  );
+  border-color: hsl(29 40% 62% / 0.55);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.1),
+    0 4px 0 0 hsl(29 35% 58%),
+    0 6px 20px hsl(30 11% 7% / 0.25);
+}
+
+.dark[data-theme="velvet"] .btn-juicy:hover,
+.dark[data-theme="noir"] .btn-juicy:hover {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 0 0 rgba(0, 0, 0, 0.08),
+    0 6px 0 0 hsl(29 35% 58%),
+    0 12px 28px hsl(30 11% 7% / 0.3);
 }
 
 .btn-juicy-pill {
@@ -707,3 +806,57 @@ body {
 .dark .ambient-fog-4 { background: hsl(29 45% 65% / 0.1); }
 .dark .ambient-fog-5 { background: hsl(345 33% 32% / 0.12); }
 .dark .ambient-fog-6 { background: hsl(29 55% 78% / 0.1); }
+
+/* ── Theme-specific atmosphere & typography ── */
+.dark[data-theme="velvet"] .text-gradient {
+  background: linear-gradient(135deg, hsl(29 60% 83%), hsl(29 45% 68%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark[data-theme="velvet"] .ambient-fog-1 { background: hsl(30 11% 7% / 0.35); }
+.dark[data-theme="velvet"] .ambient-fog-2 { background: hsl(29 55% 78% / 0.14); }
+.dark[data-theme="velvet"] .ambient-fog-3 { background: hsl(345 33% 10% / 0.25); }
+.dark[data-theme="velvet"] .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(30 11% 7% / 0.35), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(29 55% 78% / 0.12), transparent 58%),
+    radial-gradient(ellipse 36% 32% at 58% 18%, hsl(345 33% 12% / 0.3), transparent 55%);
+}
+
+.dark[data-theme="ember"] .text-gradient {
+  background: linear-gradient(135deg, hsl(345 42% 50%), hsl(29 55% 78%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark[data-theme="ember"] .ambient-fog-1 { background: hsl(345 38% 44% / 0.28); }
+.dark[data-theme="ember"] .ambient-fog-2 { background: hsl(345 33% 32% / 0.22); }
+.dark[data-theme="ember"] .ambient-fog-3 { background: hsl(345 42% 50% / 0.18); }
+.dark[data-theme="ember"] .ambient-fog-5 { background: hsl(345 38% 44% / 0.2); }
+.dark[data-theme="ember"] .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(345 38% 44% / 0.32), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(345 33% 28% / 0.24), transparent 58%),
+    radial-gradient(ellipse 36% 32% at 58% 18%, hsl(29 55% 78% / 0.1), transparent 55%);
+}
+
+.dark[data-theme="noir"] .text-gradient {
+  background: linear-gradient(135deg, hsl(29 58% 86%), hsl(29 40% 72%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark[data-theme="noir"] .ambient-fog-1 { background: hsl(345 28% 34% / 0.1); }
+.dark[data-theme="noir"] .ambient-fog-2 { background: hsl(29 55% 78% / 0.06); }
+.dark[data-theme="noir"] .ambient-fog-3 { background: hsl(345 28% 34% / 0.08); }
+.dark[data-theme="noir"] .ambient-fog-5 { background: hsl(29 55% 78% / 0.05); }
+.dark[data-theme="noir"] .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(29 55% 78% / 0.08), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(345 28% 34% / 0.1), transparent 58%),
+    radial-gradient(ellipse 36% 32% at 58% 18%, hsl(30 11% 7% / 0.2), transparent 55%);
+}

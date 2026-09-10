@@ -2,21 +2,19 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-
-function isAlmondRoute(pathname) {
-  return pathname === "/almond" || pathname.startsWith("/almond/");
-}
+import { DARK_THEMES, resolveThemeFromPath } from "@/lib/themes";
 
 export default function ThemeVariant() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const almond = isAlmondRoute(pathname);
-    document.documentElement.classList.toggle("dark", !almond);
+    const theme = resolveThemeFromPath(pathname);
+    document.documentElement.classList.add("dark");
+    document.documentElement.dataset.theme = theme;
 
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
-      meta.setAttribute("content", almond ? "#EED3BA" : "#151311");
+      meta.setAttribute("content", DARK_THEMES[theme].themeColor);
     }
   }, [pathname]);
 

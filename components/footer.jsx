@@ -1,13 +1,11 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
+import ThemeSwitcher from "./theme-switcher";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
-  const pathname = usePathname();
-  const isAlmond = pathname === "/almond";
   return (
     <footer className="relative z-10 border-t border-border/60 bg-background/50 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -23,29 +21,25 @@ export default function Footer() {
             <span className="text-sm font-semibold text-foreground">Hector Mendoza</span>
           </div>
 
-          <p className="text-center text-xs text-muted-foreground">
-            {"Designed & Built with Next.js & Framer Motion · "}
-            <Link001
-              href="https://vibetheme.hectormendoza.me"
-              className="inline-flex text-xs text-primary"
-            >
-              Vibe Theme
-            </Link001>
-            <span className="mx-1.5 text-border">·</span>
-            <Link001
-              href="https://skiper-ui.com"
-              className="inline-flex text-xs text-muted-foreground hover:text-foreground"
-            >
-              Motion by Skiper UI
-            </Link001>
-            <span className="mx-1.5 text-border">·</span>
-            <Link001
-              href={isAlmond ? "/" : "/almond"}
-              className="inline-flex text-xs text-muted-foreground hover:text-primary"
-            >
-              {isAlmond ? "Dark version" : "Almond version"}
-            </Link001>
-          </p>
+          <div className="flex flex-col items-center gap-2 text-center text-xs text-muted-foreground">
+            <p>
+              {"Designed & Built with Next.js & Framer Motion · "}
+              <Link001
+                href="https://vibetheme.hectormendoza.me"
+                className="inline-flex text-xs text-primary"
+              >
+                Vibe Theme
+              </Link001>
+              <span className="mx-1.5 text-border">·</span>
+              <Link001
+                href="https://skiper-ui.com"
+                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
+              >
+                Motion by Skiper UI
+              </Link001>
+            </p>
+            <ThemeSwitcher />
+          </div>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
