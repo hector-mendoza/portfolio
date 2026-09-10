@@ -12,6 +12,11 @@ const config: Config = {
         'obsidian-ink': '#151311',
         'velvet-curfew': '#4B262F',
         'almond-hearth': '#EED3BA',
+        'ivory-cream': '#FAF6F1',
+        'rose-cream': '#F9F0EE',
+        'peach-cream': '#FBF3EB',
+        'dusty-rose': '#C9959A',
+        'soft-mauve': '#C4A0A8',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
