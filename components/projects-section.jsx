@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
-import ProjectsHorizontalRail from "./projects-horizontal-rail";
+import ProjectCardSwipe from "./project-card-swipe";
+import ProjectsDesktopGallery from "./projects-desktop-gallery";
 import { PROJECT_FILTERS, filterProjects } from "@/lib/projects";
 
 export default function ProjectsSection() {
@@ -46,7 +47,7 @@ export default function ProjectsSection() {
             </h2>
           </div>
           <p className="hidden max-w-md text-sm leading-relaxed text-muted-foreground sm:block">
-            Every build in one place — client sites, experiments, and tools. Filter by category or scroll the full collection.
+            Every build in one place — client sites, experiments, and tools. Filter by category, then browse the full collection.
           </p>
         </motion.div>
 
@@ -74,7 +75,9 @@ export default function ProjectsSection() {
           ))}
         </motion.div>
 
-        <ProjectsHorizontalRail
+        <ProjectCardSwipe projects={filteredProjects} />
+
+        <ProjectsDesktopGallery
           projects={filteredProjects}
           activeFilter={activeFilter}
           onVibeHover={setVibeHovered}

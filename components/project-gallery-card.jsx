@@ -1,13 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 import ProjectPreview from "@/components/project-preview";
 import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
-function RailCard({ project, index, onVibeHover, onEmojiDayHover }) {
+export default function ProjectGalleryCard({
+  project,
+  index,
+  onVibeHover,
+  onEmojiDayHover,
+  className,
+}) {
   const themeMode = useThemeMode();
   const surface = projectSurface(project, themeMode);
   const [hovered, setHovered] = useState(false);
@@ -26,17 +32,17 @@ function RailCard({ project, index, onVibeHover, onEmojiDayHover }) {
 
   return (
     <motion.article
-      layout
       initial={{ opacity: 0, y: 28 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 16, scale: 0.98 }}
-      transition={{ duration: 0.45, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ duration: 0.45, delay: Math.min(index, 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
       className={cn(
-        "group relative flex h-full w-[min(82vw,340px)] shrink-0 snap-start snap-always flex-col overflow-hidden rounded-3xl border border-border/80 bg-card",
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-card",
         "shadow-[0_1px_0_rgba(255,255,255,0.6),0_20px_50px_hsl(var(--primary)/0.08)] transition-all duration-300",
         hovered && "-translate-y-1 border-primary/30 shadow-[0_24px_60px_hsl(var(--primary)/0.14)]",
+        className,
       )}
     >
       <div className="absolute left-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
@@ -51,8 +57,8 @@ function RailCard({ project, index, onVibeHover, onEmojiDayHover }) {
             <span className="mb-2 inline-flex rounded-full border border-border bg-secondary/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
               {project.category}
             </span>
-            <h3 className="truncate text-xl font-bold tracking-tight text-foreground">{project.title}</h3>
-            <p className="mt-1 truncate text-sm font-medium" style={{ color: surface.accent }}>
+            <h3 className="text-xl font-bold tracking-tight text-foreground">{project.title}</h3>
+            <p className="mt-1 text-sm font-medium" style={{ color: surface.accent }}>
               {project.subtitle}
             </p>
           </div>
@@ -89,45 +95,5 @@ function RailCard({ project, index, onVibeHover, onEmojiDayHover }) {
         </Link001>
       </div>
     </motion.article>
-  );
-}
-
-export default function ProjectsHorizontalRail({
-  projects,
-  activeFilter,
-  onVibeHover,
-  onEmojiDayHover,
-  className,
-}) {
-  return (
-    <div className={cn("relative", className)}>
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-background to-transparent sm:w-12" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-background to-transparent sm:w-12" />
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeFilter}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="-mx-6 flex gap-4 overflow-x-auto px-6 pb-4 pt-1 [scrollbar-width:none] snap-x snap-mandatory sm:-mx-0 sm:gap-5 sm:px-0 [&::-webkit-scrollbar]:hidden"
-        >
-          {projects.map((project, index) => (
-            <RailCard
-              key={project.title}
-              project={project}
-              index={index}
-              onVibeHover={project.title === "Vibe Theme" ? onVibeHover : undefined}
-              onEmojiDayHover={project.title === "Emoji of the Day" ? onEmojiDayHover : undefined}
-            />
-          ))}
-        </motion.div>
-      </AnimatePresence>
-
-      <p className="mt-2 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:hidden">
-        Swipe to browse · {projects.length} projects
-      </p>
-    </div>
   );
 }
