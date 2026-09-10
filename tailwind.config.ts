@@ -17,6 +17,10 @@ const config: Config = {
         'peach-cream': '#FBF3EB',
         'dusty-rose': '#C9959A',
         'soft-mauve': '#C4A0A8',
+        'sage-pastel': '#F0F7F2',
+        'mist-pastel': '#F0F5FA',
+        'sage-green': '#5A8F72',
+        'mist-blue': '#6B94B8',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
