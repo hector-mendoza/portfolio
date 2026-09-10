@@ -15,7 +15,7 @@ export default function BlogCardSkeleton({ featured = false, className = "" }) {
       snapshotConfig={{ leafTags: ["article", "a"] }}
       animate="shimmer"
       darkColor="hsl(200 8% 14%)"
-      shimmerColor="hsl(168 45% 42% / 0.15)"
+      shimmerColor="hsl(345 33% 32% / 0.15)"
     />
   );
 }

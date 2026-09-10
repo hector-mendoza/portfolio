@@ -9,6 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        'obsidian-ink': '#151311',
+        'velvet-curfew': '#4B262F',
+        'almond-hearth': '#EED3BA',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
