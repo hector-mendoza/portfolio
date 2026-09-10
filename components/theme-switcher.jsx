@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { THEMES, resolveThemeFromPath, themePath } from "@/lib/themes";
+import { THEMES, MODES, resolveThemeFromPath, themePath } from "@/lib/themes";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 function SwitchRow({ label, children }) {
@@ -28,6 +28,12 @@ function SwitchLink({ href, active, children }) {
   );
 }
 
+const MODE_LABELS = {
+  dark: "Dark",
+  light: "Light",
+  pastel: "Pastel",
+};
+
 export default function ThemeSwitcher() {
   const pathname = usePathname();
   const { theme: activeTheme, mode: activeMode } = resolveThemeFromPath(pathname);
@@ -48,19 +54,17 @@ export default function ThemeSwitcher() {
         ))}
       </SwitchRow>
       <SwitchRow label="Mode:">
-        <SwitchLink
-          href={themePath(activeTheme, "dark")}
-          active={activeMode === "dark"}
-        >
-          Dark
-        </SwitchLink>
-        <span className="mx-1 text-border">·</span>
-        <SwitchLink
-          href={themePath(activeTheme, "light")}
-          active={activeMode === "light"}
-        >
-          Light
-        </SwitchLink>
+        {MODES.map((mode, index) => (
+          <span key={mode} className="inline-flex items-center">
+            {index > 0 && <span className="mx-1 text-border">·</span>}
+            <SwitchLink
+              href={themePath(activeTheme, mode)}
+              active={mode === activeMode}
+            >
+              {MODE_LABELS[mode]}
+            </SwitchLink>
+          </span>
+        ))}
       </SwitchRow>
     </div>
   );

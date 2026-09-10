@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/pagination";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
+import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,6 +15,8 @@ import { cn } from "@/lib/utils";
  * Attribution: Skiper UI — https://skiper-ui.com · Swiper.js
  */
 export default function ProjectCardSwipe({ projects, className }) {
+  const themeMode = useThemeMode();
+
   if (!projects?.length) return null;
 
   return (
@@ -23,12 +26,12 @@ export default function ProjectCardSwipe({ projects, className }) {
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative mx-auto mb-10 flex w-full max-w-lg flex-col items-center sm:mb-14",
+        "relative mx-auto mb-4 flex w-full max-w-lg flex-col items-center md:hidden",
         className,
       )}
     >
       <p className="mb-5 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-        Swipe the stack
+        Swipe the stack · {projects.length}
       </p>
 
       <style>{`
@@ -54,49 +57,53 @@ export default function ProjectCardSwipe({ projects, className }) {
         effect="cards"
         grabCursor
         pagination={{ clickable: true }}
-        className="project-card-swipe h-[360px] w-[260px] sm:h-[400px] sm:w-[300px]"
+        className="project-card-swipe h-[360px] w-[260px]"
         modules={[EffectCards, Pagination]}
       >
-        {projects.map((project) => (
-          <SwiperSlide key={project.title} className="rounded-3xl">
-            <div
-              className={cn(
-                "relative flex h-full w-full flex-col justify-between overflow-hidden bg-gradient-to-br p-6",
-                project.gradient,
-              )}
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.12),transparent_55%)]" />
-              <div className="relative flex items-start justify-between gap-3">
-                <span className="rounded-full border border-white/15 bg-black/25 px-2.5 py-1 font-mono text-[10px] text-white/80 backdrop-blur-sm">
-                  {project.category}
-                </span>
-                <span className="font-mono text-[10px] text-white/50">
-                  {project.year}
-                </span>
-              </div>
+        {projects.map((project) => {
+          const surface = projectSurface(project, themeMode);
 
-              <div className="relative space-y-3">
-                <div>
-                  <h3 className="text-2xl font-bold tracking-tight text-white">
-                    {project.title}
-                  </h3>
-                  <p className="mt-1 text-sm font-medium" style={{ color: project.accent }}>
-                    {project.subtitle}
-                  </p>
+          return (
+            <SwiperSlide key={project.title} className="rounded-3xl">
+              <div
+                className={cn(
+                  "relative flex h-full w-full flex-col justify-between overflow-hidden bg-gradient-to-br p-6",
+                  surface.gradient,
+                )}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.12),transparent_55%)]" />
+                <div className="relative flex items-start justify-between gap-3">
+                  <span className="rounded-full border border-white/15 bg-black/25 px-2.5 py-1 font-mono text-[10px] text-white/80 backdrop-blur-sm">
+                    {project.category}
+                  </span>
+                  <span className="font-mono text-[10px] text-white/50">
+                    {project.year}
+                  </span>
                 </div>
-                <p className="line-clamp-3 text-xs leading-relaxed text-white/70">
-                  {project.description}
-                </p>
-                <Link001
-                  href={project.url}
-                  className="w-fit text-sm font-semibold text-white"
-                >
-                  Visit site
-                </Link001>
+
+                <div className="relative space-y-3">
+                  <div>
+                    <h3 className="text-2xl font-bold tracking-tight text-white">
+                      {project.title}
+                    </h3>
+                    <p className="mt-1 text-sm font-medium" style={{ color: surface.accent }}>
+                      {project.subtitle}
+                    </p>
+                  </div>
+                  <p className="line-clamp-3 text-xs leading-relaxed text-white/70">
+                    {project.description}
+                  </p>
+                  <Link001
+                    href={project.url}
+                    className="w-fit text-sm font-semibold text-white"
+                  >
+                    Visit site
+                  </Link001>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </motion.div>
   );

@@ -3,16 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
-import {
-  ArrowUpRight,
-  Gamepad2,
-  Sparkles,
-  SquareArrowOutUpRight,
-} from "lucide";
+import { Gamepad2, Sparkles } from "lucide";
 import GeometryWarsGame from "./geometry-wars-game";
 import BentoSocialGrid from "./bento-social-grid";
 import HeroMouseGlow from "./hero-mouse-glow";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
+import HeroFeaturedCard from "@/components/hero-featured-card";
+import { getProjectByTitle } from "@/lib/projects";
 
 let heroIntroPlayed = false;
 
@@ -32,6 +29,9 @@ const card = {
 
 const primaryStack = ["Next.js", "React", "TypeScript", "WordPress"];
 const moreStack = ["Shopify", "Figma"];
+
+const canteraProject = getProjectByTitle("Cantera Diez Hotel");
+const vibeProject = getProjectByTitle("Vibe Theme");
 
 export default function HeroSection() {
   const [gameOpen, setGameOpen] = useState(false);
@@ -122,75 +122,25 @@ export default function HeroSection() {
           </span>
         </motion.a>
 
-        {/* ── Latest build: Cantera Diez (2×1) ── */}
-        <motion.a
-          variants={card}
-          data-game-target
-          href="https://canteradiezhotel.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cuelume-hover="tick"
-          onMouseEnter={() => setHoveredCard("cantera")}
-          onMouseLeave={() => setHoveredCard(null)}
-          className="order-5 col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient md:order-4"
-          style={{ minHeight: "180px" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#151311] via-[#4B262F] to-[#151311]/90 transition-all duration-500 group-hover:from-[#4B262F] group-hover:via-[#151311] group-hover:to-[#4B262F]/90" />
-          <div className="absolute inset-0 opacity-25 bg-[radial-gradient(ellipse_at_bottom_left,_#EED3BA/0.25,transparent_60%)]" />
-          <div className="relative flex items-start justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-almond-hearth/80">
-              Latest Build
-            </span>
-            <MorphIcon
-              icon={hoveredCard === "cantera" ? SquareArrowOutUpRight : ArrowUpRight}
-              size={16}
-              color="#EED3BA"
-              spring="snappy"
-              className="transition-opacity group-hover:opacity-100"
-            />
-          </div>
-          <div className="relative">
-            <p className="text-2xl font-bold text-white md:text-3xl">Cantera Diez Hotel</p>
-            <p className="text-xs text-almond-hearth/70 mt-1">
-              Boutique hospitality · AngularJS · Firebase · i18n
-            </p>
-          </div>
-        </motion.a>
+        {canteraProject && (
+          <HeroFeaturedCard
+            project={canteraProject}
+            badge="Latest Build"
+            cardVariant={card}
+            className="order-5 col-span-2 md:order-4"
+            style={{ minHeight: "180px" }}
+          />
+        )}
 
-        {/* ── Featured project: Vibe Theme (2×1) ── */}
-        <motion.a
-          variants={card}
-          data-game-target
-          href="https://vibetheme.hectormendoza.me"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cuelume-hover="tick"
-          onMouseEnter={() => setHoveredCard("vibe")}
-          onMouseLeave={() => setHoveredCard(null)}
-          className="order-6 col-span-2 rounded-3xl overflow-hidden relative group flex flex-col justify-between p-6 glass-card-gradient md:order-5"
-          style={{ minHeight: "180px" }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#4B262F] via-[#151311] to-[#4B262F]/80 transition-all duration-500 group-hover:from-[#151311] group-hover:via-[#4B262F] group-hover:to-[#151311]" />
-          <div className="absolute inset-0 opacity-30 bg-[radial-gradient(ellipse_at_top_right,_#EED3BA/0.2,transparent_60%)]" />
-          <div className="relative flex items-start justify-between">
-            <span className="font-mono text-xs uppercase tracking-widest text-almond-hearth/80">
-              Featured Project
-            </span>
-            <MorphIcon
-              icon={hoveredCard === "vibe" ? SquareArrowOutUpRight : ArrowUpRight}
-              size={16}
-              color="#EED3BA"
-              spring="snappy"
-              className="transition-opacity group-hover:opacity-100"
-            />
-          </div>
-          <div className="relative">
-            <p className="text-2xl font-bold text-white md:text-3xl">Vibe Theme</p>
-            <p className="text-xs text-almond-hearth/70 mt-1">
-              VS Code Theme Collection · 8 dark themes · MIT licensed
-            </p>
-          </div>
-        </motion.a>
+        {vibeProject && (
+          <HeroFeaturedCard
+            project={vibeProject}
+            badge="Featured Project"
+            cardVariant={card}
+            className="order-6 col-span-2 md:order-5"
+            style={{ minHeight: "180px" }}
+          />
+        )}
 
         {/* ── About / profile (2×1) — first after identity on mobile ── */}
         <motion.a
