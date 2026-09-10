@@ -6,21 +6,23 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import { Menu, X } from "lucide";
 import { Link000 } from "@/components/ui/skiper-ui/skiper40";
+import { homeBaseFromPath, isThemePreviewPath } from "@/lib/themes";
 
-const navLinks = [
-  { label: "Home",       href: "/#hero" },
-  { label: "About",      href: "/#about" },
-  { label: "Projects",   href: "/#projects" },
+const navLinks = (basePath) => [
+  { label: "Home",       href: `${basePath}#hero` },
+  { label: "About",      href: `${basePath}#about` },
+  { label: "Projects",   href: `${basePath}#projects` },
   { label: "Blog",       href: "/blog" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Contact",    href: "/#contact" },
+  { label: "Experience", href: `${basePath}#experience` },
+  { label: "Contact",    href: `${basePath}#contact` },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const isHome = pathname === "/";
+  const homeBase = homeBaseFromPath(pathname);
+  const isHome = isThemePreviewPath(pathname);
   const showSolidNav = scrolled || !isHome;
 
   useEffect(() => {
@@ -41,18 +43,18 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <a href="/" className="group flex items-center gap-2" data-cuelume-hover="tick">
+          <a href={homeBase} className="group flex items-center gap-2" data-cuelume-hover="tick">
             <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/15 shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/20">
               <img
                 src="/logos/logo.svg"
                 alt="HM logo"
-                className="h-7 w-7 invert brightness-110"
+                className="h-7 w-7 dark:invert dark:brightness-110"
               />
             </div>
           </a>
 
           <div className="hidden items-center gap-5 md:flex">
-            {navLinks.map((link) => (
+            {navLinks(homeBase).map((link) => (
               <Link000
                 key={link.label}
                 href={link.href}
@@ -104,7 +106,7 @@ export default function Navbar() {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-background/95 backdrop-blur-xl md:hidden"
           >
-            {navLinks.map((link, i) => (
+            {navLinks(homeBase).map((link, i) => (
               <motion.a
                 key={link.label}
                 href={link.href}

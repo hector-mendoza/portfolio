@@ -3,6 +3,7 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import GlassGradientBackground from "@/components/glass-gradient-background";
+import ThemeVariant from "@/components/theme-variant";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -49,7 +50,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#0B1412",
+  themeColor: "#151311",
   width: "device-width",
   initialScale: 1,
 };
@@ -74,8 +75,13 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var p=location.pathname;var t='obsidian';var m='dark';if(p==='/light'||p.startsWith('/light/')){m='light';var s=p.replace(/^\\/light\\/?/,'');if(s)t=s;}else if(p==='/theme/velvet')t='velvet';else if(p==='/theme/ember')t='ember';else if(p==='/theme/noir')t='noir';if(m==='dark')document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;document.documentElement.dataset.mode=m;})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -84,6 +90,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
+        <ThemeVariant />
         <GlassGradientBackground />
         <ErrorBoundary>
           <CuelumeProvider />
