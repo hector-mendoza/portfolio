@@ -2,8 +2,9 @@
 @config '../tailwind.config.ts';
 
 @layer base {
-  :root {
-    /* Color Bears — Almond Hearth light mode */
+  :root,
+  [data-theme="obsidian"]:not(.dark) {
+    /* Obsidian light — Almond Hearth base, obsidian text, velvet accents */
     --background: 29 60% 83%;
     --foreground: 30 11% 7%;
     --card: 29 52% 88%;
@@ -23,6 +24,78 @@
     --border: 29 28% 70%;
     --input: 29 28% 70%;
     --ring: 345 33% 22%;
+    --radius: 0.75rem;
+  }
+
+  [data-theme="velvet"]:not(.dark) {
+    /* Velvet light — blush cream base, burgundy accents */
+    --background: 345 22% 88%;
+    --foreground: 30 11% 7%;
+    --card: 345 18% 92%;
+    --card-foreground: 30 11% 7%;
+    --popover: 345 18% 92%;
+    --popover-foreground: 30 11% 7%;
+    --primary: 345 33% 22%;
+    --primary-foreground: 29 60% 83%;
+    --secondary: 345 15% 82%;
+    --secondary-foreground: 30 11% 12%;
+    --muted: 345 12% 80%;
+    --muted-foreground: 30 8% 36%;
+    --accent: 345 30% 28%;
+    --accent-foreground: 29 60% 83%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 345 15% 72%;
+    --input: 345 15% 72%;
+    --ring: 345 33% 22%;
+    --radius: 0.75rem;
+  }
+
+  [data-theme="ember"]:not(.dark) {
+    /* Ember light — warm almond with burgundy-washed cards */
+    --background: 29 58% 82%;
+    --foreground: 30 11% 7%;
+    --card: 345 16% 86%;
+    --card-foreground: 30 11% 7%;
+    --popover: 345 16% 86%;
+    --popover-foreground: 30 11% 7%;
+    --primary: 345 33% 26%;
+    --primary-foreground: 29 60% 83%;
+    --secondary: 345 12% 78%;
+    --secondary-foreground: 30 11% 12%;
+    --muted: 29 30% 74%;
+    --muted-foreground: 30 8% 38%;
+    --accent: 345 35% 34%;
+    --accent-foreground: 29 60% 83%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 345 14% 68%;
+    --input: 345 14% 68%;
+    --ring: 345 33% 26%;
+    --radius: 0.75rem;
+  }
+
+  [data-theme="noir"]:not(.dark) {
+    /* Noir light — warm white, obsidian accents, minimal burgundy */
+    --background: 29 25% 96%;
+    --foreground: 30 11% 7%;
+    --card: 29 20% 92%;
+    --card-foreground: 30 11% 7%;
+    --popover: 29 20% 92%;
+    --popover-foreground: 30 11% 7%;
+    --primary: 30 11% 7%;
+    --primary-foreground: 29 25% 96%;
+    --secondary: 29 15% 88%;
+    --secondary-foreground: 30 11% 12%;
+    --muted: 29 12% 86%;
+    --muted-foreground: 30 8% 40%;
+    --accent: 345 28% 34%;
+    --accent-foreground: 29 25% 96%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 29 12% 82%;
+    --input: 29 12% 82%;
+    --ring: 30 11% 7%;
     --radius: 0.75rem;
   }
 
@@ -859,4 +932,80 @@ body {
     radial-gradient(ellipse 42% 38% at 22% 32%, hsl(29 55% 78% / 0.08), transparent 62%),
     radial-gradient(ellipse 38% 44% at 78% 68%, hsl(345 28% 34% / 0.1), transparent 58%),
     radial-gradient(ellipse 36% 32% at 58% 18%, hsl(30 11% 7% / 0.2), transparent 55%);
+}
+
+/* ── Light theme atmosphere & typography ── */
+[data-theme="velvet"]:not(.dark) .text-gradient {
+  background: linear-gradient(135deg, hsl(345 33% 22%), hsl(345 25% 38%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="velvet"]:not(.dark) .glass-card {
+  background: hsl(345 18% 92% / 0.88);
+  border-color: hsl(345 15% 72% / 0.8);
+}
+
+[data-theme="velvet"]:not(.dark) .ambient-fog-1 { background: hsl(345 33% 22% / 0.1); }
+[data-theme="velvet"]:not(.dark) .ambient-fog-2 { background: hsl(345 22% 75% / 0.2); }
+[data-theme="velvet"]:not(.dark) .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(345 33% 22% / 0.1), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(345 22% 80% / 0.25), transparent 58%);
+}
+
+[data-theme="ember"]:not(.dark) .text-gradient {
+  background: linear-gradient(135deg, hsl(345 33% 26%), hsl(345 25% 40%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="ember"]:not(.dark) .glass-card {
+  background: hsl(345 16% 86% / 0.9);
+  border-color: hsl(345 14% 68% / 0.75);
+}
+
+[data-theme="ember"]:not(.dark) .ambient-fog-1 { background: hsl(345 33% 26% / 0.12); }
+[data-theme="ember"]:not(.dark) .ambient-fog-3 { background: hsl(345 25% 70% / 0.18); }
+[data-theme="ember"]:not(.dark) .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(345 33% 26% / 0.14), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(29 55% 78% / 0.2), transparent 58%);
+}
+
+[data-theme="noir"]:not(.dark) .text-gradient {
+  background: linear-gradient(135deg, hsl(30 11% 7%), hsl(30 8% 28%));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+[data-theme="noir"]:not(.dark) .glass-card {
+  background: hsl(29 20% 92% / 0.92);
+  border-color: hsl(29 12% 82% / 0.85);
+}
+
+[data-theme="noir"]:not(.dark) .ambient-fog-1 { background: hsl(30 11% 7% / 0.04); }
+[data-theme="noir"]:not(.dark) .ambient-fog-2 { background: hsl(345 28% 34% / 0.06); }
+[data-theme="noir"]:not(.dark) .glass-gradient-mesh {
+  background:
+    radial-gradient(ellipse 42% 38% at 22% 32%, hsl(30 11% 7% / 0.05), transparent 62%),
+    radial-gradient(ellipse 38% 44% at 78% 68%, hsl(29 25% 90% / 0.3), transparent 58%);
+}
+
+[data-theme="noir"]:not(.dark) .btn-juicy {
+  color: hsl(var(--primary-foreground));
+  background: linear-gradient(
+    180deg,
+    hsl(30 8% 18%) 0%,
+    hsl(var(--primary)) 45%,
+    hsl(30 11% 4%) 100%
+  );
+  border-color: hsl(30 11% 4% / 0.5);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 4px 0 0 hsl(30 11% 4%),
+    0 6px 16px hsl(30 11% 7% / 0.2);
 }

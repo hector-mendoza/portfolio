@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var p=location.pathname;var t='obsidian';if(p==='/theme/velvet')t='velvet';else if(p==='/theme/ember')t='ember';else if(p==='/theme/noir')t='noir';document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;})();`,
+            __html: `(function(){var p=location.pathname;var t='obsidian';var m='dark';if(p==='/light'||p.startsWith('/light/')){m='light';var s=p.replace(/^\\/light\\/?/,'');if(s)t=s;}else if(p==='/theme/velvet')t='velvet';else if(p==='/theme/ember')t='ember';else if(p==='/theme/noir')t='noir';if(m==='dark')document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;document.documentElement.dataset.mode=m;})();`,
           }}
         />
         <script

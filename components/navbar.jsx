@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import { Menu, X } from "lucide";
 import { Link000 } from "@/components/ui/skiper-ui/skiper40";
-import { homeBaseFromPath } from "@/lib/themes";
+import { homeBaseFromPath, isThemePreviewPath } from "@/lib/themes";
 
 const navLinks = (basePath) => [
   { label: "Home",       href: `${basePath}#hero` },
@@ -22,11 +22,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const homeBase = homeBaseFromPath(pathname);
-  const isHome =
-    pathname === "/" ||
-    pathname === "/theme/velvet" ||
-    pathname === "/theme/ember" ||
-    pathname === "/theme/noir";
+  const isHome = isThemePreviewPath(pathname);
   const showSolidNav = scrolled || !isHome;
 
   useEffect(() => {
