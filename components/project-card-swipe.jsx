@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/pagination";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
+import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
 /**
@@ -14,6 +15,8 @@ import { cn } from "@/lib/utils";
  * Attribution: Skiper UI — https://skiper-ui.com · Swiper.js
  */
 export default function ProjectCardSwipe({ projects, className }) {
+  const themeMode = useThemeMode();
+
   if (!projects?.length) return null;
 
   return (
@@ -23,7 +26,7 @@ export default function ProjectCardSwipe({ projects, className }) {
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative mx-auto mb-10 flex w-full max-w-lg flex-col items-center sm:mb-14",
+        "relative mx-auto mb-10 flex w-full max-w-lg flex-col items-center md:hidden",
         className,
       )}
     >
@@ -54,15 +57,18 @@ export default function ProjectCardSwipe({ projects, className }) {
         effect="cards"
         grabCursor
         pagination={{ clickable: true }}
-        className="project-card-swipe h-[360px] w-[260px] sm:h-[400px] sm:w-[300px]"
+        className="project-card-swipe h-[360px] w-[260px]"
         modules={[EffectCards, Pagination]}
       >
-        {projects.map((project) => (
+        {projects.map((project) => {
+          const surface = projectSurface(project, themeMode);
+
+          return (
           <SwiperSlide key={project.title} className="rounded-3xl">
             <div
               className={cn(
                 "relative flex h-full w-full flex-col justify-between overflow-hidden bg-gradient-to-br p-6",
-                project.gradient,
+                surface.gradient,
               )}
             >
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.12),transparent_55%)]" />
@@ -80,7 +86,7 @@ export default function ProjectCardSwipe({ projects, className }) {
                   <h3 className="text-2xl font-bold tracking-tight text-white">
                     {project.title}
                   </h3>
-                  <p className="mt-1 text-sm font-medium" style={{ color: project.accent }}>
+                  <p className="mt-1 text-sm font-medium" style={{ color: surface.accent }}>
                     {project.subtitle}
                   </p>
                 </div>
@@ -96,7 +102,8 @@ export default function ProjectCardSwipe({ projects, className }) {
               </div>
             </div>
           </SwiperSlide>
-        ))}
+        );
+        })}
       </Swiper>
     </motion.div>
   );

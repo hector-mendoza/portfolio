@@ -5,6 +5,8 @@ import { useState, useMemo, useEffect } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 import ProjectCardSwipe from "./project-card-swipe";
+import FeaturedProjectsDesktop from "./featured-projects-desktop";
+import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
 
 const projects = [
   {
@@ -18,6 +20,8 @@ const projects = [
     category: "Dev Tool",
     accent: "#EF4444",
     gradient: "from-red-950 via-orange-900 to-rose-900/60",
+    pastelGradient: "from-emerald-950 via-teal-900 to-green-950",
+    pastelAccent: "#6FA888",
     preview: {
       bar: "npm i @is-agent-ready/next",
       lines: ["65%", "90%", "50%", "75%"],
@@ -35,6 +39,8 @@ const projects = [
     category: "Fun",
     accent: "#FACC15",
     gradient: "from-yellow-950 via-amber-900 to-orange-900/60",
+    pastelGradient: "from-lime-950 via-stone-900 to-emerald-950",
+    pastelAccent: "#B8C96E",
     preview: {
       bar: "emoji-day-hm.vercel.app",
       lines: ["70%", "55%", "80%", "65%"],
@@ -52,6 +58,8 @@ const projects = [
     category: "Hospitality",
     accent: "#D97706",
     gradient: "from-amber-950 via-stone-900 to-amber-900/60",
+    pastelGradient: "from-stone-800 via-emerald-950 to-stone-900",
+    pastelAccent: "#C4A574",
     preview: {
       bar: "canteradiezhotel.com",
       lines: ["85%", "100%", "70%", "55%"],
@@ -69,6 +77,8 @@ const projects = [
     category: "Design Tool",
     accent: "#D946EF",
     gradient: "from-violet-950 via-fuchsia-950 to-purple-900/60",
+    pastelGradient: "from-teal-950 via-emerald-950 to-cyan-950",
+    pastelAccent: "#7CB8A8",
     preview: {
       bar: "vibetheme.hectormendoza.me",
       lines: ["90%", "75%", "85%", "60%"],
@@ -86,6 +96,8 @@ const projects = [
     category: "Corporate",
     accent: "#0EA5E9",
     gradient: "from-sky-950 via-slate-900 to-cyan-900/60",
+    pastelGradient: "from-slate-800 via-teal-950 to-slate-900",
+    pastelAccent: "#7AA3BF",
     preview: {
       bar: "astes.com.mx",
       lines: ["100%", "80%", "65%", "90%"],
@@ -103,6 +115,8 @@ const projects = [
     category: "Creative Dev",
     accent: "#10B981",
     gradient: "from-emerald-950 via-green-900 to-teal-900/60",
+    pastelGradient: "from-emerald-950 via-green-900 to-teal-950",
+    pastelAccent: "#5FAF8A",
     preview: {
       bar: "gsap-cocktails-hm.vercel.app",
       lines: ["75%", "95%", "80%", "70%"],
@@ -120,6 +134,8 @@ const projects = [
     category: "Wellness",
     accent: "#E8844C",
     gradient: "from-orange-950 via-stone-900 to-amber-900/60",
+    pastelGradient: "from-stone-800 via-amber-950/80 to-emerald-950",
+    pastelAccent: "#C99B72",
     preview: {
       bar: "milestonemassage.com",
       lines: ["85%", "70%", "60%", "90%"],
@@ -137,6 +153,8 @@ const projects = [
     category: "Automotive",
     accent: "#DC2626",
     gradient: "from-red-950 via-neutral-900 to-red-900/60",
+    pastelGradient: "from-stone-900 via-red-950/70 to-stone-950",
+    pastelAccent: "#B87A7A",
     preview: {
       bar: "michoacanautolv.com",
       lines: ["90%", "75%", "65%", "80%"],
@@ -154,6 +172,8 @@ const projects = [
     category: "Personal",
     accent: "#F43F5E",
     gradient: "from-rose-950 via-pink-900 to-rose-900/60",
+    pastelGradient: "from-rose-950/80 via-stone-900 to-emerald-950",
+    pastelAccent: "#C9929E",
     preview: {
       bar: "wedding.hectormendoza.me",
       lines: ["80%", "65%", "90%", "55%"],
@@ -193,11 +213,13 @@ const FILTERS = [
 ];
 
 function ProjectPreview({ project, hovered }) {
+  const themeMode = useThemeMode();
+  const surface = projectSurface(project, themeMode);
   const isVibe = project.title === "Vibe Theme";
   const isEmojiDay = project.title === "Emoji of the Day";
 
   return (
-    <div className={`relative aspect-[2/1] overflow-hidden rounded-t-2xl bg-gradient-to-br sm:aspect-[16/10] ${project.gradient}`}>
+    <div className={`relative aspect-[2/1] overflow-hidden rounded-t-2xl bg-gradient-to-br sm:aspect-[16/10] ${surface.gradient}`}>
       {/* Vibe Theme rainbow overlay */}
       {isVibe && (
         <div
@@ -235,7 +257,7 @@ function ProjectPreview({ project, hovered }) {
           <div className="h-2 rounded-full bg-white/12" style={{ width: project.preview.lines[1] }} />
           <div className="h-2 rounded-full bg-white/12" style={{ width: project.preview.lines[2] }} />
           <div className="mt-4 flex gap-2">
-            <div className="h-7 w-24 rounded-lg" style={{ background: project.accent + "90" }} />
+            <div className="h-7 w-24 rounded-lg" style={{ background: surface.accent + "90" }} />
             <div className="h-7 w-16 rounded-lg bg-white/10" />
           </div>
           <div className="mt-2 h-2 rounded-full bg-white/10" style={{ width: project.preview.lines[3] }} />
@@ -250,7 +272,7 @@ function ProjectPreview({ project, hovered }) {
             ? "linear-gradient(90deg, #4C1D95, #7C3AED, #D946EF, #EC4899, #22D3EE, #818CF8)"
             : isEmojiDay && hovered
             ? "linear-gradient(90deg, #FACC15, #FB923C, #F472B6, #FACC15)"
-            : project.accent,
+            : surface.accent,
         }}
       />
     </div>
@@ -258,6 +280,8 @@ function ProjectPreview({ project, hovered }) {
 }
 
 function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
+  const themeMode = useThemeMode();
+  const surface = projectSurface(project, themeMode);
   const [hovered, setHovered] = useState(false);
 
   const handleEnter = () => {
@@ -285,8 +309,8 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
       <div
         className="overflow-hidden rounded-2xl glass-card transition-all duration-300 hover:shadow-2xl"
         style={{
-          borderColor: hovered ? project.accent + "44" : undefined,
-          boxShadow: hovered ? `0 24px 60px ${project.accent}18` : undefined,
+          borderColor: hovered ? surface.accent + "44" : undefined,
+          boxShadow: hovered ? `0 24px 60px ${surface.accent}18` : undefined,
         }}
       >
         {/* no border ring for Vibe — easter egg handles the magic */}
@@ -300,7 +324,7 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
             animate={{ opacity: hovered ? 1 : 0 }}
             className="absolute inset-0 hidden items-center justify-center sm:flex"
             style={{
-              background: `radial-gradient(ellipse at center, ${project.accent}30 0%, rgba(0,0,0,0.55) 100%)`,
+              background: `radial-gradient(ellipse at center, ${surface.accent}30 0%, rgba(0,0,0,0.55) 100%)`,
               backdropFilter: "blur(4px)",
             }}
           >
@@ -314,8 +338,8 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-2.5 rounded-full px-7 py-3 text-sm font-bold text-white"
               style={{
-                background: project.accent,
-                boxShadow: `0 8px 30px ${project.accent}70, 0 0 0 1px ${project.accent}40`,
+                background: surface.accent,
+                boxShadow: `0 8px 30px ${surface.accent}70, 0 0 0 1px ${surface.accent}40`,
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -348,7 +372,7 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
               data-cuelume-press
               data-cuelume-release
               className="shrink-0 inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold text-white sm:hidden"
-              style={{ background: project.accent }}
+              style={{ background: surface.accent }}
             >
               Visit
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -356,7 +380,7 @@ function ProjectCard({ project, index, onVibeHover, onEmojiDayHover }) {
               </svg>
             </a>
           </div>
-          <p className="mb-2 text-sm font-semibold sm:mb-3" style={{ color: project.accent }}>{project.subtitle}</p>
+          <p className="mb-2 text-sm font-semibold sm:mb-3" style={{ color: surface.accent }}>{project.subtitle}</p>
           <p className="mb-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground sm:mb-5 sm:line-clamp-none">{project.description}</p>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {project.tags.slice(0, 3).map((tag) => (
@@ -457,6 +481,7 @@ export default function ProjectsSection() {
           </p>
         </motion.div>
 
+        <FeaturedProjectsDesktop projects={swipeProjects} className="hidden md:block" />
         <ProjectCardSwipe projects={swipeProjects} />
 
         {/* Filter pills */}

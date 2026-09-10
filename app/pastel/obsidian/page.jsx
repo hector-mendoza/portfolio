@@ -1,9 +1,9 @@
 import PortfolioHome from "@/components/portfolio-home";
 
 export const metadata = {
-  title: "Hector Mendoza | Sage Pastel Palette",
+  title: "Hector Mendoza | Obsidian Pastel Palette",
   description:
-    "Portfolio preview — mint cream pastel with sage green accents on a dotted poster-board background.",
+    "Portfolio preview — ivory cream pastel with dusty rose accents on a dotted poster-board background.",
 };
 
 export default function ObsidianPastelPage() {
