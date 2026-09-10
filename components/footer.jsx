@@ -1,10 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isAlmond = pathname === "/almond";
   return (
     <footer className="relative z-10 border-t border-border/60 bg-background/50 backdrop-blur-xl">
       <div className="mx-auto max-w-7xl px-6 py-8">
@@ -14,7 +17,7 @@ export default function Footer() {
               <img
                 src="/logos/logo.svg"
                 alt="HM logo"
-                className="h-5 w-5 invert brightness-110"
+                className="h-5 w-5 dark:invert dark:brightness-110"
               />
             </div>
             <span className="text-sm font-semibold text-foreground">Hector Mendoza</span>
@@ -34,6 +37,13 @@ export default function Footer() {
               className="inline-flex text-xs text-muted-foreground hover:text-foreground"
             >
               Motion by Skiper UI
+            </Link001>
+            <span className="mx-1.5 text-border">·</span>
+            <Link001
+              href={isAlmond ? "/" : "/almond"}
+              className="inline-flex text-xs text-muted-foreground hover:text-primary"
+            >
+              {isAlmond ? "Dark version" : "Almond version"}
             </Link001>
           </p>
 

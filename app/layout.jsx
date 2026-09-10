@@ -3,6 +3,7 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import GlassGradientBackground from "@/components/glass-gradient-background";
+import ThemeVariant from "@/components/theme-variant";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -74,8 +75,13 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var p=location.pathname;var a=p==='/almond'||p.startsWith('/almond/');if(!a)document.documentElement.classList.add('dark');})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -84,6 +90,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
+        <ThemeVariant />
         <GlassGradientBackground />
         <ErrorBoundary>
           <CuelumeProvider />
