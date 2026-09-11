@@ -50,7 +50,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#E8F3EC",
+  themeColor: "#F0F7F2",
   width: "device-width",
   initialScale: 1,
 };
@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){var p=location.pathname,t='sage',m='light',s;if(p==='/pastel'){m='pastel';t='sage';}else if(p.indexOf('/pastel/')===0){m='pastel';s=p.replace(/^\\/pastel\\//,'');if(s)t=s;}else if(p==='/light'){m='light';t='obsidian';}else if(p.indexOf('/light/')===0){m='light';s=p.replace(/^\\/light\\//,'');if(s)t=s;}else if(p.indexOf('/theme/')===0){m='dark';s=p.replace(/^\\/theme\\//,'');t=s||'obsidian';}if(m==='dark')document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;document.documentElement.dataset.mode=m;})();`,
+            __html: `(function(){var p=location.pathname,t='sage',m='pastel',s;if(p.indexOf('/pastel/')===0){m='pastel';s=p.replace(/^\\/pastel\\//,'');if(s)t=s;}else if(p==='/light'){m='light';t='obsidian';}else if(p.indexOf('/light/')===0){m='light';s=p.replace(/^\\/light\\//,'');if(s)t=s;}else if(p.indexOf('/theme/')===0){m='dark';s=p.replace(/^\\/theme\\//,'');t=s||'obsidian';}else if(p==='/pastel'){m='pastel';t='sage';}if(m==='dark')document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;document.documentElement.dataset.mode=m;})();`,
           }}
         />
         <script
