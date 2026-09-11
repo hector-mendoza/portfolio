@@ -25,6 +25,13 @@ export default function Footer() {
             <p>
               {"Designed & Built with Next.js & Framer Motion · "}
               <Link001
+                href="https://reactbits.dev"
+                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
+              >
+                Motion by React Bits
+              </Link001>
+              <span className="mx-1.5 text-border">·</span>
+              <Link001
                 href="https://vibetheme.hectormendoza.me"
                 className="inline-flex text-xs text-primary"
               >

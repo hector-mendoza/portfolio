@@ -3,12 +3,15 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { fadeSlideUp, scaleIn, staggerContainer } from "@/lib/animations";
+import TiltedCard from "@/components/TiltedCard";
+import CountUp from "@/components/CountUp";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 const stats = [
-  { value: "8+", label: "Years Experience" },
-  { value: "20+", label: "Projects Delivered" },
-  { value: "10+", label: "Happy Clients" },
-  { value: "3", label: "Countries" },
+  { value: 8, suffix: "+", label: "Years Experience" },
+  { value: 20, suffix: "+", label: "Projects Delivered" },
+  { value: 10, suffix: "+", label: "Happy Clients" },
+  { value: 3, suffix: "", label: "Countries" },
 ];
 
 const techStack = [
@@ -26,6 +29,7 @@ export default function AboutSection() {
 
   const parallaxY = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+  const reducedMotion = usePrefersReducedMotion();
 
   return (
     <section
@@ -74,13 +78,19 @@ export default function AboutSection() {
             className="relative flex justify-center lg:justify-start"
           >
             <div className="relative w-full max-w-[520px] rounded-xl">
-              <div
-                className="w-full glass-card shadow-2xl shadow-primary/10 rounded-xl"
-              >
-                <img
-                  src="/pp.png"
-                  alt="Hector Mendoza"
-                  className="h-full w-full object-cover rounded-xl"
+              <div className="w-full overflow-hidden rounded-xl glass-card shadow-2xl shadow-primary/10">
+                <TiltedCard
+                  imageSrc="/pp.png"
+                  altText="Hector Mendoza"
+                  captionText="Hector Mendoza"
+                  containerHeight="min(640px, 85vw)"
+                  containerWidth="100%"
+                  imageHeight="min(640px, 85vw)"
+                  imageWidth="100%"
+                  scaleOnHover={1.04}
+                  rotateAmplitude={8}
+                  showMobileWarning={false}
+                  showTooltip={!reducedMotion}
                 />
               </div>
 
@@ -145,7 +155,16 @@ export default function AboutSection() {
                   whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary) / 0.5)" }}
                   className="rounded-xl glass-card p-4 text-center"
                 >
-                  <p className="text-2xl font-bold text-primary">{stat.value}</p>
+                  <p className="text-2xl font-bold text-primary">
+                    {reducedMotion ? (
+                      `${stat.value}${stat.suffix}`
+                    ) : (
+                      <>
+                        <CountUp to={stat.value} duration={1.4} className="text-2xl font-bold text-primary" />
+                        {stat.suffix}
+                      </>
+                    )}
+                  </p>
                   <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
                 </motion.div>
               ))}

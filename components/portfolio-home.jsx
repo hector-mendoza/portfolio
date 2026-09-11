@@ -7,19 +7,22 @@ import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ProjectsSection from "@/components/projects-section";
 import ScrollProgress from "@/components/scroll-progress";
+import ClickSparkRoot from "@/components/click-spark-root";
 
 export default function PortfolioHome() {
   return (
-    <main className="relative z-10">
-      <Navbar />
-      <ScrollProgress />
-      <HeroSection />
-      <AboutSection />
-      <ProjectsSection />
-      <ScrollTextReveal />
-      <ExperienceSection />
-      <ContactSection />
-      <Footer />
-    </main>
+    <ClickSparkRoot>
+      <main className="relative z-10">
+        <Navbar />
+        <ScrollProgress />
+        <HeroSection />
+        <AboutSection />
+        <ProjectsSection />
+        <ScrollTextReveal />
+        <ExperienceSection />
+        <ContactSection />
+        <Footer />
+      </main>
+    </ClickSparkRoot>
   );
 }

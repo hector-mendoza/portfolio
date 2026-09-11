@@ -7,6 +7,8 @@ import { MorphIcon } from "morphicons/react";
 import { Menu, X } from "lucide";
 import { Link000 } from "@/components/ui/skiper-ui/skiper40";
 import { homeBaseFromPath, isThemePreviewPath } from "@/lib/themes";
+import Magnet from "@/components/Magnet";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 const navLinks = (basePath) => [
   { label: "Home",       href: `${basePath}#hero` },
@@ -24,6 +26,7 @@ export default function Navbar() {
   const homeBase = homeBaseFromPath(pathname);
   const isHome = isThemePreviewPath(pathname);
   const showSolidNav = scrolled || !isHome;
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -70,14 +73,16 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center gap-3">
-            <a
-              href="mailto:hey@hectormendoza.me"
-              data-cuelume-press
-              data-cuelume-release
-              className="hidden btn-juicy btn-juicy-pill px-5 py-2 text-sm md:block"
-            >
-              {"Let's Talk"}
-            </a>
+            <Magnet padding={32} magnetStrength={5} disabled={reducedMotion} wrapperClassName="hidden md:block">
+              <a
+                href="mailto:hey@hectormendoza.me"
+                data-cuelume-press
+                data-cuelume-release
+                className="btn-juicy btn-juicy-pill px-5 py-2 text-sm"
+              >
+                {"Let's Talk"}
+              </a>
+            </Magnet>
             <button
               type="button"
               onClick={() => setMobileOpen((open) => !open)}
