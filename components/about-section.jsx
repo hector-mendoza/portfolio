@@ -37,7 +37,7 @@ export default function AboutSection() {
       ref={containerRef}
       className="relative overflow-x-clip py-16 md:py-32 overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+      <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block" aria-hidden>
         <motion.div
           style={{ x: parallaxY }}
           className="absolute top-1/2 left-0 flex -translate-y-1/2 gap-16 whitespace-nowrap opacity-[0.02]"
@@ -85,9 +85,9 @@ export default function AboutSection() {
                   imageSrc="/pp.png"
                   altText="Hector Mendoza"
                   captionText="Hector Mendoza"
-                  containerHeight="min(520px, 100%)"
+                  containerHeight="min(520px, 85vw)"
                   containerWidth="100%"
-                  imageHeight="100%"
+                  imageHeight="min(520px, 85vw)"
                   imageWidth="100%"
                   scaleOnHover={1.04}
                   rotateAmplitude={8}
@@ -102,7 +102,7 @@ export default function AboutSection() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-2 bottom-2 rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-6 sm:-bottom-6"
+                className="absolute right-2 bottom-2 w-max rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-6 sm:-bottom-6"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
