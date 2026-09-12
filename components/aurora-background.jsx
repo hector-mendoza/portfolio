@@ -18,7 +18,7 @@ export default function AuroraBackground() {
   if (!mounted || reducedMotion) return null;
 
   return (
-    <div aria-hidden className="absolute inset-0 opacity-50">
+    <div aria-hidden className="absolute inset-0 opacity-80">
       <Aurora
         colorStops={auroraStopsForTheme(theme)}
         amplitude={0.95}
