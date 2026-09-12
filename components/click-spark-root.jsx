@@ -35,7 +35,7 @@ export default function ClickSparkRoot({ children }) {
       sparkRadius={18}
       sparkCount={10}
       duration={420}
-      className="min-h-dvh"
+      className="min-h-dvh max-w-full overflow-x-clip"
     >
       {children}
     </ClickSpark>

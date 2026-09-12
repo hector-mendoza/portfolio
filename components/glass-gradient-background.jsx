@@ -5,6 +5,7 @@ export default function GlassGradientBackground() {
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
       <div className="glass-gradient-base" />
       <div className="pastel-poster-dots" />
+      <div className="mobile-aurora-wash" />
       <div className="glass-gradient-mesh" />
       <AuroraBackground />
       <div className="ambient-fog ambient-fog-1" />

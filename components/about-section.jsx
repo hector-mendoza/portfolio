@@ -35,13 +35,15 @@ export default function AboutSection() {
     <section
       id="about"
       ref={containerRef}
-      className="relative py-16 md:py-32 overflow-hidden"
+      className="relative overflow-x-clip py-16 md:py-32 overflow-hidden"
     >
-      {/* Horizontal scrolling background text */}
-      <div className="absolute top-1/2 -translate-y-1/2 left-0 pointer-events-none overflow-hidden whitespace-nowrap opacity-[0.02]">
-        <motion.div style={{ x: parallaxY }} className="flex gap-16">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+        <motion.div
+          style={{ x: parallaxY }}
+          className="absolute top-1/2 left-0 flex -translate-y-1/2 gap-16 whitespace-nowrap opacity-[0.02]"
+        >
           {[...Array(3)].map((_, i) => (
-            <span key={i} className="text-[15vw] font-bold leading-none text-foreground">
+            <span key={i} className="text-6xl font-bold leading-none text-foreground md:text-[15vw]">
               ABOUT ME ABOUT ME
             </span>
           ))}
@@ -83,9 +85,9 @@ export default function AboutSection() {
                   imageSrc="/pp.png"
                   altText="Hector Mendoza"
                   captionText="Hector Mendoza"
-                  containerHeight="min(640px, 85vw)"
+                  containerHeight="min(520px, 100%)"
                   containerWidth="100%"
-                  imageHeight="min(640px, 85vw)"
+                  imageHeight="100%"
                   imageWidth="100%"
                   scaleOnHover={1.04}
                   rotateAmplitude={8}
@@ -100,7 +102,7 @@ export default function AboutSection() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -right-4 -bottom-4 rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-6 sm:-bottom-6"
+                className="absolute right-2 bottom-2 rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-6 sm:-bottom-6"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
@@ -207,8 +209,8 @@ export default function AboutSection() {
       </motion.div>
 
       {/* Marquee strip */}
-      <div className="mt-16 md:mt-32 overflow-hidden border-y border-border bg-card/50 py-5">
-        <div className="animate-marquee flex whitespace-nowrap">
+      <div className="marquee-mask mt-16 w-full max-w-full overflow-hidden border-y border-border bg-card/50 py-5 md:mt-32">
+        <div className="animate-marquee flex w-max max-w-none whitespace-nowrap">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="flex items-center gap-8 px-4">
               {["NEXT.JS", "REACT", "TYPESCRIPT", "WORDPRESS", "SHOPIFY", "NODE.JS", "TAILWIND", "THREE.JS", "GSAP", "FIGMA"].map((item) => (

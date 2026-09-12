@@ -12,7 +12,7 @@ import ClickSparkRoot from "@/components/click-spark-root";
 export default function PortfolioHome() {
   return (
     <ClickSparkRoot>
-      <main className="relative z-10">
+      <main className="relative z-10 max-w-full overflow-x-clip">
         <Navbar />
         <ScrollProgress />
         <HeroSection />
