@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
-import ThemeSwitcher from "./theme-switcher";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
@@ -25,6 +24,13 @@ export default function Footer() {
             <p>
               {"Designed & Built with Next.js & Framer Motion · "}
               <Link001
+                href="https://reactbits.dev"
+                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
+              >
+                Motion by React Bits
+              </Link001>
+              <span className="mx-1.5 text-border">·</span>
+              <Link001
                 href="https://vibetheme.hectormendoza.me"
                 className="inline-flex text-xs text-primary"
               >
@@ -38,7 +44,6 @@ export default function Footer() {
                 Motion by Skiper UI
               </Link001>
             </p>
-            <ThemeSwitcher />
           </div>
 
           <motion.div

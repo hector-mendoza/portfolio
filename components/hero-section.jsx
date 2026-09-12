@@ -10,6 +10,11 @@ import HeroMouseGlow from "./hero-mouse-glow";
 import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 import HeroFeaturedCard from "@/components/hero-featured-card";
 import { getProjectByTitle } from "@/lib/projects";
+import BlurText from "@/components/BlurText";
+import ShinyText from "@/components/ShinyText";
+import SpotlightCard from "@/components/SpotlightCard";
+import Magnet from "@/components/Magnet";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 let heroIntroPlayed = false;
 
@@ -41,6 +46,7 @@ export default function HeroSection() {
     heroIntroPlayed = true;
     return true;
   });
+  const reducedMotion = usePrefersReducedMotion();
   return (
     <section
       id="hero"
@@ -57,18 +63,54 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl glass-card glass-card-hero p-8 md:p-10 flex flex-col justify-between"
+          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl"
           style={{ minHeight: "340px" }}
         >
+          <SpotlightCard
+            className="glass-card glass-card-hero flex h-full min-h-[340px] flex-col justify-between border-0 bg-transparent p-8 md:p-10"
+            spotlightColor="hsla(var(--primary) / 0.28)"
+          >
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div>
               <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
-                Software Engineer
+                <ShinyText
+                  text="Software Engineer"
+                  speed={3}
+                  delay={1.4}
+                  color="hsl(var(--primary))"
+                  shineColor="#ffffff"
+                  className="font-mono text-xs uppercase tracking-[0.25em]"
+                  disabled={reducedMotion}
+                />
               </span>
               <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
-                Hector
-                <br />
-                <span className="text-gradient">Mendoza</span>
+                {reducedMotion ? (
+                  <>
+                    Hector
+                    <br />
+                    <span className="text-gradient">Mendoza</span>
+                  </>
+                ) : (
+                  <>
+                    <BlurText
+                      text="Hector"
+                      as="span"
+                      animateBy="chars"
+                      delay={35}
+                      stepDuration={0.28}
+                      className="block"
+                    />
+                    <BlurText
+                      text="Mendoza"
+                      as="span"
+                      animateBy="chars"
+                      delay={35}
+                      stepDuration={0.28}
+                      className="block"
+                      spanClassName="text-gradient"
+                    />
+                  </>
+                )}
               </h1>
             </div>
 
@@ -79,14 +121,17 @@ export default function HeroSection() {
                 {" · "}Lead Developer · 8+ years crafting performant web
                 experiences.
               </p>
-              <Link005
-                href="#projects"
-                className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
-              >
-                View Work
-              </Link005>
+              <Magnet padding={40} magnetStrength={4} disabled={reducedMotion}>
+                <Link005
+                  href="#projects"
+                  className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
+                >
+                  View Work
+                </Link005>
+              </Magnet>
             </div>
           </div>
+          </SpotlightCard>
         </motion.div>
 
         {/* ── Social bento (2×2) ── */}

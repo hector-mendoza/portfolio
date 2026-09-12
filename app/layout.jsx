@@ -3,7 +3,6 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import GlassGradientBackground from "@/components/glass-gradient-background";
-import ThemeVariant from "@/components/theme-variant";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -75,13 +74,8 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="sage" data-mode="pastel" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var p=location.pathname,t='sage',m='pastel',s;if(p.indexOf('/pastel/')===0){m='pastel';s=p.replace(/^\\/pastel\\//,'');if(s)t=s;}else if(p==='/light'){m='light';t='obsidian';}else if(p.indexOf('/light/')===0){m='light';s=p.replace(/^\\/light\\//,'');if(s)t=s;}else if(p.indexOf('/theme/')===0){m='dark';s=p.replace(/^\\/theme\\//,'');t=s||'obsidian';}else if(p==='/pastel'){m='pastel';t='sage';}if(m==='dark')document.documentElement.classList.add('dark');document.documentElement.dataset.theme=t;document.documentElement.dataset.mode=m;})();`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -90,7 +84,6 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <ThemeVariant />
         <GlassGradientBackground />
         <ErrorBoundary>
           <CuelumeProvider />

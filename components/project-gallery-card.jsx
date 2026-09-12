@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 import ProjectPreview from "@/components/project-preview";
-import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
+import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
 export default function ProjectGalleryCard({
@@ -14,8 +14,7 @@ export default function ProjectGalleryCard({
   onEmojiDayHover,
   className,
 }) {
-  const themeMode = useThemeMode();
-  const surface = projectSurface(project, themeMode);
+  const surface = projectSurface(project);
   const [hovered, setHovered] = useState(false);
 
   const handleEnter = () => {

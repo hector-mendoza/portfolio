@@ -1,11 +1,10 @@
 "use client";
 
-import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
+import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
 export default function ProjectPreview({ project, hovered = false, className, aspectClass = "aspect-[16/10]" }) {
-  const themeMode = useThemeMode();
-  const surface = projectSurface(project, themeMode);
+  const surface = projectSurface(project);
   const isVibe = project.title === "Vibe Theme";
   const isEmojiDay = project.title === "Emoji of the Day";
 

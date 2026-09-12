@@ -7,6 +7,15 @@ const nextConfig = {
     unoptimized: true,
   },
   transpilePackages: ["sanity", "@sanity/vision", "@sanity/code-input"],
+  async redirects() {
+    return [
+      { source: "/theme/:path*", destination: "/", permanent: true },
+      { source: "/light", destination: "/", permanent: true },
+      { source: "/light/:path*", destination: "/", permanent: true },
+      { source: "/pastel", destination: "/", permanent: true },
+      { source: "/pastel/:path*", destination: "/", permanent: true },
+    ];
+  },
   async rewrites() {
     return {
       beforeFiles: [
