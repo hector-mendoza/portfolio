@@ -7,7 +7,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 import "swiper/css/pagination";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
-import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
+import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
 /**
@@ -15,8 +15,6 @@ import { cn } from "@/lib/utils";
  * Attribution: Skiper UI — https://skiper-ui.com · Swiper.js
  */
 export default function ProjectCardSwipe({ projects, className }) {
-  const themeMode = useThemeMode();
-
   if (!projects?.length) return null;
 
   return (
@@ -61,7 +59,7 @@ export default function ProjectCardSwipe({ projects, className }) {
         modules={[EffectCards, Pagination]}
       >
         {projects.map((project) => {
-          const surface = projectSurface(project, themeMode);
+          const surface = projectSurface(project);
 
           return (
             <SwiperSlide key={project.title} className="rounded-3xl">

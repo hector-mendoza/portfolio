@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { MorphIcon } from "morphicons/react";
 import { ArrowUpRight, SquareArrowOutUpRight } from "lucide";
-import { projectSurface, useThemeMode } from "@/lib/use-theme-mode";
+import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 import GlareHover from "@/components/GlareHover";
 
@@ -16,8 +16,7 @@ export default function HeroFeaturedCard({
   className,
   style,
 }) {
-  const themeMode = useThemeMode();
-  const surface = projectSurface(project, themeMode);
+  const surface = projectSurface(project);
   const [hovered, setHovered] = useState(false);
 
   return (

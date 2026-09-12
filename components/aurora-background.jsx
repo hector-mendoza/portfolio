@@ -2,12 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Aurora from "@/components/Aurora";
-import { auroraStopsForTheme } from "@/lib/aurora-stops";
+import { SAGE_AURORA_STOPS } from "@/lib/aurora-stops";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
-import { useThemeMode } from "@/lib/use-theme-mode";
 
 export default function AuroraBackground() {
-  const { theme } = useThemeMode();
   const reducedMotion = usePrefersReducedMotion();
   const [mounted, setMounted] = useState(false);
 
@@ -20,7 +18,7 @@ export default function AuroraBackground() {
   return (
     <div aria-hidden className="absolute inset-0 opacity-80">
       <Aurora
-        colorStops={auroraStopsForTheme(theme)}
+        colorStops={SAGE_AURORA_STOPS}
         amplitude={0.95}
         blend={0.7}
         speed={0.65}

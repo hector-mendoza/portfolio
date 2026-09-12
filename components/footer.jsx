@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
-import ThemeSwitcher from "./theme-switcher";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
@@ -45,7 +44,6 @@ export default function Footer() {
                 Motion by Skiper UI
               </Link001>
             </p>
-            <ThemeSwitcher />
           </div>
 
           <motion.div
