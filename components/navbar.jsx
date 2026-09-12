@@ -70,8 +70,16 @@ export default function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
-            <Magnet padding={32} magnetStrength={5} disabled={reducedMotion} wrapperClassName="hidden md:block">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <a
+              href="mailto:hey@hectormendoza.me"
+              data-cuelume-press
+              data-cuelume-release
+              className="btn-juicy btn-juicy-pill px-3 py-1.5 text-xs md:hidden"
+            >
+              {"Let's Talk"}
+            </a>
+            <Magnet padding={32} magnetStrength={5} disabled={reducedMotion} wrapperClassName="hidden md:inline-block">
               <a
                 href="mailto:hey@hectormendoza.me"
                 data-cuelume-press

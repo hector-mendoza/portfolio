@@ -24,7 +24,7 @@ export default function ProjectCardSwipe({ projects, className }) {
       viewport={{ once: true, margin: "-10%" }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative mx-auto mb-4 flex w-full max-w-lg flex-col items-center md:hidden",
+        "relative mx-auto mb-4 flex w-full max-w-full flex-col items-center overflow-x-clip md:hidden",
         className,
       )}
     >
@@ -35,6 +35,10 @@ export default function ProjectCardSwipe({ projects, className }) {
       <style>{`
         .project-card-swipe {
           padding-bottom: 2.5rem !important;
+          overflow: hidden !important;
+          max-width: 100%;
+        }
+        .project-card-swipe .swiper-wrapper {
           overflow: visible;
         }
         .project-card-swipe .swiper-slide {

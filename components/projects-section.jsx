@@ -19,7 +19,7 @@ export default function ProjectsSection() {
   );
 
   return (
-    <section id="projects" className="relative py-10 md:py-32">
+    <section id="projects" className="relative overflow-x-clip py-10 md:py-32">
       <VibeEasterEgg active={vibeHovered} />
       <EmojiDayEasterEgg active={emojiDayHovered} />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -56,7 +56,7 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="-mx-6 mb-6 flex gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden"
+          className="mb-6 flex w-full max-w-full flex-wrap gap-2 sm:mb-8"
         >
           {PROJECT_FILTERS.map((f) => (
             <button

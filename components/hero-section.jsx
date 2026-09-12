@@ -50,40 +50,40 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-4 py-20 md:py-28"
+      className="relative min-h-screen max-w-full overflow-x-clip flex items-center justify-center px-4 py-20 md:py-28"
     >
       <HeroMouseGlow className="relative w-full max-w-5xl mx-auto">
       <motion.div
         variants={container}
         initial={playIntro ? "hidden" : false}
         animate="show"
-        className="w-full grid grid-cols-2 md:grid-cols-4 gap-3"
+        className="grid w-full min-w-0 grid-cols-2 gap-3 md:grid-cols-4"
       >
         {/* ── Identity (2×2) ── */}
         <motion.div
           variants={card}
           data-game-target
-          className="order-1 col-span-2 row-span-2 relative overflow-hidden rounded-3xl"
+          className="relative order-1 col-span-2 row-span-2 min-w-0 overflow-hidden rounded-3xl"
           style={{ minHeight: "340px" }}
         >
           <SpotlightCard
-            className="glass-card glass-card-hero flex h-full min-h-[340px] flex-col justify-between border-0 bg-transparent p-8 md:p-10"
+            className="glass-card glass-card-hero flex h-full min-h-[340px] flex-col justify-between border-0 bg-transparent p-6 md:p-10"
             spotlightColor="hsla(var(--primary) / 0.28)"
           >
           <div className="relative z-10 flex h-full flex-col justify-between">
             <div>
-              <span className="mb-5 inline-block font-mono text-xs uppercase tracking-[0.25em] text-primary">
+              <span className="mb-5 inline-block max-w-full font-mono text-xs uppercase tracking-[0.25em] text-primary">
                 <ShinyText
                   text="Software Engineer"
                   speed={3}
                   delay={1.4}
                   color="hsl(var(--primary))"
                   shineColor="#ffffff"
-                  className="font-mono text-xs uppercase tracking-[0.25em]"
+                  className="block max-w-full overflow-hidden font-mono text-[10px] uppercase tracking-[0.16em] sm:text-xs sm:tracking-[0.25em]"
                   disabled={reducedMotion}
                 />
               </span>
-              <h1 className="text-5xl font-bold leading-[1.02] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+              <h1 className="max-w-full text-4xl font-bold leading-[1.02] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
                 {reducedMotion ? (
                   <>
                     Hector
@@ -121,7 +121,7 @@ export default function HeroSection() {
                 {" · "}Lead Developer · 8+ years crafting performant web
                 experiences.
               </p>
-              <Magnet padding={40} magnetStrength={4} disabled={reducedMotion}>
+              <Magnet padding={40} magnetStrength={4} disabled={reducedMotion} wrapperClassName="inline-block">
                 <Link005
                   href="#projects"
                   className="inline-flex w-fit items-center text-sm font-semibold text-foreground md:text-base"
@@ -143,7 +143,7 @@ export default function HeroSection() {
           data-game-target
           href="#experience"
           data-cuelume-hover="tick"
-          className="order-4 col-span-2 md:order-3 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
+          className="order-4 col-span-2 min-w-0 md:order-3 md:col-start-3 rounded-3xl glass-card p-5 flex flex-col justify-between group"
           style={{ minHeight: "160px" }}
         >
           <div className="flex items-start justify-between gap-3">
@@ -172,7 +172,7 @@ export default function HeroSection() {
             project={canteraProject}
             badge="Latest Build"
             cardVariant={card}
-            className="order-5 col-span-2 md:order-4"
+            className="order-5 col-span-2 min-w-0 md:order-4"
             style={{ minHeight: "180px" }}
           />
         )}
@@ -182,7 +182,7 @@ export default function HeroSection() {
             project={vibeProject}
             badge="Featured Project"
             cardVariant={card}
-            className="order-6 col-span-2 md:order-5"
+            className="order-6 col-span-2 min-w-0 md:order-5"
             style={{ minHeight: "180px" }}
           />
         )}
@@ -193,7 +193,7 @@ export default function HeroSection() {
           data-game-target
           href="#about"
           data-cuelume-hover="tick"
-          className="order-2 col-span-2 rounded-3xl glass-card p-5 flex items-center gap-5 group md:order-6"
+          className="order-2 col-span-2 min-w-0 rounded-3xl glass-card p-5 flex items-center gap-5 group md:order-6"
           style={{ minHeight: "140px" }}
         >
           <div
@@ -225,7 +225,7 @@ export default function HeroSection() {
         <motion.div
           variants={card}
           data-game-target
-          className="relative order-7 col-span-2 rounded-3xl glass-card p-5 flex flex-col justify-between"
+          className="relative order-7 col-span-2 min-w-0 rounded-3xl glass-card p-5 flex flex-col justify-between"
           style={{ minHeight: "140px" }}
         >
           <button

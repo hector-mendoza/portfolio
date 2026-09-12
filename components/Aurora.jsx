@@ -148,6 +148,9 @@ export default function Aurora(props) {
       const width = ctn.offsetWidth;
       const height = ctn.offsetHeight;
       renderer.setSize(width, height);
+      gl.canvas.style.width = "100%";
+      gl.canvas.style.height = "100%";
+      gl.canvas.style.maxWidth = "100%";
       if (program) {
         program.uniforms.uResolution.value = [width, height];
       }
