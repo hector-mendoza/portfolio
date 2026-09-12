@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useThemeMode } from "@/lib/use-theme-mode";
 
 export default function AuroraBackground() {
-  const { mode, theme } = useThemeMode();
+  const { theme } = useThemeMode();
   const reducedMotion = usePrefersReducedMotion();
   const [mounted, setMounted] = useState(false);
 
@@ -15,15 +15,15 @@ export default function AuroraBackground() {
     setMounted(true);
   }, []);
 
-  if (!mounted || mode !== "dark" || reducedMotion) return null;
+  if (!mounted || reducedMotion) return null;
 
   return (
-    <div aria-hidden className="absolute inset-0 opacity-100">
+    <div aria-hidden className="absolute inset-0 opacity-50">
       <Aurora
         colorStops={auroraStopsForTheme(theme)}
-        amplitude={1.15}
-        blend={0.65}
-        speed={0.85}
+        amplitude={0.95}
+        blend={0.7}
+        speed={0.65}
       />
     </div>
   );

@@ -4,21 +4,17 @@ import { useEffect, useState } from "react";
 import ClickSpark from "@/components/ClickSpark";
 import { cssVarToColor } from "@/lib/aurora-stops";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
-import { useThemeMode } from "@/lib/use-theme-mode";
 
 export default function ClickSparkRoot({ children }) {
-  const { mode } = useThemeMode();
   const reducedMotion = usePrefersReducedMotion();
-  const [sparkColor, setSparkColor] = useState("#ffffff");
+  const [sparkColor, setSparkColor] = useState("#6b8f78");
 
   useEffect(() => {
     const sync = () => {
       const raw = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary")
         .trim();
-      setSparkColor(
-        mode === "dark" ? "#f8fafc" : cssVarToColor(raw, "#0f172a"),
-      );
+      setSparkColor(cssVarToColor(raw, "#6b8f78"));
     };
 
     sync();
@@ -28,7 +24,7 @@ export default function ClickSparkRoot({ children }) {
       attributeFilter: ["data-mode", "data-theme", "class"],
     });
     return () => observer.disconnect();
-  }, [mode]);
+  }, []);
 
   if (reducedMotion) return children;
 
