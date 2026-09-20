@@ -15,6 +15,7 @@ import ShinyText from "@/components/ShinyText";
 import SpotlightCard from "@/components/SpotlightCard";
 import Magnet from "@/components/Magnet";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
+import FlipText from "@/components/block/flip-text";
 
 let heroIntroPlayed = false;
 
@@ -100,15 +101,11 @@ export default function HeroSection() {
                       stepDuration={0.28}
                       className="block"
                     />
-                    <BlurText
-                      text="Mendoza"
-                      as="span"
-                      animateBy="chars"
-                      delay={35}
-                      stepDuration={0.28}
-                      className="block"
-                      spanClassName="text-gradient"
-                    />
+                    <span className="block text-gradient">
+                      <FlipText loop={false} duration={1.4} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+                        Mendoza
+                      </FlipText>
+                    </span>
                   </>
                 )}
               </h1>

@@ -3,6 +3,7 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import GlassGradientBackground from "@/components/glass-gradient-background";
+import SiteSpotlight from "@/components/site-spotlight";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -88,6 +89,7 @@ export default function RootLayout({ children }) {
         <ErrorBoundary>
           <CuelumeProvider />
           <ToasterProvider />
+          <SiteSpotlight />
           {children}
         </ErrorBoundary>
       </body>

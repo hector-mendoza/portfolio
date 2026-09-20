@@ -71,6 +71,15 @@ export default function Navbar() {
           </div>
 
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("site-spotlight:toggle"))}
+              className="hidden items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1.5 font-mono text-[10px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary md:inline-flex"
+              aria-label="Open site search"
+            >
+              <span>Search</span>
+              <kbd className="rounded bg-muted px-1.5 py-0.5 text-[10px] text-foreground/70">⌘K</kbd>
+            </button>
             <a
               href="mailto:hey@hectormendoza.me"
               data-cuelume-press

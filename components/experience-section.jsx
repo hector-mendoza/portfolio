@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { CodeXmlIcon, ShoppingBagIcon, FigmaIcon } from "@animateicons/react/lucide";
+import ExperienceScrollStack from "@/components/experience-scroll-stack";
 
 const experiences = [
   {
@@ -118,6 +119,8 @@ export default function ExperienceSection() {
             </span>
           </h2>
         </motion.div>
+
+        <ExperienceScrollStack />
 
         {/* Timeline */}
         <div className="relative">

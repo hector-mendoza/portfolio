@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import ContactInfo from "./contact-info";
 import SocialLinks from "./social-links";
 import LocationMap from "./location-map";
+import { ArrowFillButton } from "@/components/block/arrow-fill-button";
 
 export default function ContactSection() {
   return (
@@ -35,7 +36,20 @@ export default function ContactSection() {
           className="mb-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between"
         >
           <ContactInfo />
-          <SocialLinks />
+          <div className="flex flex-col items-start gap-6 sm:items-end">
+            <SocialLinks />
+            <ArrowFillButton
+              href="mailto:hey@hectormendoza.me"
+              bgColor="hsl(var(--primary))"
+              textColor="hsl(var(--primary-foreground))"
+              fillBgColor="hsl(var(--background))"
+              fillTextColor="hsl(var(--primary))"
+              hoverFillBgColor="hsl(var(--card))"
+              hoverFillTextColor="hsl(var(--primary))"
+            >
+              Send an email
+            </ArrowFillButton>
+          </div>
         </motion.div>
 
         <LocationMap />
