@@ -15,6 +15,9 @@ export default function ScrollTextReveal() {
       </div>
 
       <div className="relative mx-auto max-w-5xl px-6 text-center">
+        <span className="mb-6 inline-block font-mono text-xs uppercase tracking-widest text-primary">
+          Philosophy
+        </span>
         <RectangularTextReveal
           as="p"
           baseColor="hsl(var(--primary))"

@@ -8,7 +8,6 @@ import Footer from "@/components/footer";
 import ProjectsSection from "@/components/projects-section";
 import ScrollProgress from "@/components/scroll-progress";
 import ClickSparkRoot from "@/components/click-spark-root";
-import CraftTextFill from "@/components/craft-text-fill";
 
 export default function PortfolioHome() {
   return (
@@ -18,7 +17,6 @@ export default function PortfolioHome() {
         <ScrollProgress />
         <HeroSection />
         <AboutSection />
-        <CraftTextFill />
         <ProjectsSection />
         <ScrollTextReveal />
         <ExperienceSection />
