@@ -1,16 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 import ProjectCardSwipe from "./project-card-swipe";
 import ProjectsDesktopGallery from "./projects-desktop-gallery";
-import { PROJECT_FILTERS, filterProjects, getProjectByTitle } from "@/lib/projects";
-import { MagnetTabs } from "@/components/block/magnet-tabs";
+import ProjectFilterTabs from "./project-filter-tabs";
+import { filterProjects } from "@/lib/projects";
 import { ArrowFillButton } from "@/components/block/arrow-fill-button";
-import ProjectHoverPreview from "@/components/project-hover-preview";
-import TradingCard from "@/components/block/trading-card";
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("recent");
@@ -21,7 +19,6 @@ export default function ProjectsSection() {
     () => filterProjects(activeFilter),
     [activeFilter],
   );
-  const featuredProject = getProjectByTitle("Cantera Diez Hotel");
 
   return (
     <section id="projects" className="relative overflow-x-clip py-10 md:py-32">
@@ -61,53 +58,46 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-6 sm:mb-8"
+          className="mb-8 sm:mb-10"
         >
-          <MagnetTabs
-            slug="projects"
-            options={PROJECT_FILTERS.map((f) => f.label)}
-            activeTab={PROJECT_FILTERS.find((f) => f.value === activeFilter)?.label ?? "Recent"}
-            onSelect={(label) => {
-              const next = PROJECT_FILTERS.find((f) => f.label === label);
-              if (next) setActiveFilter(next.value);
-            }}
-          />
+          <ProjectFilterTabs activeFilter={activeFilter} onChange={setActiveFilter} />
         </motion.div>
 
-        <ProjectHoverPreview projects={filteredProjects} />
-
-        {featuredProject ? (
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-10 flex flex-col items-center gap-4 sm:mb-12"
-          >
-            <span className="font-mono text-xs uppercase tracking-widest text-primary">Featured build</span>
-            <a
-              href={featuredProject.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-transform hover:scale-[1.02]"
+        <AnimatePresence mode="wait">
+          {filteredProjects.length > 0 ? (
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
-              <TradingCard
-                imageUrl={`https://placehold.co/300x400/${(featuredProject.accent ?? "D97706").replace("#", "")}/ffffff?text=Cantera+Diez&font=raleway`}
-                rank={1}
-                name={featuredProject.title}
-                description={featuredProject.subtitle}
+              <ProjectCardSwipe projects={filteredProjects} />
+
+              <ProjectsDesktopGallery
+                projects={filteredProjects}
+                activeFilter={activeFilter}
+                onVibeHover={setVibeHovered}
+                onEmojiDayHover={setEmojiDayHovered}
               />
-            </a>
-          </motion.div>
-        ) : null}
-
-        <ProjectCardSwipe projects={filteredProjects} />
-
-        <ProjectsDesktopGallery
-          projects={filteredProjects}
-          activeFilter={activeFilter}
-          onVibeHover={setVibeHovered}
-          onEmojiDayHover={setEmojiDayHovered}
-        />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="rounded-2xl border border-dashed border-border bg-card/60 px-6 py-12 text-center"
+            >
+              <p className="mb-2 font-mono text-xs uppercase tracking-widest text-primary">
+                No matches
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Nothing in this category yet. Try Recent or All to browse the full collection.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <motion.div
           initial={{ opacity: 0, y: 30 }}
