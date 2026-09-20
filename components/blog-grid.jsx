@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import BlogCard from "@/components/blog/blog-card";
+import BlogMasonryGrid from "@/components/blog/blog-masonry-grid";
+import BlogHoverPreview from "@/components/blog/blog-hover-preview";
 
 const FILTERS = [
   { label: "Recent", value: "recent" },
@@ -116,6 +118,8 @@ export default function BlogGrid({ posts, showSetupState = false }) {
         ))}
       </motion.div>
 
+      <BlogHoverPreview posts={filteredPosts} />
+
       {showFeaturedRow ? (
         <div className="mb-10">
           <div className="mb-5 flex items-center gap-3">
@@ -130,14 +134,9 @@ export default function BlogGrid({ posts, showSetupState = false }) {
         </div>
       ) : null}
 
-      <div className="grid gap-8 md:grid-cols-2">
-        {(showFeaturedRow
-          ? filteredPosts.filter((post) => !post.featured)
-          : filteredPosts
-        ).map((post, index) => (
-          <BlogCard key={post._id} post={post} index={index} />
-        ))}
-      </div>
+      <BlogMasonryGrid
+        posts={showFeaturedRow ? filteredPosts.filter((post) => !post.featured) : filteredPosts}
+      />
     </>
   );
 }

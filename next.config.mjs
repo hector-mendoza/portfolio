@@ -5,6 +5,10 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    remotePatterns: [
+      { protocol: "https", hostname: "placehold.co" },
+      { protocol: "https", hostname: "cdn.sanity.io" },
+    ],
   },
   transpilePackages: ["sanity", "@sanity/vision", "@sanity/code-input"],
   async redirects() {

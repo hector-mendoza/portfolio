@@ -1397,3 +1397,39 @@ body {
 [data-mode="pastel"] #projects .glass-card > div:first-child {
   border-bottom: 1px solid hsl(var(--border) / 0.5);
 }
+
+/* ObsidianUI — Flip Text */
+.flip-text-wrapper .flip-char {
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+}
+
+.flip-text-wrapper:hover .flip-char {
+  animation: obsidian-flip-char var(--flip-duration) var(--flip-delay) var(--flip-iteration) ease-in-out;
+}
+
+@keyframes obsidian-flip-char {
+  0%,
+  100% {
+    transform: rotateX(0deg);
+  }
+  50% {
+    transform: rotateX(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-text-wrapper:hover .flip-char {
+    animation: none;
+  }
+}
+
+/* ObsidianUI — compact hover previews inside cards */
+.hover-img-compact.hover-img-container {
+  background: transparent;
+  color: hsl(var(--foreground));
+  --hi-bg: transparent;
+  --hi-text: hsl(var(--foreground));
+  --hi-text-muted: hsl(var(--muted-foreground));
+  --hi-border: hsl(var(--border));
+}

@@ -6,7 +6,11 @@ import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 import ProjectCardSwipe from "./project-card-swipe";
 import ProjectsDesktopGallery from "./projects-desktop-gallery";
-import { PROJECT_FILTERS, filterProjects } from "@/lib/projects";
+import { PROJECT_FILTERS, filterProjects, getProjectByTitle } from "@/lib/projects";
+import { MagnetTabs } from "@/components/block/magnet-tabs";
+import { ArrowFillButton } from "@/components/block/arrow-fill-button";
+import ProjectHoverPreview from "@/components/project-hover-preview";
+import TradingCard from "@/components/block/trading-card";
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("recent");
@@ -17,6 +21,7 @@ export default function ProjectsSection() {
     () => filterProjects(activeFilter),
     [activeFilter],
   );
+  const featuredProject = getProjectByTitle("Cantera Diez Hotel");
 
   return (
     <section id="projects" className="relative overflow-x-clip py-10 md:py-32">
@@ -56,24 +61,44 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-6 flex w-full max-w-full flex-wrap gap-2 sm:mb-8"
+          className="mb-6 sm:mb-8"
         >
-          {PROJECT_FILTERS.map((f) => (
-            <button
-              key={f.value}
-              type="button"
-              data-cuelume-toggle
-              onClick={() => setActiveFilter(f.value)}
-              className={`shrink-0 rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
-                activeFilter === f.value
-                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                  : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
+          <MagnetTabs
+            slug="projects"
+            options={PROJECT_FILTERS.map((f) => f.label)}
+            activeTab={PROJECT_FILTERS.find((f) => f.value === activeFilter)?.label ?? "Recent"}
+            onSelect={(label) => {
+              const next = PROJECT_FILTERS.find((f) => f.label === label);
+              if (next) setActiveFilter(next.value);
+            }}
+          />
         </motion.div>
+
+        <ProjectHoverPreview projects={filteredProjects} />
+
+        {featuredProject ? (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-10 flex flex-col items-center gap-4 sm:mb-12"
+          >
+            <span className="font-mono text-xs uppercase tracking-widest text-primary">Featured build</span>
+            <a
+              href={featuredProject.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-transform hover:scale-[1.02]"
+            >
+              <TradingCard
+                imageUrl={`https://placehold.co/300x400/${(featuredProject.accent ?? "D97706").replace("#", "")}/ffffff?text=Cantera+Diez&font=raleway`}
+                rank={1}
+                name={featuredProject.title}
+                description={featuredProject.subtitle}
+              />
+            </a>
+          </motion.div>
+        ) : null}
 
         <ProjectCardSwipe projects={filteredProjects} />
 
@@ -91,17 +116,19 @@ export default function ProjectsSection() {
           className="mt-10 text-center sm:mt-16"
         >
           <p className="mb-4 text-sm text-muted-foreground">Have a project in mind?</p>
-          <a
+          <ArrowFillButton
             href="#contact"
             data-cuelume-press
             data-cuelume-release
-            className="group inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+            bgColor="hsl(var(--primary))"
+            textColor="hsl(var(--primary-foreground))"
+            fillBgColor="hsl(var(--background))"
+            fillTextColor="hsl(var(--primary))"
+            hoverFillBgColor="hsl(var(--card))"
+            hoverFillTextColor="hsl(var(--primary))"
           >
-            {"Let's build it together"}
-            <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
+            Let&apos;s build it together
+          </ArrowFillButton>
         </motion.div>
       </div>
     </section>
