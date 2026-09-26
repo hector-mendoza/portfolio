@@ -28,6 +28,15 @@ This repository powers [hectormendoza.me](https://hectormendoza.me) — a single
 
 The result is a fast, accessible site that reads like a product — not a template.
 
+### Foundation docs
+
+| Document | Purpose |
+| --- | --- |
+| [PRD.md](./PRD.md) | Product requirements — what the site should do and for whom |
+| [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) | Visual design, tokens, UI components, and design rules |
+| [Architecture.md](./Architecture.md) | Technical architecture and how systems work together |
+| [AGENTS.md](./AGENTS.md) | How AI agents should behave, which rules they follow, and which tools they can use |
+
 ---
 
 ## Highlights
