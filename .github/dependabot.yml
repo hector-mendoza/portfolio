@@ -1,6 +1,9 @@
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 #
 # Slack: .github/workflows/dependabot-slack.yml — SLACK_WEBHOOK_URL in Dependabot secrets (never commit URLs)
+#
+# Groups are limited to minor/patch so non-breaking updates can auto-merge.
+# Major bumps open as individual PRs for manual review.
 version: 2
 updates:
   - package-ecosystem: npm
@@ -12,5 +15,11 @@ updates:
     groups:
       production-dependencies:
         dependency-type: production
+        update-types:
+          - minor
+          - patch
       development-dependencies:
         dependency-type: development
+        update-types:
+          - minor
+          - patch
