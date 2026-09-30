@@ -1,0 +1,74 @@
+# Auto-merge Dependabot PRs that are patch or minor only.
+# Majors (and grouped PRs that include a major) stay manual.
+#
+# One-time repo setting (needed for --auto to wait on checks):
+# Settings → General → Pull Requests → enable "Allow auto-merge"
+name: Dependabot auto-merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  dependabot:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for non-breaking updates
+        if: >
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Prefer GitHub auto-merge so required checks must pass first.
+          if gh pr merge --auto --squash "$PR_URL"; then
+            echo "Auto-merge enabled for $PR_URL"
+            exit 0
+          fi
+
+          echo "Auto-merge unavailable (enable Allow auto-merge in repo settings)."
+          echo "Falling back to merge after other checks succeed..."
+
+          deadline=$((SECONDS + 900))
+          while (( SECONDS < deadline )); do
+            pending=0
+            failed=0
+            while IFS=$'\t' read -r name state _rest; do
+              [[ -z "${name:-}" ]] && continue
+              # Ignore this job so we do not deadlock on ourselves.
+              [[ "$name" == "dependabot" ]] && continue
+              case "$state" in
+                pass|skipping|neutral) ;;
+                fail|cancelled|timed_out) failed=1 ;;
+                *) pending=1 ;;
+              esac
+            done < <(gh pr checks "$PR_URL" 2>/dev/null || true)
+
+            if (( failed )); then
+              echo "A check failed; not merging."
+              exit 1
+            fi
+            if (( !pending )); then
+              gh pr merge --squash "$PR_URL"
+              echo "Merged $PR_URL"
+              exit 0
+            fi
+            sleep 15
+          done
+
+          echo "Timed out waiting for checks."
+          exit 1
