@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import styles from "./status.module.css";
 
@@ -19,7 +20,7 @@ export default function Error({ reset }) {
             <button type="button" onClick={() => reset()}>
               Try again
             </button>
-            <a href="/">Return home</a>
+            <Link href="/">Return home</Link>
           </div>
         </div>
       </main>

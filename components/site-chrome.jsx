@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./site-chrome.module.css";
 
 export function BrandLogo({ className = "" }) {
@@ -15,13 +16,13 @@ export function BrandLogo({ className = "" }) {
 export function SiteHeader() {
   return (
     <header className={styles.header}>
-      <a className={styles.brand} href="/" aria-label="Hector Mendoza, home">
+      <Link className={styles.brand} href="/" aria-label="Hector Mendoza, home">
         <BrandLogo />
-      </a>
+      </Link>
       <nav className={styles.nav} aria-label="Primary navigation">
-        <a href="/#work">Work</a>
-        <a href="/#about">About</a>
-        <a href="/blog">Writing</a>
+        <Link href="/#work">Work</Link>
+        <Link href="/#about">About</Link>
+        <Link href="/blog">Writing</Link>
       </nav>
       <a className={styles.availability} href="mailto:hey@hectormendoza.me">
         <span aria-hidden="true" />
@@ -41,7 +42,7 @@ export function SiteFooter() {
       <div className={styles.footerLinks}>
         <a href="https://github.com/hector-mendoza">GitHub</a>
         <a href="https://www.linkedin.com/in/hector-mendoza-m/">LinkedIn</a>
-        <a href="/blog">Writing</a>
+        <Link href="/blog">Writing</Link>
       </div>
       <a className={styles.toTop} href="#top">
         Back to top ↑
