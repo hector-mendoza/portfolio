@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { CodeXmlIcon, ShoppingBagIcon, FigmaIcon } from "@animateicons/react/lucide";
+import { Branches } from "@lucasmarkes/hairline/react";
+import HairlineFigure from "@/components/hairline-figure";
 const experiences = [
   {
     period: "2024 - Present",
@@ -105,17 +107,27 @@ export default function ExperienceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-10 md:mb-20"
+          className="mb-10 flex flex-col gap-8 md:mb-20 lg:flex-row lg:items-end lg:justify-between"
         >
-          <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
-            Experience
-          </span>
-          <h2 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-            <span className="text-balance block">
-              {"Where I've "}
-              <span className="text-gradient">worked</span>
+          <div>
+            <span className="mb-4 inline-block font-mono text-xs uppercase tracking-widest text-primary">
+              Experience
             </span>
-          </h2>
+            <h2 className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+              <span className="text-balance block">
+                {"Where I've "}
+                <span className="text-gradient">worked</span>
+              </span>
+            </h2>
+          </div>
+          <div className="hidden w-full max-w-[220px] shrink-0 md:block">
+            <HairlineFigure
+              as={Branches}
+              intensity={0.4}
+              showCaption={false}
+              label="Commit graph; commits rise under the pointer"
+            />
+          </div>
         </motion.div>
 
         {/* Timeline */}

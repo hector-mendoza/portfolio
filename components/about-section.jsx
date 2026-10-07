@@ -27,7 +27,6 @@ export default function AboutSection() {
     offset: ["start end", "end start"],
   });
 
-  const parallaxY = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -37,19 +36,6 @@ export default function AboutSection() {
       ref={containerRef}
       className="relative overflow-x-clip py-16 md:py-32 overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block" aria-hidden>
-        <motion.div
-          style={{ x: parallaxY }}
-          className="absolute top-1/2 left-0 flex -translate-y-1/2 gap-16 whitespace-nowrap opacity-[0.02]"
-        >
-          {[...Array(3)].map((_, i) => (
-            <span key={i} className="text-6xl font-bold leading-none text-foreground md:text-[15vw]">
-              ABOUT ME ABOUT ME
-            </span>
-          ))}
-        </motion.div>
-      </div>
-
       <motion.div style={{ opacity: sectionOpacity }} className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <motion.div

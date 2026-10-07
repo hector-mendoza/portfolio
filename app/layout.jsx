@@ -50,7 +50,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#F0F7F2",
+  themeColor: "#FAFAF8",
   width: "device-width",
   initialScale: 1,
 };
@@ -75,7 +75,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="sage" data-mode="pastel" suppressHydrationWarning>
+    <html lang="en" data-theme="noir" data-mode="pastel" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

@@ -423,6 +423,25 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .hairline-rule {
+    height: 1px;
+    background: hsl(var(--border));
+  }
+
+  .hairline-rule-list + .hairline-rule-list {
+    border-top: 1px solid hsl(var(--border));
+  }
+}
+
+/* @lucasmarkes/hairline — match page background and ink */
+.hairline-figure {
+  --hairline-plate: hsl(var(--background));
+  --hairline-hi: hsl(var(--foreground));
+  --hairline-edge: hsl(var(--muted-foreground) / 0.75);
+  --hairline-mid: hsl(var(--muted-foreground));
+  --hairline-lo: hsl(var(--border));
+  --hairline-stroke: 0.85;
 }
 
 @keyframes vibe-rainbow {

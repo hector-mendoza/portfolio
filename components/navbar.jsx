@@ -10,12 +10,10 @@ import Magnet from "@/components/Magnet";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 const navLinks = [
-  { label: "Home",       href: "/#hero" },
-  { label: "About",      href: "/#about" },
-  { label: "Projects",   href: "/#projects" },
-  { label: "Blog",       href: "/blog" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Contact",    href: "/#contact" },
+  { label: "Work", href: "/#projects" },
+  { label: "About", href: "/#about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -45,7 +43,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a href="/" className="group flex items-center gap-2" data-cuelume-hover="tick">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-primary/30 bg-primary/15 shadow-sm transition-all group-hover:border-primary/40 group-hover:bg-primary/20">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/80 transition-colors group-hover:border-foreground/25">
               <img
                 src="/logos/logo.svg"
                 alt="HM logo"
@@ -74,7 +72,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => window.dispatchEvent(new CustomEvent("site-spotlight:toggle"))}
-              className="hidden items-center gap-2 rounded-full border border-border bg-card/70 px-3 py-1.5 font-mono text-[10px] text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary md:inline-flex"
+              className="hidden items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1.5 font-mono text-[10px] text-muted-foreground transition-colors hover:text-foreground md:inline-flex"
               aria-label="Open site search"
             >
               <span>Search</span>

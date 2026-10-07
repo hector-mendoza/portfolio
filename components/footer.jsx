@@ -22,26 +22,12 @@ export default function Footer() {
 
           <div className="flex flex-col items-center gap-2 text-center text-xs text-muted-foreground">
             <p>
-              {"Designed & Built with Next.js & Framer Motion · "}
+              Built with Next.js · Figures by{" "}
               <Link001
-                href="https://reactbits.dev"
+                href="https://hairline.lucasmarkes.com"
                 className="inline-flex text-xs text-muted-foreground hover:text-foreground"
               >
-                Motion by React Bits
-              </Link001>
-              <span className="mx-1.5 text-border">·</span>
-              <Link001
-                href="https://vibetheme.hectormendoza.me"
-                className="inline-flex text-xs text-primary"
-              >
-                Vibe Theme
-              </Link001>
-              <span className="mx-1.5 text-border">·</span>
-              <Link001
-                href="https://skiper-ui.com"
-                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
-              >
-                Motion by Skiper UI
+                Hairline
               </Link001>
             </p>
           </div>

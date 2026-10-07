@@ -9,6 +9,8 @@ import ProjectsDesktopGallery from "./projects-desktop-gallery";
 import ProjectFilterTabs from "./project-filter-tabs";
 import { filterProjects } from "@/lib/projects";
 import { ArrowFillButton } from "@/components/block/arrow-fill-button";
+import { Riffle } from "@lucasmarkes/hairline/react";
+import HairlineFigure from "@/components/hairline-figure";
 
 export default function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("recent");
@@ -24,33 +26,36 @@ export default function ProjectsSection() {
     <section id="projects" className="relative overflow-x-clip py-10 md:py-32">
       <VibeEasterEgg active={vibeHovered} />
       <EmojiDayEasterEgg active={emojiDayHovered} />
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 -left-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-1/4 -right-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-      </div>
-
       <div className="relative mx-auto max-w-7xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="mb-6 flex flex-col items-start justify-between gap-4 sm:mb-10 sm:gap-6 sm:flex-row sm:items-end"
+          className="mb-6 flex flex-col gap-8 sm:mb-10 lg:flex-row lg:items-end lg:justify-between"
         >
-          <div>
+          <div className="max-w-xl">
             <span className="mb-3 inline-block font-mono text-xs uppercase tracking-widest text-primary sm:mb-4">
               Projects
             </span>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
               <span className="block text-balance">
-                {"All "}
+                Selected{" "}
                 <span className="text-gradient">work</span>
               </span>
             </h2>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+              Client builds, experiments, and tools — filter by category or browse the full set.
+            </p>
           </div>
-          <p className="hidden max-w-md text-sm leading-relaxed text-muted-foreground sm:block">
-            Every build in one place — client sites, experiments, and tools. Filter by category, then browse the full collection.
-          </p>
+          <div className="hidden w-full max-w-[200px] shrink-0 lg:block">
+            <HairlineFigure
+              as={Riffle}
+              intensity={0.42}
+              showCaption={false}
+              label="Tray of cards; the card under the pointer stands up"
+            />
+          </div>
         </motion.div>
 
         <motion.div
