@@ -1,0 +1,94 @@
+.shell {
+  min-height: 100vh;
+  background: #f7f7f5;
+  color: #050505;
+}
+
+.status {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+  gap: 6vw;
+  align-items: center;
+  margin-inline: auto;
+  width: min(100% - 3rem, 1200px);
+  min-height: calc(100vh - 198px);
+  padding-block: 5rem;
+}
+
+.copy p:first-child {
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  margin-block: 1.5rem;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 550;
+  letter-spacing: -0.08em;
+  line-height: 0.86;
+}
+
+.message {
+  max-width: 520px;
+  color: #626262;
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.actions a,
+.actions button {
+  padding: 0.85rem 1.1rem;
+  border: 1px solid #050505;
+  font-size: 0.75rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.actions a:first-child,
+.actions button:first-child {
+  background: #050505;
+  color: #f7f7f5;
+}
+
+.actions a:hover,
+.actions button:hover {
+  background: #050505;
+  color: #f7f7f5;
+}
+
+.figure {
+  --hairline-plate: #f7f7f5;
+  --hairline-hi: #050505;
+  --hairline-edge: #050505;
+  --hairline-mid: #737373;
+  --hairline-lo: #d0d0cd;
+  --hairline-stroke: 0.85;
+}
+
+@media (max-width: 760px) {
+  .status {
+    grid-template-columns: 1fr;
+    width: min(100% - 2rem, 1200px);
+  }
+
+  .figure {
+    max-width: 360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .actions a,
+  .actions button {
+    transition: none;
+  }
+}

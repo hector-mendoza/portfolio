@@ -14,8 +14,8 @@ export default function BlogCardSkeleton({ featured = false, className = "" }) {
       fixture={<BlogCardFixture featured={featured} />}
       snapshotConfig={{ leafTags: ["article", "a"] }}
       animate="shimmer"
-      darkColor="hsl(200 8% 14%)"
-      shimmerColor="hsl(345 33% 32% / 0.15)"
+      darkColor="hsl(0 0% 14%)"
+      shimmerColor="hsl(0 0% 100% / 0.45)"
     />
   );
 }

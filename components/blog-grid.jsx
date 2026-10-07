@@ -50,20 +50,18 @@ export default function BlogGrid({ posts, showSetupState = false }) {
 
   if (showSetupState) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-card/60 p-10 text-center">
-        <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">
+      <div className="border border-dashed border-black/30 bg-transparent p-10 text-center">
+        <p className="mb-3 font-mono text-xs uppercase tracking-widest text-black">
           Sanity setup required
         </p>
-        <h3 className="mb-3 text-2xl font-bold text-foreground">Connect your Sanity project</h3>
-        <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        <h3 className="mb-3 text-2xl font-semibold tracking-tight text-black">Connect your Sanity project</h3>
+        <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-neutral-600">
           Add your Sanity project ID and dataset to `.env.local`, then open the studio to publish
           your first post.
         </p>
         <Link
           href="/studio"
-          data-cuelume-press
-          data-cuelume-release
-          className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+          className="inline-flex items-center gap-2 border border-black bg-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-transparent hover:text-black"
         >
           Open Sanity Studio
         </Link>
@@ -73,18 +71,16 @@ export default function BlogGrid({ posts, showSetupState = false }) {
 
   if (!posts.length) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-card/60 p-10 text-center">
-        <p className="mb-3 font-mono text-xs uppercase tracking-widest text-primary">No posts yet</p>
-        <h3 className="mb-3 text-2xl font-bold text-foreground">Publish your first article</h3>
-        <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+      <div className="border border-dashed border-black/30 bg-transparent p-10 text-center">
+        <p className="mb-3 font-mono text-xs uppercase tracking-widest text-black">No posts yet</p>
+        <h3 className="mb-3 text-2xl font-semibold tracking-tight text-black">Publish your first article</h3>
+        <p className="mx-auto mb-6 max-w-2xl text-sm leading-relaxed text-neutral-600">
           Head to Sanity Studio to write your first post. Featured posts will appear in the highlighted
           row at the top of this page.
         </p>
         <Link
           href="/studio"
-          data-cuelume-press
-          data-cuelume-release
-          className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary"
+          className="inline-flex items-center gap-2 border border-black bg-black px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-transparent hover:text-black"
         >
           Open Sanity Studio
         </Link>
@@ -107,10 +103,10 @@ export default function BlogGrid({ posts, showSetupState = false }) {
             type="button"
             data-cuelume-toggle
             onClick={() => setActiveFilter(filter.value)}
-            className={`rounded-full px-4 py-1.5 font-mono text-xs transition-all duration-200 ${
+            className={`border px-4 py-1.5 font-mono text-xs transition-colors duration-200 ${
               activeFilter === filter.value
-                ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
-                : "border border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
+                ? "border-black bg-black text-white"
+                : "border-black/25 bg-transparent text-neutral-600 hover:border-black hover:text-black"
             }`}
           >
             {filter.label}
@@ -123,8 +119,8 @@ export default function BlogGrid({ posts, showSetupState = false }) {
       {showFeaturedRow ? (
         <div className="mb-10">
           <div className="mb-5 flex items-center gap-3">
-            <span className="font-mono text-xs uppercase tracking-widest text-primary">Featured</span>
-            <div className="h-px flex-1 bg-border" />
+            <span className="font-mono text-xs uppercase tracking-widest text-black">Featured</span>
+            <div className="h-px flex-1 bg-black/20" />
           </div>
           <div className="grid gap-8 md:grid-cols-2">
             {featuredPosts.map((post, index) => (

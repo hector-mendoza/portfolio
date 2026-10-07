@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { formatPostDate, getPostAccent, getPostGradient } from "@/lib/blog";
+import { formatPostDate } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
 
 function postImage(post) {
@@ -13,8 +13,7 @@ function postImage(post) {
 
   if (coverUrl) return coverUrl;
 
-  const accent = getPostAccent(post.accent).replace("#", "");
-  return `https://placehold.co/640x480/${accent}/ffffff?text=${encodeURIComponent(post.title.slice(0, 24))}&font=raleway`;
+  return `https://placehold.co/640x480/111111/f5f5f5?text=${encodeURIComponent(post.title.slice(0, 24))}&font=raleway`;
 }
 
 export default function BlogMasonryGrid({ posts }) {
@@ -22,7 +21,6 @@ export default function BlogMasonryGrid({ posts }) {
     <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
       {posts.map((post, index) => {
         const image = postImage(post);
-        const accent = getPostAccent(post.accent);
         const rowIndex = Math.floor(index / 3);
 
         return (
@@ -33,7 +31,7 @@ export default function BlogMasonryGrid({ posts }) {
             className="mb-4 break-inside-avoid"
           >
             <Link href={`/blog/${post.slug}`} className="group block" data-cuelume-hover="whisper">
-              <div className="overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:shadow-primary/10">
+              <div className="overflow-hidden border border-black/20 bg-transparent transition-colors duration-300 hover:border-black">
                 <div className="relative overflow-hidden">
                   {post.coverImage ? (
                     <Image
@@ -41,23 +39,20 @@ export default function BlogMasonryGrid({ posts }) {
                       alt={post.coverImage?.alt ?? post.title}
                       width={640}
                       height={480}
-                      className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-auto w-full object-cover grayscale transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
-                    <div
-                      className="aspect-[4/3] w-full"
-                      style={{ background: getPostGradient(accent) }}
-                    />
+                    <div className="aspect-[4/3] w-full bg-neutral-950 bg-[linear-gradient(145deg,transparent_45%,rgba(255,255,255,0.08))]" />
                   )}
                 </div>
                 <div className="space-y-2 p-5">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-neutral-500">
                     {formatPostDate(post.publishedAt)}
                   </p>
-                  <h3 className="text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+                  <h3 className="text-lg font-semibold tracking-tight text-black">
                     {post.title}
                   </h3>
-                  <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                  <p className="line-clamp-3 text-sm leading-relaxed text-neutral-600">
                     {post.description}
                   </p>
                 </div>
