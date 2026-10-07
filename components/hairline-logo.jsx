@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { startHairlineAmbient } from "@/lib/hairline-ambient";
 import { MONOGRAM_RANGE, createMonogramMount } from "@/lib/hairline-monogram";
 import styles from "./hairline-logo.module.css";
 
@@ -34,6 +35,7 @@ export default function HairlineLogo() {
     let cancelled = false;
     let figure;
     let live;
+    let stopAmbient;
 
     loadKernel()
       .then((HL) => {
@@ -50,6 +52,8 @@ export default function HairlineLogo() {
         host.appendChild(live);
 
         figure = createMonogramMount(HL)({ stage: host, svg, read: live }, MONOGRAM_RANGE[1]);
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        stopAmbient = startHairlineAmbient(host, { reducedMotion });
       })
       .catch((error) => {
         console.error(error);
@@ -57,6 +61,7 @@ export default function HairlineLogo() {
 
     return () => {
       cancelled = true;
+      stopAmbient?.();
       figure?.destroy();
       live?.remove();
       host.removeAttribute("data-hairline");
