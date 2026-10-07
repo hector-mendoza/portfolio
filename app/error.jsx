@@ -5,7 +5,7 @@ import styles from "./status.module.css";
 
 export default function Error({ reset }) {
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-portfolio-ui>
       <SiteHeader />
       <main className={styles.status}>
         <div className={styles.copy}>

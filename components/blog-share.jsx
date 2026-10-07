@@ -9,10 +9,12 @@ import {
 } from "@animateicons/react/lucide";
 import { sileo } from "sileo";
 import { play } from "cuelume";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 function ShareButton({ label, href, onClick, Icon }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
+  const reducedMotion = usePrefersReducedMotion();
 
   const iconColor = hovered ? "#f7f7f5" : "#050505";
 
@@ -29,11 +31,11 @@ function ShareButton({ label, href, onClick, Icon }) {
   const handlers = {
     onMouseEnter: () => {
       setHovered(true);
-      ref.current?.startAnimation();
+      if (!reducedMotion) ref.current?.startAnimation();
     },
     onMouseLeave: () => {
       setHovered(false);
-      ref.current?.stopAnimation();
+      if (!reducedMotion) ref.current?.stopAnimation();
     },
   };
 

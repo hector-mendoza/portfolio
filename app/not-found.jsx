@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-portfolio-ui>
       <SiteHeader />
       <main className={styles.status}>
         <div className={styles.copy}>

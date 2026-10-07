@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
 import BlogCard from "@/components/blog/blog-card";
 import BlogMasonryGrid from "@/components/blog/blog-masonry-grid";
@@ -15,6 +15,7 @@ const FILTERS = [
 
 export default function BlogGrid({ posts, showSetupState = false }) {
   const [activeFilter, setActiveFilter] = useState("recent");
+  const reducedMotion = useReducedMotion();
 
   const categories = useMemo(() => {
     return [...new Set(posts.map((post) => post.category).filter(Boolean))];
@@ -91,10 +92,10 @@ export default function BlogGrid({ posts, showSetupState = false }) {
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={reducedMotion ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        transition={reducedMotion ? { duration: 0 } : { duration: 0.6, delay: 0.1 }}
         className="mb-10 flex flex-wrap gap-2"
       >
         {filters.map((filter) => (

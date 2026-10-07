@@ -17,7 +17,7 @@ export const metadata = {
 
 export default function BlogLayout({ children }) {
   return (
-    <div className={styles.shell}>
+    <div className={styles.shell} data-portfolio-ui>
       <BoneyardProvider />
       <SiteHeader />
       {children}

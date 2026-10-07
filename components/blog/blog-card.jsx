@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useRef, useState } from "react";
 import { ChevronRightIcon } from "@animateicons/react/lucide";
 import { formatPostDate, getPostYear } from "@/lib/blog";
@@ -44,10 +44,12 @@ function BlogCardPreview({ post, hovered }) {
 export default function BlogCard({ post, index = 0, featured = false, disableMotion = false }) {
   const [hovered, setHovered] = useState(false);
   const readIconRef = useRef(null);
+  const reducedMotion = useReducedMotion();
   const year = getPostYear(post.publishedAt);
 
-  const Wrapper = disableMotion ? "article" : motion.article;
-  const wrapperProps = disableMotion
+  const motionDisabled = disableMotion || reducedMotion;
+  const Wrapper = motionDisabled ? "article" : motion.article;
+  const wrapperProps = motionDisabled
     ? { className: `group ${featured ? "md:col-span-2" : ""}` }
     : {
         layout: true,
@@ -67,7 +69,7 @@ export default function BlogCard({ post, index = 0, featured = false, disableMot
           <div className="relative">
             <BlogCardPreview post={post} hovered={hovered} />
 
-            {!disableMotion ? (
+            {!motionDisabled ? (
               <motion.div
                 animate={{ opacity: hovered ? 1 : 0 }}
                 className="absolute inset-0 flex items-center justify-center"

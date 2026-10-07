@@ -448,6 +448,36 @@
   }
 }
 
+[data-portfolio-ui] :where(a, button) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-portfolio-ui] :where(a, button):focus-visible {
+  outline: 2px solid #050505;
+  outline-offset: 4px;
+}
+
+[data-portfolio-ui] :where(a, button):active {
+  opacity: 0.68;
+}
+
+[data-portfolio-ui] :where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-portfolio-ui],
+  [data-portfolio-ui] *,
+  [data-portfolio-ui] *::before,
+  [data-portfolio-ui] *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @keyframes vibe-rainbow {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }

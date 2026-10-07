@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { formatPostDate } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
@@ -17,6 +17,8 @@ function postImage(post) {
 }
 
 export default function BlogMasonryGrid({ posts }) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
       {posts.map((post, index) => {
@@ -26,8 +28,16 @@ export default function BlogMasonryGrid({ posts }) {
         return (
           <motion.article
             key={post._id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0, transition: { duration: 0.5, delay: rowIndex * 0.08 } }}
+            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+            animate={
+              reducedMotion
+                ? undefined
+                : {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.5, delay: rowIndex * 0.08 },
+                  }
+            }
             className="mb-4 break-inside-avoid"
           >
             <Link href={`/blog/${post.slug}`} className="group block" data-cuelume-hover="whisper">
