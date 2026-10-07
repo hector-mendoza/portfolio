@@ -57,15 +57,18 @@
   fill: var(--hairline-hi);
 }
 
-.active .low {
+.figure:hover .low,
+.figure:focus-visible .low {
   transform: translate(15px, 21px);
 }
 
-.active .mid {
+.figure:hover .mid,
+.figure:focus-visible .mid {
   transform: translate(9px, 13px);
 }
 
-.active .edge {
+.figure:hover .edge,
+.figure:focus-visible .edge {
   transform: translate(4px, 6px);
 }
 
@@ -79,15 +82,18 @@
     transition: none;
   }
 
-  .active .low {
+  .figure:hover .low,
+  .figure:focus-visible .low {
     transform: translate(7px, 10px);
   }
 
-  .active .mid {
+  .figure:hover .mid,
+  .figure:focus-visible .mid {
     transform: translate(4px, 6px);
   }
 
-  .active .edge {
+  .figure:hover .edge,
+  .figure:focus-visible .edge {
     transform: translate(2px, 3px);
   }
 }
