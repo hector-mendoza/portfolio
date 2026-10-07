@@ -11,8 +11,8 @@ export default function BlogPostSkeleton() {
       fixture={<BlogPostFixture />}
       snapshotConfig={{ leafTags: ["article", "header", "section"] }}
       animate="shimmer"
-      darkColor="hsl(200 8% 14%)"
-      shimmerColor="hsl(345 33% 32% / 0.15)"
+      darkColor="hsl(0 0% 14%)"
+      shimmerColor="hsl(0 0% 100% / 0.45)"
     />
   );
 }

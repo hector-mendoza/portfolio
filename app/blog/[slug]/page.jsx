@@ -4,11 +4,11 @@ import BlogBackLink from "@/components/blog-back-link";
 import BlogShare from "@/components/blog-share";
 import {
   formatPostDate,
-  getPostAccent,
   getPostBySlug,
   getPostSlugs,
 } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
+import styles from "../blog.module.css";
 
 export const revalidate = 60;
 
@@ -51,52 +51,33 @@ export default async function BlogPostPage({ params }) {
     notFound();
   }
 
-  const accent = getPostAccent(post.accent);
   const coverUrl = post.coverImage
     ? urlForImage(post.coverImage)?.width(1400).height(780).url()
     : null;
 
   return (
-    <main className="relative min-h-screen bg-background/90 pt-28 pb-16 md:pt-36 md:pb-32">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute bottom-1/4 -right-64 h-96 w-96 rounded-full bg-primary/5 blur-3xl" />
-      </div>
-
-      <article className="relative mx-auto max-w-3xl px-6">
+    <main className={styles.page} id="top">
+      <article className={styles.article}>
         <BlogBackLink />
 
-        <header className="mb-10">
-          <div className="mb-4 flex flex-wrap items-center gap-3">
-            <span className="rounded-full border border-border px-3 py-1 font-mono text-xs text-muted-foreground">
-              {post.category}
-            </span>
-            <span className="font-mono text-xs text-muted-foreground">
-              {formatPostDate(post.publishedAt)}
-            </span>
+        <header className={styles.articleHeader}>
+          <div className={styles.meta}>
+            <span>{post.category}</span>
+            <span>{formatPostDate(post.publishedAt)}</span>
           </div>
 
-          <h1 className="mb-3 text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            {post.title}
-          </h1>
+          <h1 className={styles.articleTitle}>{post.title}</h1>
 
           {post.subtitle ? (
-            <p className="mb-4 text-lg font-semibold" style={{ color: accent }}>
-              {post.subtitle}
-            </p>
+            <p className={styles.subtitle}>{post.subtitle}</p>
           ) : null}
 
-          <p className="text-base leading-relaxed text-muted-foreground">{post.description}</p>
+          <p className={styles.articleDescription}>{post.description}</p>
 
           {post.tags?.length ? (
-            <div className="mt-6 flex flex-wrap gap-2">
+            <div className={styles.tags}>
               {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground"
-                >
-                  {tag}
-                </span>
+                <span key={tag}>{tag}</span>
               ))}
             </div>
           ) : null}
@@ -109,11 +90,10 @@ export default async function BlogPostPage({ params }) {
         </header>
 
         {coverUrl ? (
-          <div className="mb-10 overflow-hidden rounded-2xl border border-border">
+          <div className={styles.cover}>
             <img
               src={coverUrl}
               alt={post.coverImage?.alt ?? post.title}
-              className="aspect-[16/9] w-full object-cover"
             />
           </div>
         ) : null}

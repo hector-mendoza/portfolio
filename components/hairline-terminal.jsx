@@ -1,0 +1,111 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { branches, query, terminal } from "@lucasmarkes/hairline";
+import styles from "./hairline-figure.module.css";
+
+function HairlineFigure({
+  mount,
+  label,
+  intensity = 0.72,
+  theme = "light",
+  variant,
+}) {
+  const figureRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const host = figureRef.current;
+    const canvas = canvasRef.current;
+    if (!host || !canvas) return;
+
+    const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const restIntensity = () =>
+      motionPreference.matches ? Math.min(intensity, 0.25) : intensity;
+    const activeIntensity = () =>
+      motionPreference.matches ? restIntensity() : Math.min(intensity + 0.22, 1);
+
+    const figure = mount(canvas, {
+      intensity: restIntensity(),
+      theme,
+      label,
+    });
+
+    const activate = () => figure.update({ intensity: activeIntensity() });
+    const rest = () => figure.update({ intensity: restIntensity() });
+    const syncMotionPreference = () => {
+      figure.update({ intensity: restIntensity() });
+      host.dataset.reducedMotion = String(motionPreference.matches);
+    };
+
+    host.addEventListener("pointerenter", activate);
+    host.addEventListener("pointerleave", rest);
+    host.addEventListener("focusin", activate);
+    host.addEventListener("focusout", rest);
+    motionPreference.addEventListener("change", syncMotionPreference);
+    syncMotionPreference();
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        host.dataset.visible = String(entry.isIntersecting);
+      },
+      { rootMargin: "80px", threshold: 0.05 },
+    );
+    observer.observe(host);
+
+    return () => {
+      observer.disconnect();
+      host.removeEventListener("pointerenter", activate);
+      host.removeEventListener("pointerleave", rest);
+      host.removeEventListener("focusin", activate);
+      host.removeEventListener("focusout", rest);
+      motionPreference.removeEventListener("change", syncMotionPreference);
+      figure.destroy();
+    };
+  }, [intensity, label, mount, theme]);
+
+  return (
+    <div
+      ref={figureRef}
+      className={`${styles.figure} ${styles[variant]}`}
+      role="group"
+      aria-label={`${label}. Move the pointer or focus to increase its response.`}
+      tabIndex={0}
+    >
+      <div ref={canvasRef} className={styles.canvas} />
+    </div>
+  );
+}
+
+export default function HairlineTerminal() {
+  return (
+    <HairlineFigure
+      mount={terminal}
+      label="An interactive isometric terminal representing Hector's engineering work"
+      variant="terminal"
+    />
+  );
+}
+
+export function HairlineBranches() {
+  return (
+    <HairlineFigure
+      mount={branches}
+      intensity={0.65}
+      theme="dark"
+      label="An interactive commit graph branching from and merging into the main line"
+      variant="branches"
+    />
+  );
+}
+
+export function HairlineQuery() {
+  return (
+    <HairlineFigure
+      mount={query}
+      intensity={0.6}
+      label="An interactive question mark that follows the pointer"
+      variant="query"
+    />
+  );
+}

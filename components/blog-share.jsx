@@ -9,12 +9,14 @@ import {
 } from "@animateicons/react/lucide";
 import { sileo } from "sileo";
 import { play } from "cuelume";
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 function ShareButton({ label, href, onClick, Icon }) {
   const ref = useRef(null);
   const [hovered, setHovered] = useState(false);
+  const reducedMotion = usePrefersReducedMotion();
 
-  const iconColor = hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))";
+  const iconColor = hovered ? "#f7f7f5" : "#050505";
 
   const content = (
     <>
@@ -24,16 +26,16 @@ function ShareButton({ label, href, onClick, Icon }) {
   );
 
   const className =
-    "group flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:bg-primary/10";
+    "group flex h-10 w-10 items-center justify-center border border-black/30 bg-transparent transition-colors hover:border-black hover:bg-black";
 
   const handlers = {
     onMouseEnter: () => {
       setHovered(true);
-      ref.current?.startAnimation();
+      if (!reducedMotion) ref.current?.startAnimation();
     },
     onMouseLeave: () => {
       setHovered(false);
-      ref.current?.stopAnimation();
+      if (!reducedMotion) ref.current?.stopAnimation();
     },
   };
 

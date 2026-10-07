@@ -1,7 +1,6 @@
 "use client";
 
 import { HoverImg } from "@/components/block/hover-img";
-import { getPostAccent, getPostGradient } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
 
 function postImage(post) {
@@ -11,8 +10,7 @@ function postImage(post) {
 
   if (coverUrl) return coverUrl;
 
-  const accent = getPostAccent(post.accent).replace("#", "");
-  return `https://placehold.co/640x400/${accent}/ffffff?text=${encodeURIComponent(post.title.slice(0, 20))}&font=raleway`;
+  return `https://placehold.co/640x400/111111/f5f5f5?text=${encodeURIComponent(post.title.slice(0, 20))}&font=raleway`;
 }
 
 export default function BlogHoverPreview({ posts }) {
@@ -22,19 +20,18 @@ export default function BlogHoverPreview({ posts }) {
     title: post.title,
     label: post.category ?? "Article",
     imageSrc: postImage(post),
-    gradient: getPostGradient(getPostAccent(post.accent)),
   }));
 
   return (
-    <div className="mb-10 hidden overflow-hidden rounded-2xl border border-border bg-card/50 lg:block">
-      <div className="border-b border-border px-5 py-3">
-        <p className="font-mono text-xs uppercase tracking-widest text-primary">Hover to preview</p>
+    <div className="mb-10 hidden overflow-hidden border border-black/20 bg-transparent lg:block">
+      <div className="border-b border-black/20 px-5 py-3">
+        <p className="font-mono text-xs uppercase tracking-widest text-black">Hover to preview</p>
       </div>
       <div className="relative min-h-[280px]">
         <HoverImg
           compact
           isContained
-          className="!min-h-0 !bg-transparent !text-foreground [&_.hover-img-project]:border-border/70"
+          className="!min-h-0 !bg-transparent !text-black [&_.hover-img-project]:border-black/20"
           projects={items.map(({ title, label, imageSrc }) => ({ title, label, imageSrc }))}
         />
       </div>

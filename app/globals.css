@@ -27,6 +27,29 @@
     --radius: 0.75rem;
   }
 
+  [data-theme="mono"] {
+    --background: 60 11% 96%;
+    --foreground: 0 0% 2%;
+    --card: 60 7% 98%;
+    --card-foreground: 0 0% 2%;
+    --popover: 60 7% 98%;
+    --popover-foreground: 0 0% 2%;
+    --primary: 0 0% 2%;
+    --primary-foreground: 60 11% 96%;
+    --secondary: 0 0% 91%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 89%;
+    --muted-foreground: 0 0% 38%;
+    --accent: 0 0% 8%;
+    --accent-foreground: 60 11% 96%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 78%;
+    --input: 0 0% 78%;
+    --ring: 0 0% 2%;
+    --radius: 0;
+  }
+
   [data-mode="light"][data-theme="velvet"] {
     /* Velvet light — blush cream base, burgundy accents */
     --background: 345 22% 88%;
@@ -422,6 +445,36 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+[data-portfolio-ui] :where(a, button) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+[data-portfolio-ui] :where(a, button):focus-visible {
+  outline: 2px solid #050505;
+  outline-offset: 4px;
+}
+
+[data-portfolio-ui] :where(a, button):active {
+  opacity: 0.68;
+}
+
+[data-portfolio-ui] :where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-portfolio-ui],
+  [data-portfolio-ui] *,
+  [data-portfolio-ui] *::before,
+  [data-portfolio-ui] *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

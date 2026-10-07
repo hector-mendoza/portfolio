@@ -1,6 +1,6 @@
-import Navbar from "@/components/navbar";
-import Footer from "@/components/footer";
 import BoneyardProvider from "@/components/boneyard-provider";
+import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import styles from "./blog.module.css";
 
 export const metadata = {
   title: "Blog | Hector Mendoza",
@@ -17,11 +17,11 @@ export const metadata = {
 
 export default function BlogLayout({ children }) {
   return (
-    <>
+    <div className={styles.shell} data-portfolio-ui>
       <BoneyardProvider />
-      <Navbar />
+      <SiteHeader />
       {children}
-      <Footer />
-    </>
+      <SiteFooter />
+    </div>
   );
 }
