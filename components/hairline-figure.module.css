@@ -8,13 +8,6 @@
 .canvas {
   width: 100%;
   height: 100%;
-  transform-origin: 50% 55%;
-  will-change: transform;
-}
-
-.figure[data-visible="true"] .canvas {
-  animation: hairline-breathe var(--hairline-duration, 9s)
-    cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
 }
 
 .figure::after {
@@ -34,50 +27,12 @@
   transform: scale(1);
 }
 
-.figure:hover .canvas,
-.figure:focus-visible .canvas {
-  animation-duration: calc(var(--hairline-duration, 9s) * 0.72);
-}
-
 .figure:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 5px;
 }
 
-.terminal {
-  --hairline-duration: 9.5s;
-}
-
-.branches {
-  --hairline-duration: 11s;
-}
-
-.query {
-  --hairline-duration: 8.5s;
-}
-
-@keyframes hairline-breathe {
-  0% {
-    transform: translate3d(-0.35%, 0.45%, 0) rotate(-0.18deg) scale(0.995);
-  }
-
-  50% {
-    transform: translate3d(0.45%, -0.35%, 0) rotate(0.12deg) scale(1.004);
-  }
-
-  100% {
-    transform: translate3d(0.15%, 0.25%, 0) rotate(0.2deg) scale(1);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .figure[data-visible="true"] .canvas,
-  .figure:hover .canvas,
-  .figure:focus-visible .canvas {
-    animation: none;
-    transform: none;
-  }
-
   .figure::after {
     transition: none;
   }

@@ -1,0 +1,29 @@
+.figure {
+  --hairline-plate: #f7f7f5;
+  --hairline-hi: #050505;
+  --hairline-edge: #3f3f3f;
+  --hairline-mid: #858585;
+  --hairline-lo: #c7c7c4;
+  --hairline-stroke: 0.85;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 4;
+  outline: none;
+}
+
+.figure :global([data-hairline-live]) {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.figure:focus-visible {
+  outline: 2px solid var(--hairline-hi);
+  outline-offset: 5px;
+}

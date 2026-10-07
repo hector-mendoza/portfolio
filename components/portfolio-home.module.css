@@ -155,11 +155,33 @@
   line-height: 0.98;
 }
 
-.sectionHeading > p:last-child {
+.sectionHeading > p:last-child,
+.headingAside > p {
   max-width: 360px;
   color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.65;
+}
+
+.headingAside {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.headingAside > :nth-child(n + 2) {
+  width: min(100%, 220px);
+  margin-left: auto;
+}
+
+.commandKeys {
+  width: min(100%, 280px);
+  margin-top: 0.5rem;
+}
+
+.headingFigure {
+  width: min(100%, 250px);
+  margin-top: -2rem;
+  margin-left: auto;
 }
 
 .projectList {
@@ -324,27 +346,20 @@
   border-top: 1px solid var(--line);
 }
 
-.portrait {
+.logoPortrait {
   align-self: start;
+  border-block: 1px solid var(--line);
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 2rem 2rem;
 }
 
-.portrait img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  filter: grayscale(1) contrast(1.04);
-  object-fit: cover;
-  object-position: center 30%;
-  transition: filter 400ms ease, transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.portrait:hover img {
-  filter: grayscale(1) contrast(1.08);
-  transform: scale(1.012);
-}
-
-.portrait span {
+.logoPortrait span {
   display: block;
-  margin-top: 0.8rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.62rem;
   letter-spacing: 0.05em;
@@ -531,8 +546,14 @@
     grid-template-columns: 1fr;
   }
 
-  .portrait {
+  .logoPortrait {
     max-width: 600px;
+  }
+
+  .headingAside > :nth-child(n + 2),
+  .headingFigure {
+    width: min(100%, 320px);
+    margin: 0;
   }
 
   .timeline {

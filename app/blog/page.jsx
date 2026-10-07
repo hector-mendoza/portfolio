@@ -1,4 +1,5 @@
 import BlogGrid from "@/components/blog-grid";
+import { HairlineKeyboard, HairlinePhosphor } from "@/components/hairline-terminal";
 import { getPosts } from "@/lib/blog";
 import { isSanityConfigured } from "@/sanity/env";
 import styles from "./blog.module.css";
@@ -18,10 +19,14 @@ export default async function BlogPage() {
             <br />
             <em>worked through.</em>
           </h1>
-          <p className={styles.description}>
-            Thoughts on engineering, design, and the craft of building for the
-            web—published from the workbench.
-          </p>
+          <div className={styles.workbench}>
+            <p className={styles.description}>
+              Thoughts on engineering, design, and the craft of building for the
+              web—published from the workbench.
+            </p>
+            <HairlinePhosphor />
+            <HairlineKeyboard />
+          </div>
         </header>
 
         <BlogGrid posts={posts} showSetupState={!isSanityConfigured} />
