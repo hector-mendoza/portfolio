@@ -31,6 +31,11 @@ export const metadata = {
     "Shopify",
   ],
   canonical: "https://www.hectormendoza.me",
+  icons: {
+    icon: "/logos/logo.svg",
+    shortcut: "/logos/logo.svg",
+    apple: "/logos/logo.svg",
+  },
   openGraph: {
     title: "Hector Mendoza | Senior Software Engineer",
     description:
@@ -50,7 +55,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#F0F7F2",
+  themeColor: "#F7F7F5",
   width: "device-width",
   initialScale: 1,
 };
@@ -75,7 +80,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="sage" data-mode="pastel" suppressHydrationWarning>
+    <html lang="en" data-theme="mono" data-mode="light" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"

@@ -27,6 +27,29 @@
     --radius: 0.75rem;
   }
 
+  [data-theme="mono"] {
+    --background: 60 11% 96%;
+    --foreground: 0 0% 2%;
+    --card: 60 7% 98%;
+    --card-foreground: 0 0% 2%;
+    --popover: 60 7% 98%;
+    --popover-foreground: 0 0% 2%;
+    --primary: 0 0% 2%;
+    --primary-foreground: 60 11% 96%;
+    --secondary: 0 0% 91%;
+    --secondary-foreground: 0 0% 8%;
+    --muted: 0 0% 89%;
+    --muted-foreground: 0 0% 38%;
+    --accent: 0 0% 8%;
+    --accent-foreground: 60 11% 96%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 78%;
+    --input: 0 0% 78%;
+    --ring: 0 0% 2%;
+    --radius: 0;
+  }
+
   [data-mode="light"][data-theme="velvet"] {
     /* Velvet light — blush cream base, burgundy accents */
     --background: 345 22% 88%;

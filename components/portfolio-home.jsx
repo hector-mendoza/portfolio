@@ -5,6 +5,7 @@ import HairlineTerminal, {
   HairlineBranches,
   HairlineQuery,
 } from "@/components/hairline-terminal";
+import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import portrait from "@/public/pp.png";
 import styles from "./portfolio-home.module.css";
 
@@ -19,20 +20,7 @@ export default function PortfolioHome() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <a className={styles.wordmark} href="#top" aria-label="Hector Mendoza, home">
-          HM<span>.</span>
-        </a>
-        <nav className={styles.nav} aria-label="Primary navigation">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="/blog">Writing</a>
-        </nav>
-        <a className={styles.availability} href="mailto:hey@hectormendoza.me">
-          <span aria-hidden="true" />
-          Let&apos;s talk
-        </a>
-      </header>
+      <SiteHeader />
 
       <section className={styles.hero} id="top">
         <div className={styles.heroCopy}>
@@ -200,15 +188,7 @@ export default function PortfolioHome() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <span>© {new Date().getFullYear()} Hector Mendoza</span>
-        <div>
-          <a href="https://github.com/hector-mendoza">GitHub</a>
-          <a href="https://www.linkedin.com/in/hector-mendoza-m/">LinkedIn</a>
-          <a href="/blog">Writing</a>
-        </div>
-        <a href="#top">Back to top ↑</a>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
