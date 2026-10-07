@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { Terminal } from "@lucasmarkes/hairline/react";
 import { projects } from "@/lib/projects";
+import HairlineTerminal from "@/components/hairline-terminal";
 import portrait from "@/public/pp.png";
 import styles from "./portfolio-home.module.css";
 
@@ -53,11 +53,7 @@ export default function PortfolioHome() {
         </div>
         <div className={styles.heroFigure}>
           <span className={styles.figureIndex}>01 / INTERACTIVE SYSTEM</span>
-          <Terminal
-            intensity={0.72}
-            theme="light"
-            label="An interactive isometric terminal representing Hector's engineering work"
-          />
+          <HairlineTerminal />
           <p>Move your pointer across the system.</p>
         </div>
       </section>
