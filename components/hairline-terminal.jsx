@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { PILLE, startHairlineAmbient } from "@/lib/hairline-ambient";
 import {
   branches,
   cabinet,
@@ -25,6 +26,8 @@ function HairlineFigure({
   intensity = 0.72,
   theme = "light",
   variant,
+  ambient = "wander",
+  onTyped,
 }) {
   const figureRef = useRef(null);
   const canvasRef = useRef(null);
@@ -36,7 +39,7 @@ function HairlineFigure({
 
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const restIntensity = () =>
-      motionPreference.matches ? Math.min(intensity, 0.25) : intensity;
+      motionPreference.matches ? Math.min(intensity, 0.25) : Math.min(intensity + 0.12, 1);
     const activeIntensity = () =>
       motionPreference.matches ? restIntensity() : Math.min(intensity + 0.22, 1);
 
@@ -60,7 +63,14 @@ function HairlineFigure({
     motionPreference.addEventListener("change", syncMotionPreference);
     syncMotionPreference();
 
+    const stopAmbient = startHairlineAmbient(canvas, {
+      mode: ambient,
+      reducedMotion: motionPreference.matches,
+      onTyped,
+    });
+
     return () => {
+      stopAmbient();
       host.removeEventListener("pointerenter", activate);
       host.removeEventListener("pointerleave", rest);
       host.removeEventListener("focusin", activate);
@@ -68,14 +78,14 @@ function HairlineFigure({
       motionPreference.removeEventListener("change", syncMotionPreference);
       figure.destroy();
     };
-  }, [intensity, label, mount, theme]);
+  }, [ambient, intensity, label, mount, onTyped, theme]);
 
   return (
     <div
       ref={figureRef}
-      className={`${styles.figure} ${styles[variant]}`}
+      className={`${styles.figure} ${styles[variant] ?? ""}`}
       role="group"
-      aria-label={`${label}. Move the pointer or focus to increase its response.`}
+      aria-label={`${label}. The figure stays in motion, and still answers the pointer.`}
       tabIndex={0}
     >
       <div ref={canvasRef} className={styles.canvas} />
@@ -172,14 +182,28 @@ export function HairlinePhone() {
 }
 
 export function HairlineKeyboard({ theme = "light" }) {
+  const [typed, setTyped] = useState("");
+
   return (
-    <HairlineFigure
-      mount={keyboard}
-      intensity={0.58}
-      theme={theme}
-      label="An interactive Hairline keyboard whose keys sink under the pointer"
-      variant="keyboard"
-    />
+    <div className={styles.keyboardBlock}>
+      <HairlineFigure
+        mount={keyboard}
+        intensity={0.7}
+        theme={theme}
+        ambient="type"
+        onTyped={setTyped}
+        label="A Hairline keyboard typing PILLE, and answering the pointer"
+        variant="keyboard"
+      />
+      <p className={styles.typed} aria-live="polite">
+        <span aria-hidden="true">›</span>
+        <span>{typed || "\u00a0"}</span>
+        <span className={styles.caret} aria-hidden="true" />
+        <span className={styles.srOnly}>
+          {typed ? `Typed ${typed}` : `Waiting to type ${PILLE}`}
+        </span>
+      </p>
+    </div>
   );
 }
 

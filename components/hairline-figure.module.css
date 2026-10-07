@@ -10,6 +10,49 @@
   height: 100%;
 }
 
+.keyboardBlock {
+  position: relative;
+}
+
+.typed {
+  position: absolute;
+  left: 8%;
+  bottom: 11%;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  pointer-events: none;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.caret {
+  width: 0.45rem;
+  height: 0.9rem;
+  background: currentColor;
+  animation: caret 1s steps(1) infinite;
+}
+
+.srOnly {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
 .figure::after {
   position: absolute;
   inset: 12% 5%;
@@ -33,7 +76,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .figure::after {
+  .figure::after,
+  .caret {
+    animation: none;
     transition: none;
   }
 }
