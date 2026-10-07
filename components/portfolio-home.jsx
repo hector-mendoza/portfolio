@@ -1,12 +1,13 @@
-import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/projects";
+import HairlineLogo from "@/components/hairline-logo";
 import HairlineTerminal, {
   HairlineBranches,
+  HairlinePlot,
   HairlineQuery,
+  HairlineSlow,
 } from "@/components/hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import portrait from "@/public/hector-hairline-portrait.webp";
 import styles from "./portfolio-home.module.css";
 
 export default function PortfolioHome() {
@@ -53,10 +54,13 @@ export default function PortfolioHome() {
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>02 / Selected archive</p>
           <h2 id="work-title">Work that holds up.</h2>
-          <p>
-            Product engineering, creative development, and client work across
-            hospitality, commerce, and the open web.
-          </p>
+          <div className={styles.headingAside}>
+            <p>
+              Product engineering, creative development, and client work across
+              hospitality, commerce, and the open web.
+            </p>
+            <HairlinePlot />
+          </div>
         </div>
         <div className={styles.projectList}>
           {projects.map((project, index) => (
@@ -111,14 +115,9 @@ export default function PortfolioHome() {
       </section>
 
       <section className={styles.about} id="about" aria-labelledby="about-title">
-        <div className={styles.portrait}>
-          <Image
-            src={portrait}
-            alt="Monochrome illustrated portrait of Hector Mendoza"
-            sizes="(max-width: 800px) 100vw, 42vw"
-            placeholder="blur"
-          />
-          <span>Based in Morelia, Mexico · Available worldwide</span>
+        <div className={styles.logoPortrait}>
+          <HairlineLogo />
+          <span>HM / Drawn from the original mark</span>
         </div>
         <div className={styles.aboutCopy}>
           <p className={styles.eyebrow}>04 / About</p>
@@ -158,6 +157,9 @@ export default function PortfolioHome() {
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>05 / Experience</p>
           <h2 id="experience-title">A record of making.</h2>
+          <div className={styles.headingFigure}>
+            <HairlineSlow />
+          </div>
         </div>
         <div className={styles.timeline}>
           {experience.map(([period, role, company]) => (

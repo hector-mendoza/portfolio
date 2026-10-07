@@ -1,7 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { branches, query, terminal } from "@lucasmarkes/hairline";
+import {
+  branches,
+  phosphor,
+  plot,
+  query,
+  slow,
+  terminal,
+} from "@lucasmarkes/hairline";
 import styles from "./hairline-figure.module.css";
 
 function HairlineFigure({
@@ -45,16 +52,7 @@ function HairlineFigure({
     motionPreference.addEventListener("change", syncMotionPreference);
     syncMotionPreference();
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        host.dataset.visible = String(entry.isIntersecting);
-      },
-      { rootMargin: "80px", threshold: 0.05 },
-    );
-    observer.observe(host);
-
     return () => {
-      observer.disconnect();
       host.removeEventListener("pointerenter", activate);
       host.removeEventListener("pointerleave", rest);
       host.removeEventListener("focusin", activate);
@@ -106,6 +104,39 @@ export function HairlineQuery() {
       intensity={0.6}
       label="An interactive question mark that follows the pointer"
       variant="query"
+    />
+  );
+}
+
+export function HairlinePlot() {
+  return (
+    <HairlineFigure
+      mount={plot}
+      intensity={0.58}
+      label="An interactive Hairline plot whose bars lift toward the pointer"
+      variant="plot"
+    />
+  );
+}
+
+export function HairlineSlow() {
+  return (
+    <HairlineFigure
+      mount={slow}
+      intensity={0.58}
+      label="An animated Hairline conveyor carrying work through a gate"
+      variant="slow"
+    />
+  );
+}
+
+export function HairlinePhosphor() {
+  return (
+    <HairlineFigure
+      mount={phosphor}
+      intensity={0.62}
+      label="An animated Hairline phosphor matrix that can be painted with the pointer"
+      variant="phosphor"
     />
   );
 }

@@ -52,6 +52,16 @@
   line-height: 1.7;
 }
 
+.workbench {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.workbench > :last-child {
+  width: min(100%, 260px);
+  margin-left: auto;
+}
+
 .article {
   margin-inline: auto;
   width: min(100% - 3rem, 860px);
@@ -220,6 +230,11 @@
 
   .description {
     max-width: 580px;
+  }
+
+  .workbench > :last-child {
+    width: min(100%, 320px);
+    margin-left: 0;
   }
 
   .skeletonGrid {
