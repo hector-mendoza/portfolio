@@ -4,96 +4,13 @@
   --hairline-edge: #3f3f3f;
   --hairline-mid: #858585;
   --hairline-lo: #c7c7c4;
+  --hairline-stroke: 0.85;
   position: relative;
-  aspect-ratio: 5 / 4;
-  outline: none;
-}
-
-.figure svg {
-  display: block;
   width: 100%;
-  height: 100%;
-}
-
-.guide,
-.plinth,
-.layer {
-  vector-effect: non-scaling-stroke;
-}
-
-.guide {
-  fill: none;
-  stroke: var(--hairline-lo);
-  stroke-dasharray: 3 7;
-  stroke-width: 0.8;
-}
-
-.plinth {
-  fill: var(--hairline-plate);
-  stroke: var(--hairline-mid);
-  stroke-width: 0.9;
-}
-
-.layer {
-  transition: transform 700ms cubic-bezier(0.32, 0.72, 0, 1);
-}
-
-.low {
-  fill: var(--hairline-lo);
-  transform: translate(7px, 10px);
-}
-
-.mid {
-  fill: var(--hairline-mid);
-  transform: translate(4px, 6px);
-}
-
-.edge {
-  fill: var(--hairline-edge);
-  transform: translate(2px, 3px);
-}
-
-.front {
-  fill: var(--hairline-hi);
-}
-
-.figure:hover .low,
-.figure:focus-visible .low {
-  transform: translate(15px, 21px);
-}
-
-.figure:hover .mid,
-.figure:focus-visible .mid {
-  transform: translate(9px, 13px);
-}
-
-.figure:hover .edge,
-.figure:focus-visible .edge {
-  transform: translate(4px, 6px);
+  outline: none;
 }
 
 .figure:focus-visible {
   outline: 2px solid var(--hairline-hi);
   outline-offset: 5px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .layer {
-    transition: none;
-  }
-
-  .figure:hover .low,
-  .figure:focus-visible .low {
-    transform: translate(7px, 10px);
-  }
-
-  .figure:hover .mid,
-  .figure:focus-visible .mid {
-    transform: translate(4px, 6px);
-  }
-
-  .figure:hover .edge,
-  .figure:focus-visible .edge {
-    transform: translate(2px, 3px);
-  }
 }

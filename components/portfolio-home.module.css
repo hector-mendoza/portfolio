@@ -168,9 +168,14 @@
   gap: 1.5rem;
 }
 
-.headingAside > :last-child {
+.headingAside > :nth-child(n + 2) {
   width: min(100%, 220px);
   margin-left: auto;
+}
+
+.commandKeys {
+  width: min(100%, 280px);
+  margin-top: 0.5rem;
 }
 
 .headingFigure {
@@ -545,7 +550,7 @@
     max-width: 600px;
   }
 
-  .headingAside > :last-child,
+  .headingAside > :nth-child(n + 2),
   .headingFigure {
     width: min(100%, 320px);
     margin: 0;

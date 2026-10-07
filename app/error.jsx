@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { HairlineVault } from "@/components/hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import styles from "./status.module.css";
 
@@ -22,6 +23,9 @@ export default function Error({ reset }) {
             </button>
             <Link href="/">Return home</Link>
           </div>
+        </div>
+        <div className={styles.figure}>
+          <HairlineVault />
         </div>
       </main>
       <SiteFooter />

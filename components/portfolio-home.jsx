@@ -3,9 +3,11 @@ import { projects } from "@/lib/projects";
 import HairlineLogo from "@/components/hairline-logo";
 import HairlineTerminal, {
   HairlineBranches,
+  HairlineCabinet,
+  HairlineKeyboard,
+  HairlinePhone,
   HairlinePlot,
-  HairlineQuery,
-  HairlineSlow,
+  HairlineRiffle,
 } from "@/components/hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import styles from "./portfolio-home.module.css";
@@ -60,6 +62,7 @@ export default function PortfolioHome() {
               hospitality, commerce, and the open web.
             </p>
             <HairlinePlot />
+            <HairlineRiffle />
           </div>
         </div>
         <div className={styles.projectList}>
@@ -99,6 +102,9 @@ export default function PortfolioHome() {
             <span aria-hidden="true">$</span>
             npx skills add lucasmarkes/hairline
           </code>
+          <div className={styles.commandKeys}>
+            <HairlineKeyboard theme="dark" />
+          </div>
           <a
             href="https://hairline.lucasmarkes.com/"
             target="_blank"
@@ -117,7 +123,7 @@ export default function PortfolioHome() {
       <section className={styles.about} id="about" aria-labelledby="about-title">
         <div className={styles.logoPortrait}>
           <HairlineLogo />
-          <span>HM / Drawn from the original mark</span>
+          <span>HM / Drawn with Hairline</span>
         </div>
         <div className={styles.aboutCopy}>
           <p className={styles.eyebrow}>04 / About</p>
@@ -158,7 +164,7 @@ export default function PortfolioHome() {
           <p className={styles.eyebrow}>05 / Experience</p>
           <h2 id="experience-title">A record of making.</h2>
           <div className={styles.headingFigure}>
-            <HairlineSlow />
+            <HairlineCabinet />
           </div>
         </div>
         <div className={styles.timeline}>
@@ -185,8 +191,8 @@ export default function PortfolioHome() {
             <ArrowUpRight aria-hidden="true" />
           </a>
         </div>
-        <div className={styles.contactFigure} aria-hidden="true">
-          <HairlineQuery />
+        <div className={styles.contactFigure}>
+          <HairlinePhone />
         </div>
       </section>
 

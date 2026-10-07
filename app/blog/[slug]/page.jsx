@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import BlogPortableText from "@/components/blog-portable-text";
 import BlogBackLink from "@/components/blog-back-link";
+import { HairlineLoupe } from "@/components/hairline-terminal";
 import BlogShare from "@/components/blog-share";
 import {
   formatPostDate,
@@ -59,6 +60,10 @@ export default async function BlogPostPage({ params }) {
     <main className={styles.page} id="top">
       <article className={styles.article}>
         <BlogBackLink />
+
+        <div className={styles.articleFigure}>
+          <HairlineLoupe />
+        </div>
 
         <header className={styles.articleHeader}>
           <div className={styles.meta}>

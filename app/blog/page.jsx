@@ -1,5 +1,5 @@
 import BlogGrid from "@/components/blog-grid";
-import { HairlinePhosphor } from "@/components/hairline-terminal";
+import { HairlineKeyboard, HairlinePhosphor } from "@/components/hairline-terminal";
 import { getPosts } from "@/lib/blog";
 import { isSanityConfigured } from "@/sanity/env";
 import styles from "./blog.module.css";
@@ -25,6 +25,7 @@ export default async function BlogPage() {
               web—published from the workbench.
             </p>
             <HairlinePhosphor />
+            <HairlineKeyboard />
           </div>
         </header>
 

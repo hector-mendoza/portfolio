@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HairlineQuery } from "@/components/hairline-terminal";
+import { HairlineLockers } from "@/components/hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import styles from "./status.module.css";
 
@@ -25,7 +25,7 @@ export default function NotFound() {
           </div>
         </div>
         <div className={styles.figure}>
-          <HairlineQuery />
+          <HairlineLockers />
         </div>
       </main>
       <SiteFooter />
