@@ -568,5 +568,3 @@ var HL = (() => {
   return __toCommonJS(kernel_exports);
 })();
 /* /hairline kernel */
-
-export default HL;

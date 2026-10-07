@@ -7,7 +7,20 @@
   --hairline-stroke: 0.85;
   position: relative;
   width: 100%;
+  aspect-ratio: 5 / 4;
   outline: none;
+}
+
+.figure :global([data-hairline-live]) {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .figure:focus-visible {
