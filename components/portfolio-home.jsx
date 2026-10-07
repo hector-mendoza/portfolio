@@ -6,7 +6,7 @@ import HairlineTerminal, {
   HairlineQuery,
 } from "@/components/hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import portrait from "@/public/pp.png";
+import portrait from "@/public/hector-hairline-portrait.webp";
 import styles from "./portfolio-home.module.css";
 
 export default function PortfolioHome() {
@@ -19,7 +19,7 @@ export default function PortfolioHome() {
   ];
 
   return (
-    <main className={styles.page}>
+    <main className={styles.page} data-portfolio-ui>
       <SiteHeader />
 
       <section className={styles.hero} id="top">
@@ -114,7 +114,7 @@ export default function PortfolioHome() {
         <div className={styles.portrait}>
           <Image
             src={portrait}
-            alt="Hector Mendoza"
+            alt="Monochrome illustrated portrait of Hector Mendoza"
             sizes="(max-width: 800px) 100vw, 42vw"
             placeholder="blur"
           />
