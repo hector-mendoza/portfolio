@@ -1,59 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
 import SocialLinks from "./social-links";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-border/60 bg-background/50 backdrop-blur-xl">
-      <div className="mx-auto max-w-7xl px-6 py-8">
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <div className="flex items-center gap-3">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/30 bg-primary/15">
-              <img
-                src="/logos/logo.svg"
-                alt="HM logo"
-                className="h-5 w-5 dark:invert dark:brightness-110"
-              />
+    <footer className="relative z-10 border-t border-border bg-background">
+      <div className="notion-section-inner py-8">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-md border border-border">
+              <img src="/logos/logo.svg" alt="HM logo" className="h-4 w-4" />
             </div>
-            <span className="text-sm font-semibold text-foreground">Hector Mendoza</span>
+            <span className="text-sm font-medium text-foreground">Hector Mendoza</span>
           </div>
 
-          <div className="flex flex-col items-center gap-2 text-center text-xs text-muted-foreground">
-            <p>
-              {"Designed & Built with Next.js & Framer Motion · "}
-              <Link001
-                href="https://reactbits.dev"
-                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
-              >
-                Motion by React Bits
-              </Link001>
-              <span className="mx-1.5 text-border">·</span>
-              <Link001
-                href="https://vibetheme.hectormendoza.me"
-                className="inline-flex text-xs text-primary"
-              >
-                Vibe Theme
-              </Link001>
-              <span className="mx-1.5 text-border">·</span>
-              <Link001
-                href="https://skiper-ui.com"
-                className="inline-flex text-xs text-muted-foreground hover:text-foreground"
-              >
-                Motion by Skiper UI
-              </Link001>
-            </p>
-          </div>
+          <p className="text-xs text-muted-foreground">
+            Built with Next.js · Figures by{" "}
+            <Link001
+              href="https://hairline.lucasmarkes.com"
+              className="text-foreground underline-offset-2 hover:underline"
+            >
+              Hairline
+            </Link001>
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <SocialLinks />
-          </motion.div>
+          <SocialLinks />
         </div>
       </div>
     </footer>

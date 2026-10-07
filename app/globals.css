@@ -2,6 +2,30 @@
 @config '../tailwind.config.ts';
 
 @layer base {
+  [data-theme="notion"] {
+    /* Notion-like grayscale — strict B&W hierarchy */
+    --background: 0 0% 99%;
+    --foreground: 0 0% 9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 0% 35%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 0 0% 9%;
+    --radius: 0.25rem;
+  }
+
   :root,
   [data-mode="pastel"][data-theme="sage"] {
     /* Sage pastel — mint cream, eucalyptus green */
@@ -423,6 +447,115 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .hairline-rule {
+    height: 1px;
+    background: hsl(var(--border));
+  }
+
+  .hairline-rule-list + .hairline-rule-list {
+    border-top: 1px solid hsl(var(--border));
+  }
+
+  .notion-caption {
+    @apply text-xs tracking-wide text-muted-foreground;
+  }
+
+  .notion-link {
+    @apply text-foreground underline-offset-4 transition-colors hover:underline;
+  }
+
+  .notion-btn {
+    @apply inline-flex items-center justify-center rounded-md border border-foreground bg-foreground px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-foreground/90;
+  }
+
+  .notion-btn-ghost {
+    @apply inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+  }
+
+  .notion-row {
+    @apply rounded-sm transition-colors hover:bg-muted/80;
+  }
+
+  .notion-doc .notion-section-inner {
+    @apply mx-auto w-full max-w-3xl px-6;
+  }
+}
+
+/* @lucasmarkes/hairline — match page background and ink */
+.hairline-figure {
+  --hairline-plate: hsl(var(--background));
+  --hairline-hi: hsl(var(--foreground));
+  --hairline-edge: hsl(var(--muted-foreground) / 0.75);
+  --hairline-mid: hsl(var(--muted-foreground));
+  --hairline-lo: hsl(var(--border));
+  --hairline-stroke: 0.85;
+}
+
+[data-theme="notion"] .hairline-figure {
+  --hairline-plate: hsl(0 0% 99%);
+  --hairline-hi: hsl(0 0% 9%);
+  --hairline-edge: hsl(0 0% 55%);
+  --hairline-mid: hsl(0 0% 40%);
+  --hairline-lo: hsl(0 0% 82%);
+  --hairline-stroke: 0.72;
+}
+
+[data-theme="notion"] .text-gradient {
+  background: none;
+  -webkit-text-fill-color: inherit;
+  color: inherit;
+}
+
+[data-theme="notion"] .navbar-scrolled {
+  background: hsl(0 0% 100% / 0.92);
+  border-bottom: 1px solid hsl(var(--border));
+  backdrop-filter: blur(12px);
+  box-shadow: none;
+}
+
+[data-theme="notion"] .glass-card,
+[data-theme="notion"] .glass-subtle,
+[data-theme="notion"] .glass-pill {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+[data-theme="notion"] .btn-juicy,
+[data-theme="notion"] .btn-juicy-outline {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  border: 1px solid hsl(var(--foreground));
+  background: hsl(var(--foreground));
+  color: hsl(var(--primary-foreground));
+  font-weight: 500;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+[data-theme="notion"] .btn-juicy:hover,
+[data-theme="notion"] .btn-juicy-outline:hover {
+  transform: none;
+  opacity: 0.88;
+  box-shadow: none;
+}
+
+[data-theme="notion"] .btn-juicy-outline {
+  background: transparent;
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--border));
+}
+
+[data-theme="notion"] .btn-juicy:active,
+[data-theme="notion"] .btn-juicy-outline:active {
+  transform: none;
+  opacity: 0.75;
 }
 
 @keyframes vibe-rainbow {

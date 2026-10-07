@@ -28,7 +28,7 @@ function SocialIconLink({ label, href, Icon, customSvgPath, size = "md" }) {
       target={href.startsWith("mailto") ? undefined : "_blank"}
       rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
       data-cuelume-hover="tick"
-      className={`group flex ${box} items-center justify-center border border-border bg-card transition-all hover:border-primary/50 hover:bg-primary/10`}
+      className={`group flex ${box} items-center justify-center border border-border bg-card transition-colors hover:bg-muted`}
       aria-label={label}
       onMouseEnter={() => {
         setHovered(true);
@@ -43,7 +43,7 @@ function SocialIconLink({ label, href, Icon, customSvgPath, size = "md" }) {
         <Icon
           ref={ref}
           size={dim}
-          color={hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))"}
+          color={hovered ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))"}
         />
       ) : (
         <svg
@@ -51,7 +51,7 @@ function SocialIconLink({ label, href, Icon, customSvgPath, size = "md" }) {
           style={{
             width: dim,
             height: dim,
-            color: hovered ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+            color: hovered ? "hsl(var(--foreground))" : "hsl(var(--muted-foreground))",
           }}
           fill="currentColor"
           viewBox="0 0 24 24"
