@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { Laptop } from "@lucasmarkes/hairline/react";
 import HairlineFigure from "@/components/hairline-figure";
 import SocialLinks from "@/components/social-links";
-import { Link005 } from "@/components/ui/skiper-ui/skiper40";
 import { getProjectByTitle } from "@/lib/projects";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
@@ -17,59 +16,49 @@ export default function HeroSection() {
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <section
-      id="hero"
-      className="relative flex min-h-[88vh] items-center px-6 py-24 md:py-32"
-    >
-      <div className="mx-auto grid w-full max-w-6xl gap-14 lg:grid-cols-[1fr_260px] lg:items-center lg:gap-20 xl:grid-cols-[1fr_300px]">
+    <section id="hero" className="relative py-20 md:py-28">
+      <div className="notion-section-inner grid gap-12 lg:grid-cols-[1fr_220px] lg:items-start lg:gap-16">
         <motion.div
-          initial={reducedMotion ? false : { opacity: 0, y: 14 }}
+          initial={reducedMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.45, ease: "easeOut" }}
         >
-          <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.32em] text-muted-foreground">
-            Software engineer
-          </p>
-          <h1 className="max-w-2xl text-4xl font-semibold leading-[1.06] tracking-tight text-foreground sm:text-5xl md:text-[3.25rem] md:leading-[1.05]">
-            Hector{" "}
-            <span className="text-gradient font-semibold">Mendoza</span>
+          <p className="notion-caption mb-3">Software engineer · Morelia, MX</p>
+          <h1 className="text-[2.75rem] font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl">
+            Hector Mendoza
           </h1>
-          <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground md:text-lg">
-            Head of Web Integrations at UrVenue. I lead delivery of performant,
-            accessible products with Next.js, WordPress, and Shopify.
+          <p className="mt-5 max-w-xl text-base leading-[1.7] text-muted-foreground md:text-[17px]">
+            Head of Web Integrations at UrVenue. I ship fast, accessible web
+            products with Next.js, WordPress, and Shopify.
           </p>
-          <div className="mt-9 flex flex-wrap items-center gap-5">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="mailto:hey@hectormendoza.me"
+              className="notion-btn"
               data-cuelume-press
               data-cuelume-release
-              className="btn-juicy btn-juicy-pill px-6 py-2.5 text-sm"
             >
-              Let&apos;s talk
+              Email me
             </a>
-            <Link005
-              href="#projects"
-              className="text-sm font-medium text-foreground/85 hover:text-foreground"
-            >
-              View work →
-            </Link005>
+            <a href="#projects" className="notion-btn-ghost notion-link">
+              View work
+            </a>
           </div>
 
           {featured.length > 0 ? (
-            <ul className="mt-12 space-y-0 border-t border-border pt-8">
+            <ul className="mt-12 border-t border-border">
               {featured.map((project) => (
                 <li key={project.title} className="hairline-rule-list">
                   <a
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cuelume-hover="tick"
-                    className="group flex items-baseline justify-between gap-4 py-3.5 text-sm"
+                    className="notion-row flex items-baseline justify-between gap-4 py-3 text-sm"
                   >
-                    <span className="font-medium text-foreground transition-colors group-hover:text-primary">
+                    <span className="font-medium text-foreground underline-offset-2 hover:underline">
                       {project.title}
                     </span>
-                    <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                    <span className="shrink-0 tabular-nums text-muted-foreground">
                       {project.year}
                     </span>
                   </a>
@@ -84,14 +73,15 @@ export default function HeroSection() {
         </motion.div>
 
         <motion.div
-          initial={reducedMotion ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto w-full max-w-[300px] lg:max-w-none"
+          initial={reducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="mx-auto w-full max-w-[240px] lg:max-w-none lg:pt-2"
         >
           <HairlineFigure
             as={Laptop}
-            intensity={0.48}
+            intensity={0.32}
+            showCaption={false}
             label="Isometric laptop; lid opens toward the pointer"
           />
         </motion.div>

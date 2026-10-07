@@ -9,7 +9,7 @@ import SectionHairline from "@/components/section-hairline";
 
 export default function PortfolioHome() {
   return (
-    <main className="relative z-10 max-w-full overflow-x-clip">
+    <main className="notion-doc relative z-10 max-w-full overflow-x-clip">
       <Navbar />
       <HeroSection />
       <SectionHairline />

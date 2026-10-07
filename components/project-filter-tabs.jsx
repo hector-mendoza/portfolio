@@ -75,15 +75,15 @@ function FilterTab({ label, count, isActive, onSelect }) {
       data-cuelume-toggle
       onClick={onSelect}
       className={cn(
-        "group relative shrink-0 rounded-full px-4 py-1.5 font-mono text-xs transition-colors",
-        isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground",
+        "group relative shrink-0 rounded-md px-3 py-1.5 text-xs transition-colors",
+        isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground",
       )}
     >
       {isActive ? (
         <motion.span
           layoutId="project-filter-pill"
           transition={{ type: "spring", stiffness: 420, damping: 32 }}
-          className="absolute inset-0 rounded-full bg-primary shadow-lg shadow-primary/20"
+          className="absolute inset-0 rounded-md bg-muted"
         />
       ) : null}
       <span className="relative z-10 inline-flex items-center gap-1.5">
@@ -92,8 +92,8 @@ function FilterTab({ label, count, isActive, onSelect }) {
           className={cn(
             "rounded-full px-1.5 py-0.5 text-[10px] tabular-nums transition-colors",
             isActive
-              ? "bg-primary-foreground/15 text-primary-foreground"
-              : "bg-muted text-muted-foreground group-hover:text-foreground",
+              ? "bg-background text-foreground"
+              : "bg-transparent text-muted-foreground group-hover:text-foreground",
           )}
         >
           {count}

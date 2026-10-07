@@ -1,212 +1,101 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import { fadeSlideUp, scaleIn, staggerContainer } from "@/lib/animations";
-import TiltedCard from "@/components/TiltedCard";
 import CountUp from "@/components/CountUp";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 const stats = [
-  { value: 8, suffix: "+", label: "Years Experience" },
-  { value: 20, suffix: "+", label: "Projects Delivered" },
-  { value: 10, suffix: "+", label: "Happy Clients" },
+  { value: 8, suffix: "+", label: "Years" },
+  { value: 20, suffix: "+", label: "Projects" },
+  { value: 10, suffix: "+", label: "Clients" },
   { value: 3, suffix: "", label: "Countries" },
 ];
 
 const techStack = [
   "Next.js", "React", "TypeScript", "WordPress", "Shopify",
-  "Node.js", "Tailwind CSS", "Three.js", "GSAP", "Figma",
-  "WooCommerce", "SEO",
+  "Node.js", "Tailwind CSS", "GSAP", "Figma",
 ];
 
 export default function AboutSection() {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
-
-  const sectionOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
   const reducedMotion = usePrefersReducedMotion();
 
   return (
-    <section
-      id="about"
-      ref={containerRef}
-      className="relative overflow-x-clip py-16 md:py-32 overflow-hidden"
-    >
-      <motion.div style={{ opacity: sectionOpacity }} className="mx-auto max-w-7xl px-6">
-        {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mb-10 md:mb-20"
-        >
-          <motion.span variants={fadeSlideUp} className="mb-4 inline-block font-mono text-xs uppercase tracking-[0.3em] text-primary">
-            About
-          </motion.span>
-          <motion.h2 variants={fadeSlideUp} className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-7xl">
-            <span className="block text-balance">
-              {"A bit about "}
-              <span className="text-gradient">me</span>
-            </span>
-          </motion.h2>
-        </motion.div>
+    <section id="about" ref={containerRef} className="relative py-16 md:py-24">
+      <div className="notion-section-inner">
+        <p className="notion-caption mb-2">About</p>
+        <h2 className="text-3xl font-bold tracking-tight text-foreground">
+          Background
+        </h2>
 
-        <div className="grid items-start gap-16 lg:grid-cols-2">
-          {/* Avatar — Notion-style squircle */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex justify-center lg:justify-start"
-          >
-            <div className="relative w-full max-w-[520px] rounded-xl">
-              <div className="w-full overflow-hidden rounded-xl glass-card shadow-2xl shadow-primary/10">
-                <TiltedCard
-                  imageSrc="/pp.png"
-                  altText="Hector Mendoza"
-                  captionText="Hector Mendoza"
-                  containerHeight="min(520px, 85vw)"
-                  containerWidth="100%"
-                  imageHeight="min(520px, 85vw)"
-                  imageWidth="100%"
-                  scaleOnHover={1.04}
-                  rotateAmplitude={8}
-                  showMobileWarning={false}
-                  showTooltip={!reducedMotion}
-                />
-              </div>
-
-              {/* Floating badge */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5, y: 16 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute right-2 bottom-2 w-max rounded-xl border border-border bg-card p-4 shadow-2xl shadow-primary/5 sm:-right-6 sm:-bottom-6"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <svg className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">{"Master's Degree"}</p>
-                    <p className="text-xs text-muted-foreground">Computer Science</p>
-                  </div>
-                </div>
-              </motion.div>
+        <div className="mt-10 grid gap-10 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-12">
+          <div className="mx-auto w-full max-w-[11rem] md:mx-0">
+            <div className="overflow-hidden rounded-md border border-border bg-card">
+              <img
+                src="/pp.png"
+                alt="Hector Mendoza"
+                className="aspect-square w-full object-cover grayscale"
+              />
             </div>
-          </motion.div>
+          </div>
 
-          {/* Text Content */}
-          <div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <motion.p variants={fadeSlideUp} className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                {"I'm currently "}
-                <span className="text-foreground font-medium">Head of Web Integrations at UrVenue</span>
-                {", based in Morelia, Mexico. With over 8 years of experience I specialize in building performant, accessible, and visually polished web experiences."}
-              </motion.p>
-              <motion.p variants={fadeSlideUp} className="mb-6 text-lg leading-relaxed text-muted-foreground">
-                {"Before UrVenue I led the web team at "}
-                <span className="text-foreground font-medium">Once Interactive</span>
-                {", collaborating with 50+ international companies across e-commerce, hospitality, and corporate sectors. I also hold a Master's degree in Computer Science with a focus on Mobile App Development."}
-              </motion.p>
-              <motion.p variants={fadeSlideUp} className="mb-10 text-lg leading-relaxed text-muted-foreground">
-                {"My approach combines clean code with thoughtful design. I believe every pixel matters and every interaction should feel intentional."}
-              </motion.p>
-            </motion.div>
-
-            {/* Stats */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-4"
-            >
-              {stats.map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  variants={scaleIn}
-                  whileHover={{ scale: 1.05, borderColor: "hsl(var(--primary) / 0.5)" }}
-                  className="rounded-xl glass-card p-4 text-center"
-                >
-                  <p className="text-2xl font-bold text-primary">
-                    {reducedMotion ? (
-                      `${stat.value}${stat.suffix}`
-                    ) : (
-                      <>
-                        <CountUp to={stat.value} duration={1.4} className="text-2xl font-bold text-primary" />
-                        {stat.suffix}
-                      </>
-                    )}
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Tech Stack */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <p className="mb-4 font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                Tech Stack
-              </p>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={{ visible: { transition: { staggerChildren: 0.04 } } }}
-                className="flex flex-wrap gap-2"
-              >
-                {techStack.map((tech) => (
-                  <motion.span
-                    key={tech}
-                    variants={{
-                      hidden: { opacity: 0, scale: 0.5 },
-                      visible: { opacity: 1, scale: 1 },
-                    }}
-                    whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary) / 0.15)" }}
-                    className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs font-medium text-secondary-foreground transition-all hover:border-primary/50 hover:text-primary cursor-default"
-                  >
-                    {tech}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </motion.div>
+          <div className="min-w-0 space-y-5 text-base leading-[1.75] text-muted-foreground">
+            <p>
+              I&apos;m{" "}
+              <span className="font-medium text-foreground">
+                Head of Web Integrations at UrVenue
+              </span>
+              , based in Morelia, Mexico. I focus on performant, accessible,
+              polished web experiences across the stack.
+            </p>
+            <p>
+              Before UrVenue I led the web team at{" "}
+              <span className="font-medium text-foreground">Once Interactive</span>
+              , working with 50+ international clients in e-commerce, hospitality,
+              and corporate sectors. I hold a Master&apos;s in Computer Science
+              (mobile app development specialty).
+            </p>
+            <p>
+              I care about clean code and calm interfaces — every interaction
+              should feel intentional.
+            </p>
           </div>
         </div>
-      </motion.div>
 
-      {/* Marquee strip */}
-      <div className="marquee-mask mt-16 w-full max-w-full overflow-hidden border-y border-border bg-card/50 py-5 md:mt-32">
-        <div className="animate-marquee flex w-max max-w-none whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex items-center gap-8 px-4">
-              {["NEXT.JS", "REACT", "TYPESCRIPT", "WORDPRESS", "SHOPIFY", "NODE.JS", "TAILWIND", "THREE.JS", "GSAP", "FIGMA"].map((item) => (
-                <span key={`${item}-${i}`} className="flex items-center gap-8 font-mono text-sm tracking-widest text-muted-foreground">
-                  <span>{item}</span>
-                  <span className="text-primary">{"///"}</span>
-                </span>
-              ))}
+        <dl className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-background px-4 py-4 text-center">
+              <dt className="notion-caption">{stat.label}</dt>
+              <dd className="mt-1 text-2xl font-semibold tabular-nums text-foreground">
+                {reducedMotion ? (
+                  `${stat.value}${stat.suffix}`
+                ) : (
+                  <>
+                    <CountUp
+                      to={stat.value}
+                      duration={1.2}
+                      className="text-2xl font-semibold text-foreground"
+                    />
+                    {stat.suffix}
+                  </>
+                )}
+              </dd>
             </div>
           ))}
+        </dl>
+
+        <div className="mt-12">
+          <p className="notion-caption mb-3">Stack</p>
+          <div className="flex flex-wrap gap-2">
+            {techStack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
