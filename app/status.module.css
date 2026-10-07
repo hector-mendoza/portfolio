@@ -1,4 +1,6 @@
 .shell {
+  position: relative;
+  z-index: 20;
   min-height: 100vh;
   background: #f7f7f5;
   color: #050505;

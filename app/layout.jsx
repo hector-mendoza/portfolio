@@ -2,7 +2,6 @@ import { Outfit, JetBrains_Mono } from "next/font/google";
 import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
-import GlassGradientBackground from "@/components/glass-gradient-background";
 import SiteSpotlight from "@/components/site-spotlight";
 import "./globals.css";
 
@@ -90,7 +89,6 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
-        <GlassGradientBackground />
         <ErrorBoundary>
           <CuelumeProvider />
           <ToasterProvider />

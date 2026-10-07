@@ -3,7 +3,7 @@ import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 
 export default function BonesLayout({ children }) {
   return (
-    <div className="min-h-screen bg-[#f7f7f5] text-black">
+    <div className="relative z-20 min-h-screen bg-[#f7f7f5] text-black">
       <BoneyardProvider />
       <SiteHeader />
       {children}
