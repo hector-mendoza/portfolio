@@ -1,7 +1,10 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/projects";
-import HairlineTerminal from "@/components/hairline-terminal";
+import HairlineTerminal, {
+  HairlineBranches,
+  HairlineQuery,
+} from "@/components/hairline-terminal";
 import portrait from "@/public/pp.png";
 import styles from "./portfolio-home.module.css";
 
@@ -92,6 +95,33 @@ export default function PortfolioHome() {
         </div>
       </section>
 
+      <section className={styles.commandLab} aria-labelledby="command-title">
+        <div className={styles.commandCopy}>
+          <p className={styles.eyebrow}>03 / An open invitation</p>
+          <h2 id="command-title">Give your agent a sharper line.</h2>
+          <p>
+            Hairline is a small set of precise, pointer-aware drawings. Its
+            companion skill teaches coding agents the same visual discipline.
+          </p>
+          <code>
+            <span aria-hidden="true">$</span>
+            npx skills add lucasmarkes/hairline
+          </code>
+          <a
+            href="https://hairline.lucasmarkes.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Explore Hairline
+            <ArrowUpRight aria-hidden="true" size={17} />
+          </a>
+        </div>
+        <div className={styles.commandFigure}>
+          <HairlineBranches />
+          <p>Trace the branch with your pointer.</p>
+        </div>
+      </section>
+
       <section className={styles.about} id="about" aria-labelledby="about-title">
         <div className={styles.portrait}>
           <Image
@@ -103,7 +133,7 @@ export default function PortfolioHome() {
           <span>Based in Morelia, Mexico · Available worldwide</span>
         </div>
         <div className={styles.aboutCopy}>
-          <p className={styles.eyebrow}>03 / About</p>
+          <p className={styles.eyebrow}>04 / About</p>
           <h2 id="about-title">
             Engineer by training.
             <br />
@@ -138,7 +168,7 @@ export default function PortfolioHome() {
 
       <section className={styles.experience} aria-labelledby="experience-title">
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>04 / Experience</p>
+          <p className={styles.eyebrow}>05 / Experience</p>
           <h2 id="experience-title">A record of making.</h2>
         </div>
         <div className={styles.timeline}>
@@ -153,16 +183,21 @@ export default function PortfolioHome() {
       </section>
 
       <section className={styles.contact} id="contact">
-        <p className={styles.eyebrow}>05 / Start a conversation</p>
-        <h2>
-          Have something
-          <br />
-          worth building?
-        </h2>
-        <a href="mailto:hey@hectormendoza.me">
-          hey@hectormendoza.me
-          <ArrowUpRight aria-hidden="true" />
-        </a>
+        <div className={styles.contactCopy}>
+          <p className={styles.eyebrow}>06 / Start a conversation</p>
+          <h2>
+            Have something
+            <br />
+            worth building?
+          </h2>
+          <a href="mailto:hey@hectormendoza.me">
+            hey@hectormendoza.me
+            <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+        <div className={styles.contactFigure} aria-hidden="true">
+          <HairlineQuery />
+        </div>
       </section>
 
       <footer className={styles.footer}>

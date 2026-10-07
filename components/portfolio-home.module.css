@@ -1,8 +1,9 @@
 .page {
-  --ink: #191917;
-  --paper: #f2f0e9;
-  --accent: #e45028;
-  --line: rgba(25, 25, 23, 0.2);
+  --ink: #050505;
+  --paper: #f7f7f5;
+  --accent: #050505;
+  --muted: #626262;
+  --line: rgba(5, 5, 5, 0.2);
   position: relative;
   z-index: 20;
   min-height: 100vh;
@@ -17,6 +18,7 @@
 .about,
 .experience,
 .contact,
+.commandLab,
 .footer {
   margin-inline: auto;
   width: min(100% - 3rem, 1440px);
@@ -76,8 +78,8 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #3f8d62;
-  box-shadow: 0 0 0 4px rgba(63, 141, 98, 0.12);
+  background: #111;
+  box-shadow: 0 0 0 4px rgba(5, 5, 5, 0.1);
 }
 
 .hero {
@@ -125,7 +127,7 @@
 
 .heroIntro p {
   max-width: 520px;
-  color: rgba(25, 25, 23, 0.72);
+  color: var(--muted);
   font-size: clamp(1rem, 1.25vw, 1.2rem);
   line-height: 1.65;
 }
@@ -143,10 +145,10 @@
 
 .heroFigure {
   --hairline-plate: var(--paper);
-  --hairline-hi: var(--accent);
-  --hairline-edge: #191917;
-  --hairline-mid: #797870;
-  --hairline-lo: #c6c2b8;
+  --hairline-hi: #050505;
+  --hairline-edge: #050505;
+  --hairline-mid: #737373;
+  --hairline-lo: #d0d0cd;
   --hairline-stroke: 0.85;
   align-self: center;
   width: 100%;
@@ -160,7 +162,7 @@
 }
 
 .heroFigure p {
-  color: rgba(25, 25, 23, 0.55);
+  color: var(--muted);
   font-size: 0.7rem;
   text-align: right;
 }
@@ -189,7 +191,7 @@
 
 .sectionHeading > p:last-child {
   max-width: 360px;
-  color: rgba(25, 25, 23, 0.6);
+  color: var(--muted);
   font-size: 0.9rem;
   line-height: 1.65;
 }
@@ -205,12 +207,19 @@
   align-items: center;
   min-height: 112px;
   border-bottom: 1px solid var(--line);
-  transition: padding 200ms ease, color 200ms ease;
+  transition: padding 200ms ease, color 200ms ease, background 200ms ease;
 }
 
 .project:hover {
   padding-inline: 1rem;
-  color: var(--accent);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.project:hover .projectTitle small,
+.project:hover .projectMeta,
+.project:hover .projectNumber {
+  color: #bdbdbd;
 }
 
 .projectNumber,
@@ -237,11 +246,85 @@
 .projectTitle small,
 .projectMeta,
 .projectNumber {
-  color: rgba(25, 25, 23, 0.52);
+  color: var(--muted);
 }
 
 .project svg {
   width: 1.35rem;
+}
+
+.commandLab {
+  --hairline-plate: #080808;
+  --hairline-hi: #fff;
+  --hairline-edge: #d4d4d4;
+  --hairline-mid: #737373;
+  --hairline-lo: #262626;
+  --hairline-stroke: 0.85;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  gap: clamp(3rem, 10vw, 10rem);
+  align-items: center;
+  padding: clamp(2rem, 6vw, 6rem);
+  background: #080808;
+  color: #f5f5f5;
+}
+
+.commandCopy h2 {
+  max-width: 780px;
+  margin-top: 2rem;
+  font-size: clamp(2.8rem, 5.5vw, 6rem);
+  font-weight: 550;
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+}
+
+.commandCopy > p:not(.eyebrow) {
+  max-width: 570px;
+  margin-top: 2rem;
+  color: #aaa;
+  line-height: 1.7;
+}
+
+.commandCopy code {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  border: 1px solid #404040;
+  background: #111;
+  color: #f5f5f5;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: clamp(0.65rem, 1.3vw, 0.82rem);
+  white-space: nowrap;
+}
+
+.commandCopy code span {
+  color: #777;
+}
+
+.commandCopy > a {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid #777;
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-transform: uppercase;
+}
+
+.commandFigure p {
+  color: #888;
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.62rem;
+  text-align: right;
+  text-transform: uppercase;
 }
 
 .about {
@@ -292,7 +375,7 @@
 .aboutCopy > p:not(.eyebrow, .lead) {
   max-width: 620px;
   margin-top: 2rem;
-  color: rgba(25, 25, 23, 0.62);
+  color: var(--muted);
   line-height: 1.75;
 }
 
@@ -320,7 +403,7 @@
 
 .stats dd {
   margin-top: 0.25rem;
-  color: rgba(25, 25, 23, 0.55);
+  color: var(--muted);
   font-size: 0.72rem;
 }
 
@@ -340,7 +423,7 @@
 
 .role span,
 .role p {
-  color: rgba(25, 25, 23, 0.55);
+  color: var(--muted);
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.68rem;
   text-transform: uppercase;
@@ -352,10 +435,17 @@
 }
 
 .contact {
-  display: flex;
+  --hairline-plate: var(--paper);
+  --hairline-hi: #050505;
+  --hairline-edge: #050505;
+  --hairline-mid: #737373;
+  --hairline-lo: #d0d0cd;
+  --hairline-stroke: 0.85;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  gap: 5vw;
   min-height: 78vh;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding-block: 6rem;
   border-top: 1px solid var(--line);
 }
@@ -376,6 +466,10 @@
   padding-bottom: 0.45rem;
   border-bottom: 1px solid currentColor;
   font-size: clamp(1rem, 2vw, 1.6rem);
+}
+
+.contactFigure {
+  width: 100%;
 }
 
 .footer {
@@ -406,6 +500,7 @@
   .about,
   .experience,
   .contact,
+  .commandLab,
   .footer {
     width: min(100% - 2rem, 1440px);
   }
@@ -433,6 +528,14 @@
   }
 
   .heroFigure {
+    max-width: 520px;
+  }
+
+  .commandLab {
+    grid-template-columns: 1fr;
+  }
+
+  .commandFigure {
     max-width: 520px;
   }
 
@@ -465,6 +568,14 @@
   .timeline {
     margin-left: 0;
   }
+
+  .contact {
+    grid-template-columns: 1fr;
+  }
+
+  .contactFigure {
+    max-width: 420px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -482,6 +593,14 @@
 
   .project:hover {
     padding-inline: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  .project:hover .projectTitle small,
+  .project:hover .projectMeta,
+  .project:hover .projectNumber {
+    color: var(--muted);
   }
 
   .stats {
