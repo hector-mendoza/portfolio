@@ -17,7 +17,8 @@
     "@sanity/workbench-cli": {
       "@module-federation/vite": {
         "@module-federation/dts-plugin": {
-          "undici": "^7.29.0"
+          "undici": "^7.30.0",
+          "adm-zip": "^0.6.1"
         }
       }
     },
@@ -36,7 +37,7 @@
     "@portabletext/react": "^8.0.1",
     "@sanity/code-input": "^7.3.9",
     "@sanity/image-url": "^2.1.1",
-    "@sanity/vision": "^6.17.0",
+    "@sanity/vision": "^6.19.0",
     "boneyard-js": "^1.10.0",
     "clsx": "^2.1.1",
     "cuelume": "^0.2.4",
@@ -51,7 +52,7 @@
     "ogl": "^1.0.11",
     "react": "^19",
     "react-dom": "^19",
-    "sanity": "^6.17.0",
+    "sanity": "^6.19.0",
     "sileo": "^0.1.5",
     "swiper": "^14.3.0",
     "tailwind-merge": "^3.7.0",
