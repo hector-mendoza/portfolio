@@ -2,7 +2,8 @@
   --ink: #050505;
   --paper: #f7f7f5;
   --accent: #050505;
-  --muted: #626262;
+  /* WCAG 4.5:1 vs darkest canvas behind muted copy (~rgb(167,167,166)); max pass #3d3d3d */
+  --muted: #3c3c3c;
   --line: rgba(5, 5, 5, 0.2);
   position: relative;
   min-height: 100vh;
