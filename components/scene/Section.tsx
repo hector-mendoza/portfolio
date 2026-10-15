@@ -8,9 +8,15 @@ type SectionProps = {
   id: SectionId;
   children: ReactNode;
   className?: string;
+  htmlId?: string;
 };
 
-export default function Section({ id, children, className }: SectionProps) {
+export default function Section({
+  id,
+  children,
+  className,
+  htmlId,
+}: SectionProps) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -20,7 +26,12 @@ export default function Section({ id, children, className }: SectionProps) {
   }, [id]);
 
   return (
-    <section ref={ref} data-section={id} className={className}>
+    <section
+      ref={ref}
+      id={htmlId}
+      data-section={id}
+      className={className}
+    >
       {children}
     </section>
   );

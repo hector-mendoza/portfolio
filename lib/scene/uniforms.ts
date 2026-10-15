@@ -6,6 +6,7 @@ export type SceneUniforms = {
   theme: SectionTheme;
   progress: number;
   pointer: ScenePointer | null;
+  section: SectionId;
 };
 
 export const DEFAULT_THEME_MAP: ThemeMap = {
@@ -19,9 +20,10 @@ export const DEFAULT_THEME_MAP: ThemeMap = {
 export function themeUniforms(
   theme: SectionTheme,
   progress: number,
-  pointer: ScenePointer | null
+  pointer: ScenePointer | null,
+  section: SectionId = "hero"
 ): SceneUniforms {
-  return { theme, progress, pointer };
+  return { theme, progress, pointer, section };
 }
 
 export function sectionTheme(
@@ -34,5 +36,6 @@ export function sectionTheme(
 export const INITIAL_UNIFORMS: SceneUniforms = themeUniforms(
   DEFAULT_THEME_MAP.hero,
   0,
-  null
+  null,
+  "hero"
 );

@@ -1,5 +1,9 @@
+import {
+  HERO_POINTER_SCRAMBLE_BOOST,
+  HERO_POINTER_SCRAMBLE_RADIUS_PX,
+} from "./hero-scramble-boost";
 import type { Density, SectionTheme } from "./types";
-import type { SceneUniforms } from "./uniforms";
+import { INITIAL_UNIFORMS, type SceneUniforms } from "./uniforms";
 import type { SceneRenderer } from "./renderer";
 
 /**
@@ -158,6 +162,10 @@ uniform vec4 uClicks[4];
 uniform int uClickEffect;
 uniform float uIntro;
 uniform float uFrame;
+uniform vec2 uPointerN;
+uniform vec2 uCanvasSize;
+uniform float uHeroScramblePx;
+uniform float uHeroScrambleBoost;
 in vec2 vUv;
 layout(location = 0) out vec4 outColor;
 layout(location = 1) out vec4 outAux;
@@ -289,6 +297,14 @@ void main() {
       float size = 0.08 + 0.22 * (1.0 - exp(-c.z * 5.0));
       scramble = max(scramble, (1.0 - smoothstep(size * 0.6, size, d)) * c.w);
     }
+  }
+  if (uHeroScrambleBoost > 0.001) {
+    vec2 fragPx = vUv * uCanvasSize;
+    vec2 ptrPx = uPointerN * uCanvasSize;
+    float dist = length(fragPx - ptrPx);
+    float t = clamp(1.0 - dist / max(uHeroScramblePx, 1.0), 0.0, 1.0);
+    float falloff = t * t * (3.0 - 2.0 * t);
+    scramble = max(scramble, falloff * uHeroScrambleBoost);
   }
   vec2 t = clamp(shape.xy * mix(0.7, 1.0, reveal), 0.0, 1.0);
   vec4 mixed = mix(tone(t.x), tone(t.y), shape.z);
@@ -593,6 +609,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   let grainClock = 0;
   let lastFrame = 0;
   let lastPointer: { x: number; y: number } | null = null;
+  let frameUniforms: SceneUniforms = INITIAL_UNIFORMS;
 
   const syncRamp = (theme: SectionTheme) => {
     const key = `${theme.hue}|${theme.intensity}|${theme.density}`;
@@ -659,6 +676,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     if (!gl || !canvas || !field || !halo || !blur || !composite || !fieldTarget || !haloA || !haloB) {
       return;
     }
+    const u = frameUniforms;
     const s = settingsRef;
     const aspect = view.width / view.height;
     syncAtlas();
@@ -685,6 +703,18 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1i(fu.uClickEffect, s.clickEffect);
     gl.uniform1f(fu.uIntro, introClock);
     gl.uniform1f(fu.uFrame, frameSeed);
+    const heroScramble =
+      u.section === "hero" && u.pointer
+        ? HERO_POINTER_SCRAMBLE_BOOST
+        : 0;
+    gl.uniform2f(
+      fu.uPointerN,
+      u.pointer?.x ?? 0,
+      u.pointer?.y ?? 0
+    );
+    gl.uniform2f(fu.uCanvasSize, view.width, view.height);
+    gl.uniform1f(fu.uHeroScramblePx, HERO_POINTER_SCRAMBLE_RADIUS_PX);
+    gl.uniform1f(fu.uHeroScrambleBoost, heroScramble);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     const glowing = s.glow > 0.001;
@@ -889,6 +919,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
         ? clamp((now - lastFrame) / 1000, 0.001, 0.05)
         : 1 / 60;
       lastFrame = now;
+      frameUniforms = u;
       applyUniforms(u);
       applyPointer(u.pointer);
       const s = settingsRef;

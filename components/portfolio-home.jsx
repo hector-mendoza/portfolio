@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/lib/projects";
+import HomeWorkList from "@/components/home-work-list";
+import Section from "@/components/scene/Section";
 import HairlineLogo from "@/components/hairline-logo";
 import HairlineTerminal, {
   HairlineBranches,
@@ -25,7 +26,7 @@ export default function PortfolioHome() {
     <main className={styles.page} data-portfolio-ui>
       <SiteHeader />
 
-      <section className={styles.hero} id="top">
+      <Section id="hero" htmlId="top" className={styles.hero}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Software engineer · Morelia, MX</p>
           <h1>
@@ -50,7 +51,7 @@ export default function PortfolioHome() {
           <HairlineTerminal />
           <p>Move your pointer across the system.</p>
         </div>
-      </section>
+      </Section>
 
       <section className={styles.work} id="work" aria-labelledby="work-title">
         <div className={styles.sectionHeading}>
@@ -65,29 +66,7 @@ export default function PortfolioHome() {
             <HairlineRiffle />
           </div>
         </div>
-        <div className={styles.projectList}>
-          {projects.map((project, index) => (
-            <a
-              className={styles.project}
-              href={project.url}
-              key={project.title}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className={styles.projectNumber}>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className={styles.projectTitle}>
-                <strong>{project.title}</strong>
-                <small>{project.subtitle}</small>
-              </span>
-              <span className={styles.projectMeta}>
-                {project.category} · {project.year}
-              </span>
-              <ArrowUpRight aria-hidden="true" />
-            </a>
-          ))}
-        </div>
+        <HomeWorkList />
       </section>
 
       <section className={styles.commandLab} aria-labelledby="command-title">

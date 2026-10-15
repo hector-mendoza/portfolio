@@ -23,7 +23,8 @@ let pointer: ScenePointer | null = null;
 let uniforms: SceneUniforms = themeUniforms(
   DEFAULT_THEME_MAP.hero,
   0,
-  null
+  null,
+  "hero"
 );
 
 let sceneRenderer: SceneRenderer | null = null;
@@ -74,7 +75,8 @@ function recomputeRunningSection() {
   uniforms = themeUniforms(
     DEFAULT_THEME_MAP[best],
     scrollProgress,
-    pointer
+    pointer,
+    best
   );
 
   if (state.phase === "paused") return;
@@ -199,7 +201,8 @@ export function setScrollProgress(p: number): void {
       uniforms = themeUniforms(
         DEFAULT_THEME_MAP[state.section],
         scrollProgress,
-        pointer
+        pointer,
+        state.section
       );
       emit();
     } else {
