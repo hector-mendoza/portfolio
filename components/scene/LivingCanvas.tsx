@@ -16,35 +16,16 @@ export default function LivingCanvas() {
   const phase = scene.phase;
 
   const hostRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (phase === "disabled") return;
-    const idle =
-      typeof requestIdleCallback !== "undefined"
-        ? requestIdleCallback
-        : (cb: IdleRequestCallback) =>
-            window.setTimeout(
-              () => cb({ didTimeout: false, timeRemaining: () => 0 }),
-              1
-            );
-    const cancel =
-      typeof cancelIdleCallback !== "undefined"
-        ? cancelIdleCallback
-        : clearTimeout;
-    const id = idle(() => setReady(true));
-    return () => cancel(id);
+    const t = window.requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(t);
   }, [phase]);
 
   useEffect(() => {
-    if (!ready || phase === "disabled") return;
-    const t = window.requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(t);
-  }, [ready, phase]);
-
-  useEffect(() => {
-    if (!ready || phase === "disabled") return;
+    if (phase === "disabled") return;
     const host = hostRef.current;
     if (!host) return;
 
@@ -72,7 +53,7 @@ export default function LivingCanvas() {
       setSceneCanvasMounted(false);
       renderer.dispose();
     };
-  }, [ready, phase]);
+  }, [phase]);
 
   if (phase === "disabled") {
     return <SceneStaticPoster />;

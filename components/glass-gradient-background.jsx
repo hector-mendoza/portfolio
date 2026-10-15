@@ -1,5 +1,3 @@
-import AuroraBackground from "@/components/aurora-background";
-
 export default function GlassGradientBackground() {
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -7,7 +5,6 @@ export default function GlassGradientBackground() {
       <div className="pastel-poster-dots" />
       <div className="mobile-aurora-wash" />
       <div className="glass-gradient-mesh" />
-      <AuroraBackground />
       <div className="ambient-fog ambient-fog-1" />
       <div className="ambient-fog ambient-fog-2" />
       <div className="ambient-fog ambient-fog-3" />
