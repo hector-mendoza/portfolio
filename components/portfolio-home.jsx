@@ -1,5 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/lib/projects";
+import { getFeaturedCaseStudies } from "@/content/registry";
+import CaseStudyCard from "@/components/case-study/case-study-card";
 import HairlineLogo from "@/components/hairline-logo";
 import HairlineTerminal, {
   HairlineBranches,
@@ -13,6 +15,7 @@ import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import styles from "./portfolio-home.module.css";
 
 export default function PortfolioHome() {
+  const featuredCaseStudies = getFeaturedCaseStudies();
   const experience = [
     ["2024—Now", "Head of Web Integrations", "UrVenue"],
     ["2023—2024", "Web Services Developer", "UrVenue"],
@@ -65,6 +68,13 @@ export default function PortfolioHome() {
             <HairlineRiffle />
           </div>
         </div>
+        {featuredCaseStudies.length > 0 ? (
+          <div className={styles.caseStudyGrid} aria-label="Featured case studies">
+            {featuredCaseStudies.map((study, index) => (
+              <CaseStudyCard key={study.slug} study={study} index={index} />
+            ))}
+          </div>
+        ) : null}
         <div className={styles.projectList}>
           {projects.map((project, index) => (
             <a
