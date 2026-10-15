@@ -15,17 +15,21 @@ export default function HeroFeaturedCard({
   cardKey,
   className,
   style,
+  href,
+  external = true,
 }) {
   const surface = projectSurface(project);
   const [hovered, setHovered] = useState(false);
+  const destination = href ?? project.url;
+  const isExternal = external && !href?.startsWith("/");
 
   return (
     <motion.a
       variants={cardVariant}
       data-game-target
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={destination}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       data-cuelume-hover="tick"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

@@ -36,6 +36,7 @@ const card = {
 const primaryStack = ["Next.js", "React", "TypeScript", "WordPress"];
 const moreStack = ["Shopify", "Figma"];
 
+const agentReadyProject = getProjectByTitle("Agent Ready");
 const canteraProject = getProjectByTitle("Cantera Diez Hotel");
 const vibeProject = getProjectByTitle("Vibe Theme");
 
@@ -164,12 +165,24 @@ export default function HeroSection() {
           </span>
         </motion.a>
 
+        {agentReadyProject && (
+          <HeroFeaturedCard
+            project={agentReadyProject}
+            badge="Case study"
+            href="/work/agent-ready"
+            external={false}
+            cardVariant={card}
+            className="order-5 col-span-2 min-w-0 md:order-4"
+            style={{ minHeight: "180px" }}
+          />
+        )}
+
         {canteraProject && (
           <HeroFeaturedCard
             project={canteraProject}
             badge="Latest Build"
             cardVariant={card}
-            className="order-5 col-span-2 min-w-0 md:order-4"
+            className="order-6 col-span-2 min-w-0 md:order-4 md:col-start-3"
             style={{ minHeight: "180px" }}
           />
         )}
@@ -179,7 +192,7 @@ export default function HeroSection() {
             project={vibeProject}
             badge="Featured Project"
             cardVariant={card}
-            className="order-6 col-span-2 min-w-0 md:order-5"
+            className="order-7 col-span-2 min-w-0 md:order-5"
             style={{ minHeight: "180px" }}
           />
         )}

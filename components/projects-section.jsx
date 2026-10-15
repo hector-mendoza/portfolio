@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
+import CaseStudyCard from "@/components/case-study/case-study-card";
 import VibeEasterEgg from "./vibe-easter-egg";
 import EmojiDayEasterEgg from "./emoji-day-easter-egg";
 import ProjectCardSwipe from "./project-card-swipe";
@@ -10,7 +11,7 @@ import ProjectFilterTabs from "./project-filter-tabs";
 import { filterProjects } from "@/lib/projects";
 import { ArrowFillButton } from "@/components/block/arrow-fill-button";
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ caseStudies = [] }) {
   const [activeFilter, setActiveFilter] = useState("recent");
   const [vibeHovered, setVibeHovered] = useState(false);
   const [emojiDayHovered, setEmojiDayHovered] = useState(false);
@@ -52,6 +53,32 @@ export default function ProjectsSection() {
             Every build in one place — client sites, experiments, and tools. Filter by category, then browse the full collection.
           </p>
         </motion.div>
+
+        {caseStudies.length > 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.65, delay: 0.05 }}
+            className="mb-10 sm:mb-14"
+          >
+            <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <span className="mb-2 inline-block font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+                  Case studies
+                </span>
+                <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  Long-form write-ups for selected builds — depth, stack, and how the work holds up in production.
+                </p>
+              </div>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {caseStudies.map((study, index) => (
+                <CaseStudyCard key={study.slug} study={study} index={index} />
+              ))}
+            </div>
+          </motion.div>
+        ) : null}
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -3,6 +3,7 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import SiteSpotlight from "@/components/site-spotlight";
+import GlassGradientBackground from "@/components/glass-gradient-background";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -54,7 +55,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: "#F7F7F5",
+  themeColor: "#EEF6F1",
   width: "device-width",
   initialScale: 1,
 };
@@ -79,7 +80,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="mono" data-mode="light" suppressHydrationWarning>
+    <html lang="en" data-theme="sage" data-mode="pastel" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
@@ -89,6 +90,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
+        <GlassGradientBackground />
         <ErrorBoundary>
           <CuelumeProvider />
           <ToasterProvider />

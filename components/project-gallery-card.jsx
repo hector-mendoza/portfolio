@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Link001 } from "@/components/ui/skiper-ui/skiper40";
 import ProjectPreview from "@/components/project-preview";
 import { projectSurface } from "@/lib/use-theme-mode";
+import { getCaseStudyByProjectTitle } from "@/content/registry";
 import { cn } from "@/lib/utils";
 
 export default function ProjectGalleryCard({
@@ -15,6 +16,9 @@ export default function ProjectGalleryCard({
   className,
 }) {
   const surface = projectSurface(project);
+  const caseStudy = getCaseStudyByProjectTitle(project.title);
+  const primaryHref = caseStudy ? `/work/${caseStudy.slug}` : project.url;
+  const primaryLabel = caseStudy ? "Read case study" : "View project";
   const [hovered, setHovered] = useState(false);
 
   const handleEnter = () => {
@@ -78,10 +82,10 @@ export default function ProjectGalleryCard({
         </div>
 
         <Link001
-          href={project.url}
+          href={primaryHref}
           className="inline-flex w-fit items-center gap-2 text-sm font-semibold text-foreground transition-colors group-hover:text-primary"
         >
-          View project
+          {primaryLabel}
           <svg
             className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             fill="none"
