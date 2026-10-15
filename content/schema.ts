@@ -31,18 +31,30 @@ export type Media =
       height: number;
     };
 
+export type CaseStudyLinks = {
+  live?: string;
+  repo?: string;
+  listing?: { url: string; label: string };
+};
+
 export type CaseStudyBase = {
   slug: Slug;
   title: string;
   summary: string;
   stack: string[];
-  links: { live?: string; repo?: string };
+  links: CaseStudyLinks;
 };
 
 export type DraftCaseStudy = CaseStudyBase & {
   status: "draft";
   role?: string;
+  org?: string;
+  period?: { start: string; end: string | "present" };
+  problem?: string;
+  approach?: string[];
   outcomes: Outcome[];
+  cover?: Media;
+  gallery?: Media[];
 };
 
 export type PublishedCaseStudy = CaseStudyBase & {
