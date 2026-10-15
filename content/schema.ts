@@ -31,21 +31,32 @@ export type Media =
       height: number;
     };
 
-export type CaseStudy = {
+export type CaseStudyBase = {
   slug: Slug;
   title: string;
+  summary: string;
+  stack: string[];
+  links: { live?: string; repo?: string };
+};
+
+export type DraftCaseStudy = CaseStudyBase & {
+  status: "draft";
+  role?: string;
+  outcomes: Outcome[];
+};
+
+export type PublishedCaseStudy = CaseStudyBase & {
+  status: "published";
   role: string;
   org: string;
   period: { start: string; end: string | "present" };
-  summary: string;
   problem: string;
   approach: string[];
   outcomes: [Outcome, ...Outcome[]];
-  stack: string[];
   cover: Media;
   gallery: Media[];
-  links: { live?: string; repo?: string };
-  status: "draft" | "published";
 };
+
+export type CaseStudy = DraftCaseStudy | PublishedCaseStudy;
 
 export type MotionPreference = "full" | "reduced";
