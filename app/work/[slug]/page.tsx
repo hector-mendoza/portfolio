@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
-import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import CaseStudyPageShell from "@/components/case-study/case-study-page-shell";
 import CaseStudySections from "@/components/case-study/case-study-sections";
 import {
   getCaseStudyBySlug,
   getCaseStudySlugs,
 } from "@/content/registry";
-import styles from "./case-study.module.css";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -50,48 +49,63 @@ export default async function CaseStudyPage({ params }: PageProps) {
   );
 
   return (
-    <main className={styles.page} data-portfolio-ui>
-      <SiteHeader />
-      <article className={styles.article}>
-        <div className={styles.intro}>
-          <p className={styles.eyebrow}>Case study · {study.category}</p>
-          <h1>{study.title}</h1>
-          <p className={styles.lead}>{study.summary}</p>
-          <dl className={styles.meta}>
-            <div>
-              <dt>Role</dt>
-              <dd>{study.role}</dd>
+    <CaseStudyPageShell>
+      <article className="mx-auto w-full max-w-4xl px-6 pb-24 pt-28 md:pb-32 md:pt-32">
+        <header className="mb-10 rounded-3xl border border-border/70 bg-card/75 p-6 backdrop-blur-md sm:p-10">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary">
+            Case study · {study.category}
+          </p>
+          <h1 className="mt-4 text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+            {study.title}
+          </h1>
+          <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            {study.summary}
+          </p>
+          <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-2xl border border-border/60 bg-background/50 px-4 py-3">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                Role
+              </dt>
+              <dd className="mt-1 text-sm font-medium text-foreground">{study.role}</dd>
             </div>
-            <div>
-              <dt>Year</dt>
-              <dd>{study.year}</dd>
+            <div className="rounded-2xl border border-border/60 bg-background/50 px-4 py-3">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                Year
+              </dt>
+              <dd className="mt-1 text-sm font-medium text-foreground">{study.year}</dd>
             </div>
-            <div>
-              <dt>Stack</dt>
-              <dd>{study.stack.join(" · ")}</dd>
+            <div className="rounded-2xl border border-border/60 bg-background/50 px-4 py-3 sm:col-span-1">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                Stack
+              </dt>
+              <dd className="mt-1 text-sm font-medium text-foreground">
+                {study.stack.join(" · ")}
+              </dd>
             </div>
           </dl>
-          <div className={styles.actions}>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             {links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 target="_blank"
                 rel="noreferrer"
-                className={styles.action}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-4 py-2 font-mono text-[11px] uppercase tracking-wide text-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
                 {link.label}
-                <ArrowUpRight aria-hidden size={16} />
+                <ArrowUpRight aria-hidden size={14} />
               </a>
             ))}
-            <Link href="/#work" className={styles.back}>
-              Back to selected work
+            <Link
+              href="/#projects"
+              className="font-mono text-[11px] uppercase tracking-wide text-muted-foreground transition-colors hover:text-primary"
+            >
+              ← Back to projects
             </Link>
           </div>
-        </div>
+        </header>
         <CaseStudySections sections={study.sections} />
       </article>
-      <SiteFooter />
-    </main>
+    </CaseStudyPageShell>
   );
 }

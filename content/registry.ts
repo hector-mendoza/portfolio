@@ -22,3 +22,7 @@ export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
 export function getCaseStudySlugs(): readonly string[] {
   return caseStudies.map((study) => study.slug);
 }
+
+export function getCaseStudyByProjectTitle(title: string): CaseStudy | undefined {
+  return caseStudies.find((study) => study.title === title);
+}
