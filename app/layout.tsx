@@ -3,6 +3,8 @@ import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
 import CuelumeProvider from "@/components/cuelume-provider";
 import SiteSpotlight from "@/components/site-spotlight";
+import MotionRoot from "@/components/scene/MotionRoot";
+import LivingCanvasLoader from "@/components/scene/LivingCanvasLoader";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -64,7 +66,8 @@ const jsonLd = {
   "@type": "Person",
   name: "Hector Mendoza",
   jobTitle: "Head of Web Integrations",
-  description: "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
+  description:
+    "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
   url: "https://www.hectormendoza.me",
   email: "hey@hectormendoza.me",
   sameAs: [
@@ -72,12 +75,29 @@ const jsonLd = {
     "https://www.linkedin.com/in/hector-mendoza-m/",
     "https://www.threads.com/@hectormendozax2",
   ],
-  address: { "@type": "PostalAddress", addressLocality: "Morelia", addressCountry: "MX" },
-  knowsAbout: ["React", "Next.js", "TypeScript", "WordPress", "Shopify", "Node.js", "Tailwind CSS", "Figma"],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Morelia",
+    addressCountry: "MX",
+  },
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "WordPress",
+    "Shopify",
+    "Node.js",
+    "Tailwind CSS",
+    "Figma",
+  ],
   worksFor: { "@type": "Organization", name: "UrVenue" },
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" data-theme="mono" data-mode="light" suppressHydrationWarning>
       <head>
@@ -93,7 +113,8 @@ export default function RootLayout({ children }) {
           <CuelumeProvider />
           <ToasterProvider />
           <SiteSpotlight />
-          {children}
+          <LivingCanvasLoader />
+          <MotionRoot>{children}</MotionRoot>
         </ErrorBoundary>
       </body>
     </html>

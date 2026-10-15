@@ -29,7 +29,8 @@ const SITE_SEARCH = [
   { icon: <GraduationCap />, label: "Sanity Studio", description: "Manage blog content", link: "/studio" },
 ];
 
-export default function SiteSpotlight({ open, onOpenChange }) {
+/** @param {{ open?: boolean; onOpenChange?: (value: boolean | ((prev: boolean) => boolean)) => void }} [props] */
+export default function SiteSpotlight({ open, onOpenChange } = {}) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = open ?? internalOpen;
 
