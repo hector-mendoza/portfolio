@@ -6,7 +6,7 @@ const vouched: Source = { kind: "internal", note: "vouched by Hector" };
 export const caseStudies: CaseStudy[] = [
   {
     slug: slug("orbit"),
-    status: "draft",
+    status: "published",
     title: "Orbit",
     summary:
       "A desktop pet that shows what your Claude Code sessions are doing.",
@@ -49,7 +49,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: slug("vibe-theme"),
-    status: "draft",
+    status: "published",
     title: "Vibe Theme",
     summary:
       "VS Code/Cursor extension with 7 dark themes, plus a landing page with live theme switching.",
@@ -89,10 +89,11 @@ export const caseStudies: CaseStudy[] = [
       width: 1600,
       height: 1000,
     },
+    gallery: [],
   },
   {
     slug: slug("agent-ready"),
-    status: "draft",
+    status: "published",
     title: "agent-ready",
     summary:
       "Makes web apps readable by AI agents — generates robots.txt, llms.txt, sitemaps and more.",
@@ -122,6 +123,7 @@ export const caseStudies: CaseStudy[] = [
       width: 1600,
       height: 1000,
     },
+    gallery: [],
   },
   {
     slug: slug("ai-ops-console"),

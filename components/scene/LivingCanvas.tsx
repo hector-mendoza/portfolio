@@ -3,6 +3,7 @@
 import {
   attachSceneRenderer,
   getSceneCapability,
+  setSceneCanvasMounted,
   setScenePaused,
   useScene,
 } from "@/lib/scene/store";
@@ -53,6 +54,7 @@ export default function LivingCanvas() {
 
     const renderer = createGradientAsciiRenderer();
     renderer.mount(host, dpr);
+    setSceneCanvasMounted(true);
     attachSceneRenderer(renderer);
 
     const offscreenObserver = new IntersectionObserver(
@@ -67,6 +69,7 @@ export default function LivingCanvas() {
     return () => {
       offscreenObserver.disconnect();
       attachSceneRenderer(null);
+      setSceneCanvasMounted(false);
       renderer.dispose();
     };
   }, [ready, phase]);

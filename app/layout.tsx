@@ -5,6 +5,7 @@ import CuelumeProvider from "@/components/cuelume-provider";
 import SiteSpotlight from "@/components/site-spotlight";
 import MotionRoot from "@/components/scene/MotionRoot";
 import LivingCanvasLoader from "@/components/scene/LivingCanvasLoader";
+import SceneHtmlState from "@/components/scene/SceneHtmlState";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -99,7 +100,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-theme="mono" data-mode="light" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="mono"
+      data-mode="light"
+      data-scene="static:pending"
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
@@ -110,6 +117,7 @@ export default function RootLayout({
         className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
         <ErrorBoundary>
+          <SceneHtmlState />
           <CuelumeProvider />
           <ToasterProvider />
           <SiteSpotlight />

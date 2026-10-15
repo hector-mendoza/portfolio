@@ -28,6 +28,7 @@ let uniforms: SceneUniforms = themeUniforms(
 
 let sceneRenderer: SceneRenderer | null = null;
 let sceneLoopRaf = 0;
+let canvasMounted = false;
 
 const sectionElements = new Map<SectionId, Element>();
 const sectionRatios = new Map<SectionId, number>();
@@ -146,6 +147,37 @@ export function attachSceneRenderer(renderer: SceneRenderer | null): void {
   }
   sceneRenderer = renderer;
   reconcileSceneLoop();
+}
+
+export function setSceneCanvasMounted(mounted: boolean): void {
+  if (canvasMounted === mounted) return;
+  canvasMounted = mounted;
+  emit();
+}
+
+export function getSceneDataSceneAttribute(): string {
+  if (typeof window === "undefined") {
+    return "static:pending";
+  }
+  ensureInitialized();
+  if (capability === null) {
+    return "static:pending";
+  }
+  if (capability.kind === "static") {
+    return `static:${capability.reason}`;
+  }
+  if (!canvasMounted || state.phase === "disabled") {
+    return "static:pending";
+  }
+  return "living";
+}
+
+export function useSceneDataSceneAttribute(): string {
+  return useSyncExternalStore(
+    subscribeScene,
+    getSceneDataSceneAttribute,
+    () => "static:pending"
+  );
 }
 
 export function subscribeScene(listener: Listener): () => void {
