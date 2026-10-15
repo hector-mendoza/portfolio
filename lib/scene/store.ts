@@ -2,7 +2,13 @@
 
 import { useSyncExternalStore } from "react";
 import { detectCapability } from "./capability";
-import { DEFAULT_THEME_MAP, themeToUniforms, type SceneUniforms } from "./uniforms";
+import {
+  DEFAULT_THEME_MAP,
+  themeUniforms,
+  type ScenePointer,
+  type SceneUniforms,
+} from "./uniforms";
+import type { SceneRenderer } from "./renderer";
 import type { Capability, SceneState, SectionId } from "./types";
 
 type Listener = () => void;
@@ -13,12 +19,15 @@ let capability: Capability | null = null;
 let state: SceneState = { phase: "idle" };
 let scrollProgress = 0;
 let activeSection: SectionId = "hero";
-let uniforms: SceneUniforms = themeToUniforms(
+let pointer: ScenePointer | null = null;
+let uniforms: SceneUniforms = themeUniforms(
   DEFAULT_THEME_MAP.hero,
   0,
-  0,
-  [1, 1]
+  null
 );
+
+let sceneRenderer: SceneRenderer | null = null;
+let sceneLoopRaf = 0;
 
 const sectionElements = new Map<SectionId, Element>();
 const sectionRatios = new Map<SectionId, number>();
@@ -36,6 +45,7 @@ function applyCapability(cap: Capability) {
   } else if (state.phase === "disabled") {
     state = { phase: "idle" };
   }
+  reconcileSceneLoop();
   emit();
 }
 
@@ -55,12 +65,16 @@ function recomputeRunningSection() {
       state = { phase: "idle" };
       emit();
     }
+    reconcileSceneLoop();
     return;
   }
 
   activeSection = best;
-  const theme = DEFAULT_THEME_MAP[best];
-  uniforms = themeToUniforms(theme, scrollProgress, uniforms.uTime, uniforms.uResolution);
+  uniforms = themeUniforms(
+    DEFAULT_THEME_MAP[best],
+    scrollProgress,
+    pointer
+  );
 
   if (state.phase === "paused") return;
 
@@ -69,7 +83,34 @@ function recomputeRunningSection() {
     section: best,
     progress: scrollProgress,
   };
+  reconcileSceneLoop();
   emit();
+}
+
+function shouldRunSceneLoop(): boolean {
+  if (!sceneRenderer || capability?.kind !== "living") return false;
+  if (state.phase === "paused" || state.phase === "disabled") return false;
+  return true;
+}
+
+function reconcileSceneLoop() {
+  cancelAnimationFrame(sceneLoopRaf);
+  sceneLoopRaf = 0;
+  if (!shouldRunSceneLoop()) {
+    sceneRenderer?.pause();
+    return;
+  }
+
+  const tick = () => {
+    if (!shouldRunSceneLoop()) {
+      sceneLoopRaf = 0;
+      sceneRenderer?.pause();
+      return;
+    }
+    sceneRenderer?.frame(getSceneUniforms());
+    sceneLoopRaf = requestAnimationFrame(tick);
+  };
+  sceneLoopRaf = requestAnimationFrame(tick);
 }
 
 export function initSceneStore(): Capability {
@@ -99,6 +140,14 @@ export function getSceneUniforms(): SceneUniforms {
   return uniforms;
 }
 
+export function attachSceneRenderer(renderer: SceneRenderer | null): void {
+  if (sceneRenderer && sceneRenderer !== renderer) {
+    sceneRenderer.dispose();
+  }
+  sceneRenderer = renderer;
+  reconcileSceneLoop();
+}
+
 export function subscribeScene(listener: Listener): () => void {
   listeners.add(listener);
   return () => listeners.delete(listener);
@@ -115,11 +164,10 @@ export function setScrollProgress(p: number): void {
     pendingScrollProgress = null;
     if (state.phase === "running") {
       state = { ...state, progress: scrollProgress };
-      uniforms = themeToUniforms(
+      uniforms = themeUniforms(
         DEFAULT_THEME_MAP[state.section],
         scrollProgress,
-        uniforms.uTime,
-        uniforms.uResolution
+        pointer
       );
       emit();
     } else {
@@ -128,27 +176,22 @@ export function setScrollProgress(p: number): void {
   });
 }
 
+export function setScenePointer(next: ScenePointer | null): void {
+  pointer = next;
+  uniforms = { ...uniforms, pointer: next };
+}
+
 export function setScenePaused(cause: "hidden" | "offscreen", paused: boolean): void {
   if (capability?.kind !== "living") return;
   if (paused) {
     if (state.phase !== "paused") {
       state = { phase: "paused", cause };
+      reconcileSceneLoop();
       emit();
     }
   } else if (state.phase === "paused" && state.cause === cause) {
     recomputeRunningSection();
   }
-}
-
-export function setUniformTime(time: number): void {
-  uniforms = { ...uniforms, uTime: time };
-}
-
-export function setUniformResolution(width: number, height: number): void {
-  uniforms = {
-    ...uniforms,
-    uResolution: [width, height],
-  };
 }
 
 export function registerSection(id: SectionId, el: Element | null): () => void {

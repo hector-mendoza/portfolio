@@ -10,9 +10,13 @@ export type SceneState =
   | { phase: "paused"; cause: "hidden" | "offscreen" }
   | { phase: "disabled"; capability: Extract<Capability, { kind: "static" }> };
 
+export type Density = "sparse" | "medium" | "dense";
+
 export type SectionTheme = {
+  /** 0–359 */
   hue: number;
   intensity: 0 | 1 | 2 | 3;
+  density: Density;
   flow: "calm" | "drift";
 };
 

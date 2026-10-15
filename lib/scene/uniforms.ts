@@ -1,36 +1,27 @@
 import type { SectionId, SectionTheme, ThemeMap } from "./types";
 
-export const DEFAULT_THEME_MAP: ThemeMap = {
-  hero: { hue: 220, intensity: 2, flow: "drift" },
-  work: { hue: 260, intensity: 2, flow: "calm" },
-  case: { hue: 200, intensity: 3, flow: "drift" },
-  about: { hue: 180, intensity: 1, flow: "calm" },
-  contact: { hue: 240, intensity: 1, flow: "calm" },
-} as const;
+export type ScenePointer = { x: number; y: number };
 
 export type SceneUniforms = {
-  uTime: number;
-  uProgress: number;
-  uHue: number;
-  uIntensity: number;
-  uFlow: number;
-  uResolution: [number, number];
+  theme: SectionTheme;
+  progress: number;
+  pointer: ScenePointer | null;
 };
 
-export function themeToUniforms(
+export const DEFAULT_THEME_MAP: ThemeMap = {
+  hero: { hue: 220, intensity: 1, density: "medium", flow: "drift" },
+  work: { hue: 260, intensity: 1, density: "medium", flow: "calm" },
+  case: { hue: 200, intensity: 1, density: "dense", flow: "drift" },
+  about: { hue: 180, intensity: 1, density: "sparse", flow: "calm" },
+  contact: { hue: 240, intensity: 1, density: "sparse", flow: "calm" },
+} as const;
+
+export function themeUniforms(
   theme: SectionTheme,
   progress: number,
-  time: number,
-  resolution: [number, number]
+  pointer: ScenePointer | null
 ): SceneUniforms {
-  return {
-    uTime: time,
-    uProgress: progress,
-    uHue: theme.hue / 360,
-    uIntensity: theme.intensity / 3,
-    uFlow: theme.flow === "drift" ? 1 : 0,
-    uResolution: resolution,
-  };
+  return { theme, progress, pointer };
 }
 
 export function sectionTheme(
@@ -40,9 +31,8 @@ export function sectionTheme(
   return map[section];
 }
 
-export const INITIAL_UNIFORMS: SceneUniforms = themeToUniforms(
+export const INITIAL_UNIFORMS: SceneUniforms = themeUniforms(
   DEFAULT_THEME_MAP.hero,
   0,
-  0,
-  [1, 1]
+  null
 );
