@@ -30,6 +30,22 @@ export const caseStudies: CaseStudy[] = [
           "One place to see every AI agent session and know when each one finishes.",
       },
     ],
+    cover: {
+      kind: "image",
+      src: "/work/orbit/icon.png",
+      width: 256,
+      height: 256,
+      alt: "Orbit app icon: two pale capsule eyes on a dark navy rounded square",
+    },
+    gallery: [
+      {
+        kind: "image",
+        src: "/work/orbit/running.png",
+        width: 273,
+        height: 108,
+        alt: "Orbit pet idle on the desktop",
+      },
+    ],
   },
   {
     slug: slug("vibe-theme"),
