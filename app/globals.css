@@ -437,8 +437,13 @@
     @apply border-border;
   }
 
+  html {
+    background-color: hsl(var(--background));
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
   }
 }
 

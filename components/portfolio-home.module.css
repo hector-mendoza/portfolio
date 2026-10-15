@@ -5,10 +5,8 @@
   --muted: #626262;
   --line: rgba(5, 5, 5, 0.2);
   position: relative;
-  z-index: 20;
   min-height: 100vh;
   overflow: clip;
-  background: var(--paper);
   color: var(--ink);
 }
 

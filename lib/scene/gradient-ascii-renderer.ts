@@ -23,16 +23,45 @@ export function densityToCellSize(density: Density): number {
   }
 }
 
-function themeToColors(theme: SectionTheme): string[] {
+function hslToRgb01(h: number, s: number, l: number): number[] {
+  const sat = s / 100;
+  const light = l / 100;
+  const c = (1 - Math.abs(2 * light - 1)) * sat;
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+  const m = light - c / 2;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  if (h < 60) [r, g, b] = [c, x, 0];
+  else if (h < 120) [r, g, b] = [x, c, 0];
+  else if (h < 180) [r, g, b] = [0, c, x];
+  else if (h < 240) [r, g, b] = [0, x, c];
+  else if (h < 300) [r, g, b] = [x, 0, c];
+  else [r, g, b] = [c, 0, x];
+  return [r + m, g + m, b + m];
+}
+
+function themeToRgbStops(theme: SectionTheme): number[][] {
   const { hue, intensity } = theme;
   const lit = 12 + intensity * 8;
   const mid = 22 + intensity * 10;
   return [
-    `hsl(${hue} 55% ${lit}%)`,
-    `hsl(${hue} 35% ${mid + 18}%)`,
-    `hsl(${(hue + 24) % 360} 45% ${mid + 8}%)`,
-    `hsl(${(hue + 48) % 360} 50% ${mid}%)`,
+    hslToRgb01(hue, 55, lit),
+    hslToRgb01(hue, 35, mid + 18),
+    hslToRgb01((hue + 24) % 360, 45, mid + 8),
+    hslToRgb01((hue + 48) % 360, 50, mid),
   ];
+}
+
+function densityToGlyphDensity(density: Density): number {
+  switch (density) {
+    case "sparse":
+      return 0.65;
+    case "medium":
+      return 0.8;
+    case "dense":
+      return 0.95;
+  }
 }
 
 function themeFlowValue(theme: SectionTheme): number {
@@ -555,7 +584,8 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   const pointer = { x: 0, y: 0, inside: false };
   let atlas: Atlas | null = null;
   let atlasKey = "";
-  let paletteKey = "";
+  let rampKey = "";
+  let rampCount = DEFAULT_COLORS.length;
   let time = 0;
   let glyphTime = 0;
   let introClock = 1;
@@ -564,25 +594,14 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   let lastFrame = 0;
   let lastPointer: { x: number; y: number } | null = null;
 
-  const colorCache = new Map<string, number[]>();
-  const parseColor = (value: string, probe: CanvasRenderingContext2D | null): number[] => {
-    const key = String(value);
-    const cached = colorCache.get(key);
-    if (cached) return cached;
-    let rgb: number[] = [0, 0, 0];
-    if (probe) {
-      probe.clearRect(0, 0, 1, 1);
-      probe.fillStyle = "#000000";
-      probe.fillStyle = key;
-      probe.fillRect(0, 0, 1, 1);
-      const [r, g, b] = probe.getImageData(0, 0, 1, 1).data;
-      rgb = [r / 255, g / 255, b / 255];
-    }
-    colorCache.set(key, rgb);
-    return rgb;
+  const syncRamp = (theme: SectionTheme) => {
+    const key = `${theme.hue}|${theme.intensity}|${theme.density}`;
+    if (key === rampKey) return;
+    rampKey = key;
+    const stops = themeToRgbStops(theme);
+    rampCount = stops.length;
+    stops.forEach((rgb, i) => ramp.set(toLab(rgb), i * 3));
   };
-
-  let probe: CanvasRenderingContext2D | null = null;
 
   const syncAtlas = () => {
     if (!gl) return;
@@ -601,14 +620,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
       },
       () => undefined
     );
-  };
-
-  const syncPalette = () => {
-    const s = settingsRef;
-    const key = s.colors.join(",");
-    if (key === paletteKey) return;
-    paletteKey = key;
-    s.colors.forEach((color, i) => ramp.set(toLab(parseColor(color, probe)), i * 3));
   };
 
   const bindGlyphs = (program: Program, width: number, height: number) => {
@@ -651,7 +662,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     const s = settingsRef;
     const aspect = view.width / view.height;
     syncAtlas();
-    syncPalette();
     gl.bindVertexArray(vao);
     gl.disable(gl.BLEND);
 
@@ -664,7 +674,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1f(fu.uTime, time);
     gl.uniform1i(fu.uShape, s.shape);
     gl.uniform3fv(fu.uRamp, ramp);
-    gl.uniform1i(fu.uCount, s.colors.length);
+    gl.uniform1i(fu.uCount, rampCount);
     gl.uniform1f(fu.uScale, s.scale);
     gl.uniform1f(fu.uSoftness, s.softness);
     gl.uniform1f(fu.uFlow, s.flow);
@@ -798,13 +808,12 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   };
 
   const applyUniforms = (u: SceneUniforms) => {
-    const colors = themeToColors(u.theme);
+    syncRamp(u.theme);
     const intensity = u.theme.intensity / 3;
     settingsRef = {
       ...settingsRef,
-      colors: colors.length > 1 ? colors : [colors[0], colors[0]],
       cellSize: densityToCellSize(u.theme.density),
-      density: DEFAULT_GLYPH_DENSITY,
+      density: densityToGlyphDensity(u.theme.density),
       flow: themeFlowValue(u.theme),
       scale: 0.95 + u.progress * 0.12,
       variation: u.progress * 0.35,
@@ -834,9 +843,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     fieldTarget = createTarget(gl, 2);
     haloA = createTarget(gl, 1);
     haloB = createTarget(gl, 1);
-    probe = document.createElement("canvas").getContext("2d", {
-      willReadFrequently: true,
-    });
     return true;
   };
 

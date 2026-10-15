@@ -65,7 +65,7 @@ export default function MotionRoot({ children }: MotionRootProps) {
 
   return (
     <RouteTransition>
-      <div className="relative z-10">{children}</div>
+      <div className="relative z-[1]">{children}</div>
     </RouteTransition>
   );
 }
