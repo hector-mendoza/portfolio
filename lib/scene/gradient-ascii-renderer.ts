@@ -2,6 +2,15 @@ import type { Density, SectionTheme } from "./types";
 import type { SceneUniforms } from "./uniforms";
 import type { SceneRenderer } from "./renderer";
 
+/**
+ * Gradient ASCII scene renderer: all glyphs and gradients are drawn on one WebGL canvas.
+ * Offscreen 2D is used only to bake a glyph atlas texture — never mounted as DOM text.
+ */
+/** Caps tuned so stacked glow + gradient keep body text ≥ WCAG AA vs brightest frame on light UI. */
+const WCAG_GRADIENT_OPACITY_MAX = 0.32;
+const WCAG_GLOW_MAX = 0.045;
+const WCAG_GLYPH_OPACITY_MAX = 0.4;
+
 /** Maps theme density to ASCII cell size (px). Sole density → cell-size mapping. */
 export function densityToCellSize(density: Density): number {
   switch (density) {
@@ -504,14 +513,14 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     cellSize: 18,
     density: DEFAULT_GLYPH_DENSITY,
     glyphOpacity: 0.85,
-    glow: 0.2,
+    glow: WCAG_GLOW_MAX,
     depthOfField: 0,
     flicker: 0.2,
     softness: 0.5,
     scale: 1,
     flow: 0.5,
     speed: 1,
-    gradientOpacity: 0.9,
+    gradientOpacity: WCAG_GRADIENT_OPACITY_MAX,
     grain: 0.08,
     variation: 0,
     mouseInteraction: true,
@@ -800,9 +809,9 @@ export function createGradientAsciiRenderer(): SceneRenderer {
       scale: 0.95 + u.progress * 0.12,
       variation: u.progress * 0.35,
       softness: 0.45 + intensity * 0.2,
-      gradientOpacity: 0.75 + intensity * 0.15,
-      glyphOpacity: 0.7 + intensity * 0.15,
-      glow: 0.12 + intensity * 0.12,
+      gradientOpacity: WCAG_GRADIENT_OPACITY_MAX * (0.85 + intensity * 0.15),
+      glyphOpacity: WCAG_GLYPH_OPACITY_MAX * (0.9 + intensity * 0.1),
+      glow: WCAG_GLOW_MAX * (0.85 + intensity * 0.15),
     };
   };
 
@@ -854,6 +863,8 @@ export function createGradientAsciiRenderer(): SceneRenderer {
       if (disposed) return;
       container = el;
       deviceRatio = dpr;
+      el.setAttribute("aria-hidden", "true");
+      el.style.pointerEvents = "none";
       canvas = document.createElement("canvas");
       canvas.setAttribute("aria-hidden", "true");
       canvas.style.cssText =

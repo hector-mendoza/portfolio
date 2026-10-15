@@ -78,9 +78,9 @@ export default function LivingCanvas() {
   return (
     <div
       ref={hostRef}
-      aria-hidden
+      aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500"
-      style={{ opacity: visible ? 1 : 0 }}
+      style={{ opacity: visible ? 1 : 0, pointerEvents: "none" }}
     />
   );
 }

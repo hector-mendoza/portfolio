@@ -21,9 +21,9 @@ export default function SceneStaticPoster({
 }: SceneStaticPosterProps) {
   return (
     <div
-      aria-hidden
+      aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-0"
-      style={{ background: posterGradient(theme) }}
+      style={{ background: posterGradient(theme), pointerEvents: "none" }}
     />
   );
 }
