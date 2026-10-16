@@ -37,7 +37,7 @@ const payload = {
     { title: "Vibe Theme", url: "https://vibetheme.hectormendoza.me", stack: ["Design", "VS Code", "Color Theory"], category: "Design Tool", year: 2026 },
     { title: "Astes", url: "https://astes.com.mx", stack: ["WordPress", "SEO"], category: "Corporate", year: 2024 },
     { title: "Mojito Cocktails", url: "https://gsap-cocktails-hm.vercel.app", stack: ["GSAP", "Next.js", "WebGL"], category: "Creative Dev", year: 2026 },
-    { title: "Our Wedding", url: "http://wedding.hectormendoza.me", stack: ["Next.js", "Tailwind CSS"], category: "Personal", year: 2025 },
+    { title: "Our Wedding", url: "https://wedding.hectormendoza.me", stack: ["Next.js", "Tailwind CSS"], category: "Personal", year: 2025 },
   ],
   social: {
     github: "https://github.com/hector-mendoza",

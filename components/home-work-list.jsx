@@ -1,10 +1,8 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { publishedStudies } from "@/content/case-studies";
 import { projects } from "@/lib/projects";
-import { caseStudyViewTransitionName } from "@/components/transition/RouteTransition";
+import { caseStudyViewTransitionName } from "@/lib/view-transition-names";
 import styles from "./portfolio-home.module.css";
 
 function formatPeriod(period) {

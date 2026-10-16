@@ -2,6 +2,7 @@
 const nextConfig = {
   experimental: {
     useTypeScriptCli: true,
+    optimizePackageImports: ["lucide-react", "lucide"],
   },
   images: {
     unoptimized: true,

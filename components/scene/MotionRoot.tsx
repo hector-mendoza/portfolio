@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  initSceneStore,
+  notifySceneUserActivation,
   setScenePaused,
   setScenePointer,
   setScrollProgress,
@@ -22,44 +22,89 @@ function computeScrollProgress(): number {
 
 export default function MotionRoot({ children }: MotionRootProps) {
   useEffect(() => {
-    initSceneStore();
-
-    const onScroll = () => {
-      setScrollProgress(computeScrollProgress());
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
     const onVisibility = () => {
       setScenePaused("hidden", document.visibilityState === "hidden");
     };
     document.addEventListener("visibilitychange", onVisibility);
     onVisibility();
 
-    const onPointerMove = (event: PointerEvent) => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      if (w <= 0 || h <= 0) return;
-      setScenePointer({
-        x: Math.min(1, Math.max(0, event.clientX / w)),
-        y: Math.min(1, Math.max(0, event.clientY / h)),
-      });
-    };
-    const onPointerLeave = () => setScenePointer(null);
-
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    document.documentElement.addEventListener("pointerleave", onPointerLeave, {
-      passive: true,
-    });
-
     return () => {
-      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("visibilitychange", onVisibility);
-      window.removeEventListener("pointermove", onPointerMove);
-      document.documentElement.removeEventListener(
-        "pointerleave",
-        onPointerLeave
-      );
+    };
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    let teardown: (() => void) | undefined;
+
+    const attach = () => {
+      if (cancelled) return;
+
+      const onScroll = () => {
+        notifySceneUserActivation();
+        setScrollProgress(computeScrollProgress());
+      };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+
+      let pendingPointer: { x: number; y: number } | null = null;
+      let pointerRaf: number | null = null;
+
+      const flushPointer = () => {
+        pointerRaf = null;
+        setScenePointer(pendingPointer);
+      };
+
+      const onPointerMove = (event: PointerEvent) => {
+        notifySceneUserActivation();
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        if (w <= 0 || h <= 0) return;
+        pendingPointer = {
+          x: Math.min(1, Math.max(0, event.clientX / w)),
+          y: Math.min(1, Math.max(0, event.clientY / h)),
+        };
+        if (pointerRaf === null) {
+          pointerRaf = requestAnimationFrame(flushPointer);
+        }
+      };
+      const onPointerLeave = () => {
+        pendingPointer = null;
+        if (pointerRaf === null) {
+          pointerRaf = requestAnimationFrame(flushPointer);
+        }
+      };
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      document.documentElement.addEventListener("pointerleave", onPointerLeave, {
+        passive: true,
+      });
+
+      teardown = () => {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("pointermove", onPointerMove);
+        document.documentElement.removeEventListener(
+          "pointerleave",
+          onPointerLeave
+        );
+        if (pointerRaf !== null) cancelAnimationFrame(pointerRaf);
+      };
+    };
+
+    if (typeof requestIdleCallback !== "undefined") {
+      const id = requestIdleCallback(attach, { timeout: 1200 });
+      return () => {
+        cancelled = true;
+        cancelIdleCallback(id);
+        teardown?.();
+      };
+    }
+
+    const id = window.setTimeout(attach, 200);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(id);
+      teardown?.();
     };
   }, []);
 

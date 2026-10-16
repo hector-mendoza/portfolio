@@ -1,21 +1,36 @@
 import { Outfit, JetBrains_Mono } from "next/font/google";
-import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
-import CuelumeProvider from "@/components/cuelume-provider";
-import SiteSpotlight from "@/components/site-spotlight";
+import DeferredLayoutClients from "@/components/deferred-layout-clients";
+import DeferredToaster from "@/components/deferred-toaster";
+import LayoutSceneShell from "@/components/layout-scene-shell";
 import MotionRoot from "@/components/scene/MotionRoot";
-import LivingCanvasLoader from "@/components/scene/LivingCanvasLoader";
-import SceneHtmlState from "@/components/scene/SceneHtmlState";
 import "./globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  weight: ["600"],
+  display: "swap",
+  adjustFontFallback: true,
+  preload: true,
+});
+
+const outfitBody = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit-body",
+  weight: ["400", "500"],
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  weight: ["600"],
+  display: "swap",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 export const metadata = {
@@ -114,14 +129,12 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${outfit.variable} ${outfitBody.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
         <ErrorBoundary>
-          <SceneHtmlState />
-          <CuelumeProvider />
-          <ToasterProvider />
-          <SiteSpotlight />
-          <LivingCanvasLoader />
+          <LayoutSceneShell />
+          <DeferredLayoutClients />
+          <DeferredToaster />
           <MotionRoot>{children}</MotionRoot>
         </ErrorBoundary>
       </body>

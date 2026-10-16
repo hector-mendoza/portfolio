@@ -59,7 +59,3 @@ export default function RouteTransition({ children }: RouteTransitionProps) {
   return <div className="route-transition-root">{children}</div>;
 }
 
-/** Morph key for case studies: view-transition-name: case-${slug} (slug only). */
-export function caseStudyViewTransitionName(slug: string): string {
-  return `case-${slug}`;
-}

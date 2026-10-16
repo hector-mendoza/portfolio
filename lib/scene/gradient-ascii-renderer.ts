@@ -610,6 +610,9 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   let lastFrame = 0;
   let lastPointer: { x: number; y: number } | null = null;
   let frameUniforms: SceneUniforms = INITIAL_UNIFORMS;
+  const mobileCoarse =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px)").matches;
 
   const syncRamp = (theme: SectionTheme) => {
     const key = `${theme.hue}|${theme.intensity}|${theme.density}`;
@@ -628,15 +631,22 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     atlasKey = key;
     if (atlas) gl.deleteTexture(atlas.texture);
     atlas = buildAtlas(gl, s.characters, s.fontFamily);
-    document.fonts?.load?.(`300 64px ${s.fontFamily}`, s.characters).then(
-      () => {
-        if (disposed || !gl || atlasKey !== key) return;
-        if (atlas) gl.deleteTexture(atlas.texture);
-        atlas = buildAtlas(gl, s.characters, s.fontFamily);
-        draw();
-      },
-      () => undefined
-    );
+    const refreshAtlasAfterFonts = () => {
+      document.fonts?.load?.(`300 64px ${s.fontFamily}`, s.characters).then(
+        () => {
+          if (disposed || !gl || atlasKey !== key) return;
+          if (atlas) gl.deleteTexture(atlas.texture);
+          atlas = buildAtlas(gl, s.characters, s.fontFamily);
+          draw();
+        },
+        () => undefined
+      );
+    };
+    if (typeof requestIdleCallback !== "undefined") {
+      requestIdleCallback(refreshAtlasAfterFonts, { timeout: 4000 });
+    } else {
+      refreshAtlasAfterFonts();
+    }
   };
 
   const bindGlyphs = (program: Program, width: number, height: number) => {
@@ -717,7 +727,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1f(fu.uHeroScrambleBoost, heroScramble);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    const glowing = s.glow > 0.001;
+    const glowing = !mobileCoarse && s.glow > 0.001;
     if (glowing) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, haloA.framebuffer);
       gl.drawBuffers([gl.COLOR_ATTACHMENT0]);
@@ -762,14 +772,16 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     view.ratio = Math.min(settingsRef.dpr ?? deviceRatio, 2);
     canvas.width = Math.max(1, Math.round(view.width * view.ratio));
     canvas.height = Math.max(1, Math.round(view.height * view.ratio));
+    const fieldDivisor = mobileCoarse ? 3 : 2;
     sizeTarget(
       gl,
       fieldTarget,
-      Math.max(1, Math.round(canvas.width / 2)),
-      Math.max(1, Math.round(canvas.height / 2))
+      Math.max(1, Math.round(canvas.width / fieldDivisor)),
+      Math.max(1, Math.round(canvas.height / fieldDivisor))
     );
-    const haloWidth = Math.max(1, Math.round(canvas.width / 4));
-    const haloHeight = Math.max(1, Math.round(canvas.height / 4));
+    const haloDivisor = mobileCoarse ? 6 : 4;
+    const haloWidth = Math.max(1, Math.round(canvas.width / haloDivisor));
+    const haloHeight = Math.max(1, Math.round(canvas.height / haloDivisor));
     sizeTarget(gl, haloA, haloWidth, haloHeight);
     sizeTarget(gl, haloB, haloWidth, haloHeight);
     draw();

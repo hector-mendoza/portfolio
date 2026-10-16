@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { initSceneStore } from "@/lib/scene/store";
 import { useEffect, useState } from "react";
 
 const LivingCanvas = dynamic(() => import("./LivingCanvas"), {
@@ -13,7 +14,9 @@ export default function LivingCanvasLoader() {
   useEffect(() => {
     let cancelled = false;
     const mount = () => {
-      if (!cancelled) setSceneMounted(true);
+      if (cancelled) return;
+      initSceneStore();
+      setSceneMounted(true);
     };
 
     if (typeof requestIdleCallback !== "undefined") {
