@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import SplitText from 'gsap/SplitText';
 import { cn } from '@/lib/utils';
+import { TEXT_FILL_PRIMARY } from '@/lib/react-bits-default-colors';
 import './text-fill-animation.css';
 
 const SPLIT_CHARACTER_SELECTOR = '.split-chars';
@@ -30,7 +31,7 @@ if (typeof window !== 'undefined') {
 export function TextFillAnimation({
   text = 'Build thoughtful interfaces, bring your ideas to life, and make every interaction feel right with ObsidianUI.',
   textColor = 'var(--foreground)',
-  primaryColor = '#ff6b00',
+  primaryColor = TEXT_FILL_PRIMARY,
   dimColor = 'color-mix(in srgb, var(--foreground) 20%, var(--background))',
   backgroundColor = 'var(--background)',
   className = '',

@@ -25,6 +25,8 @@ describe("detectTier", () => {
     const tier = detectTier();
     expect(tier.kind).toBe("calm");
     expect(tier.fps).toBe(24);
+    expect(tier.scale).toBe(0.5);
+    expect(tier.dprCap).toBe(1);
   });
 
   it("returns calm for innerWidth under 768", () => {

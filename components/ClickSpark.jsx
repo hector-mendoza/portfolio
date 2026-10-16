@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useCallback } from "react";
+import { CLICK_SPARK_CANVAS } from "@/lib/react-bits-default-colors";
 import {
   cancelAnimationFrame as scheduleCancelAnimationFrame,
   noteEffectRafPending,
@@ -10,7 +11,7 @@ import {
 const EFFECT_SOURCE = "components/ClickSpark.jsx";
 
 const ClickSpark = ({
-  sparkColor = "#fff",
+  sparkColor = CLICK_SPARK_CANVAS,
   sparkSize = 10,
   sparkRadius = 15,
   sparkCount = 8,

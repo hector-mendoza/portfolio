@@ -39,7 +39,9 @@ export default function HomeWorkList() {
         );
       })}
 
-      <p className={styles.moreWorkLabel}>More work</p>
+      <h3 className={styles.moreWorkLabel} id="more-work-heading">
+        More work
+      </h3>
 
       {projects.map((project) => {
         index += 1;

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 
-const ORIGIN = process.env.LH_ORIGIN ?? "http://127.0.0.1:3000";
+const ORIGIN = process.env.LH_ORIGIN ?? "http://localhost:3000";
 const RUNS = Number(process.env.LH_RUNS ?? "3");
 
 function topMainThreadCosts(report, limit = 3) {
@@ -30,11 +30,19 @@ function runOnce(index) {
   const perf = report.categories.performance.score * 100;
   const lcp = report.audits["largest-contentful-paint"].numericValue;
   const tbt = report.audits["total-blocking-time"].numericValue;
+  const cls = report.audits["cumulative-layout-shift"]?.numericValue ?? null;
+  const shiftItems =
+    report.audits["layout-shift-elements"]?.details?.items ?? [];
   const result = {
     run: index + 1,
     score: Math.round(perf),
     lcpMs: Math.round(lcp),
     tbtMs: Math.round(tbt),
+    cls: cls != null ? Math.round(cls * 1000) / 1000 : null,
+    layoutShiftElements: shiftItems.slice(0, 5).map((item) => ({
+      node: item.node?.snippet ?? item.node?.selector ?? "unknown",
+      score: item.score,
+    })),
     mainThreadTop3: topMainThreadCosts(report),
   };
   fs.rmSync(outDir, { recursive: true, force: true });

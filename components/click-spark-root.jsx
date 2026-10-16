@@ -2,19 +2,20 @@
 
 import { useEffect, useState } from "react";
 import ClickSpark from "@/components/ClickSpark";
+import { CLICK_SPARK_FALLBACK } from "@/lib/react-bits-default-colors";
 import { cssVarToColor } from "@/lib/aurora-stops";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
 export default function ClickSparkRoot({ children }) {
   const reducedMotion = usePrefersReducedMotion();
-  const [sparkColor, setSparkColor] = useState("#6b8f78");
+  const [sparkColor, setSparkColor] = useState(CLICK_SPARK_FALLBACK);
 
   useEffect(() => {
     const sync = () => {
       const raw = getComputedStyle(document.documentElement)
         .getPropertyValue("--primary")
         .trim();
-      setSparkColor(cssVarToColor(raw, "#6b8f78"));
+      setSparkColor(cssVarToColor(raw, CLICK_SPARK_FALLBACK));
     };
 
     sync();

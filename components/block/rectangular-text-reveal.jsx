@@ -6,13 +6,13 @@ import { CustomEase } from "gsap/CustomEase";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { cn } from "@/lib/utils";
+import { RECT_REVEAL_BASE as DEFAULT_BASE_COLOR } from "@/lib/react-bits-default-colors";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(SplitText, CustomEase, ScrollTrigger);
 }
 
 const DEFAULT_TAG = "div";
-const DEFAULT_BASE_COLOR = "#ea580c";
 const DEFAULT_OVERLAY_COLOR = "var(--background)";
 const DEFAULT_STAGGER = 0.2;
 const DEFAULT_COVER_DURATION = 0.34;

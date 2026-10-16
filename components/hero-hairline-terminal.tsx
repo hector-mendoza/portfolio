@@ -17,13 +17,13 @@ export default function HeroHairlineTerminal() {
       if (!cancelled) setMounted(true);
     };
     if (typeof requestIdleCallback !== "undefined") {
-      const id = requestIdleCallback(run, { timeout: 4500 });
+      const id = requestIdleCallback(run, { timeout: 800 });
       return () => {
         cancelled = true;
         cancelIdleCallback(id);
       };
     }
-    const id = window.setTimeout(run, 400);
+    const id = window.setTimeout(run, 0);
     return () => {
       cancelled = true;
       window.clearTimeout(id);

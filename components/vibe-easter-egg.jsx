@@ -1,17 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
-const PALETTE = [
-  "#4C1D95", // Deep Violet
-  "#7C3AED", // Electric Violet
-  "#A855F7", // Bright Violet
-  "#D946EF", // Fuchsia Pulse
-  "#EC4899", // Hot Pink
-  "#22D3EE", // Cyan Spark
-  "#818CF8", // Indigo Haze
-  "#C026D3", // Magenta Glow
-];
+import { VIBE_EASTER_EGG_PALETTE as PALETTE } from "@/lib/vibe-easter-egg-palette";
+import {
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+} from "@/lib/scene/schedule";
 
 const STAR_COUNT = 140;
 
@@ -107,7 +101,7 @@ export default function VibeEasterEgg({ active }) {
         ctx.shadowBlur  = 0;
         ctx.globalAlpha = 1;
 
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = scheduleRequestAnimationFrame(draw);
       } else {
         // Fully faded — pause until next hover
         rafRef.current = null;
@@ -116,12 +110,12 @@ export default function VibeEasterEgg({ active }) {
 
     startRef.current = () => {
       if (!rafRef.current) {
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = scheduleRequestAnimationFrame(draw);
       }
     };
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) scheduleCancelAnimationFrame(rafRef.current);
       rafRef.current = null;
       startRef.current = null;
       window.removeEventListener("resize", resize);

@@ -16,6 +16,7 @@ import SpotlightCard from "@/components/SpotlightCard";
 import Magnet from "@/components/Magnet";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import FlipText from "@/components/block/flip-text";
+import { HERO_GLARE } from "@/lib/react-bits-default-colors";
 
 let heroIntroPlayed = false;
 
@@ -79,7 +80,7 @@ export default function HeroSection() {
                   speed={3}
                   delay={1.4}
                   color="hsl(var(--primary))"
-                  shineColor="#ffffff"
+                  shineColor={HERO_GLARE}
                   className="block max-w-full overflow-hidden font-mono text-[10px] uppercase tracking-[0.16em] sm:text-xs sm:tracking-[0.25em]"
                   disabled={reducedMotion}
                 />

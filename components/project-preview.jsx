@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  PROJECT_PREVIEW_GRADIENT_A,
+  PROJECT_PREVIEW_GRADIENT_B,
+} from "@/lib/project-preview-gradients";
 import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 
@@ -64,9 +68,9 @@ export default function ProjectPreview({ project, hovered = false, className, as
         style={{
           background:
             isVibe && hovered
-              ? "linear-gradient(90deg, #4C1D95, #7C3AED, #D946EF, #EC4899, #22D3EE, #818CF8)"
+              ? PROJECT_PREVIEW_GRADIENT_A
               : isEmojiDay && hovered
-                ? "linear-gradient(90deg, #FACC15, #FB923C, #F472B6, #FACC15)"
+                ? PROJECT_PREVIEW_GRADIENT_B
                 : surface.accent,
         }}
       />

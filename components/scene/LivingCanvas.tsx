@@ -8,11 +8,7 @@ import {
   useSceneDisabled,
 } from "@/lib/scene/store";
 import { createGradientAsciiRenderer } from "@/lib/scene/gradient-ascii-renderer";
-import {
-  cancelAnimationFrame as scheduleCancelAnimationFrame,
-  detectTier,
-  requestAnimationFrame as scheduleRequestAnimationFrame,
-} from "@/lib/scene/schedule";
+import { detectTier } from "@/lib/scene/schedule";
 import SceneStaticPoster from "@/components/scene/SceneStaticPoster";
 import { useEffect, useRef, useState } from "react";
 
@@ -20,13 +16,7 @@ export default function LivingCanvas() {
   const disabled = useSceneDisabled();
 
   const hostRef = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    if (disabled) return;
-    const t = scheduleRequestAnimationFrame(() => setVisible(true));
-    return () => scheduleCancelAnimationFrame(t);
-  }, [disabled]);
+  const [visible] = useState(true);
 
   useEffect(() => {
     if (disabled) return;
@@ -66,7 +56,7 @@ export default function LivingCanvas() {
     <div
       ref={hostRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-500"
+      className="pointer-events-none fixed inset-0 z-0"
       style={{ opacity: visible ? 1 : 0, pointerEvents: "none" }}
     />
   );

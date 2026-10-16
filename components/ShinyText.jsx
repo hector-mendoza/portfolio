@@ -2,14 +2,18 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useAnimationFrame, useTransform } from 'motion/react';
+import {
+  SHINY_TEXT_DEFAULT_COLOR,
+  SHINY_TEXT_DEFAULT_SHINE,
+} from '@/lib/react-bits-default-colors';
 
 const ShinyText = ({
   text,
   disabled = false,
   speed = 2,
   className = '',
-  color = '#b5b5b5',
-  shineColor = '#ffffff',
+  color = SHINY_TEXT_DEFAULT_COLOR,
+  shineColor = SHINY_TEXT_DEFAULT_SHINE,
   spread = 120,
   yoyo = false,
   pauseOnHover = false,

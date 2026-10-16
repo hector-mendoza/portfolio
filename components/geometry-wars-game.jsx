@@ -2,6 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  GEOMETRY_WARS_CANVAS,
+  GEOMETRY_WARS_NEON,
+  GEOMETRY_WARS_POWERUP_COLORS,
+} from "@/lib/game-neon-colors";
+import {
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+} from "@/lib/scene/schedule";
 
 const CHASE_SPEED_MIN = 1.9;
 const CHASE_SPEED_MAX = 3.2;
@@ -24,13 +33,13 @@ const POWERUP_LIFETIME_FRAMES = 480;
 const POWERUP_EFFECT_FRAMES = 360;
 const HIGH_SCORE_KEY = "portfolio-geo-wars-grid-high-score";
 
-const NEON_COLORS = ["#00E5FF", "#FF2E9A", "#7CFF6B", "#FFD23F", "#B24BFF", "#FF7A29", "#4DFFDF"];
+const NEON_COLORS = GEOMETRY_WARS_NEON;
 
 const POWERUP_DEFS = {
-  rapid: { color: "#FFD23F", label: "R", name: "Rapid Fire" },
-  shield: { color: "#00E5FF", label: "S", name: "Shield" },
-  multi: { color: "#FF2E9A", label: "M", name: "Multi-Shot" },
-  life: { color: "#7CFF6B", label: "+", name: "Extra Life" },
+  rapid: { color: GEOMETRY_WARS_POWERUP_COLORS.rapid, label: "R", name: "Rapid Fire" },
+  shield: { color: GEOMETRY_WARS_POWERUP_COLORS.shield, label: "S", name: "Shield" },
+  multi: { color: GEOMETRY_WARS_POWERUP_COLORS.multi, label: "M", name: "Multi-Shot" },
+  life: { color: GEOMETRY_WARS_POWERUP_COLORS.life, label: "+", name: "Extra Life" },
 };
 const POWERUP_TYPE_LIST = Object.keys(POWERUP_DEFS);
 
@@ -466,8 +475,8 @@ export default function GeometryWarsGame({ open, onClose }) {
       if (s && s.shieldFrames > 0) {
         ctx.save();
         ctx.translate(x, y);
-        ctx.strokeStyle = "#00E5FF";
-        ctx.shadowColor = "#00E5FF";
+        ctx.strokeStyle = GEOMETRY_WARS_CANVAS.accent;
+        ctx.shadowColor = GEOMETRY_WARS_CANVAS.accent;
         ctx.shadowBlur = 12;
         ctx.lineWidth = 2;
         ctx.globalAlpha = 0.5 + Math.sin(s.frame * 0.2) * 0.25;
@@ -502,7 +511,7 @@ export default function GeometryWarsGame({ open, onClose }) {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       if (!s) {
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = scheduleRequestAnimationFrame(draw);
         return;
       }
 
@@ -745,7 +754,7 @@ export default function GeometryWarsGame({ open, onClose }) {
       // Draw bullets — glowing plasma orbs
       s.bullets.forEach((b) => {
         const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, BULLET_RADIUS * 1.8);
-        grad.addColorStop(0, "#ffffff");
+        grad.addColorStop(0, GEOMETRY_WARS_CANVAS.white);
         grad.addColorStop(0.4, lighten(primaryHex, 0.3));
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = grad;
@@ -785,7 +794,7 @@ export default function GeometryWarsGame({ open, onClose }) {
           ctx.font = "bold 13px monospace";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.fillStyle = "#0a0a0a";
+          ctx.fillStyle = GEOMETRY_WARS_CANVAS.fill;
           ctx.shadowBlur = 0;
           ctx.fillText(def.label, 0, 1);
         }
@@ -798,7 +807,7 @@ export default function GeometryWarsGame({ open, onClose }) {
       s.particles.forEach((particle) => {
         ctx.globalAlpha = Math.max(0, particle.life / particle.maxLife);
         const grad = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.size * 1.6);
-        grad.addColorStop(0, "#ffffff");
+        grad.addColorStop(0, GEOMETRY_WARS_CANVAS.white);
         grad.addColorStop(0.45, particle.color);
         grad.addColorStop(1, "rgba(0,0,0,0)");
         ctx.fillStyle = grad;
@@ -811,13 +820,13 @@ export default function GeometryWarsGame({ open, onClose }) {
 
       drawShip();
 
-      rafRef.current = requestAnimationFrame(draw);
+      rafRef.current = scheduleRequestAnimationFrame(draw);
     }
 
-    rafRef.current = requestAnimationFrame(draw);
+    rafRef.current = scheduleRequestAnimationFrame(draw);
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) scheduleCancelAnimationFrame(rafRef.current);
       rafRef.current = null;
       window.removeEventListener("resize", resize);
     };

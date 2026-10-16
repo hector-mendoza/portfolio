@@ -10,7 +10,7 @@ const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
   weight: ["600"],
-  display: "swap",
+  display: "optional",
   adjustFontFallback: true,
   preload: true,
 });
@@ -19,7 +19,7 @@ const outfitBody = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit-body",
   weight: ["400", "500"],
-  display: "swap",
+  display: "optional",
   adjustFontFallback: true,
   preload: false,
 });
@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   weight: ["600"],
-  display: "swap",
+  display: "optional",
   adjustFontFallback: true,
   preload: false,
 });

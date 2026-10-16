@@ -54,12 +54,12 @@ function publishEffectRafMetricsWindow(): void {
       __EFFECT_RAF_TICKS__?: Record<string, number>;
       __EFFECT_RAF_PENDING__?: Record<string, number>;
     }
-  ).__EFFECT_RAF_TICKS = { ...effectRafTicks };
+  ).__EFFECT_RAF_TICKS__ = { ...effectRafTicks };
   (
     window as Window & {
       __EFFECT_RAF_PENDING__?: Record<string, number>;
     }
-  ).__EFFECT_RAF_PENDING = { ...effectRafPending };
+  ).__EFFECT_RAF_PENDING__ = { ...effectRafPending };
 }
 
 function noteEffectTick(source: string): void {
