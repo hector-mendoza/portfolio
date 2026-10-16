@@ -2,7 +2,6 @@
 /**
  * CI guards: centralized rAF policy + no raw author colors in components/.
  */
-import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -92,42 +91,85 @@ const RAF_ALLOW_PATHS = new Set(
   RAF_POLICY.filter((e) => e.status !== "removed").map((e) => e.path)
 );
 
-const RG_IGNORE = [
-  "--no-heading",
-  "--glob",
-  "!node_modules/**",
-  "--glob",
-  "!.next/**",
-  "--glob",
-  "!**/*.test.ts",
-  "--glob",
-  "!**/*.test.tsx",
-  "--glob",
-  "!vitest.setup.js",
-  "--glob",
-  "!scripts/check-guards.mjs",
-];
+const SKIP_DIR_NAMES = new Set(["node_modules", ".next", ".git"]);
 
-function ripgrep(pattern, searchPath, extraGlobs = [], fixed = false) {
-  const args = [
-    ...(fixed ? ["-F"] : []),
-    pattern,
-    searchPath,
-    ...RG_IGNORE,
-    ...extraGlobs.flatMap((g) => ["--glob", g]),
-  ];
-  const result = spawnSync("rg", args, {
-    cwd: root,
-    encoding: "utf8",
-  });
-  if (result.status === 0) {
-    return result.stdout
-      .trim()
-      .split("\n")
-      .filter((line) => line.length > 0);
+const SKIP_FILE_SUFFIXES = [".test.ts", ".test.tsx"];
+
+function shouldSkipFile(relativePath) {
+  if (relativePath === "scripts/check-guards.mjs") return true;
+  if (relativePath === "vitest.setup.js") return true;
+  for (const suffix of SKIP_FILE_SUFFIXES) {
+    if (relativePath.endsWith(suffix)) return true;
   }
-  if (result.status === 1) return [];
-  throw new Error(result.stderr || `rg exited ${result.status}`);
+  return false;
+}
+
+/** @returns {string[]} repo-relative file paths */
+function walkFiles(dirAbs, dirRel = "") {
+  const out = [];
+  let entries;
+  try {
+    entries = fs.readdirSync(dirAbs, { withFileTypes: true });
+  } catch {
+    return out;
+  }
+  for (const ent of entries) {
+    const rel = dirRel ? `${dirRel}/${ent.name}` : ent.name;
+    if (ent.isDirectory()) {
+      if (SKIP_DIR_NAMES.has(ent.name)) continue;
+      out.push(...walkFiles(path.join(dirAbs, ent.name), rel));
+      continue;
+    }
+    if (!ent.isFile()) continue;
+    if (shouldSkipFile(rel)) continue;
+    out.push(rel);
+  }
+  return out;
+}
+
+/**
+ * @param {string} searchRootAbs absolute directory to walk
+ * @param {(line: string, lineIndex: number) => boolean} lineMatches
+ * @returns {string[]} hits as `./path:line:content`
+ */
+function grepTree(searchRootAbs, lineMatches) {
+  const searchRootRel =
+    searchRootAbs === root
+      ? ""
+      : path.relative(root, searchRootAbs).split(path.sep).join("/");
+  const files = walkFiles(searchRootAbs, searchRootRel);
+  const hits = [];
+  for (const rel of files) {
+    const abs = path.join(root, rel);
+    let text;
+    try {
+      text = fs.readFileSync(abs, "utf8");
+    } catch {
+      continue;
+    }
+    if (text.includes("\0")) continue;
+    const lines = text.split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      if (lineMatches(lines[i], i)) {
+        hits.push(`./${rel}:${i + 1}:${lines[i]}`);
+      }
+    }
+  }
+  return hits;
+}
+
+function ripgrep(pattern, searchPath, _extraGlobs = [], fixed = false) {
+  const searchRootAbs = path.isAbsolute(searchPath)
+    ? searchPath
+    : path.join(root, searchPath === "." ? "" : searchPath);
+  if (fixed) {
+    return grepTree(searchRootAbs, (line) => line.includes(pattern));
+  }
+  const re = new RegExp(pattern, "g");
+  return grepTree(searchRootAbs, (line) => {
+    re.lastIndex = 0;
+    return re.test(line);
+  });
 }
 
 function normalizeHit(line) {

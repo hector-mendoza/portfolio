@@ -920,7 +920,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
       antialias: false,
       depth: false,
       stencil: false,
-      preserveDrawingBuffer: true,
     });
     if (!gl) return false;
     field = link(gl, FIELD);
