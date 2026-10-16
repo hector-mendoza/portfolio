@@ -50,5 +50,8 @@ export function resolveHeroPointerScrambleBoost(): number {
   return 0.05;
 }
 
-export const HERO_POINTER_SCRAMBLE_RADIUS_PX = 120;
-export const HERO_POINTER_SCRAMBLE_BOOST = resolveHeroPointerScrambleBoost();
+export const HERO_POINTER_SCRAMBLE_RADIUS_PX = 200;
+export const HERO_POINTER_SCRAMBLE_BOOST = Math.max(
+  resolveHeroPointerScrambleBoost(),
+  0.58
+);

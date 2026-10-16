@@ -361,7 +361,7 @@ vec4 glyphAt(vec2 px) {
   float decode = max(aux.g, 1.0 - aux.r);
   if (decode > 0.02) {
     float frame = floor(uGlyphTime * 20.0);
-    if (hash12(cell * 3.7 + frame * 5.3) < decode * 1.25) index = 1.0 + floor(hash12(cell + frame * 1.37) * (uCount - 1.0));
+    if (hash12(cell * 3.7 + frame * 5.3) < decode * 2.4) index = 1.0 + floor(hash12(cell + frame * 1.37) * (uCount - 1.0));
   }
   float present = step(pick, uDensity * mix(1.0, 0.3 + tone * 1.1, 0.55));
   float cutoff = smoothstep(0.03, 0.1, value);
@@ -426,6 +426,8 @@ void main() {
   float grain = (hash12(gl_FragCoord.xy + uFrame * vec2(17.0, 59.0)) + hash12(gl_FragCoord.xy * 1.31 + uFrame * 7.0) - 1.0) * uGrain;
   float body = clamp(color.a, 0.0, 1.0);
   color.rgb += grain * (0.25 + body) * 0.5;
+  float readSoft = smoothstep(0.78, 0.22, vUv.x) * smoothstep(0.95, 0.45, vUv.y);
+  color.rgb = mix(color.rgb, color.rgb * 0.68 + vec3(0.2), readSoft * 0.28);
   color.a = clamp(color.a, 0.0, 1.0);
   color.rgb = clamp(color.rgb, 0.0, color.a);
   outColor = color;
@@ -805,17 +807,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1f(cu.uGrain, s.grain);
     gl.uniform1f(cu.uFrame, frameSeed);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-
-    if (typeof window !== "undefined" && gl && canvas) {
-      (
-        window as Window & {
-          __PORTFOLIO_QA_READ_CANVAS__?: (
-            context: WebGL2RenderingContext,
-            target: HTMLCanvasElement
-          ) => void;
-        }
-      ).__PORTFOLIO_QA_READ_CANVAS__?.(gl, canvas);
-    }
   };
 
   const resize = () => {

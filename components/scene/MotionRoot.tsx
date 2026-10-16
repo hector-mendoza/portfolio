@@ -1,5 +1,6 @@
 "use client";
 
+import { setGsapScenePaused } from "@/lib/scene/gsap-scheduler";
 import {
   cancelAnimationFrame as scheduleCancelAnimationFrame,
   noteActivity,
@@ -10,6 +11,7 @@ import {
   setScenePaused,
   setScenePointer,
   setScrollProgress,
+  wakeCalmSceneLoopFromUserInput,
 } from "@/lib/scene/store";
 import { useEffect, type ReactNode } from "react";
 import RouteTransition from "@/components/transition/RouteTransition";
@@ -30,6 +32,7 @@ export default function MotionRoot({ children }: MotionRootProps) {
     const onVisibility = () => {
       const hidden = document.visibilityState === "hidden";
       setSceneSchedulerPaused(hidden);
+      setGsapScenePaused(hidden);
       setScenePaused("hidden", hidden);
     };
     document.addEventListener("visibilitychange", onVisibility);
@@ -47,10 +50,21 @@ export default function MotionRoot({ children }: MotionRootProps) {
     const attach = () => {
       if (cancelled) return;
 
-      const onScroll = () => {
-        setScrollProgress(computeScrollProgress());
+      const onScrollCapture = () => {
+        wakeCalmSceneLoopFromUserInput();
       };
-      onScroll();
+      window.addEventListener("scroll", onScrollCapture, {
+        passive: true,
+        capture: true,
+      });
+
+      const onScroll = (event: Event) => {
+        if (event.isTrusted) {
+          wakeCalmSceneLoopFromUserInput();
+        }
+        setScrollProgress(computeScrollProgress(), event.isTrusted);
+      };
+      setScrollProgress(computeScrollProgress(), false);
       window.addEventListener("scroll", onScroll, { passive: true });
 
       let pendingPointer: { x: number; y: number } | null = null;
@@ -62,6 +76,9 @@ export default function MotionRoot({ children }: MotionRootProps) {
       };
 
       const onPointerMove = (event: PointerEvent) => {
+        if (event.isTrusted) {
+          wakeCalmSceneLoopFromUserInput();
+        }
         noteActivity(performance.now());
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -81,14 +98,23 @@ export default function MotionRoot({ children }: MotionRootProps) {
         }
       };
 
+      const onTouchStart = (event: TouchEvent) => {
+        if (event.isTrusted) {
+          wakeCalmSceneLoopFromUserInput();
+        }
+      };
+
       window.addEventListener("pointermove", onPointerMove, { passive: true });
       document.documentElement.addEventListener("pointerleave", onPointerLeave, {
         passive: true,
       });
+      window.addEventListener("touchstart", onTouchStart, { passive: true });
 
       teardown = () => {
+        window.removeEventListener("scroll", onScrollCapture, { capture: true });
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("pointermove", onPointerMove);
+        window.removeEventListener("touchstart", onTouchStart);
         document.documentElement.removeEventListener(
           "pointerleave",
           onPointerLeave

@@ -16,6 +16,11 @@ export const RAF_POLICY = [
     reason: "Single native requestAnimationFrame loop for the scene scheduler.",
   },
   {
+    path: "lib/scene/gsap-scheduler.ts",
+    status: "removed",
+    reason: "GSAP updates run from scene loop tickGsapScene(); no direct rAF.",
+  },
+  {
     path: "lib/scene/store.ts",
     status: "subscribed",
     reason: "Scene draw loop uses schedule.subscribe(); scroll coalescing uses schedule.requestAnimationFrame.",
@@ -207,6 +212,7 @@ function report(title, lines) {
 const rafHits = ripgrep("requestAnimationFrame", ".", [], true);
 const rafViolations = rafHits.filter((hit) => {
   const file = normalizeHit(hit);
+  if (file.startsWith("scripts/")) return false;
   if (file === "lib/scene/schedule.ts") return false;
   return !RAF_ALLOW_PATHS.has(file);
 });
@@ -228,6 +234,16 @@ const hexHits = ripgrep("#[0-9a-fA-F]{3,8}\\b", componentsDir, [], false).filter
   (line) => !isAllowedHexInCss(line) && !isAllowedColorLine(line)
 );
 report("Raw #hex in components/", hexHits);
+
+const shippedDirs = ["lib", "components", "app"].map((d) => path.join(root, d));
+const qaFlagPatterns = ["__PORTFOLIO_QA", "__PLAYWRIGHT", "webdriver"];
+for (const flag of qaFlagPatterns) {
+  const hits = [];
+  for (const dir of shippedDirs) {
+    hits.push(...ripgrep(flag, dir, [], true));
+  }
+  report(`Test-only flag ${flag} in shipped source`, hits);
+}
 
 if (failed) {
   console.error("\ncheck:guards failed.\n");

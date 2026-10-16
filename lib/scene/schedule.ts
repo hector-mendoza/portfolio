@@ -23,6 +23,8 @@ let nextOneShotId = 1;
 
 let nativeRafScheduleCount = 0;
 let nativeRafTickCount = 0;
+let nativeDelayTimeout: ReturnType<typeof setTimeout> | null = null;
+let schedulerMaxFps = 60;
 
 /** Playwright / QA: tick counts attributed to allowlisted effect sources. */
 const effectRafTicks: Record<string, number> = {};
@@ -116,6 +118,10 @@ export function __test_resetScheduleState(): void {
     globalThis.cancelAnimationFrame(nativeRafId);
     nativeRafId = null;
   }
+  if (nativeDelayTimeout !== null) {
+    globalThis.clearTimeout(nativeDelayTimeout);
+    nativeDelayTimeout = null;
+  }
   subscribers.clear();
   oneShots.clear();
   nativeRafScheduleCount = 0;
@@ -156,6 +162,30 @@ export function markDraw(
   budget.targetFps = effectiveTargetFps(tier, act, now);
 }
 
+/** Scene loop sets the max native scheduler rate (idle 4 fps, calm 24, full 60). */
+export function setSchedulerMaxFps(fps: number): void {
+  schedulerMaxFps = Math.max(1, fps);
+}
+
+function clearNativeScheduleHandles(): void {
+  if (nativeRafId !== null) {
+    globalThis.cancelAnimationFrame(nativeRafId);
+    nativeRafId = null;
+  }
+  if (nativeDelayTimeout !== null) {
+    globalThis.clearTimeout(nativeDelayTimeout);
+    nativeDelayTimeout = null;
+  }
+}
+
+function nativeTickIntervalMs(now: number): number {
+  if (oneShots.size > 0) return 0;
+  const act = getActivity(now);
+  const fps =
+    act.kind === "active" ? schedulerMaxFps : IDLE_FPS;
+  return 1000 / fps;
+}
+
 function publishDebug(): void {
   if (typeof window === "undefined") return;
   (
@@ -172,7 +202,8 @@ function publishDebug(): void {
       __SCHEDULE_NATIVE_RAF_SCHEDULES?: number;
       __SCHEDULE_NATIVE_RAF_TICKS?: number;
     }
-  ).__SCHEDULE_NATIVE_RAF_PENDING = nativeRafId !== null;
+  ).__SCHEDULE_NATIVE_RAF_PENDING =
+    nativeRafId !== null || nativeDelayTimeout !== null;
   (
     window as Window & {
       __SCHEDULE_NATIVE_RAF_SCHEDULES?: number;
@@ -187,11 +218,29 @@ function publishDebug(): void {
 
 function scheduleNativeIfNeeded(): void {
   if (scenePaused) return;
-  if (nativeRafId !== null) return;
+  if (nativeRafId !== null || nativeDelayTimeout !== null) return;
   if (subscribers.size === 0 && oneShots.size === 0) return;
-  nativeRafScheduleCount += 1;
-  nativeRafId = globalThis.requestAnimationFrame(nativeTick);
-  publishDebug();
+
+  const delayMs = nativeTickIntervalMs(
+    typeof performance !== "undefined" ? performance.now() : 0
+  );
+
+  const armRaf = () => {
+    nativeRafScheduleCount += 1;
+    nativeRafId = globalThis.requestAnimationFrame(nativeTick);
+    publishDebug();
+  };
+
+  if (delayMs > 4) {
+    nativeDelayTimeout = globalThis.setTimeout(() => {
+      nativeDelayTimeout = null;
+      armRaf();
+    }, delayMs);
+    publishDebug();
+    return;
+  }
+
+  armRaf();
 }
 
 function nativeTick(now: number): void {
@@ -220,10 +269,9 @@ function nativeTick(now: number): void {
 /** Scene hidden/offscreen: cancel native rAF and schedule nothing until resumed. */
 export function setSceneSchedulerPaused(paused: boolean): void {
   scenePaused = paused;
-  if (paused && nativeRafId !== null) {
-    globalThis.cancelAnimationFrame(nativeRafId);
-    nativeRafId = null;
-  } else if (!paused) {
+  if (paused) {
+    clearNativeScheduleHandles();
+  } else {
     scheduleNativeIfNeeded();
   }
   publishDebug();

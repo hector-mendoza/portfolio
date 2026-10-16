@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import styles from "./hairline-figure.module.css";
+import slotStyles from "./deferred-below-fold-hairline.module.css";
 
 const HairlinePlot = dynamic(
   () => import("@/components/hairline-terminal").then((m) => ({ default: m.HairlinePlot })),
@@ -40,6 +42,18 @@ type DeferredBelowFoldHairlineProps = {
     | "keyboard-dark";
 };
 
+function HairlineSlotPlaceholder({ which }: { which: DeferredBelowFoldHairlineProps["which"] }) {
+  return (
+    <div
+      className={`${slotStyles.slot} ${slotStyles[which]}`}
+      aria-hidden="true"
+      data-hairline-slot={which}
+    >
+      <div className={styles.figure} style={{ width: "100%", aspectRatio: "5 / 4" }} />
+    </div>
+  );
+}
+
 export function DeferredBelowFoldHairline({ which }: DeferredBelowFoldHairlineProps) {
   const [ready, setReady] = useState(false);
 
@@ -62,24 +76,42 @@ export function DeferredBelowFoldHairline({ which }: DeferredBelowFoldHairlinePr
     };
   }, []);
 
-  if (!ready) return null;
+  if (!ready) {
+    return <HairlineSlotPlaceholder which={which} />;
+  }
 
   switch (which) {
     case "plot-riffle":
       return (
-        <>
+        <div className={`${slotStyles.slot} ${slotStyles["plot-riffle"]}`}>
           <HairlinePlot />
           <HairlineRiffle />
-        </>
+        </div>
       );
     case "branches":
-      return <HairlineBranches />;
+      return (
+        <div className={`${slotStyles.slot} ${slotStyles.branches}`}>
+          <HairlineBranches />
+        </div>
+      );
     case "cabinet":
-      return <HairlineCabinet />;
+      return (
+        <div className={`${slotStyles.slot} ${slotStyles.cabinet}`}>
+          <HairlineCabinet />
+        </div>
+      );
     case "phone":
-      return <HairlinePhone />;
+      return (
+        <div className={`${slotStyles.slot} ${slotStyles.phone}`}>
+          <HairlinePhone />
+        </div>
+      );
     case "keyboard-dark":
-      return <HairlineKeyboard theme="dark" />;
+      return (
+        <div className={`${slotStyles.slot} ${slotStyles["keyboard-dark"]}`}>
+          <HairlineKeyboard theme="dark" />
+        </div>
+      );
     default:
       return null;
   }

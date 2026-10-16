@@ -1,4 +1,8 @@
 import { chromium } from "playwright";
+import {
+  NATIVE_RAF_COUNTER_INIT,
+  sampleNativeRafDelta,
+} from "./native-raf-counter-init.mjs";
 
 const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 const IDLE_MS = 2000;
@@ -120,6 +124,7 @@ async function main() {
     viewport: { width: 1280, height: 800 },
   });
   const page = await context.newPage();
+  await page.addInitScript(NATIVE_RAF_COUNTER_INIT);
 
   await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });
   await page.waitForFunction(
@@ -195,6 +200,13 @@ async function main() {
   }
   if (hiddenProbe.schedulePending) {
     throw new Error("Expected scheduler native rAF cleared while hidden");
+  }
+
+  const hiddenNativeRaf = await sampleNativeRafDelta(page, SAMPLE_MS);
+  if (hiddenNativeRaf.delta !== 0) {
+    throw new Error(
+      `Hidden tab must have 0 native rAF calls; got ${hiddenNativeRaf.delta}`
+    );
   }
 
   const hiddenSample = await sampleDelta(page, SAMPLE_MS);

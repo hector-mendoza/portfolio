@@ -1,44 +1,23 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
 import styles from "./hairline-figure.module.css";
+
+function HeroHairlinePlaceholder() {
+  return (
+    <div
+      className={styles.figure}
+      aria-hidden="true"
+      style={{ width: "100%", aspectRatio: "5 / 4", maxHeight: "320px" }}
+    />
+  );
+}
 
 const HairlineTerminal = dynamic(() => import("@/components/hairline-terminal"), {
   ssr: false,
+  loading: HeroHairlinePlaceholder,
 });
 
 export default function HeroHairlineTerminal() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    const run = () => {
-      if (!cancelled) setMounted(true);
-    };
-    if (typeof requestIdleCallback !== "undefined") {
-      const id = requestIdleCallback(run, { timeout: 800 });
-      return () => {
-        cancelled = true;
-        cancelIdleCallback(id);
-      };
-    }
-    const id = window.setTimeout(run, 0);
-    return () => {
-      cancelled = true;
-      window.clearTimeout(id);
-    };
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div
-        className={styles.figure}
-        aria-hidden="true"
-        style={{ minHeight: "clamp(220px, 32vh, 360px)" }}
-      />
-    );
-  }
-
   return <HairlineTerminal />;
 }

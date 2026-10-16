@@ -1,0 +1,26 @@
+.slot {
+  width: min(100%, 220px);
+  margin-left: auto;
+  contain: layout size;
+}
+
+.plot-riffle {
+  min-height: 360px;
+}
+
+.branches {
+  min-height: 280px;
+}
+
+.cabinet {
+  min-height: 280px;
+}
+
+.phone {
+  min-height: 320px;
+}
+
+.keyboard-dark {
+  width: min(100%, 280px);
+  min-height: 220px;
+}

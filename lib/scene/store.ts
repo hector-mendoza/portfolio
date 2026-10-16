@@ -11,16 +11,19 @@ import {
 import type { SceneRenderer } from "./renderer";
 import {
   detectTier,
+  effectiveTargetFps,
   getActivity,
   getNativeRafPending,
   markDraw,
   noteActivity,
-  requestAnimationFrame as scheduleRequestAnimationFrame,
   setSceneSchedulerPaused,
+  setSchedulerMaxFps,
   shouldDraw,
   subscribe,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
   type FrameBudget,
 } from "./schedule";
+import { installGsapOnSceneScheduler, tickGsapScene } from "./gsap-scheduler";
 import type { Capability, SceneState, SectionId } from "./types";
 
 type Listener = () => void;
@@ -47,6 +50,8 @@ let pauseOffscreen = false;
 
 let frameCallCount = 0;
 const frameBudget: FrameBudget = { targetFps: 60, lastDraw: -1 };
+/** Calm tier: mount/resize paints once; rAF loop stays off until scroll/pointer/touch. */
+let calmSceneAwaitingUserInput = false;
 /** Hold the rAF loop until LCP (or timeout) so hero text is not competing with WebGL on the main thread. */
 let sceneLoopGateOpen = false;
 let sceneLoopGateScheduled = false;
@@ -69,12 +74,32 @@ function shouldRunSceneLoop(): boolean {
   if (state.phase === "disabled") return false;
   if (!sceneLoopGateOpen) return false;
   if (isScenePausedByCause() || state.phase === "paused") return false;
+  if (calmSceneAwaitingUserInput) return false;
   return true;
+}
+
+function syncCalmFirstFrameHold(): void {
+  if (typeof window === "undefined") return;
+  if (detectTier().kind !== "calm") {
+    calmSceneAwaitingUserInput = false;
+    return;
+  }
+  calmSceneAwaitingUserInput = true;
+}
+
+/** First scroll, pointer, or touch on calm tier starts the normal scene loop. */
+export function wakeCalmSceneLoopFromUserInput(): void {
+  if (!calmSceneAwaitingUserInput) return;
+  calmSceneAwaitingUserInput = false;
+  noteActivity(performance.now());
+  reconcileSceneLoop();
+  scheduleRequestAnimationFrame(() => undefined);
 }
 
 function openSceneLoopGate(): void {
   if (sceneLoopGateOpen) return;
   sceneLoopGateOpen = true;
+  syncCalmFirstFrameHold();
   reconcileSceneLoop();
 }
 
@@ -129,6 +154,9 @@ function sceneLoopTick(now: number): void {
   const tier = detectTier();
   const act = getActivity(now);
   sceneRenderer?.setTier(tier);
+
+  setSchedulerMaxFps(effectiveTargetFps(tier, act, now));
+  tickGsapScene(now);
 
   if (shouldDraw(now, frameBudget, tier, act)) {
     markDraw(now, frameBudget, tier, act);
@@ -229,6 +257,7 @@ function recomputeRunningSection() {
 
 export function initSceneStore(): Capability {
   if (capability) return capability;
+  installGsapOnSceneScheduler();
   const cap = detectCapability();
   applyCapability(cap);
   return cap;
@@ -254,10 +283,12 @@ export function attachSceneRenderer(renderer: SceneRenderer | null): void {
   if (renderer) {
     sceneLoopGateOpen = false;
     sceneLoopGateScheduled = false;
+    syncCalmFirstFrameHold();
     scheduleSceneLoopGate();
   } else {
     sceneLoopGateOpen = false;
     sceneLoopGateScheduled = false;
+    calmSceneAwaitingUserInput = false;
   }
   reconcileSceneLoop();
 }
@@ -297,7 +328,10 @@ export function subscribeScene(listener: Listener): () => void {
   return () => listeners.delete(listener);
 }
 
-export function setScrollProgress(p: number): void {
+export function setScrollProgress(p: number, fromUserInput = false): void {
+  if (fromUserInput) {
+    wakeCalmSceneLoopFromUserInput();
+  }
   noteActivity(performance.now());
   const clamped = Math.min(1, Math.max(0, p));
   pendingScrollProgress = clamped;
@@ -417,10 +451,19 @@ export function __test_resetSceneLoopMetrics(): void {
   frameCallCount = 0;
   frameBudget.lastDraw = -1;
   frameBudget.targetFps = 60;
+  calmSceneAwaitingUserInput = false;
+}
+
+/** @internal Vitest */
+export function __test_wakeCalmSceneLoopFromUserInput(): void {
+  wakeCalmSceneLoopFromUserInput();
 }
 
 /** @internal Vitest — reset module loop state without touching capability detection */
-export function __test_attachMockRenderer(frame: () => void): SceneRenderer {
+export function __test_attachMockRenderer(
+  frame: () => void,
+  tier: "full" | "calm" = "full"
+): SceneRenderer {
   const renderer: SceneRenderer = {
     mount: () => undefined,
     setTier: () => undefined,
@@ -432,7 +475,12 @@ export function __test_attachMockRenderer(frame: () => void): SceneRenderer {
   state = { phase: "running", section: "hero", progress: 0 };
   pauseHidden = false;
   pauseOffscreen = false;
-  noteActivity(performance.now() + 1_000_000);
+  if (tier === "calm") {
+    calmSceneAwaitingUserInput = true;
+  } else {
+    calmSceneAwaitingUserInput = false;
+    noteActivity(performance.now() + 1_000_000);
+  }
   attachSceneRenderer(renderer);
   sceneLoopGateOpen = true;
   sceneLoopGateScheduled = true;

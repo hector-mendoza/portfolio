@@ -32,6 +32,9 @@
 
 .eyebrow,
 .figureIndex {
+  display: block;
+  min-height: calc(0.67rem * 1.4);
+  color: var(--muted);
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.67rem;
   font-weight: 600;
@@ -106,7 +109,9 @@
 }
 
 .heroFigure {
-  min-height: clamp(220px, 32vh, 360px);
+  contain: layout size;
+  min-height: 406px;
+  height: 406px;
   --hairline-plate: var(--paper);
   --hairline-hi: #050505;
   --hairline-edge: #050505;
@@ -125,8 +130,10 @@
 }
 
 .heroFigure p {
+  min-height: calc(0.7rem * 1.45);
   color: var(--muted);
   font-size: 0.7rem;
+  line-height: 1.45;
   text-align: right;
 }
 
@@ -142,6 +149,7 @@
   gap: 4vw;
   align-items: start;
   margin-bottom: clamp(3rem, 7vw, 7rem);
+  min-height: 11rem;
 }
 
 .sectionHeading h2,
@@ -317,8 +325,8 @@
   white-space: nowrap;
 }
 
-.commandCopy code span {
-  color: #777;
+.commandCopy code span[aria-hidden="true"] {
+  color: #f0f0f0;
 }
 
 .commandCopy > a {
