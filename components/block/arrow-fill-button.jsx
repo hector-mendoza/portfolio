@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { ARROW_FILL } from "@/lib/react-bits-default-colors";
 import "./arrow-fill-button.css";
 
 /**
@@ -14,12 +15,12 @@ import "./arrow-fill-button.css";
 export function ArrowFillButton({
   children = "Explore components",
   className = "",
-  bgColor = "#ff6b00",
-  textColor = "#ffffff",
-  fillBgColor = "#ffffff",
-  fillTextColor = "#ff6b00",
-  hoverFillBgColor = "#ffffff",
-  hoverFillTextColor = "#ff6b00",
+  bgColor = ARROW_FILL.bg,
+  textColor = ARROW_FILL.text,
+  fillBgColor = ARROW_FILL.fillBg,
+  fillTextColor = ARROW_FILL.fillText,
+  hoverFillBgColor = ARROW_FILL.hoverFillBg,
+  hoverFillTextColor = ARROW_FILL.hoverFillText,
   arrowColor,
   hoverArrowColor,
   as: Component = "a",

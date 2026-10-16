@@ -389,6 +389,10 @@ var HL = (() => {
   var byStage = /* @__PURE__ */ new Map();
   var raf = 0;
   var last = 0;
+  function scheduleFrame(cb) {
+    var schedule = typeof window !== "undefined" && window.__portfolioScheduleFrame;
+    return schedule ? schedule(cb) : requestAnimationFrame(cb);
+  }
   var io = null;
   var rm = null;
   function frame(now) {
@@ -399,13 +403,13 @@ var HL = (() => {
       b.awake = !!b.tick(dt, now);
       any = any || b.awake;
     }
-    raf = any ? requestAnimationFrame(frame) : 0;
+    raf = any ? scheduleFrame(frame) : 0;
   }
   function wake(b) {
     b.awake = true;
     if (!raf) {
       last = performance.now();
-      raf = requestAnimationFrame(frame);
+      raf = scheduleFrame(frame);
     }
   }
   var onMotion = () => {

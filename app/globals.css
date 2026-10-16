@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @config '../tailwind.config.ts';
 
+html {
+  scrollbar-gutter: stable;
+}
+
 @layer base {
   :root,
   [data-mode="pastel"][data-theme="sage"] {
@@ -437,8 +441,13 @@
     @apply border-border;
   }
 
+  html {
+    background-color: hsl(var(--background));
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
   }
 }
 
@@ -446,6 +455,16 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+[data-portfolio-ui] {
+  --ink: #050505;
+  --paper: #f7f7f5;
+  --accent: #050505;
+  /* 4.5:1 vs darkest composited sample under muted text (~148 gray on work subline) */
+  --fg-secondary: #181818;
+  --muted: var(--fg-secondary);
+  --line: rgba(5, 5, 5, 0.2);
 }
 
 [data-portfolio-ui] :where(a, button) {

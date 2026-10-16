@@ -1,6 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import {
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+} from "@/lib/scene/schedule";
 
 const EMOJIS = ["😀", "😂", "🥳", "😎", "🤯", "😱", "🥹", "😴", "🙃", "🤔", "☀️", "🌙", "🎉", "🫠", "😤", "🥸"];
 
@@ -82,7 +86,7 @@ export default function EmojiDayEasterEgg({ active }) {
         }
 
         ctx.globalAlpha = 1;
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = scheduleRequestAnimationFrame(draw);
       } else {
         rafRef.current = null;
       }
@@ -90,12 +94,12 @@ export default function EmojiDayEasterEgg({ active }) {
 
     startRef.current = () => {
       if (!rafRef.current) {
-        rafRef.current = requestAnimationFrame(draw);
+        rafRef.current = scheduleRequestAnimationFrame(draw);
       }
     };
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) scheduleCancelAnimationFrame(rafRef.current);
       rafRef.current = null;
       startRef.current = null;
       window.removeEventListener("resize", resize);

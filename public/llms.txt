@@ -27,7 +27,7 @@ Hector Mendoza is a Senior Web Developer and Lead Developer with 8+ years of exp
 - [Vibe Theme](https://vibetheme.hectormendoza.me) — VS Code & Cursor theme collection, 8 premium dark themes, MIT licensed, free forever (2026)
 - [Astes](https://astes.com.mx) — Corporate website built with WordPress, SEO-optimized (2024)
 - [Mojito Cocktails](https://gsap-cocktails-hm.vercel.app) — GSAP animation showcase with scroll-driven animations and 3D transforms (2026)
-- [Our Wedding](http://wedding.hectormendoza.me) — Personal wedding website with RSVP management and countdown timer (2025)
+- [Our Wedding](https://wedding.hectormendoza.me) — Personal wedding website with RSVP management and countdown timer (2025)
 
 ## Education
 

@@ -7,6 +7,7 @@ import { ArrowUpRight, SquareArrowOutUpRight } from "lucide";
 import { projectSurface } from "@/lib/use-theme-mode";
 import { cn } from "@/lib/utils";
 import GlareHover from "@/components/GlareHover";
+import { HERO_GLARE } from "@/lib/react-bits-default-colors";
 
 export default function HeroFeaturedCard({
   project,
@@ -38,7 +39,7 @@ export default function HeroFeaturedCard({
       <GlareHover
         overlay
         borderRadius="1.5rem"
-        glareColor="#ffffff"
+        glareColor={HERO_GLARE}
         glareOpacity={0.35}
         className="flex h-full min-h-[inherit] flex-col justify-between p-6"
       >

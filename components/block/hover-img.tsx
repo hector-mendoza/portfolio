@@ -145,7 +145,6 @@ export function HoverImg({ projects = defaultProjects, className, isContained = 
             >
                 {projects.map((project, index) => (
                     <div className="hover-img-thumbnail" key={index}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={project.imageSrc} alt={project.title} />
                     </div>
                 ))}

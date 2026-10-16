@@ -1,14 +1,7 @@
 .page {
-  --ink: #050505;
-  --paper: #f7f7f5;
-  --accent: #050505;
-  --muted: #626262;
-  --line: rgba(5, 5, 5, 0.2);
   position: relative;
-  z-index: 20;
   min-height: 100vh;
   overflow: clip;
-  background: var(--paper);
   color: var(--ink);
 }
 
@@ -32,12 +25,16 @@
   grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.55fr);
   gap: 4vw;
   align-items: end;
+  contain: layout;
   min-height: calc(100vh - 88px);
   padding-block: clamp(4rem, 9vh, 8rem) clamp(3rem, 7vh, 6rem);
 }
 
 .eyebrow,
 .figureIndex {
+  display: block;
+  min-height: calc(0.67rem * 1.4);
+  color: var(--muted);
   font-family: var(--font-jetbrains), monospace;
   font-size: 0.67rem;
   font-weight: 600;
@@ -48,9 +45,11 @@
 
 .hero h1 {
   max-width: 1000px;
+  min-height: 2.05em;
   margin-top: 2rem;
+  font-family: var(--font-outfit), system-ui, sans-serif;
   font-size: clamp(3.4rem, 7.6vw, 8.4rem);
-  font-weight: 550;
+  font-weight: 600;
   letter-spacing: -0.075em;
   line-height: 0.9;
 }
@@ -110,6 +109,9 @@
 }
 
 .heroFigure {
+  contain: layout size;
+  min-height: 406px;
+  height: 406px;
   --hairline-plate: var(--paper);
   --hairline-hi: #050505;
   --hairline-edge: #050505;
@@ -128,8 +130,10 @@
 }
 
 .heroFigure p {
+  min-height: calc(0.7rem * 1.45);
   color: var(--muted);
   font-size: 0.7rem;
+  line-height: 1.45;
   text-align: right;
 }
 
@@ -145,6 +149,7 @@
   gap: 4vw;
   align-items: start;
   margin-bottom: clamp(3rem, 7vw, 7rem);
+  min-height: 11rem;
 }
 
 .sectionHeading h2,
@@ -182,6 +187,20 @@
   width: min(100%, 250px);
   margin-top: -2rem;
   margin-left: auto;
+}
+
+.moreWorkLabel {
+  grid-column: 1 / -1;
+  min-height: 2.75rem;
+  margin: clamp(2rem, 5vw, 3rem) 0 0.5rem;
+  padding-top: clamp(1.5rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-jetbrains), monospace;
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
 }
 
 .projectList {
@@ -306,8 +325,8 @@
   white-space: nowrap;
 }
 
-.commandCopy code span {
-  color: #777;
+.commandCopy code span[aria-hidden="true"] {
+  color: #f0f0f0;
 }
 
 .commandCopy > a {

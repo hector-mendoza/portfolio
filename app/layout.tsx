@@ -1,18 +1,36 @@
 import { Outfit, JetBrains_Mono } from "next/font/google";
-import { ToasterProvider } from "@/components/toaster-provider";
 import ErrorBoundary from "@/components/error-boundary";
-import CuelumeProvider from "@/components/cuelume-provider";
-import SiteSpotlight from "@/components/site-spotlight";
+import DeferredLayoutClients from "@/components/deferred-layout-clients";
+import DeferredToaster from "@/components/deferred-toaster";
+import LayoutSceneShell from "@/components/layout-scene-shell";
+import MotionRoot from "@/components/scene/MotionRoot";
 import "./globals.css";
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
+  weight: ["600"],
+  display: "optional",
+  adjustFontFallback: true,
+  preload: true,
+});
+
+const outfitBody = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit-body",
+  weight: ["400", "500"],
+  display: "optional",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  weight: ["600"],
+  display: "optional",
+  adjustFontFallback: true,
+  preload: false,
 });
 
 export const metadata = {
@@ -64,7 +82,8 @@ const jsonLd = {
   "@type": "Person",
   name: "Hector Mendoza",
   jobTitle: "Head of Web Integrations",
-  description: "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
+  description:
+    "Senior Software Engineer & Lead Developer with 8+ years of experience. Based in Morelia, Mexico.",
   url: "https://www.hectormendoza.me",
   email: "hey@hectormendoza.me",
   sameAs: [
@@ -72,14 +91,37 @@ const jsonLd = {
     "https://www.linkedin.com/in/hector-mendoza-m/",
     "https://www.threads.com/@hectormendozax2",
   ],
-  address: { "@type": "PostalAddress", addressLocality: "Morelia", addressCountry: "MX" },
-  knowsAbout: ["React", "Next.js", "TypeScript", "WordPress", "Shopify", "Node.js", "Tailwind CSS", "Figma"],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Morelia",
+    addressCountry: "MX",
+  },
+  knowsAbout: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "WordPress",
+    "Shopify",
+    "Node.js",
+    "Tailwind CSS",
+    "Figma",
+  ],
   worksFor: { "@type": "Organization", name: "UrVenue" },
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" data-theme="mono" data-mode="light" suppressHydrationWarning>
+    <html
+      lang="en"
+      data-theme="mono"
+      data-mode="light"
+      data-scene="static:pending"
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
@@ -87,13 +129,13 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${outfit.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        className={`${outfit.variable} ${outfitBody.variable} ${jetbrainsMono.variable} font-sans antialiased`}
       >
         <ErrorBoundary>
-          <CuelumeProvider />
-          <ToasterProvider />
-          <SiteSpotlight />
-          {children}
+          <LayoutSceneShell />
+          <DeferredLayoutClients />
+          <DeferredToaster />
+          <MotionRoot>{children}</MotionRoot>
         </ErrorBoundary>
       </body>
     </html>

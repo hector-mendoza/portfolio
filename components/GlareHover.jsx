@@ -2,15 +2,20 @@
 
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import {
+  GLARE_DEFAULT_BG,
+  GLARE_DEFAULT_BORDER,
+  GLARE_DEFAULT_GLARE,
+} from "@/lib/react-bits-default-colors";
 
 const GlareHover = ({
   width = "500px",
   height = "500px",
-  background = "#000",
+  background = GLARE_DEFAULT_BG,
   borderRadius = "10px",
-  borderColor = "#333",
+  borderColor = GLARE_DEFAULT_BORDER,
   children,
-  glareColor = "#ffffff",
+  glareColor = GLARE_DEFAULT_GLARE,
   glareOpacity = 0.5,
   glareAngle = -45,
   glareSize = 250,

@@ -1,15 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/lib/projects";
+import HomeWorkList from "@/components/home-work-list";
+import SectionSceneRegister from "@/components/scene/SectionSceneRegister";
+import { DeferredBelowFoldHairline } from "@/components/deferred-below-fold-hairline";
 import HairlineLogo from "@/components/hairline-logo";
-import HairlineTerminal, {
-  HairlineBranches,
-  HairlineCabinet,
-  HairlineKeyboard,
-  HairlinePhone,
-  HairlinePlot,
-  HairlineRiffle,
-} from "@/components/hairline-terminal";
+import HeroHairlineTerminal from "@/components/hero-hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import ScrollTextReveal from "@/components/scroll-text-reveal";
 import styles from "./portfolio-home.module.css";
 
 export default function PortfolioHome() {
@@ -25,7 +21,8 @@ export default function PortfolioHome() {
     <main className={styles.page} data-portfolio-ui>
       <SiteHeader />
 
-      <section className={styles.hero} id="top">
+      <section id="top" data-section="hero" className={styles.hero}>
+        <SectionSceneRegister id="hero" targetId="top" />
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>Software engineer · Morelia, MX</p>
           <h1>
@@ -47,7 +44,7 @@ export default function PortfolioHome() {
         </div>
         <div className={styles.heroFigure}>
           <span className={styles.figureIndex}>01 / INTERACTIVE SYSTEM</span>
-          <HairlineTerminal />
+          <HeroHairlineTerminal />
           <p>Move your pointer across the system.</p>
         </div>
       </section>
@@ -61,34 +58,13 @@ export default function PortfolioHome() {
               Product engineering, creative development, and client work across
               hospitality, commerce, and the open web.
             </p>
-            <HairlinePlot />
-            <HairlineRiffle />
+            <DeferredBelowFoldHairline which="plot-riffle" />
           </div>
         </div>
-        <div className={styles.projectList}>
-          {projects.map((project, index) => (
-            <a
-              className={styles.project}
-              href={project.url}
-              key={project.title}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className={styles.projectNumber}>
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className={styles.projectTitle}>
-                <strong>{project.title}</strong>
-                <small>{project.subtitle}</small>
-              </span>
-              <span className={styles.projectMeta}>
-                {project.category} · {project.year}
-              </span>
-              <ArrowUpRight aria-hidden="true" />
-            </a>
-          ))}
-        </div>
+        <HomeWorkList />
       </section>
+
+      <ScrollTextReveal />
 
       <section className={styles.commandLab} aria-labelledby="command-title">
         <div className={styles.commandCopy}>
@@ -103,7 +79,7 @@ export default function PortfolioHome() {
             npx skills add lucasmarkes/hairline
           </code>
           <div className={styles.commandKeys}>
-            <HairlineKeyboard theme="dark" />
+            <DeferredBelowFoldHairline which="keyboard-dark" />
           </div>
           <a
             href="https://hairline.lucasmarkes.com/"
@@ -115,7 +91,7 @@ export default function PortfolioHome() {
           </a>
         </div>
         <div className={styles.commandFigure}>
-          <HairlineBranches />
+          <DeferredBelowFoldHairline which="branches" />
           <p>Trace the branch with your pointer.</p>
         </div>
       </section>
@@ -164,7 +140,7 @@ export default function PortfolioHome() {
           <p className={styles.eyebrow}>05 / Experience</p>
           <h2 id="experience-title">A record of making.</h2>
           <div className={styles.headingFigure}>
-            <HairlineCabinet />
+            <DeferredBelowFoldHairline which="cabinet" />
           </div>
         </div>
         <div className={styles.timeline}>
@@ -192,7 +168,7 @@ export default function PortfolioHome() {
           </a>
         </div>
         <div className={styles.contactFigure}>
-          <HairlinePhone />
+          <DeferredBelowFoldHairline which="phone" />
         </div>
       </section>
 

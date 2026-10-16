@@ -8,6 +8,7 @@ import {
   TwitterIcon,
 } from "@animateicons/react/lucide";
 import { sileo } from "sileo";
+import { BLOG_SHARE } from "@/lib/react-bits-default-colors";
 import { play } from "cuelume";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
@@ -16,7 +17,7 @@ function ShareButton({ label, href, onClick, Icon }) {
   const [hovered, setHovered] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
 
-  const iconColor = hovered ? "#f7f7f5" : "#050505";
+  const iconColor = hovered ? BLOG_SHARE.hover : BLOG_SHARE.rest;
 
   const content = (
     <>

@@ -7,7 +7,10 @@ const QUOTE =
 
 export default function ScrollTextReveal() {
   return (
-    <section className="relative overflow-hidden py-20 md:py-40">
+    <section
+      className="relative overflow-hidden py-20 md:py-40"
+      style={{ minHeight: "min(420px, 50vh)" }}
+    >
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden opacity-[0.03]">
         <span className="whitespace-nowrap text-[20vw] font-bold leading-none text-foreground">
           CRAFT
