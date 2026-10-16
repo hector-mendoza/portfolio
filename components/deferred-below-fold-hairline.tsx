@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { useCalmSceneAwaitingInput } from "@/components/use-calm-scene-awaiting-input";
 import styles from "./hairline-figure.module.css";
 import slotStyles from "./deferred-below-fold-hairline.module.css";
 
@@ -55,6 +56,7 @@ function HairlineSlotPlaceholder({ which }: { which: DeferredBelowFoldHairlinePr
 }
 
 export function DeferredBelowFoldHairline({ which }: DeferredBelowFoldHairlineProps) {
+  const calmHold = useCalmSceneAwaitingInput();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -76,7 +78,7 @@ export function DeferredBelowFoldHairline({ which }: DeferredBelowFoldHairlinePr
     };
   }, []);
 
-  if (!ready) {
+  if (calmHold || !ready) {
     return <HairlineSlotPlaceholder which={which} />;
   }
 

@@ -47,6 +47,80 @@ export function darkestPixel(png, step = 2) {
   return darkest;
 }
 
+function nearRgb(a, b, tol = 18) {
+  return (
+    Math.abs(a[0] - b[0]) <= tol &&
+    Math.abs(a[1] - b[1]) <= tol &&
+    Math.abs(a[2] - b[2]) <= tol
+  );
+}
+
+/** Background RGB behind text: opposite-luminance sample in a clip rect. */
+export function backgroundPixelInRegion(png, clip, fgRgb, step = 2) {
+  const { width, height, data } = png;
+  const x0 = Math.max(0, Math.floor(clip.x));
+  const y0 = Math.max(0, Math.floor(clip.y));
+  const x1 = Math.min(width, Math.ceil(clip.x + clip.width));
+  const y1 = Math.min(height, Math.ceil(clip.y + clip.height));
+  if (x1 <= x0 || y1 <= y0) return null;
+  const fgL = relLum(...fgRgb);
+  const darkText = fgL < 0.45;
+  let pick = null;
+  let pickScore = darkText ? Infinity : -Infinity;
+  for (let y = y0; y < y1; y += step) {
+    for (let x = x0; x < x1; x += step) {
+      const i = (width * y + x) << 2;
+      const a = data[i + 3];
+      if (a < 128) continue;
+      const rgb = [data[i], data[i + 1], data[i + 2]];
+      if (nearRgb(rgb, fgRgb, 22)) continue;
+      const l = relLum(...rgb);
+      if (darkText) {
+        if (l <= fgL + 0.06) continue;
+        if (l < pickScore) {
+          pickScore = l;
+          pick = rgb;
+        }
+      } else {
+        if (l >= fgL - 0.06) continue;
+        if (l > pickScore) {
+          pickScore = l;
+          pick = rgb;
+        }
+      }
+    }
+  }
+  if (pick) return pick;
+  return darkestPixelInRegion(png, clip, step, fgRgb);
+}
+
+/** Darkest RGB within a clip rect (viewport coordinates). */
+export function darkestPixelInRegion(png, clip, step = 2, excludeRgb = null) {
+  const { width, height, data } = png;
+  const x0 = Math.max(0, Math.floor(clip.x));
+  const y0 = Math.max(0, Math.floor(clip.y));
+  const x1 = Math.min(width, Math.ceil(clip.x + clip.width));
+  const y1 = Math.min(height, Math.ceil(clip.y + clip.height));
+  if (x1 <= x0 || y1 <= y0) return null;
+  let darkest = null;
+  let darkestL = Infinity;
+  for (let y = y0; y < y1; y += step) {
+    for (let x = x0; x < x1; x += step) {
+      const i = (width * y + x) << 2;
+      const a = data[i + 3];
+      if (a < 128) continue;
+      const rgb = [data[i], data[i + 1], data[i + 2]];
+      if (excludeRgb && nearRgb(rgb, excludeRgb)) continue;
+      const l = relLum(...rgb);
+      if (l < darkestL) {
+        darkestL = l;
+        darkest = rgb;
+      }
+    }
+  }
+  return darkest;
+}
+
 export function countChangedPixels(pngA, pngB, tolerance = 2) {
   if (pngA.width !== pngB.width || pngA.height !== pngB.height) return -1;
   const { width, height, data: a } = pngA;

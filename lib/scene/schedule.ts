@@ -271,6 +271,7 @@ export function setSceneSchedulerPaused(paused: boolean): void {
   scenePaused = paused;
   if (paused) {
     clearNativeScheduleHandles();
+    oneShots.clear();
   } else {
     scheduleNativeIfNeeded();
   }

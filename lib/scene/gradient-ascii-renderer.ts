@@ -426,8 +426,11 @@ void main() {
   float grain = (hash12(gl_FragCoord.xy + uFrame * vec2(17.0, 59.0)) + hash12(gl_FragCoord.xy * 1.31 + uFrame * 7.0) - 1.0) * uGrain;
   float body = clamp(color.a, 0.0, 1.0);
   color.rgb += grain * (0.25 + body) * 0.5;
-  float readSoft = smoothstep(0.78, 0.22, vUv.x) * smoothstep(0.95, 0.45, vUv.y);
-  color.rgb = mix(color.rgb, color.rgb * 0.68 + vec3(0.2), readSoft * 0.28);
+  float readColumn = smoothstep(0.97, 0.02, vUv.x);
+  float readVertical = smoothstep(0.995, 0.08, vUv.y);
+  float readSoft = readColumn * readVertical;
+  vec3 lift = vec3(0.96, 0.95, 0.93);
+  color.rgb = mix(color.rgb, lift, readSoft * 0.94);
   color.a = clamp(color.a, 0.0, 1.0);
   color.rgb = clamp(color.rgb, 0.0, color.a);
   outColor = color;

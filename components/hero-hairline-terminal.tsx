@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useCalmSceneAwaitingInput } from "@/components/use-calm-scene-awaiting-input";
 import styles from "./hairline-figure.module.css";
 
 function HeroHairlinePlaceholder() {
@@ -19,5 +20,9 @@ const HairlineTerminal = dynamic(() => import("@/components/hairline-terminal"),
 });
 
 export default function HeroHairlineTerminal() {
+  const calmHold = useCalmSceneAwaitingInput();
+  if (calmHold) {
+    return <HeroHairlinePlaceholder />;
+  }
   return <HairlineTerminal />;
 }

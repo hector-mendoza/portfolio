@@ -78,19 +78,30 @@ function shouldRunSceneLoop(): boolean {
   return true;
 }
 
+function publishCalmAwaitingInput(): void {
+  if (typeof document === "undefined") return;
+  document.documentElement.toggleAttribute(
+    "data-calm-scene-awaiting-input",
+    calmSceneAwaitingUserInput
+  );
+}
+
 function syncCalmFirstFrameHold(): void {
   if (typeof window === "undefined") return;
   if (detectTier().kind !== "calm") {
     calmSceneAwaitingUserInput = false;
+    publishCalmAwaitingInput();
     return;
   }
   calmSceneAwaitingUserInput = true;
+  publishCalmAwaitingInput();
 }
 
 /** First scroll, pointer, or touch on calm tier starts the normal scene loop. */
 export function wakeCalmSceneLoopFromUserInput(): void {
   if (!calmSceneAwaitingUserInput) return;
   calmSceneAwaitingUserInput = false;
+  publishCalmAwaitingInput();
   noteActivity(performance.now());
   reconcileSceneLoop();
   scheduleRequestAnimationFrame(() => undefined);
