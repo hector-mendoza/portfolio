@@ -805,6 +805,17 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1f(cu.uGrain, s.grain);
     gl.uniform1f(cu.uFrame, frameSeed);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+    if (typeof window !== "undefined" && gl && canvas) {
+      (
+        window as Window & {
+          __PORTFOLIO_QA_READ_CANVAS__?: (
+            context: WebGL2RenderingContext,
+            target: HTMLCanvasElement
+          ) => void;
+        }
+      ).__PORTFOLIO_QA_READ_CANVAS__?.(gl, canvas);
+    }
   };
 
   const resize = () => {

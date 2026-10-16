@@ -3,28 +3,25 @@ import { chromium } from "playwright";
 const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 const BOX = 240;
 
-async function snapshotCanvasBox(page, cx, cy) {
-  return page.evaluate(
-    ({ cx, cy, box }) => {
-      const canvas = document.querySelector("canvas");
-      if (!canvas) return null;
-      const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
-      if (!gl) return null;
-      const scale = canvas.width / canvas.clientWidth;
-      const x0 = Math.max(0, Math.floor((cx - box / 2) * scale));
-      const y0 = Math.max(0, Math.floor((cy - box / 2) * scale));
-      const size = Math.floor(box * scale);
-      const w = canvas.width;
-      const h = canvas.height;
-      const readW = Math.min(size, w - x0);
-      const readH = Math.min(size, h - y0);
-      const buf = new Uint8Array(readW * readH * 4);
-      gl.readPixels(x0, h - y0 - readH, readW, readH, gl.RGBA, gl.UNSIGNED_BYTE, buf);
-      return { buf: [...buf], readW, readH };
-    },
-    { cx, cy, box: BOX }
-  );
-}
+const QA_INIT = () => {
+  window.__PORTFOLIO_QA_LAST_READ__ = null;
+  window.__PORTFOLIO_QA_READ_CANVAS__ = (gl, canvas) => {
+    const spec = window.__PORTFOLIO_QA_BOX__;
+    if (!spec) return;
+    const { cx, cy, box } = spec;
+    const scale = canvas.width / canvas.clientWidth;
+    const x0 = Math.max(0, Math.floor((cx - box / 2) * scale));
+    const y0 = Math.max(0, Math.floor((cy - box / 2) * scale));
+    const size = Math.floor(box * scale);
+    const w = canvas.width;
+    const h = canvas.height;
+    const readW = Math.min(size, w - x0);
+    const readH = Math.min(size, h - y0);
+    const buf = new Uint8Array(readW * readH * 4);
+    gl.readPixels(x0, h - y0 - readH, readW, readH, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+    window.__PORTFOLIO_QA_LAST_READ__ = { buf: [...buf], readW, readH };
+  };
+};
 
 function countChanged(a, b) {
   if (!a || !b || a.buf.length !== b.buf.length) return -1;
@@ -42,12 +39,20 @@ function countChanged(a, b) {
   return changed;
 }
 
+async function waitForRead(page) {
+  await page.waitForFunction(() => window.__PORTFOLIO_QA_LAST_READ__ != null, {
+    timeout: 8000,
+  });
+  return page.evaluate(() => window.__PORTFOLIO_QA_LAST_READ__);
+}
+
 async function main() {
   const browser = await chromium.launch({
     headless: true,
     args: ["--enable-webgl", "--use-gl=angle", "--use-angle=swiftshader-webgl"],
   });
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  await page.addInitScript(QA_INIT);
   await page.goto(`${ORIGIN}/`, { waitUntil: "load" });
   await page.waitForFunction(
     () => document.documentElement.getAttribute("data-scene") === "living",
@@ -66,7 +71,15 @@ async function main() {
   const cx = box ? box.x + box.width * 0.55 : 640;
   const cy = box ? box.y + box.height * 0.45 : 320;
 
-  const baseline = await snapshotCanvasBox(page, cx, cy);
+  await page.evaluate(
+    ({ cx, cy, box: boxPx }) => {
+      window.__PORTFOLIO_QA_LAST_READ__ = null;
+      window.__PORTFOLIO_QA_BOX__ = { cx, cy, box: boxPx };
+    },
+    { cx, cy, box: BOX }
+  );
+  const baseline = await waitForRead(page);
+
   await page.mouse.move(cx, cy);
   await page.waitForTimeout(300);
   for (let i = 0; i < 6; i++) {
@@ -74,7 +87,11 @@ async function main() {
     await page.waitForTimeout(120);
   }
   await page.waitForTimeout(500);
-  const after = await snapshotCanvasBox(page, cx, cy);
+
+  await page.evaluate(() => {
+    window.__PORTFOLIO_QA_LAST_READ__ = null;
+  });
+  const after = await waitForRead(page);
 
   const changedPixels = countChanged(baseline, after);
   const headlineAfter = await page.evaluate(() => {
@@ -86,6 +103,7 @@ async function main() {
     boxPx: BOX,
     sampleCenter: { cx, cy },
     changedPixels,
+    readMethod: "same-frame gl.readPixels via __PORTFOLIO_QA_READ_CANVAS__",
     headlineUnchanged: headline === headlineAfter,
     headlineSample: headline.slice(0, 40),
   };
