@@ -68,9 +68,6 @@ async function showPage(page, blank) {
 async function main() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
-  await context.addInitScript(() => {
-    window.__PLAYWRIGHT_ALLOW_SCENE__ = true;
-  });
   const page = await context.newPage();
 
   await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });

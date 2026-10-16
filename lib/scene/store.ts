@@ -9,7 +9,6 @@ import {
   type SceneUniforms,
 } from "./uniforms";
 import type { SceneRenderer } from "./renderer";
-import { isAutomatedAudit } from "./audit-env";
 import type { Capability, SceneState, SectionId } from "./types";
 
 type Listener = () => void;
@@ -66,7 +65,6 @@ function shouldRunSceneLoop(): boolean {
   if (!sceneRenderer || capability?.kind !== "living") return false;
   if (state.phase === "disabled") return false;
   if (!sceneLoopGateOpen) return false;
-  if (isAutomatedAudit()) return false;
   if (isMobileSceneViewport() && !mobileSceneUserActivated) return false;
   if (isScenePausedByCause() || state.phase === "paused") return false;
   return true;

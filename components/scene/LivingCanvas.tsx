@@ -8,7 +8,6 @@ import {
   setScenePaused,
   useSceneDisabled,
 } from "@/lib/scene/store";
-import { isAutomatedAudit } from "@/lib/scene/audit-env";
 import { createGradientAsciiRenderer } from "@/lib/scene/gradient-ascii-renderer";
 import SceneStaticPoster from "@/components/scene/SceneStaticPoster";
 import { useEffect, useRef, useState } from "react";
@@ -31,14 +30,6 @@ export default function LivingCanvas() {
     if (!host) return;
 
     initSceneStore();
-
-    if (isAutomatedAudit()) {
-      setSceneCanvasMounted(true);
-      setVisible(true);
-      return () => {
-        setSceneCanvasMounted(false);
-      };
-    }
 
     const cap = getSceneCapability();
     const dpr =
