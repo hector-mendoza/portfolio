@@ -1,7 +1,12 @@
 "use client";
 
 import {
-  notifySceneUserActivation,
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  noteActivity,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+  setSceneSchedulerPaused,
+} from "@/lib/scene/schedule";
+import {
   setScenePaused,
   setScenePointer,
   setScrollProgress,
@@ -23,7 +28,9 @@ function computeScrollProgress(): number {
 export default function MotionRoot({ children }: MotionRootProps) {
   useEffect(() => {
     const onVisibility = () => {
-      setScenePaused("hidden", document.visibilityState === "hidden");
+      const hidden = document.visibilityState === "hidden";
+      setSceneSchedulerPaused(hidden);
+      setScenePaused("hidden", hidden);
     };
     document.addEventListener("visibilitychange", onVisibility);
     onVisibility();
@@ -41,7 +48,6 @@ export default function MotionRoot({ children }: MotionRootProps) {
       if (cancelled) return;
 
       const onScroll = () => {
-        notifySceneUserActivation();
         setScrollProgress(computeScrollProgress());
       };
       onScroll();
@@ -56,7 +62,7 @@ export default function MotionRoot({ children }: MotionRootProps) {
       };
 
       const onPointerMove = (event: PointerEvent) => {
-        notifySceneUserActivation();
+        noteActivity(performance.now());
         const w = window.innerWidth;
         const h = window.innerHeight;
         if (w <= 0 || h <= 0) return;
@@ -65,13 +71,13 @@ export default function MotionRoot({ children }: MotionRootProps) {
           y: Math.min(1, Math.max(0, event.clientY / h)),
         };
         if (pointerRaf === null) {
-          pointerRaf = requestAnimationFrame(flushPointer);
+          pointerRaf = scheduleRequestAnimationFrame(flushPointer);
         }
       };
       const onPointerLeave = () => {
         pendingPointer = null;
         if (pointerRaf === null) {
-          pointerRaf = requestAnimationFrame(flushPointer);
+          pointerRaf = scheduleRequestAnimationFrame(flushPointer);
         }
       };
 
@@ -87,7 +93,7 @@ export default function MotionRoot({ children }: MotionRootProps) {
           "pointerleave",
           onPointerLeave
         );
-        if (pointerRaf !== null) cancelAnimationFrame(pointerRaf);
+        if (pointerRaf !== null) scheduleCancelAnimationFrame(pointerRaf);
       };
     };
 

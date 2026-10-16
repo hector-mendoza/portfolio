@@ -4,7 +4,8 @@ import {
 } from "./hero-scramble-boost";
 import type { Density, SectionTheme } from "./types";
 import { INITIAL_UNIFORMS, type SceneUniforms } from "./uniforms";
-import type { SceneRenderer } from "./renderer";
+import type { RenderTier } from "./schedule";
+import type { SceneMountOptions, SceneRenderer } from "./renderer";
 
 /**
  * Gradient ASCII scene renderer: all glyphs and gradients are drawn on one WebGL canvas.
@@ -509,27 +510,51 @@ const sizeTarget = (gl: WebGL2RenderingContext, target: Target, width: number, h
   gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 };
 
-const buildAtlas = (gl: WebGL2RenderingContext, characters: string, fontFamily: string): Atlas => {
-  const list = [...new Set([...characters].filter(char => char !== '\n' && char !== '\r'))];
-  if (!list.length) list.push(' ');
+function bakeGlyphAtlasCanvas(
+  characters: string = DEFAULT_CHARACTERS,
+  fontFamily: string = DEFAULT_FONT
+): { canvas: HTMLCanvasElement; count: number; grid: number[] } {
+  const list = [...new Set([...characters].filter((char) => char !== "\n" && char !== "\r"))];
+  if (!list.length) list.push(" ");
   const font = `300 ${Math.round(ATLAS_CELL_H * FONT_SCALE)}px ${fontFamily}`;
   const columns = Math.min(ATLAS_COLUMNS, list.length);
   const rows = Math.ceil(list.length / columns);
-  const canvas = document.createElement('canvas');
+  const canvas = document.createElement("canvas");
   canvas.width = ATLAS_CELL_W * columns;
   canvas.height = ATLAS_CELL_H * rows;
-  const context = canvas.getContext('2d');
+  const context = canvas.getContext("2d");
   if (context) {
     context.font = font;
-    context.textAlign = 'center';
-    context.textBaseline = 'middle';
-    context.fillStyle = '#fff';
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillStyle = "#fff";
     list.forEach((char, index) => {
       const column = index % columns;
       const row = Math.floor(index / columns);
-      context.fillText(char, column * ATLAS_CELL_W + ATLAS_CELL_W / 2, row * ATLAS_CELL_H + ATLAS_CELL_H / 2 + 3);
+      context.fillText(
+        char,
+        column * ATLAS_CELL_W + ATLAS_CELL_W / 2,
+        row * ATLAS_CELL_H + ATLAS_CELL_H / 2 + 3
+      );
     });
   }
+  return { canvas, count: list.length, grid: [columns, rows] };
+}
+
+let preparedAtlasBake: ReturnType<typeof bakeGlyphAtlasCanvas> | null = null;
+
+/** Bake glyph atlas during the scene mount idle callback (2D only, no module init). */
+export function prepareGlyphAtlasInIdle(): void {
+  if (preparedAtlasBake) return;
+  preparedAtlasBake = bakeGlyphAtlasCanvas();
+}
+
+const uploadAtlasFromCanvas = (
+  gl: WebGL2RenderingContext,
+  canvas: HTMLCanvasElement,
+  count: number,
+  grid: number[]
+): Atlas => {
   const texture = gl.createTexture();
   gl.bindTexture(gl.TEXTURE_2D, texture);
   gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
@@ -539,7 +564,12 @@ const buildAtlas = (gl: WebGL2RenderingContext, characters: string, fontFamily: 
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  return { texture, count: list.length, grid: [columns, rows] };
+  return { texture, count, grid };
+};
+
+const buildAtlas = (gl: WebGL2RenderingContext, characters: string, fontFamily: string): Atlas => {
+  const baked = bakeGlyphAtlasCanvas(characters, fontFamily);
+  return uploadAtlasFromCanvas(gl, baked.canvas, baked.count, baked.grid);
 };
 
 
@@ -550,7 +580,8 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   let canvas: HTMLCanvasElement | null = null;
   let gl: WebGL2RenderingContext | null = null;
   let disposed = false;
-  let deviceRatio = 1;
+  let renderScale = 1;
+  let renderDprCap = 2;
   let settingsRef: Settings = {
     colors: DEFAULT_COLORS,
     shape: 0,
@@ -610,10 +641,6 @@ export function createGradientAsciiRenderer(): SceneRenderer {
   let lastFrame = 0;
   let lastPointer: { x: number; y: number } | null = null;
   let frameUniforms: SceneUniforms = INITIAL_UNIFORMS;
-  const mobileCoarse =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches;
-
   const syncRamp = (theme: SectionTheme) => {
     const key = `${theme.hue}|${theme.intensity}|${theme.density}`;
     if (key === rampKey) return;
@@ -630,7 +657,22 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     if (key === atlasKey && atlas) return;
     atlasKey = key;
     if (atlas) gl.deleteTexture(atlas.texture);
-    atlas = buildAtlas(gl, s.characters, s.fontFamily);
+    if (
+      preparedAtlasBake &&
+      s.characters === DEFAULT_CHARACTERS &&
+      s.fontFamily === DEFAULT_FONT
+    ) {
+      const bake = preparedAtlasBake;
+      preparedAtlasBake = null;
+      atlas = uploadAtlasFromCanvas(
+        gl,
+        bake.canvas,
+        bake.count,
+        bake.grid
+      );
+    } else {
+      atlas = buildAtlas(gl, s.characters, s.fontFamily);
+    }
     const refreshAtlasAfterFonts = () => {
       document.fonts?.load?.(`300 64px ${s.fontFamily}`, s.characters).then(
         () => {
@@ -727,7 +769,7 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl.uniform1f(fu.uHeroScrambleBoost, heroScramble);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
-    const glowing = !mobileCoarse && s.glow > 0.001;
+    const glowing = renderScale >= 1 && s.glow > 0.001;
     if (glowing) {
       gl.bindFramebuffer(gl.FRAMEBUFFER, haloA.framebuffer);
       gl.drawBuffers([gl.COLOR_ATTACHMENT0]);
@@ -769,17 +811,21 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     if (!container || !canvas || !gl || !fieldTarget || !haloA || !haloB) return;
     view.width = Math.max(1, container.clientWidth);
     view.height = Math.max(1, container.clientHeight);
-    view.ratio = Math.min(settingsRef.dpr ?? deviceRatio, 2);
+    const dpr =
+      typeof window !== "undefined"
+        ? Math.min(window.devicePixelRatio, renderDprCap)
+        : renderDprCap;
+    view.ratio = dpr * renderScale;
     canvas.width = Math.max(1, Math.round(view.width * view.ratio));
     canvas.height = Math.max(1, Math.round(view.height * view.ratio));
-    const fieldDivisor = mobileCoarse ? 3 : 2;
+    const fieldDivisor = renderScale < 1 ? 3 : 2;
     sizeTarget(
       gl,
       fieldTarget,
       Math.max(1, Math.round(canvas.width / fieldDivisor)),
       Math.max(1, Math.round(canvas.height / fieldDivisor))
     );
-    const haloDivisor = mobileCoarse ? 6 : 4;
+    const haloDivisor = renderScale < 1 ? 6 : 4;
     const haloWidth = Math.max(1, Math.round(canvas.width / haloDivisor));
     const haloHeight = Math.max(1, Math.round(canvas.height / haloDivisor));
     sizeTarget(gl, haloA, haloWidth, haloHeight);
@@ -906,11 +952,19 @@ export function createGradientAsciiRenderer(): SceneRenderer {
     gl = null;
   };
 
+  const applyTier = (tier: RenderTier) => {
+    renderScale = tier.scale;
+    renderDprCap = tier.dprCap;
+    settingsRef = { ...settingsRef, dpr: renderDprCap };
+    if (container && canvas && gl) resize();
+  };
+
   return {
-    mount(el: HTMLElement, dpr: number) {
+    mount(el: HTMLElement, options: SceneMountOptions) {
       if (disposed) return;
       container = el;
-      deviceRatio = dpr;
+      renderScale = options.scale;
+      renderDprCap = options.dprCap;
       el.setAttribute("aria-hidden", "true");
       el.style.pointerEvents = "none";
       canvas = document.createElement("canvas");
@@ -919,10 +973,14 @@ export function createGradientAsciiRenderer(): SceneRenderer {
         "position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;";
       el.appendChild(canvas);
       if (!initGl()) return;
-      settingsRef = { ...settingsRef, dpr };
+      settingsRef = { ...settingsRef, dpr: renderDprCap };
+      syncAtlas();
       resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(el);
       resize();
+    },
+    setTier(tier: RenderTier) {
+      applyTier(tier);
     },
     frame(u: SceneUniforms) {
       if (disposed || !gl) return;

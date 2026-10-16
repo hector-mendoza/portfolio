@@ -5,6 +5,7 @@ import { DeferredBelowFoldHairline } from "@/components/deferred-below-fold-hair
 import HairlineLogo from "@/components/hairline-logo";
 import HeroHairlineTerminal from "@/components/hero-hairline-terminal";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import ScrollTextReveal from "@/components/scroll-text-reveal";
 import styles from "./portfolio-home.module.css";
 
 export default function PortfolioHome() {
@@ -62,6 +63,8 @@ export default function PortfolioHome() {
         </div>
         <HomeWorkList />
       </section>
+
+      <ScrollTextReveal />
 
       <section className={styles.commandLab} aria-labelledby="command-title">
         <div className={styles.commandCopy}>

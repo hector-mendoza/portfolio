@@ -2,13 +2,17 @@
 
 import {
   attachSceneRenderer,
-  getSceneCapability,
   initSceneStore,
   setSceneCanvasMounted,
   setScenePaused,
   useSceneDisabled,
 } from "@/lib/scene/store";
 import { createGradientAsciiRenderer } from "@/lib/scene/gradient-ascii-renderer";
+import {
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  detectTier,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+} from "@/lib/scene/schedule";
 import SceneStaticPoster from "@/components/scene/SceneStaticPoster";
 import { useEffect, useRef, useState } from "react";
 
@@ -20,8 +24,8 @@ export default function LivingCanvas() {
 
   useEffect(() => {
     if (disabled) return;
-    const t = window.requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(t);
+    const t = scheduleRequestAnimationFrame(() => setVisible(true));
+    return () => scheduleCancelAnimationFrame(t);
   }, [disabled]);
 
   useEffect(() => {
@@ -31,12 +35,9 @@ export default function LivingCanvas() {
 
     initSceneStore();
 
-    const cap = getSceneCapability();
-    const dpr =
-      cap?.kind === "living" ? cap.dpr : Math.min(window.devicePixelRatio, 2);
-
+    const tier = detectTier();
     const renderer = createGradientAsciiRenderer();
-    renderer.mount(host, dpr);
+    renderer.mount(host, { scale: tier.scale, dprCap: tier.dprCap });
     setSceneCanvasMounted(true);
     attachSceneRenderer(renderer);
 

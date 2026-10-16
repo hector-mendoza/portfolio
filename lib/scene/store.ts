@@ -9,6 +9,18 @@ import {
   type SceneUniforms,
 } from "./uniforms";
 import type { SceneRenderer } from "./renderer";
+import {
+  detectTier,
+  getActivity,
+  getNativeRafPending,
+  markDraw,
+  noteActivity,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+  setSceneSchedulerPaused,
+  shouldDraw,
+  subscribe,
+  type FrameBudget,
+} from "./schedule";
 import type { Capability, SceneState, SectionId } from "./types";
 
 type Listener = () => void;
@@ -28,15 +40,13 @@ let uniforms: SceneUniforms = themeUniforms(
 );
 
 let sceneRenderer: SceneRenderer | null = null;
-/** Single scene animation loop id; null when no callback is scheduled. */
-let rafId: number | null = null;
+let unsubscribeSceneLoop: (() => void) | null = null;
 let canvasMounted = false;
 let pauseHidden = false;
 let pauseOffscreen = false;
 
 let frameCallCount = 0;
-let lastSceneLoopAt = 0;
-let mobileSceneUserActivated = false;
+const frameBudget: FrameBudget = { targetFps: 60, lastDraw: -1 };
 /** Hold the rAF loop until LCP (or timeout) so hero text is not competing with WebGL on the main thread. */
 let sceneLoopGateOpen = false;
 let sceneLoopGateScheduled = false;
@@ -54,27 +64,12 @@ function isScenePausedByCause(): boolean {
   return pauseHidden || pauseOffscreen;
 }
 
-function isMobileSceneViewport(): boolean {
-  return (
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches
-  );
-}
-
 function shouldRunSceneLoop(): boolean {
   if (!sceneRenderer || capability?.kind !== "living") return false;
   if (state.phase === "disabled") return false;
   if (!sceneLoopGateOpen) return false;
-  if (isMobileSceneViewport() && !mobileSceneUserActivated) return false;
   if (isScenePausedByCause() || state.phase === "paused") return false;
   return true;
-}
-
-/** First scroll/pointer on mobile starts the WebGL loop (keeps Lighthouse TBT off the rAF hot path). */
-export function notifySceneUserActivation(): void {
-  if (mobileSceneUserActivated) return;
-  mobileSceneUserActivated = true;
-  reconcileSceneLoop();
 }
 
 function openSceneLoopGate(): void {
@@ -106,61 +101,49 @@ function scheduleSceneLoopGate(): void {
   window.setTimeout(done, 3500);
 }
 
+function publishSceneLoopDebug(): void {
+  if (typeof window === "undefined") return;
+  (
+    window as Window & { __SCENE_FRAME_COUNT?: number; __SCENE_RAF_ID?: number | null }
+  ).__SCENE_FRAME_COUNT = frameCallCount;
+  (
+    window as Window & { __SCENE_RAF_ID?: number | null }
+  ).__SCENE_RAF_ID = getNativeRafPending() ? 1 : null;
+}
+
 function pauseSceneLoop(): void {
-  if (rafId !== null) {
-    cancelAnimationFrame(rafId);
-    rafId = null;
+  if (unsubscribeSceneLoop) {
+    unsubscribeSceneLoop();
+    unsubscribeSceneLoop = null;
   }
-  if (typeof window !== "undefined") {
-    (
-      window as Window & { __SCENE_RAF_ID?: number | null }
-    ).__SCENE_RAF_ID = null;
-  }
+  publishSceneLoopDebug();
   sceneRenderer?.pause();
 }
 
-function sceneLoopMinIntervalMs(): number {
-  if (typeof window === "undefined") return 0;
-  return window.matchMedia("(max-width: 768px)").matches ? 50 : 0;
-}
-
-function sceneLoopTick(): void {
-  rafId = null;
+function sceneLoopTick(now: number): void {
   if (!shouldRunSceneLoop()) {
+    pauseSceneLoop();
     sceneRenderer?.pause();
     return;
   }
-  const now = performance.now();
-  const minInterval = sceneLoopMinIntervalMs();
-  if (minInterval > 0 && now - lastSceneLoopAt < minInterval) {
-    rafId = requestAnimationFrame(sceneLoopTick);
-    return;
+  const tier = detectTier();
+  const act = getActivity(now);
+  sceneRenderer?.setTier(tier);
+
+  if (shouldDraw(now, frameBudget, tier, act)) {
+    markDraw(now, frameBudget, tier, act);
+    frameCallCount += 1;
+    sceneRenderer?.frame(getSceneUniforms());
   }
-  lastSceneLoopAt = now;
-  frameCallCount += 1;
-  if (typeof window !== "undefined") {
-    (
-      window as Window & { __SCENE_FRAME_COUNT?: number; __SCENE_RAF_ID?: number | null }
-    ).__SCENE_FRAME_COUNT = frameCallCount;
-    (
-      window as Window & { __SCENE_FRAME_COUNT?: number; __SCENE_RAF_ID?: number | null }
-    ).__SCENE_RAF_ID = rafId;
-  }
-  sceneRenderer?.frame(getSceneUniforms());
-  if (shouldRunSceneLoop()) {
-    rafId = requestAnimationFrame(sceneLoopTick);
-  }
+
+  publishSceneLoopDebug();
 }
 
 function resumeSceneLoop(): void {
-  if (rafId !== null) return;
+  if (unsubscribeSceneLoop !== null) return;
   if (!shouldRunSceneLoop()) return;
-  rafId = requestAnimationFrame(sceneLoopTick);
-  if (typeof window !== "undefined") {
-    (
-      window as Window & { __SCENE_RAF_ID?: number | null }
-    ).__SCENE_RAF_ID = rafId;
-  }
+  unsubscribeSceneLoop = subscribe(sceneLoopTick);
+  publishSceneLoopDebug();
 }
 
 function reconcileSceneLoop(): void {
@@ -222,7 +205,11 @@ function recomputeRunningSection() {
     return;
   }
 
+  const prevSection = activeSection;
   activeSection = best;
+  if (prevSection !== best) {
+    noteActivity(performance.now());
+  }
   uniforms = themeUniforms(
     DEFAULT_THEME_MAP[best],
     scrollProgress,
@@ -311,10 +298,11 @@ export function subscribeScene(listener: Listener): () => void {
 }
 
 export function setScrollProgress(p: number): void {
+  noteActivity(performance.now());
   const clamped = Math.min(1, Math.max(0, p));
   pendingScrollProgress = clamped;
   if (scrollRaf != null) return;
-  scrollRaf = requestAnimationFrame(() => {
+  scrollRaf = scheduleRequestAnimationFrame(() => {
     scrollRaf = null;
     if (pendingScrollProgress == null) return;
     scrollProgress = pendingScrollProgress;
@@ -340,8 +328,10 @@ export function setScenePointer(next: ScenePointer | null): void {
 
 export function setScenePaused(cause: "hidden" | "offscreen", paused: boolean): void {
   if (capability?.kind !== "living") return;
-  if (cause === "hidden") pauseHidden = paused;
-  else pauseOffscreen = paused;
+  if (cause === "hidden") {
+    pauseHidden = paused;
+    setSceneSchedulerPaused(paused);
+  } else pauseOffscreen = paused;
 
   if (isScenePausedByCause()) {
     if (state.phase !== "paused" && state.phase !== "disabled") {
@@ -414,7 +404,7 @@ export function useSceneRunning(): boolean {
 
 /** @internal Vitest / diagnostics */
 export function __test_getRafId(): number | null {
-  return rafId;
+  return unsubscribeSceneLoop !== null ? 1 : null;
 }
 
 /** @internal Vitest / diagnostics */
@@ -425,12 +415,15 @@ export function __test_getFrameCallCount(): number {
 /** @internal Vitest / diagnostics */
 export function __test_resetSceneLoopMetrics(): void {
   frameCallCount = 0;
+  frameBudget.lastDraw = -1;
+  frameBudget.targetFps = 60;
 }
 
 /** @internal Vitest — reset module loop state without touching capability detection */
 export function __test_attachMockRenderer(frame: () => void): SceneRenderer {
   const renderer: SceneRenderer = {
     mount: () => undefined,
+    setTier: () => undefined,
     frame: () => frame(),
     pause: () => undefined,
     dispose: () => undefined,
@@ -439,7 +432,7 @@ export function __test_attachMockRenderer(frame: () => void): SceneRenderer {
   state = { phase: "running", section: "hero", progress: 0 };
   pauseHidden = false;
   pauseOffscreen = false;
-  mobileSceneUserActivated = true;
+  noteActivity(performance.now() + 1_000_000);
   attachSceneRenderer(renderer);
   sceneLoopGateOpen = true;
   sceneLoopGateScheduled = true;

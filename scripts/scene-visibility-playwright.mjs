@@ -1,6 +1,6 @@
 import { chromium } from "playwright";
 
-const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 
 async function readMetrics(page) {
   return page.evaluate(() => ({

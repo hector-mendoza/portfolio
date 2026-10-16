@@ -16,10 +16,6 @@ function probeWebGL(): boolean {
 
 function pickDpr(): 1 | 1.5 | 2 {
   const ratio = typeof window !== "undefined" ? window.devicePixelRatio : 1;
-  const mobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches;
-  if (mobile) return 1;
   if (ratio >= 2) return 2;
   if (ratio >= 1.5) return 1.5;
   return 1;

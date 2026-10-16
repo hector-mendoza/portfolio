@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint .",
     "test": "vitest run",
+    "test:scene-qa-gate": "node scripts/scene-qa-gate-playwright.mjs",
     "test:watch": "vitest",
     "bones:build": "boneyard-js build http://localhost:3000/bones",
     "sanity": "sanity dev",

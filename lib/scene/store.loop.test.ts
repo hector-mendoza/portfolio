@@ -1,4 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { __test_resetScheduleState } from "./schedule";
 import {
   __test_attachMockRenderer,
   __test_detachRenderer,
@@ -13,11 +14,17 @@ type RafEntry = { id: number; cb: FrameRequestCallback };
 describe("scene store animation loop", () => {
   let rafQueue: RafEntry[] = [];
   let nextRafId = 1;
+  let nowMs = 0;
 
   beforeEach(() => {
     rafQueue = [];
     nextRafId = 1;
+    nowMs = 0;
+    vi.stubGlobal("performance", {
+      now: () => nowMs,
+    });
     __test_resetSceneLoopMetrics();
+    __test_resetScheduleState();
     __test_detachRenderer();
 
     vi.stubGlobal("requestAnimationFrame", (cb: FrameRequestCallback) => {
@@ -45,9 +52,10 @@ describe("scene store animation loop", () => {
     vi.unstubAllGlobals();
   });
 
-  function flushOneFrame() {
+  function flushOneFrame(advanceMs = 20) {
+    nowMs += advanceMs;
     const entry = rafQueue.shift();
-    entry?.cb(0);
+    entry?.cb(nowMs);
   }
 
   function pendingRafCount() {

@@ -1,21 +1,30 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from "react";
+import {
+  cancelAnimationFrame as scheduleCancelAnimationFrame,
+  noteEffectRafPending,
+  requestAnimationFrame as scheduleRequestAnimationFrame,
+} from "@/lib/scene/schedule";
+
+const EFFECT_SOURCE = "components/ClickSpark.jsx";
 
 const ClickSpark = ({
-  sparkColor = '#fff',
+  sparkColor = "#fff",
   sparkSize = 10,
   sparkRadius = 15,
   sparkCount = 8,
   duration = 400,
-  easing = 'ease-out',
+  easing = "ease-out",
   extraScale = 1.0,
-  className = '',
-  children
+  className = "",
+  children,
 }) => {
   const canvasRef = useRef(null);
   const sparksRef = useRef([]);
   const startTimeRef = useRef(null);
+  const animationIdRef = useRef(null);
+  const clickSparkEnsureLoopRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,13 +60,13 @@ const ClickSpark = ({
   }, []);
 
   const easeFunc = useCallback(
-    t => {
+    (t) => {
       switch (easing) {
-        case 'linear':
+        case "linear":
           return t;
-        case 'ease-in':
+        case "ease-in":
           return t * t;
-        case 'ease-in-out':
+        case "ease-in-out":
           return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
         default:
           return t * (2 - t);
@@ -69,17 +78,24 @@ const ClickSpark = ({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
 
-    let animationId;
+    const stopLoop = () => {
+      if (animationIdRef.current !== null) {
+        scheduleCancelAnimationFrame(animationIdRef.current);
+        noteEffectRafPending(EFFECT_SOURCE, -1);
+        animationIdRef.current = null;
+      }
+      startTimeRef.current = null;
+    };
 
-    const draw = timestamp => {
+    const draw = (timestamp) => {
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
       }
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      sparksRef.current = sparksRef.current.filter(spark => {
+      sparksRef.current = sparksRef.current.filter((spark) => {
         const elapsed = timestamp - spark.startTime;
         if (elapsed >= duration) {
           return false;
@@ -106,17 +122,37 @@ const ClickSpark = ({
         return true;
       });
 
-      animationId = requestAnimationFrame(draw);
+      if (sparksRef.current.length === 0) {
+        stopLoop();
+        return;
+      }
+
+      animationIdRef.current = scheduleRequestAnimationFrame(draw);
     };
 
-    animationId = requestAnimationFrame(draw);
+    const ensureLoop = () => {
+      if (animationIdRef.current !== null) return;
+      noteEffectRafPending(EFFECT_SOURCE, 1);
+      animationIdRef.current = scheduleRequestAnimationFrame(draw);
+    };
+
+    clickSparkEnsureLoopRef.current = ensureLoop;
 
     return () => {
-      cancelAnimationFrame(animationId);
+      clickSparkEnsureLoopRef.current = null;
+      stopLoop();
     };
-  }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
+  }, [
+    sparkColor,
+    sparkSize,
+    sparkRadius,
+    sparkCount,
+    duration,
+    easeFunc,
+    extraScale,
+  ]);
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -128,16 +164,20 @@ const ClickSpark = ({
       x,
       y,
       angle: (2 * Math.PI * i) / sparkCount,
-      startTime: now
+      startTime: now,
     }));
 
     sparksRef.current.push(...newSparks);
+    clickSparkEnsureLoopRef.current?.();
   };
 
   return (
     <div className={`relative w-full ${className}`} onClick={handleClick}>
       {children}
-      <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-50 block h-full w-full select-none" />
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-50 block h-full w-full select-none"
+      />
     </div>
   );
 };

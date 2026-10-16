@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { prepareGlyphAtlasInIdle } from "@/lib/scene/gradient-ascii-renderer";
 import { initSceneStore } from "@/lib/scene/store";
 import { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ export default function LivingCanvasLoader() {
     const mount = () => {
       if (cancelled) return;
       initSceneStore();
+      prepareGlyphAtlasInIdle();
       setSceneMounted(true);
     };
 
