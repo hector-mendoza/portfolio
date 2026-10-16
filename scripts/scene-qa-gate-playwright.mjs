@@ -3,6 +3,7 @@ import {
   NATIVE_RAF_COUNTER_INIT,
   sampleNativeRafDelta,
 } from "./native-raf-counter-init.mjs";
+import { hideViaSecondTab } from "./playwright-hide-tab.mjs";
 
 const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 const IDLE_MS = 2000;
@@ -66,30 +67,6 @@ async function sampleDelta(page, ms) {
   };
 }
 
-async function hideViaSecondTab(context, page) {
-  const blank = await context.newPage();
-  await blank.goto("about:blank");
-  await page.waitForTimeout(800);
-  const metrics = await readProbe(page);
-  if (metrics.visibilityState === "hidden") {
-    return { blank, mode: "second-tab" };
-  }
-
-  await blank.close();
-  await page.evaluate(() => {
-    Object.defineProperty(document, "visibilityState", {
-      configurable: true,
-      get: () => "hidden",
-    });
-    Object.defineProperty(document, "hidden", {
-      configurable: true,
-      get: () => true,
-    });
-    document.dispatchEvent(new Event("visibilitychange"));
-  });
-  return { blank: null, mode: "visibilitychange-fallback" };
-}
-
 function assertNoStrayEffectPending(perFileDelta, phase) {
   for (const f of EFFECT_FILES) {
     if (f === "lib/scene/schedule.ts") continue;
@@ -124,6 +101,7 @@ async function main() {
     viewport: { width: 1280, height: 800 },
   });
   const page = await context.newPage();
+  await page.addInitScript(NATIVE_RAF_COUNTER_INIT);
   await page.addInitScript(NATIVE_RAF_COUNTER_INIT);
 
   await page.goto(`${ORIGIN}/`, { waitUntil: "domcontentloaded" });
@@ -169,6 +147,10 @@ async function main() {
   await page.mouse.move(24, 24);
   await page.waitForTimeout(IDLE_MS);
 
+  await page.evaluate(() => {
+    window.__nativeRafCount = 0;
+  });
+  const idleNativeRaf = await sampleNativeRafDelta(page, SAMPLE_MS);
   const idleSample = await sampleDelta(page, SAMPLE_MS);
 
   const maxIdleScheduleTicks = 28;
@@ -202,6 +184,9 @@ async function main() {
     throw new Error("Expected scheduler native rAF cleared while hidden");
   }
 
+  await page.evaluate(() => {
+    window.__nativeRafCount = 0;
+  });
   const hiddenNativeRaf = await sampleNativeRafDelta(page, SAMPLE_MS);
   if (hiddenNativeRaf.delta !== 0) {
     throw new Error(
@@ -231,11 +216,15 @@ async function main() {
     idle: {
       sceneFrameDelta: idleSample.sceneFrameDelta,
       scheduleTickDelta: idleSample.scheduleTickDelta,
+      nativeRafDelta: idleNativeRaf.delta,
+      nativeRafPerSec: Math.round(idleNativeRaf.perSec * 10) / 10,
       perFile: idleSample.perFileDelta,
     },
     hidden: {
       sceneFrameDelta: hiddenSample.sceneFrameDelta,
       scheduleTickDelta: hiddenSample.scheduleTickDelta,
+      nativeRafDelta: hiddenNativeRaf.delta,
+      nativeRafPerSec: Math.round(hiddenNativeRaf.perSec * 10) / 10,
       perFile: hiddenSample.perFileDelta,
       rafId: hiddenProbe.rafId,
     },

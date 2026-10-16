@@ -3,8 +3,13 @@
 import { useEffect, useState } from "react";
 
 /** True on calm tier until first trusted scroll / pointer / touch wakes the scene loop. */
+function readCalmSceneAwaitingInput(): boolean {
+  if (typeof document === "undefined") return false;
+  return document.documentElement.hasAttribute("data-calm-scene-awaiting-input");
+}
+
 export function useCalmSceneAwaitingInput(): boolean {
-  const [awaiting, setAwaiting] = useState(false);
+  const [awaiting, setAwaiting] = useState(readCalmSceneAwaitingInput);
 
   useEffect(() => {
     const root = document.documentElement;

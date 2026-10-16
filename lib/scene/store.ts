@@ -103,8 +103,8 @@ export function wakeCalmSceneLoopFromUserInput(): void {
   calmSceneAwaitingUserInput = false;
   publishCalmAwaitingInput();
   noteActivity(performance.now());
-  reconcileSceneLoop();
   scheduleRequestAnimationFrame(() => undefined);
+  reconcileSceneLoop();
 }
 
 function openSceneLoopGate(): void {

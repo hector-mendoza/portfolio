@@ -101,6 +101,11 @@ export function detectTier(): RenderTier {
 
 export function noteActivity(now: number): void {
   activity = { kind: "active", until: now + ACTIVE_MS };
+  if (nativeDelayTimeout !== null) {
+    clearTimeout(nativeDelayTimeout);
+    nativeDelayTimeout = null;
+    scheduleNativeIfNeeded();
+  }
 }
 
 export function getActivity(now: number): Activity {
@@ -186,6 +191,12 @@ function nativeTickIntervalMs(now: number): number {
   return 1000 / fps;
 }
 
+function armNativeRaf(): void {
+  nativeRafScheduleCount += 1;
+  nativeRafId = globalThis.requestAnimationFrame(nativeTick);
+  publishDebug();
+}
+
 function publishDebug(): void {
   if (typeof window === "undefined") return;
   (
@@ -218,29 +229,35 @@ function publishDebug(): void {
 
 function scheduleNativeIfNeeded(): void {
   if (scenePaused) return;
-  if (nativeRafId !== null || nativeDelayTimeout !== null) return;
   if (subscribers.size === 0 && oneShots.size === 0) return;
+
+  if (oneShots.size > 0 && !scenePaused) {
+    if (nativeDelayTimeout !== null) {
+      clearTimeout(nativeDelayTimeout);
+      nativeDelayTimeout = null;
+    }
+    if (nativeRafId === null) {
+      armNativeRaf();
+    }
+    return;
+  }
+
+  if (nativeRafId !== null || nativeDelayTimeout !== null) return;
 
   const delayMs = nativeTickIntervalMs(
     typeof performance !== "undefined" ? performance.now() : 0
   );
 
-  const armRaf = () => {
-    nativeRafScheduleCount += 1;
-    nativeRafId = globalThis.requestAnimationFrame(nativeTick);
-    publishDebug();
-  };
-
   if (delayMs > 4) {
     nativeDelayTimeout = globalThis.setTimeout(() => {
       nativeDelayTimeout = null;
-      armRaf();
+      armNativeRaf();
     }, delayMs);
     publishDebug();
     return;
   }
 
-  armRaf();
+  armNativeRaf();
 }
 
 function nativeTick(now: number): void {
@@ -290,6 +307,10 @@ export function subscribe(fn: Subscriber): () => void {
 export function requestAnimationFrame(cb: FrameRequestCallback): number {
   const id = nextOneShotId++;
   oneShots.set(id, cb);
+  if (nativeDelayTimeout !== null) {
+    clearTimeout(nativeDelayTimeout);
+    nativeDelayTimeout = null;
+  }
   scheduleNativeIfNeeded();
   return id;
 }

@@ -7,6 +7,7 @@ import {
   NATIVE_RAF_COUNTER_INIT,
   sampleNativeRafDelta,
 } from "./native-raf-counter-init.mjs";
+import { hideViaSecondTab } from "./playwright-hide-tab.mjs";
 import { decodePng } from "./playwright-image-utils.mjs";
 
 const ORIGIN = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
@@ -194,6 +195,9 @@ async function main() {
   await desktop.waitForTimeout(2000);
   await desktop.mouse.move(24, 24);
   await desktop.waitForTimeout(2000);
+  await desktop.evaluate(() => {
+    window.__nativeRafCount = 0;
+  });
   const idleDesktop = await sampleNativeRafDelta(desktop, 2000);
   await desktop.mouse.move(700, 420);
   await desktop.waitForTimeout(500);
@@ -215,6 +219,9 @@ async function main() {
     { timeout: 10000 }
   );
   await calm.waitForTimeout(2000);
+  await calm.evaluate(() => {
+    window.__nativeRafCount = 0;
+  });
   const idleCalm = await sampleNativeRafDelta(calm, 2000);
   const touchWake = await wakeLatency(calm, "touchstart");
   const scrollCalmPage = await calmCtx.newPage();
@@ -227,9 +234,10 @@ async function main() {
   await scrollCalmPage.waitForTimeout(4000);
   const scrollWake = await wakeLatency(scrollCalmPage, "scroll");
 
-  const blank = await desktopCtx.newPage();
-  await blank.goto("about:blank");
-  await desktop.waitForTimeout(800);
+  const { mode: hideMode } = await hideViaSecondTab(desktopCtx, desktop);
+  await desktop.evaluate(() => {
+    window.__nativeRafCount = 0;
+  });
   const hiddenRaf = await sampleNativeRafDelta(desktop, 2000);
 
   const worstContrast = measureContrastWorstFromScript();
@@ -258,6 +266,7 @@ async function main() {
     contrastWorst: worstContrast,
     scrambleChangedPixels240px: scramble,
     clsPerformanceObserver: cls,
+    hiddenTabMode: hideMode,
     lighthouse,
   };
 
