@@ -16,12 +16,13 @@ export function BrandLogo({ className = "" }) {
 export function SiteHeader() {
   return (
     <header className={styles.header}>
-      <Link className={styles.brand} href="/" aria-label="Hector Mendoza, home">
+      <Link className={styles.brand} href="/classic" aria-label="Hector Mendoza, home">
         <BrandLogo />
       </Link>
       <nav className={styles.nav} aria-label="Primary navigation">
-        <Link href="/#work">Work</Link>
-        <Link href="/#about">About</Link>
+        <Link href="/">City</Link>
+        <Link href="/classic#work">Work</Link>
+        <Link href="/classic#about">About</Link>
         <Link href="/blog">Writing</Link>
       </nav>
       <a className={styles.availability} href="mailto:hey@hectormendoza.me">
