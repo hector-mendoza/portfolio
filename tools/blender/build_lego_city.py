@@ -305,7 +305,7 @@ def build(parts, mats, meshes, include_baseplate_studs):
             stud_obj = bpy.data.objects.new(f"stud_{color}", stud_mesh)
             link_material(stud_obj, mat)
             stud_obj.parent = field_obj
-            stud_obj.location = (0, 0, -1)  # the template itself hides below the baseplate
+            stud_obj.location = (0, 0, 0)  # instances are offset by this, so keep it at the parent origin
             studs_col.objects.link(stud_obj)
             continue
         for k, pt in enumerate(pts):
@@ -359,14 +359,14 @@ def add_world_and_lights(night=False):
             if hasattr(sky, name):
                 setattr(sky, name, value)
         links.new(sky.outputs["Color"], bg.inputs["Color"])
-        bg.inputs["Strength"].default_value = 0.08 if night else 0.55
+        bg.inputs["Strength"].default_value = 0.08 if night else 0.28
     else:
         bg.inputs["Color"].default_value = (0.03, 0.05, 0.14, 1) if night else (0.42, 0.72, 1.0, 1)
         bg.inputs["Strength"].default_value = 0.35 if night else 1.0
     scene.world = world
 
     sun_data = bpy.data.lights.new("Sun", type="SUN")
-    sun_data.energy = 0.6 if night else 4.5
+    sun_data.energy = 0.6 if night else 2.6
     sun_data.angle = math.radians(2.5)
     sun_data.color = (0.75, 0.8, 1.0) if night else (1.0, 0.96, 0.88)
     sun = bpy.data.objects.new("Sun", sun_data)
@@ -374,7 +374,7 @@ def add_world_and_lights(night=False):
     scene.collection.objects.link(sun)
 
     fill_data = bpy.data.lights.new("Fill", type="SUN")
-    fill_data.energy = 0.1 if night else 1.2
+    fill_data.energy = 0.1 if night else 0.5
     fill_data.color = (0.8, 0.9, 1.0)
     fill = bpy.data.objects.new("Fill", fill_data)
     fill.rotation_euler = (math.radians(60), 0, math.radians(-140))
@@ -417,6 +417,7 @@ def render_shots(args, mats, names):
         scene.cycles.device = "CPU"
     scene.view_settings.view_transform = "AgX" if "AgX" in [v.identifier for v in scene.view_settings.bl_rna.properties["view_transform"].enum_items] else "Filmic"
     scene.view_settings.look = "AgX - Punchy" if scene.view_settings.view_transform == "AgX" else "Medium High Contrast"
+    scene.view_settings.exposure = -0.6
     os.makedirs(args.out, exist_ok=True)
     if args.labels:
         for obj in bpy.data.objects:
