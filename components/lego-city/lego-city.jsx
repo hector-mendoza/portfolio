@@ -83,8 +83,8 @@ function SkyIcon({ sky, size = 15 }) {
     case "cloudy":
       return sky.dark ? <CloudMoon {...props} /> : <CloudSun {...props} />;
     default:
-      if (sky.dark) return <Moon {...props} />;
-      return sky.phase === "Sunset" || sky.phase === "Sunrise" ? <Sunset {...props} /> : <Sun {...props} />;
+      if (sky.phase === "Sunset" || sky.phase === "Sunrise") return <Sunset {...props} />;
+      return sky.dark ? <Moon {...props} /> : <Sun {...props} />;
   }
 }
 
