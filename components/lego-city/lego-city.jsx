@@ -8,6 +8,15 @@ import {
   ChevronRight,
   Moon,
   Sun,
+  Sunset,
+  Cloud,
+  CloudRain,
+  CloudSnow,
+  CloudLightning,
+  CloudFog,
+  CloudSun,
+  CloudMoon,
+  MapPin,
   Pause,
   Play,
   Eye,
@@ -39,6 +48,107 @@ function supportsWebGL() {
   } catch {
     return false;
   }
+}
+
+const TIME_CHOICES = [
+  ["live", "Live"],
+  ["day", "Day"],
+  ["dusk", "Sunset"],
+  ["night", "Night"],
+];
+
+const WEATHER_CHOICES = [
+  ["live", "Live", null],
+  ["clear", "Clear", Sun],
+  ["cloudy", "Cloudy", Cloud],
+  ["fog", "Fog", CloudFog],
+  ["rain", "Rain", CloudRain],
+  ["storm", "Storm", CloudLightning],
+  ["snow", "Snow", CloudSnow],
+];
+
+function SkyIcon({ sky, size = 15 }) {
+  if (!sky) return <CloudSun size={size} aria-hidden="true" />;
+  const props = { size, "aria-hidden": "true" };
+  switch (sky.kind) {
+    case "storm":
+      return <CloudLightning {...props} />;
+    case "rain":
+    case "drizzle":
+      return <CloudRain {...props} />;
+    case "snow":
+      return <CloudSnow {...props} />;
+    case "fog":
+      return <CloudFog {...props} />;
+    case "cloudy":
+      return sky.dark ? <CloudMoon {...props} /> : <CloudSun {...props} />;
+    default:
+      if (sky.phase === "Sunset" || sky.phase === "Sunrise") return <Sunset {...props} />;
+      return sky.dark ? <Moon {...props} /> : <Sun {...props} />;
+  }
+}
+
+function skyLabel(sky) {
+  if (!sky) return "Sky";
+  const parts = [];
+  parts.push(sky.timeMode === "live" ? sky.clock : sky.phase);
+  if (sky.weatherMode !== "live") parts.push(sky.weatherLabel);
+  else if (sky.temp != null) parts.push(`${sky.temp}°`);
+  return parts.filter(Boolean).join(" · ");
+}
+
+function SkyPanel({ sky, app, onClose }) {
+  const liveLine =
+    sky.weatherMode !== "live"
+      ? `${sky.weatherLabel} (preview)`
+      : sky.status === "offline"
+      ? `Live weather unavailable, showing the sun only`
+      : sky.status === "loading"
+        ? "Fetching the weather…"
+        : `${sky.weatherLabel}${sky.temp != null ? `, ${sky.temp}°C` : ""}`;
+  return (
+    <div className={styles.skyPanel} role="dialog" aria-label="Sky controls">
+      <header className={styles.cardHead}>
+        <p className={styles.eyebrow}>
+          <MapPin size={12} aria-hidden="true" /> Live from {sky.place}
+        </p>
+        <button type="button" className={styles.iconButton} onClick={onClose} aria-label="Close sky controls">
+          <X size={16} />
+        </button>
+      </header>
+      <p className={styles.skyNow}>
+        <SkyIcon sky={sky} size={22} />
+        <span>
+          {sky.clock ? (
+            <>
+              <strong>{sky.clock}</strong> · {sky.phase}
+            </>
+          ) : (
+            <strong>{sky.phase}</strong>
+          )}
+          <small>{liveLine}</small>
+        </span>
+      </p>
+      <p className={styles.skyGroup}>Time of day</p>
+      <div className={styles.skyChips} role="group" aria-label="Time of day">
+        {TIME_CHOICES.map(([id, label]) => (
+          <button key={id} type="button" aria-pressed={sky.timeMode === id} onClick={() => app?.setTimeMode(id)}>
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className={styles.skyGroup}>Weather</p>
+      <div className={styles.skyChips} role="group" aria-label="Weather">
+        {WEATHER_CHOICES.map(([id, label, Icon]) => (
+          <button key={id} type="button" aria-pressed={sky.weatherMode === id} onClick={() => app?.setWeatherMode(id)}>
+            {Icon && <Icon size={13} aria-hidden="true" />}
+            {label}
+          </button>
+        ))}
+      </div>
+      <p className={styles.skyFoot}>Live follows the real sun and weather in {sky.place}. Pick anything else to preview it.</p>
+    </div>
+  );
 }
 
 const OUTFITS = [
@@ -171,6 +281,7 @@ export default function LegoCity() {
   const [landmarks, setLandmarks] = useState([]);
   const [showHelp, setShowHelp] = useState(false);
   const [showPostcards, setShowPostcards] = useState(false);
+  const [showSky, setShowSky] = useState(false);
   const [touch, setTouch] = useState(false);
   const [outfit, setOutfit] = useState("red");
   const [menu, setMenu] = useState(false);
@@ -239,6 +350,7 @@ export default function LegoCity() {
         setOpen(null);
         setShowHelp(false);
         setShowPostcards(false);
+        setShowSky(false);
       }
       if (e.key === "?") setShowHelp((v) => !v);
     };
@@ -327,6 +439,20 @@ export default function LegoCity() {
           </div>
           <button
             type="button"
+            className={`${styles.pill} ${styles.skyPill}`}
+            onClick={() => {
+              setShowSky((v) => !v);
+              setMenu(false);
+            }}
+            aria-expanded={showSky}
+            disabled={!ready}
+            title="Sky: live time and weather (N toggles night)"
+          >
+            <SkyIcon sky={state?.sky} />
+            <span>{skyLabel(state?.sky)}</span>
+          </button>
+          <button
+            type="button"
             className={`${styles.pill} ${styles.moreToggle}`}
             onClick={() => setMenu((v) => !v)}
             aria-expanded={menu}
@@ -381,17 +507,6 @@ export default function LegoCity() {
           >
             {state?.muted ? <VolumeX size={15} aria-hidden="true" /> : <Volume2 size={15} aria-hidden="true" />}
             <span>{state?.muted ? "Muted" : "Sound"}</span>
-          </button>
-          <button
-            type="button"
-            className={styles.pill}
-            onClick={() => app?.setNight(!state?.night)}
-            aria-pressed={!!state?.night}
-            disabled={!ready}
-            title="Day / night (N)"
-          >
-            {state?.night ? <Sun size={15} aria-hidden="true" /> : <Moon size={15} aria-hidden="true" />}
-            <span>{state?.night ? "Day" : "Night"}</span>
           </button>
           <button
             type="button"
@@ -548,6 +663,8 @@ export default function LegoCity() {
 
       {showPostcards && <Postcards onClose={() => setShowPostcards(false)} />}
 
+      {showSky && state?.sky && <SkyPanel sky={state.sky} app={app} onClose={() => setShowSky(false)} />}
+
       {/* help */}
       {showHelp && (
         <div className={styles.help} role="dialog" aria-label="Controls">
@@ -572,7 +689,9 @@ export default function LegoCity() {
             <dt>Tap a label</dt>
             <dd>Open any building from afar</dd>
             <dt>V · N · M</dt>
-            <dd>First person · night mode · mute</dd>
+            <dd>First person · night · mute</dd>
+            <dt>Sky</dt>
+            <dd>The city follows the real time and weather in Morelia. Open Sky to preview any hour or condition.</dd>
           </dl>
           <button type="button" className={styles.more} onClick={() => setShowHelp(false)}>
             Got it
