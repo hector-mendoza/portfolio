@@ -41,6 +41,7 @@ The result is a fast, accessible site that reads like a product — not a templa
 | Piece | Where |
 | --- | --- |
 | City spec: 25 lots on a 5×5 grid, districts, tram line and stops | `lib/lego-city/spec.js` |
+| Scale: 1 unit = 1 stud; minifig 5 studs; storey 6 bricks (7.2); doors 5 bricks; roads 16 studs | `lib/lego-city/layout.js` |
 | Brick builders (towers, shops, chapel, station, parks, vehicles, minifigs, 3×5 brick font) | `lib/lego-city/builders.js`, `font.js` |
 | Compiler → bricks, studs, colliders, walkable heights, landmarks, route | `lib/lego-city/compile.js` |
 | Three.js runtime: instanced bricks, day/night, tram ride, third/first-person walking, minimap | `lib/lego-city/three/` |
