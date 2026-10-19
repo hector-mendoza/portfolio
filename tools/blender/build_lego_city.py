@@ -128,10 +128,10 @@ class Materials:
         for mat in self.cache.values():
             bsdf = mat.node_tree.nodes["Principled BSDF"]
             if mat.get("lego_emissive"):
-                bsdf.inputs["Emission Strength"].default_value = 6.0 if night else 0.6
+                bsdf.inputs["Emission Strength"].default_value = 40.0 if night else 0.6
             if mat.get("lego_glass"):
                 bsdf.inputs["Emission Color"].default_value = (1.0, 0.75, 0.35, 1)
-                bsdf.inputs["Emission Strength"].default_value = 1.5 if night else 0.0
+                bsdf.inputs["Emission Strength"].default_value = 3.0 if night else 0.0
 
 
 class Meshes:
