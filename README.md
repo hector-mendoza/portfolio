@@ -24,13 +24,13 @@ A refined personal portfolio and writing platform — motion-rich, content-drive
 
 ## Overview
 
-This repository powers [hectormendoza.me](https://hectormendoza.me) — a portfolio you travel through. The home page is **Mendoza City**, a LEGO®-style city rendered live in Three.js where every building is a project, a job, or a chapter: ride the tram for the guided tour or get off and walk anywhere. The same city spec also builds in Blender for postcard renders and a downloadable glTF. A classic single-page portfolio and a Sanity-backed blog sit alongside it.
+This repository powers [hectormendoza.me](https://hectormendoza.me) — a portfolio you travel through. The home page is **Pilleland**, a LEGO®-style city rendered live in Three.js where every building is a project, a job, or a chapter: ride the tram for the guided tour or get off and walk anywhere. The same city spec also builds in Blender for postcard renders and a downloadable glTF. A classic single-page portfolio and a Sanity-backed blog sit alongside it.
 
 The result is a fast, accessible site that reads like a product — not a template.
 
 ---
 
-## Mendoza City
+## Pilleland
 
 ```
 /                 → the city (Three.js, client-rendered, falls back to /classic without WebGL)
@@ -143,7 +143,7 @@ flowchart TB
 
 ```
 app/
-├── page.jsx              # Home — Mendoza City (3D LEGO portfolio)
+├── page.jsx              # Home — Pilleland (3D LEGO portfolio)
 ├── classic/              # Classic single-page portfolio
 ├── blog/                 # Blog index & dynamic post routes
 ├── studio/               # Sanity Studio (embedded CMS)

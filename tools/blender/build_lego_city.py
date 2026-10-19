@@ -1,5 +1,5 @@
 """
-Rebuilds Mendoza City inside Blender from public/city/city-parts.json, which is
+Rebuilds Pilleland inside Blender from public/city/city-parts.json, which is
 produced from the very same spec and builders the Three.js site uses
 (`npm run city:compile`). Then it lights the scene, renders a set of postcards
 and exports a glTF for anyone who wants the model.
@@ -43,7 +43,7 @@ def parse_args():
         argv = argv[argv.index("--") + 1 :]
     else:
         argv = [a for a in argv[1:] if not a.endswith(".py")]
-    ap = argparse.ArgumentParser(description="Build Mendoza City in Blender")
+    ap = argparse.ArgumentParser(description="Build Pilleland in Blender")
     ap.add_argument("--parts", default="public/city/city-parts.json")
     ap.add_argument("--out", default="public/city/renders")
     ap.add_argument("--glb", default="public/city/lego-city.glb")
@@ -258,7 +258,7 @@ def link_material(obj, mat):
 
 
 def build(parts, mats, meshes, include_baseplate_studs):
-    city = bpy.data.collections.new("MendozaCity")
+    city = bpy.data.collections.new("Pilleland")
     bpy.context.scene.collection.children.link(city)
     bricks = bpy.data.collections.new("Bricks")
     studs_col = bpy.data.collections.new("Studs")

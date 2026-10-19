@@ -64,7 +64,7 @@ function Postcards({ onClose }) {
         </button>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/city/renders/${card.file}.png`} alt={`${card.title}: Mendoza City rendered in Blender`} />
+      <img src={`/city/renders/${card.file}.png`} alt={`${card.title}: Pilleland rendered in Blender`} />
       <div className={styles.postcardNav}>
         <button type="button" className={styles.iconButton} onClick={() => setIndex((index + POSTCARDS.length - 1) % POSTCARDS.length)} aria-label="Previous postcard">
           <ChevronLeft size={18} />
@@ -196,7 +196,7 @@ export default function LegoCity() {
           appRef.current = app;
           setStatus("ready");
         } catch (err) {
-          console.error("Mendoza City failed to start", err);
+          console.error("Pilleland failed to start", err);
           setStatus("error");
         }
       })
@@ -255,7 +255,7 @@ export default function LegoCity() {
     return (
       <div className={styles.fallback}>
         <BrandLogo className={styles.fallbackLogo} />
-        <h1>Mendoza City needs WebGL.</h1>
+        <h1>Pilleland needs WebGL.</h1>
         <p>
           This portfolio is a 3D LEGO® city rendered in your browser. Your device couldn&apos;t start it, but
           everything in the city also lives on the classic page.
@@ -275,7 +275,7 @@ export default function LegoCity() {
         <Link href="/classic" className={styles.brand} aria-label="Hector Mendoza, classic portfolio">
           <BrandLogo />
           <span>
-            <strong>Mendoza City</strong>
+            <strong>Pilleland</strong>
             <small>Hector Mendoza · Software Engineer</small>
           </span>
         </Link>
@@ -511,7 +511,7 @@ export default function LegoCity() {
               <span className={styles.brick} aria-hidden="true" /> Welcome to
             </p>
             <h1 className={styles.title}>
-              <span>Mendoza</span> <span>City</span>
+              <span>Pille</span><span>land</span>
             </h1>
             <p>
               A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of

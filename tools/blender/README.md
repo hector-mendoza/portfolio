@@ -1,4 +1,4 @@
-# Mendoza City in Blender
+# Pilleland in Blender
 
 The city is described once (`lib/lego-city/spec.js` + `lib/lego-city/builders.js`)
 and consumed twice: by the Three.js runtime on the home page, and by this Blender

@@ -20,7 +20,7 @@ const SITE_SHORTCUTS = [
 ];
 
 const SITE_SEARCH = [
-  { icon: <Home />, label: "Mendoza City", description: "Ride or walk the LEGO city portfolio", link: "/" },
+  { icon: <Home />, label: "Pilleland", description: "Ride or walk the LEGO city portfolio", link: "/" },
   { icon: <User />, label: "About", description: "Story, stats, and stack", link: "/classic#about" },
   { icon: <FolderKanban />, label: "Projects", description: "Browse client work and experiments", link: "/classic#work" },
   { icon: <Briefcase />, label: "Experience", description: "Roles, education, and skills", link: "/classic#about" },
