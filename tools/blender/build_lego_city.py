@@ -383,10 +383,10 @@ def add_world_and_lights(night=False):
 
 SHOTS = {
     # name: (location in studs [x, y, z] three.js coords, look-at target, lens mm, night)
-    "overview": ((150, 215, 215), (0, 0, 10), 40, False),
-    "station": ((40, 24, 150), (0, 8, 92), 45, False),
-    "square": ((-26, 16, 44), (0, 6, -6), 38, False),
-    "night": ((-150, 70, 150), (0, 10, 0), 45, True),
+    "overview": ((190, 270, 270), (0, 0, 10), 40, False),
+    "station": ((50, 30, 180), (0, 10, 112), 45, False),
+    "square": ((-30, 20, 52), (0, 8, -6), 38, False),
+    "night": ((-190, 90, 190), (0, 12, 0), 45, True),
 }
 
 
