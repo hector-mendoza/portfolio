@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @config '../tailwind.config.ts';
+/* Keep Tailwind's source scan away from the city's binary assets (glTF, renders, parts JSON). */
+@source not '../public/city';
 
 @layer base {
   :root,

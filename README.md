@@ -24,9 +24,38 @@ A refined personal portfolio and writing platform — motion-rich, content-drive
 
 ## Overview
 
-This repository powers [hectormendoza.me](https://hectormendoza.me) — a single-page portfolio experience paired with a Sanity-backed blog. Every surface is designed with intention: glassmorphic depth, choreographed motion, skeleton-first loading, and machine-readable metadata for agents and crawlers.
+This repository powers [hectormendoza.me](https://hectormendoza.me) — a portfolio you travel through. The home page is **Pilleland**, a LEGO®-style city rendered live in Three.js where every building is a project, a job, or a chapter: ride the tram for the guided tour or get off and walk anywhere. The same city spec also builds in Blender for postcard renders and a downloadable glTF. A classic single-page portfolio and a Sanity-backed blog sit alongside it.
 
 The result is a fast, accessible site that reads like a product — not a template.
+
+---
+
+## Pilleland
+
+```
+/                 → the city (Three.js, client-rendered, falls back to /classic without WebGL)
+/classic          → the classic single-page portfolio
+/city/renders/*   → Blender postcards · /city/lego-city.glb → the model
+```
+
+| Piece | Where |
+| --- | --- |
+| City spec: 25 lots on a 5×5 grid, districts, tram line and stops | `lib/lego-city/spec.js` |
+| Brick builders (towers, shops, chapel, station, parks, vehicles, minifigs, 3×5 brick font) | `lib/lego-city/builders.js`, `font.js` |
+| Compiler → bricks, studs, colliders, walkable heights, landmarks, route | `lib/lego-city/compile.js` |
+| Three.js runtime: instanced bricks, day/night, tram ride, third/first-person walking, minimap | `lib/lego-city/three/` |
+| HUD, cards, intro, joystick | `components/lego-city/` |
+| Blender script (materials, Nishita sky, postcards, glTF) | `tools/blender/build_lego_city.py` ([docs](tools/blender/README.md)) |
+
+**How it travels.** The city builds itself brick by brick when you press start. Ride mode seats you on Line 1, a tram that stops at every district with a bell; each stop shows the buildings on either side as cards, and the camera turns to face them. Walk mode drops your minifig (pick its colours on the welcome card) on the sidewalk: `WASD` / joystick to move, `Space` to jump, drag to look, `E` to enter the building you are standing at, `Tab` to hop back on the tram. Citizens stroll the sidewalks and wave when you walk up; 58 gold studs are hidden around town to collect (progress is saved in your browser). Tap any floating label to open it from afar. `N` toggles night, `V` first person, `M` mute. Sounds are synthesised with WebAudio, nothing to download.
+
+**One spec, two renderers.** `npm run city:compile` writes `public/city/city-parts.json` (5.6k bricks + 26k studs with positions, colours and finishes). The browser rebuilds the same list into a handful of `InstancedMesh`es at load (~20 ms); Blender turns it into linked-duplicate objects with ABS-plastic, glass and chrome materials, then renders and exports.
+
+```bash
+npm run city:compile   # regenerate the parts file after editing the spec or builders
+npm run city:blender   # render postcards + export the glTF (needs Blender on PATH)
+npm test               # includes the city's layout / compile / font tests
+```
 
 ---
 
@@ -101,6 +130,7 @@ flowchart TB
 | Layer | Technology |
 | --- | --- |
 | Framework | Next.js 16 · React 19 · App Router |
+| 3D | Three.js (instanced LEGO® bricks) · Blender for offline renders & glTF |
 | Styling | Tailwind CSS 4 · CSS custom properties · Outfit & JetBrains Mono |
 | Motion | Framer Motion · scroll-linked animations |
 | Content | Sanity 6 · Portable Text · embedded Studio |
@@ -113,13 +143,18 @@ flowchart TB
 
 ```
 app/
-├── page.jsx              # Home — hero, projects, experience, contact
+├── page.jsx              # Home — Pilleland (3D LEGO portfolio)
+├── classic/              # Classic single-page portfolio
 ├── blog/                 # Blog index & dynamic post routes
 ├── studio/               # Sanity Studio (embedded CMS)
 ├── bones/                # Boneyard snapshot target
 └── api/                  # Agent metadata & crawl rules
 
 components/               # Sections, blog UI, shared primitives
+components/lego-city/     # City HUD, cards, joystick
+lib/lego-city/            # City spec, builders, compiler, Three.js runtime
+tools/blender/            # Blender build/render/export script
+public/city/              # Compiled parts, Blender postcards, glTF
 lib/                      # Utilities & blog helpers
 sanity/                   # Schema, client, GROQ queries
 bones/                    # Pre-built skeleton snapshots
@@ -180,6 +215,8 @@ Open [http://localhost:3000](http://localhost:3000) for the site, [http://localh
 | `npm test` | Run Vitest test suite |
 | `npm run test:watch` | Run tests in watch mode |
 | `npm run bones:build` | Rebuild Boneyard snapshots *(requires dev server)* |
+| `npm run city:compile` | Compile the city spec to `public/city/city-parts.json` |
+| `npm run city:blender` | Render postcards and export the glTF with Blender |
 | `npm run sanity` | Launch Sanity Studio standalone |
 | `npm run sanity:deploy` | Deploy Studio to Sanity hosting |
 
@@ -189,6 +226,7 @@ Open [http://localhost:3000](http://localhost:3000) for the site, [http://localh
 
 | Surface | Where to edit |
 | --- | --- |
+| The city: lots, colours, tram stops, card copy | `lib/lego-city/spec.js` (projects pull from `lib/projects.js`) |
 | Hero, about, projects, experience, contact | `components/` section files |
 | Blog posts | Sanity Studio at `/studio` |
 | Theme & design tokens | CSS variables in `app/globals.css` |

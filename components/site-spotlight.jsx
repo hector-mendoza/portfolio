@@ -13,18 +13,18 @@ import {
 import { AppleSpotlight } from "@/components/block/apple-spotlight";
 
 const SITE_SHORTCUTS = [
-  { label: "Home", icon: <Home />, link: "/#hero" },
-  { label: "About", icon: <User />, link: "/#about" },
-  { label: "Projects", icon: <FolderKanban />, link: "/#projects" },
+  { label: "City", icon: <Home />, link: "/" },
+  { label: "About", icon: <User />, link: "/classic#about" },
+  { label: "Projects", icon: <FolderKanban />, link: "/classic#work" },
   { label: "Blog", icon: <FileText />, link: "/blog" },
 ];
 
 const SITE_SEARCH = [
-  { icon: <Home />, label: "Home", description: "Back to the hero", link: "/#hero" },
-  { icon: <User />, label: "About", description: "Story, stats, and stack", link: "/#about" },
-  { icon: <FolderKanban />, label: "Projects", description: "Browse client work and experiments", link: "/#projects" },
-  { icon: <Briefcase />, label: "Experience", description: "Roles, education, and skills", link: "/#experience" },
-  { icon: <Mail />, label: "Contact", description: "Email, socials, and location", link: "/#contact" },
+  { icon: <Home />, label: "Pilleland", description: "Ride or walk the LEGO city portfolio", link: "/" },
+  { icon: <User />, label: "About", description: "Story, stats, and stack", link: "/classic#about" },
+  { icon: <FolderKanban />, label: "Projects", description: "Browse client work and experiments", link: "/classic#work" },
+  { icon: <Briefcase />, label: "Experience", description: "Roles, education, and skills", link: "/classic#about" },
+  { icon: <Mail />, label: "Contact", description: "Email, socials, and location", link: "/classic#contact" },
   { icon: <FileText />, label: "Blog", description: "Featured writing from Sanity", link: "/blog" },
   { icon: <GraduationCap />, label: "Sanity Studio", description: "Manage blog content", link: "/studio" },
 ];

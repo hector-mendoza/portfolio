@@ -12,6 +12,12 @@ export default async function sitemap() {
       priority: 1,
     },
     {
+      url: `${base}/classic`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: `${base}/blog`,
       lastModified: new Date(),
       changeFrequency: "weekly",
