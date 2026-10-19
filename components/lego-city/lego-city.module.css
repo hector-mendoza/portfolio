@@ -35,6 +35,133 @@
   cursor: grabbing;
 }
 
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, rgba(11, 22, 32, 0.28) 100%);
+  z-index: 1;
+}
+
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.studCounter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 750;
+  box-shadow: 0 8px 30px rgba(11, 22, 32, 0.2);
+}
+
+.studCounter small {
+  font-size: 0.7rem;
+  opacity: 0.6;
+}
+
+.goldStud {
+  align-self: center;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe28a, #d79a1a 70%);
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.jumpButton {
+  position: absolute;
+  right: clamp(0.9rem, 2vw, 1.6rem);
+  bottom: calc(clamp(0.9rem, 2vw, 1.6rem) + 215px);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--lego-yellow);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  z-index: 6;
+  box-shadow: 0 10px 30px rgba(11, 22, 32, 0.25);
+}
+
+.picker {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+}
+
+.picker span {
+  margin-right: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.picker button {
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 6px;
+  border: 2px solid rgba(11, 22, 32, 0.25);
+  cursor: pointer;
+  box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.18);
+  transition: transform 140ms ease, border-color 140ms ease;
+}
+
+.picker button[aria-checked="true"] {
+  border-color: var(--ink);
+  transform: translateY(-3px) scale(1.08);
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+}
+
+.title span {
+  position: relative;
+  display: inline-block;
+  padding: 0.05em 0.28em 0.08em;
+  border-radius: 0.18em;
+  background: var(--lego-red);
+  color: #fff;
+  box-shadow: inset 0 -0.14em 0 rgba(0, 0, 0, 0.22);
+}
+
+.title span:last-child {
+  background: var(--lego-yellow);
+  color: var(--ink);
+}
+
+.title span::before {
+  content: "";
+  position: absolute;
+  left: 0.3em;
+  right: 0.3em;
+  top: -0.16em;
+  height: 0.16em;
+  border-radius: 0.08em 0.08em 0 0;
+  background: inherit;
+  background-image: repeating-linear-gradient(90deg, transparent 0 0.35em, rgba(255, 255, 255, 0.001) 0.35em 0.55em);
+  -webkit-mask: repeating-linear-gradient(90deg, #000 0 0.38em, transparent 0.38em 0.62em);
+  mask: repeating-linear-gradient(90deg, #000 0 0.38em, transparent 0.38em 0.62em);
+}
+
 /* ---------------------------------------------------------------- top bar */
 
 .topbar {
@@ -917,9 +1044,17 @@
     justify-content: flex-start;
   }
 
+  .minimapWrap {
+    left: auto;
+    right: 0.6rem;
+    top: 7.9rem;
+    bottom: auto;
+  }
+
   .minimap {
-    width: 110px;
-    height: 110px;
+    width: 84px;
+    height: 84px;
+    border-radius: 12px;
   }
 
   .legend {
@@ -927,16 +1062,35 @@
   }
 
   .joystick {
-    left: auto;
-    right: clamp(0.9rem, 2vw, 1.6rem);
-    bottom: 5.4rem;
+    left: clamp(0.9rem, 2vw, 1.6rem);
+    bottom: 9.5rem;
+  }
+
+  .jumpButton {
+    bottom: 10.2rem;
+  }
+
+  .studCounter {
+    position: absolute;
+    right: 0.6rem;
+    top: 4.3rem;
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+  }
+
+  .enter {
+    bottom: 3.6rem;
   }
 
   .stopCards {
     right: 0.6rem;
     left: 0.6rem;
     width: auto;
-    bottom: 5.6rem;
+    bottom: 6rem;
+  }
+
+  .stopCards .body {
+    display: none;
   }
 
   .navigator {

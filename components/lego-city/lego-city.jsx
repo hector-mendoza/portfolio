@@ -2,7 +2,23 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight, Moon, Sun, Pause, Play, Eye, Footprints, TramFront, X, Image as ImageIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Moon,
+  Sun,
+  Pause,
+  Play,
+  Eye,
+  Footprints,
+  TramFront,
+  X,
+  Image as ImageIcon,
+  Volume2,
+  VolumeX,
+  ArrowUp,
+} from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { BrandLogo } from "@/components/site-chrome";
@@ -17,6 +33,15 @@ function supportsWebGL() {
     return false;
   }
 }
+
+const OUTFITS = [
+  { id: "red", torso: "bright-red", legs: "dark-blue", hex: "#C91A09", label: "Classic red" },
+  { id: "blue", torso: "bright-blue", legs: "black", hex: "#0055BF", label: "City blue" },
+  { id: "lime", torso: "lime", legs: "dark-bluish-gray", hex: "#BBE90B", label: "Lime" },
+  { id: "pink", torso: "dark-pink", legs: "dark-purple", hex: "#C870A0", label: "Dark pink" },
+  { id: "yellow", torso: "bright-yellow", legs: "dark-blue", hex: "#F2CD37", label: "Yellow" },
+  { id: "white", torso: "white", legs: "dark-bluish-gray", hex: "#F4F4F4", label: "White" },
+];
 
 const POSTCARDS = [
   { file: "overview", title: "The whole city", note: "Cycles render, 1920×1080" },
@@ -140,6 +165,7 @@ export default function LegoCity() {
   const [showHelp, setShowHelp] = useState(false);
   const [showPostcards, setShowPostcards] = useState(false);
   const [touch, setTouch] = useState(false);
+  const [outfit, setOutfit] = useState("red");
 
   useEffect(() => {
     setTouch(window.matchMedia("(pointer: coarse)").matches);
@@ -242,6 +268,7 @@ export default function LegoCity() {
   return (
     <div className={styles.shell} data-mode={mode} data-night={state?.night ? "true" : "false"}>
       <div ref={containerRef} className={styles.canvas} />
+      <div className={styles.vignette} aria-hidden="true" />
 
       {/* top bar */}
       <header className={styles.topbar}>
@@ -252,6 +279,13 @@ export default function LegoCity() {
             <small>Hector Mendoza · Software Engineer</small>
           </span>
         </Link>
+        {ready && !state?.intro && (
+          <div className={styles.studCounter} aria-live="polite" title="Gold studs collected on foot">
+            <span className={styles.goldStud} aria-hidden="true" />
+            <strong>{state.studs}</strong>
+            <small>/ {state.studsTotal}</small>
+          </div>
+        )}
         <div className={styles.controls} role="toolbar" aria-label="City controls">
           <div className={styles.segment} role="group" aria-label="Mode">
             <button
@@ -295,6 +329,17 @@ export default function LegoCity() {
               <span>{state?.view === "first" ? "1st person" : "3rd person"}</span>
             </button>
           )}
+          <button
+            type="button"
+            className={styles.pill}
+            onClick={() => app?.setMuted(!state?.muted)}
+            aria-pressed={!state?.muted}
+            disabled={!ready}
+            title="Sound (M)"
+          >
+            {state?.muted ? <VolumeX size={15} aria-hidden="true" /> : <Volume2 size={15} aria-hidden="true" />}
+            <span>{state?.muted ? "Muted" : "Sound"}</span>
+          </button>
           <button
             type="button"
             className={styles.pill}
@@ -376,8 +421,15 @@ export default function LegoCity() {
       {ready && mode === "walk" && !state?.intro && (
         <>
           {touch && <Joystick onMove={(x, z) => app?.setJoystick(x, z)} />}
+          {touch && (
+            <button type="button" className={styles.jumpButton} onClick={() => app?.jump()} aria-label="Jump">
+              <ArrowUp size={22} />
+            </button>
+          )}
           <div className={styles.hint}>
-            {touch ? "Joystick to walk · drag to look" : "WASD to walk · Shift to run · drag to look · Tab to ride"}
+            {touch
+              ? "Joystick to walk · drag to look · collect the gold studs"
+              : "WASD walk · Shift run · Space jump · drag to look · E enter · Tab ride"}
           </div>
           {state?.near && !open && (
             <button type="button" className={styles.enter} onClick={() => setOpen(state.near)}>
@@ -429,17 +481,21 @@ export default function LegoCity() {
             <dt>Tab</dt>
             <dd>Switch between riding the tram and walking</dd>
             <dt>Space / ← →</dt>
-            <dd>Next / previous tram stop</dd>
+            <dd>Next / previous tram stop (riding)</dd>
             <dt>WASD</dt>
             <dd>Walk (hold Shift to run)</dd>
+            <dt>Space</dt>
+            <dd>Jump (walking)</dd>
+            <dt>Gold studs</dt>
+            <dd>Walk into them to collect all {state?.studsTotal ?? ""}</dd>
             <dt>Drag</dt>
             <dd>Look around · scroll to zoom</dd>
             <dt>E</dt>
             <dd>Enter the building you&apos;re standing at</dd>
             <dt>Tap a label</dt>
             <dd>Open any building from afar</dd>
-            <dt>V · N</dt>
-            <dd>First person · night mode</dd>
+            <dt>V · N · M</dt>
+            <dd>First person · night mode · mute</dd>
           </dl>
           <button type="button" className={styles.more} onClick={() => setShowHelp(false)}>
             Got it
@@ -454,11 +510,33 @@ export default function LegoCity() {
             <p className={styles.eyebrow}>
               <span className={styles.brick} aria-hidden="true" /> Welcome to
             </p>
-            <h1>Mendoza City</h1>
+            <h1 className={styles.title}>
+              <span>Mendoza</span> <span>City</span>
+            </h1>
             <p>
               A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of
               my story. Ride the tram for the guided tour, or get off and walk anywhere.
             </p>
+            {ready && (
+              <div className={styles.picker} role="radiogroup" aria-label="Pick your minifig">
+                <span>Your minifig</span>
+                {OUTFITS.map((o) => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={outfit === o.id}
+                    aria-label={o.label}
+                    title={o.label}
+                    style={{ background: o.hex }}
+                    onClick={() => {
+                      setOutfit(o.id);
+                      app?.setPlayerColors({ torso: o.torso, legs: o.legs });
+                    }}
+                  />
+                ))}
+              </div>
+            )}
             {ready ? (
               <div className={styles.introActions}>
                 <button type="button" className={styles.primary} onClick={startTour}>
