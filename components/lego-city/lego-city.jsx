@@ -24,6 +24,7 @@ import {
   RotateCcw,
   Download,
   RefreshCw,
+  MoreHorizontal,
 } from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
@@ -172,6 +173,7 @@ export default function LegoCity() {
   const [showPostcards, setShowPostcards] = useState(false);
   const [touch, setTouch] = useState(false);
   const [outfit, setOutfit] = useState("red");
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     setTouch(window.matchMedia("(pointer: coarse)").matches);
@@ -221,6 +223,8 @@ export default function LegoCity() {
   const stopId = state?.stop?.id;
   const nearId = state?.near?.id;
   const mode = state?.mode ?? "ride";
+  useEffect(() => setMenu(false), [mode]);
+
   useEffect(() => {
     const app = appRef.current;
     if (!app || !app.state) return;
@@ -321,6 +325,16 @@ export default function LegoCity() {
               <Orbit size={15} aria-hidden="true" /> Explore
             </button>
           </div>
+          <button
+            type="button"
+            className={`${styles.pill} ${styles.moreToggle}`}
+            onClick={() => setMenu((v) => !v)}
+            aria-expanded={menu}
+            aria-label="More controls"
+          >
+            <MoreHorizontal size={16} aria-hidden="true" />
+          </button>
+          <div className={`${styles.secondaryControls} ${menu ? styles.secondaryOpen : ""}`}>
           {mode === "explore" ? (
             <button
               type="button"
@@ -395,6 +409,7 @@ export default function LegoCity() {
           <Link href="/classic" className={`${styles.pill} ${styles.classicLink}`}>
             Classic site
           </Link>
+          </div>
         </div>
       </header>
 
@@ -462,20 +477,22 @@ export default function LegoCity() {
             <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("top")}>
               Top
             </button>
-            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("front")}>
-              Front
-            </button>
-            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("side")}>
-              Side
-            </button>
-            <span className={styles.viewerSep} aria-hidden="true" />
-            <a className={styles.viewerView} href="/city/lego-city.glb" download title="Download the glTF model">
-              <Download size={14} aria-hidden="true" /> glTF
-            </a>
+            {!touch && (
+              <>
+                <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("front")}>
+                  Front
+                </button>
+                <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("side")}>
+                  Side
+                </button>
+                <span className={styles.viewerSep} aria-hidden="true" />
+                <a className={styles.viewerView} href="/city/lego-city.glb" download title="Download the glTF model">
+                  <Download size={14} aria-hidden="true" /> glTF
+                </a>
+              </>
+            )}
           </nav>
-          <div className={styles.hint}>
-            {touch ? "One finger to orbit · pinch to zoom · two fingers to pan · tap a label to open it" : "Drag to orbit · scroll to zoom · right-drag to pan · click a label to open it"}
-          </div>
+          {!touch && <div className={styles.hint}>Drag to orbit · scroll to zoom · right-drag to pan · click a label to open it</div>}
         </>
       )}
 
@@ -488,11 +505,7 @@ export default function LegoCity() {
               <ArrowUp size={22} />
             </button>
           )}
-          <div className={styles.hint}>
-            {touch
-              ? "Joystick to walk · drag to look · collect the gold studs"
-              : "WASD walk · Shift run · Space jump · drag to look · E enter · Tab ride"}
-          </div>
+          {!touch && <div className={styles.hint}>WASD walk · Shift run · Space jump · drag to look · E enter · Tab ride</div>}
           {state?.near && !open && (
             <button type="button" className={styles.enter} onClick={() => setOpen(state.near)}>
               <span className={styles.key}>E</span> Enter {state.near.title}
