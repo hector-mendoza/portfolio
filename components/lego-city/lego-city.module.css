@@ -775,6 +775,51 @@
   font-weight: 700;
 }
 
+/* ---------------------------------------------------------------- viewer bar */
+
+.viewerBar {
+  position: absolute;
+  left: 50%;
+  bottom: calc(clamp(0.9rem, 2vw, 1.6rem) + 2.6rem);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 999px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 40px rgba(11, 22, 32, 0.18);
+  z-index: 5;
+}
+
+.viewerSep {
+  width: 1px;
+  height: 1.4rem;
+  background: var(--line);
+  margin: 0 0.2rem;
+}
+
+.viewerView {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.viewerView:hover {
+  background: var(--lego-yellow);
+}
+
 /* ---------------------------------------------------------------- help + intro */
 
 .help {
@@ -821,9 +866,19 @@
   display: grid;
   place-items: center;
   padding: 1rem;
-  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.12), rgba(11, 22, 32, 0.4));
-  backdrop-filter: blur(1.5px);
+  pointer-events: none; /* the turntable behind stays draggable */
   z-index: 9;
+}
+
+.intro > * {
+  pointer-events: auto;
+}
+
+@media (min-width: 980px) {
+  .intro {
+    place-items: center start;
+    padding-left: clamp(1.5rem, 5vw, 5rem);
+  }
 }
 
 .introCard {
@@ -1115,5 +1170,15 @@
   .hint {
     bottom: 1.2rem;
     font-size: 0.66rem;
+    white-space: normal;
+    text-align: center;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .viewerBar {
+    width: calc(100vw - 1.2rem);
+    justify-content: center;
+    flex-wrap: wrap;
+    bottom: 5.4rem;
   }
 }

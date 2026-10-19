@@ -18,6 +18,12 @@ import {
   Volume2,
   VolumeX,
   ArrowUp,
+  Orbit,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw,
+  Download,
+  RefreshCw,
 } from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
@@ -247,7 +253,8 @@ export default function LegoCity() {
   const startWalk = useCallback(() => {
     const a = appRef.current;
     if (!a) return;
-    a.startTour();
+    a.sounds.unlock();
+    a.setState({ intro: false });
     a.setMode("walk");
   }, []);
 
@@ -304,8 +311,29 @@ export default function LegoCity() {
             >
               <Footprints size={15} aria-hidden="true" /> Walk
             </button>
+            <button
+              type="button"
+              aria-pressed={mode === "explore"}
+              onClick={() => app?.setMode("explore")}
+              disabled={!ready}
+              title="3D model viewer"
+            >
+              <Orbit size={15} aria-hidden="true" /> Explore
+            </button>
           </div>
-          {mode === "ride" ? (
+          {mode === "explore" ? (
+            <button
+              type="button"
+              className={styles.pill}
+              onClick={() => app?.setAutoRotate(!state?.autoRotate)}
+              aria-pressed={!!state?.autoRotate}
+              disabled={!ready}
+              title="Turntable"
+            >
+              <RefreshCw size={15} aria-hidden="true" />
+              <span>{state?.autoRotate ? "Turning" : "Still"}</span>
+            </button>
+          ) : mode === "ride" ? (
             <button
               type="button"
               className={styles.pill}
@@ -417,6 +445,40 @@ export default function LegoCity() {
         </nav>
       )}
 
+      {/* explore (model viewer) toolbar */}
+      {ready && mode === "explore" && !state?.intro && (
+        <>
+          <nav className={styles.viewerBar} aria-label="Model viewer">
+            <button type="button" className={styles.iconButton} onClick={() => app?.orbitZoom(0.8)} aria-label="Zoom in" title="Zoom in">
+              <ZoomIn size={18} />
+            </button>
+            <button type="button" className={styles.iconButton} onClick={() => app?.orbitZoom(1.25)} aria-label="Zoom out" title="Zoom out">
+              <ZoomOut size={18} />
+            </button>
+            <span className={styles.viewerSep} aria-hidden="true" />
+            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("home")}>
+              <RotateCcw size={14} aria-hidden="true" /> Reset
+            </button>
+            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("top")}>
+              Top
+            </button>
+            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("front")}>
+              Front
+            </button>
+            <button type="button" className={styles.viewerView} onClick={() => app?.orbitView("side")}>
+              Side
+            </button>
+            <span className={styles.viewerSep} aria-hidden="true" />
+            <a className={styles.viewerView} href="/city/lego-city.glb" download title="Download the glTF model">
+              <Download size={14} aria-hidden="true" /> glTF
+            </a>
+          </nav>
+          <div className={styles.hint}>
+            {touch ? "One finger to orbit · pinch to zoom · two fingers to pan · tap a label to open it" : "Drag to orbit · scroll to zoom · right-drag to pan · click a label to open it"}
+          </div>
+        </>
+      )}
+
       {/* walk helpers */}
       {ready && mode === "walk" && !state?.intro && (
         <>
@@ -479,7 +541,9 @@ export default function LegoCity() {
           <h3>Controls</h3>
           <dl>
             <dt>Tab</dt>
-            <dd>Switch between riding the tram and walking</dd>
+            <dd>Cycle Ride → Walk → Explore</dd>
+            <dt>Explore</dt>
+            <dd>3D viewer: drag to orbit, scroll or pinch to zoom, right-drag or two fingers to pan</dd>
             <dt>Space / ← →</dt>
             <dd>Next / previous tram stop (riding)</dd>
             <dt>WASD</dt>
@@ -515,7 +579,8 @@ export default function LegoCity() {
             </h1>
             <p>
               A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of
-              my story. Ride the tram for the guided tour, or get off and walk anywhere.
+              my story. Ride the tram for the guided tour, get off and walk anywhere, or spin the whole set around
+              like a model.
             </p>
             {ready && (
               <div className={styles.picker} role="radiogroup" aria-label="Pick your minifig">
@@ -544,6 +609,9 @@ export default function LegoCity() {
                 </button>
                 <button type="button" className={styles.secondary} onClick={startWalk}>
                   <Footprints size={16} aria-hidden="true" /> Walk instead
+                </button>
+                <button type="button" className={styles.secondary} onClick={() => appRef.current?.explore()}>
+                  <Orbit size={16} aria-hidden="true" /> Just look around
                 </button>
               </div>
             ) : (
