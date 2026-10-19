@@ -99,7 +99,9 @@ function skyLabel(sky) {
 
 function SkyPanel({ sky, app, onClose }) {
   const liveLine =
-    sky.status === "offline"
+    sky.weatherMode !== "live"
+      ? `${sky.weatherLabel} (preview)`
+      : sky.status === "offline"
       ? `Live weather unavailable, showing the sun only`
       : sky.status === "loading"
         ? "Fetching the weather…"
@@ -117,7 +119,13 @@ function SkyPanel({ sky, app, onClose }) {
       <p className={styles.skyNow}>
         <SkyIcon sky={sky} size={22} />
         <span>
-          <strong>{sky.clock ?? sky.phase}</strong> · {sky.phase}
+          {sky.clock ? (
+            <>
+              <strong>{sky.clock}</strong> · {sky.phase}
+            </>
+          ) : (
+            <strong>{sky.phase}</strong>
+          )}
           <small>{liveLine}</small>
         </span>
       </p>
@@ -431,6 +439,20 @@ export default function LegoCity() {
           </div>
           <button
             type="button"
+            className={`${styles.pill} ${styles.skyPill}`}
+            onClick={() => {
+              setShowSky((v) => !v);
+              setMenu(false);
+            }}
+            aria-expanded={showSky}
+            disabled={!ready}
+            title="Sky: live time and weather (N toggles night)"
+          >
+            <SkyIcon sky={state?.sky} />
+            <span>{skyLabel(state?.sky)}</span>
+          </button>
+          <button
+            type="button"
             className={`${styles.pill} ${styles.moreToggle}`}
             onClick={() => setMenu((v) => !v)}
             aria-expanded={menu}
@@ -485,20 +507,6 @@ export default function LegoCity() {
           >
             {state?.muted ? <VolumeX size={15} aria-hidden="true" /> : <Volume2 size={15} aria-hidden="true" />}
             <span>{state?.muted ? "Muted" : "Sound"}</span>
-          </button>
-          <button
-            type="button"
-            className={`${styles.pill} ${styles.skyPill}`}
-            onClick={() => {
-              setShowSky((v) => !v);
-              setMenu(false);
-            }}
-            aria-expanded={showSky}
-            disabled={!ready}
-            title="Sky: live time and weather (N toggles night)"
-          >
-            <SkyIcon sky={state?.sky} />
-            <span>{skyLabel(state?.sky)}</span>
           </button>
           <button
             type="button"

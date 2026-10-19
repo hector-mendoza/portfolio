@@ -1194,14 +1194,24 @@
     gap: 0.35rem;
   }
 
+  .segment {
+    padding: 0.15rem;
+  }
+
   .segment button {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.72rem;
+    padding: 0.42rem 0.42rem;
+    font-size: 0.66rem;
+    gap: 0.2rem;
+  }
+
+  .segment button svg {
+    width: 14px;
+    height: 14px;
   }
 
   .segment button span,
   .classicLink,
-  .pill span {
+  .pill:not(.skyPill) span {
     display: none;
   }
 
@@ -1377,8 +1387,46 @@
     width: auto;
   }
 
+  .skyPill {
+    flex: 0 1 auto;
+    padding: 0.45rem 0.5rem;
+    white-space: nowrap;
+  }
+
   .skyPill span {
+    display: inline;
     min-width: 0;
+    font-size: 0.64rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .skyPill svg {
+    display: none;
+  }
+
+  .brand {
+    flex: 0 0 auto;
+    width: 2.6rem;
+    height: 2.6rem;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .brand img {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .controls {
+    min-width: 0;
+    gap: 0.2rem;
+    flex: 1 1 0;
+    overflow: hidden;
+  }
+
+  .controls .pill:not(.skyPill) {
+    padding: 0.45rem 0.5rem;
   }
 
   .help,
