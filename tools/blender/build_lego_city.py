@@ -387,7 +387,7 @@ SHOTS = {
     # name: (location in studs [x, y, z] three.js coords, look-at target, lens mm, night)
     "overview": ((260, 360, 360), (0, 0, 10), 40, False),
     "station": ((50, 30, 180), (0, 10, 112), 45, False),
-    "minifig": ((1.5, 5.6, 117), (-3, 4.2, 104), 75, False),
+    "minifig": ((2.5, 5.2, 123), (-3, 3.1, 104), 75, False),
     "square": ((-30, 20, 52), (0, 8, -6), 38, False),
     "night": ((-250, 110, 250), (0, 12, 0), 45, True),
 }
