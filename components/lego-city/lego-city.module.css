@@ -1161,6 +1161,110 @@
   }
 }
 
+.talk {
+  position: absolute;
+  left: 50%;
+  right: auto;
+  margin: 0;
+  bottom: calc(clamp(0.9rem, 2vw, 1.6rem) + 1rem);
+  transform: translateX(-50%);
+  width: min(30rem, calc(100vw - 1.6rem));
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.9rem 1rem 1rem;
+  border-radius: 1.2rem;
+  border: 2px solid var(--ink);
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 16px 40px rgba(11, 22, 32, 0.3);
+  animation: pop 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 6;
+}
+
+.talkHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.talkHead strong {
+  font-size: 1rem;
+}
+
+.talkHead span {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.talkText {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.talkOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.talkOptions button {
+  padding: 0.45rem 0.8rem;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: var(--lego-yellow);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.talkOptions button:hover,
+.talkOptions button:focus-visible {
+  background: #fff;
+}
+
+.waypoint {
+  position: absolute;
+  top: 4.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.4rem 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: var(--lego-yellow);
+  color: var(--ink);
+  font-weight: 750;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.waypoint button {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(27, 27, 27, 0.12);
+  color: inherit;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .talk {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .card,
   .introCard,
@@ -1309,6 +1413,16 @@
 
   .hint {
     display: none;
+  }
+
+  .talk {
+    bottom: 0.6rem;
+    padding: 0.75rem 0.8rem 0.85rem;
+  }
+
+  .waypoint {
+    top: 3.7rem;
+    font-size: 0.74rem;
   }
 
   .navigator {

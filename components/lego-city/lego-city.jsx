@@ -347,6 +347,7 @@ export default function LegoCity() {
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
+        appRef.current?.endTalk?.();
         setOpen(null);
         setShowHelp(false);
         setShowPostcards(false);
@@ -620,11 +621,50 @@ export default function LegoCity() {
               <ArrowUp size={22} />
             </button>
           )}
-          {!touch && <div className={styles.hint}>WASD walk · Shift run · Space jump · drag to look · E enter · Tab ride</div>}
-          {state?.near && !open && (
+          {!touch && <div className={styles.hint}>WASD walk · Shift run · Space jump · drag to look · E enter/talk · Tab ride</div>}
+          {state?.talkable && !state.talk && !open && (
+            <button type="button" className={styles.enter} onClick={() => app?.startTalk()}>
+              <span className={styles.key}>E</span> Talk to {state.talkable.name}
+            </button>
+          )}
+          {state?.near && !state?.talkable && !state?.talk && !open && (
             <button type="button" className={styles.enter} onClick={() => setOpen(state.near)}>
               <span className={styles.key}>E</span> Enter {state.near.title}
             </button>
+          )}
+          {state?.talk && (
+            <dialog open className={styles.talk} aria-label={`Conversation with ${state.talk.name}`}>
+              <div className={styles.talkHead}>
+                <strong>{state.talk.name}</strong>
+                <span>{state.talk.role}</span>
+              </div>
+              <p className={styles.talkText} aria-live="polite">
+                {state.talk.text}
+              </p>
+              <div className={styles.talkOptions}>
+                {state.talk.options.map((o) => (
+                  <button key={o.id} type="button" onClick={() => app?.talkChoose(o.id)}>
+                    {o.label}
+                  </button>
+                ))}
+                {state.talk.options.length === 0 && (
+                  <button type="button" onClick={() => app?.endTalk()}>
+                    Close
+                  </button>
+                )}
+              </div>
+            </dialog>
+          )}
+          {state?.waypoint && (
+            <div className={styles.waypoint}>
+              <MapPin size={14} aria-hidden="true" />
+              <span>
+                {state.waypoint.title} · {state.waypoint.dist} studs
+              </span>
+              <button type="button" onClick={() => app?.clearWaypoint()} aria-label="Cancel route">
+                <X size={14} aria-hidden="true" />
+              </button>
+            </div>
           )}
         </>
       )}
