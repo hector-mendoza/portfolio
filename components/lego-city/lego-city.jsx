@@ -633,7 +633,7 @@ export default function LegoCity() {
             </button>
           )}
           {state?.talk && (
-            <div className={styles.talk} role="dialog" aria-label={`Conversation with ${state.talk.name}`}>
+            <dialog open className={styles.talk} aria-label={`Conversation with ${state.talk.name}`}>
               <div className={styles.talkHead}>
                 <strong>{state.talk.name}</strong>
                 <span>{state.talk.role}</span>
@@ -653,7 +653,7 @@ export default function LegoCity() {
                   </button>
                 )}
               </div>
-            </div>
+            </dialog>
           )}
           {state?.waypoint && (
             <div className={styles.waypoint}>

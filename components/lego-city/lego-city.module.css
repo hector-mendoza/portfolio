@@ -1164,6 +1164,8 @@
 .talk {
   position: absolute;
   left: 50%;
+  right: auto;
+  margin: 0;
   bottom: calc(clamp(0.9rem, 2vw, 1.6rem) + 1rem);
   transform: translateX(-50%);
   width: min(30rem, calc(100vw - 1.6rem));
