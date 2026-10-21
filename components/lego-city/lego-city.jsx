@@ -211,7 +211,7 @@ function Postcards({ onClose }) {
 function TravelPanel({ current, onFly, onClose }) {
   const places = listDestinations();
   return (
-    <div className={styles.travel} role="dialog" aria-label="Departures">
+    <dialog open className={styles.travel} aria-label="Departures">
       <header className={styles.cardHead}>
         <p className={styles.eyebrow}>
           <Plane size={14} aria-hidden="true" /> Departures
@@ -240,7 +240,7 @@ function TravelPanel({ current, onFly, onClose }) {
           );
         })}
       </ul>
-    </div>
+    </dialog>
   );
 }
 
