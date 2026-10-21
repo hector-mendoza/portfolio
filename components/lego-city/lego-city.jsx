@@ -34,8 +34,10 @@ import {
   Download,
   RefreshCw,
   MoreHorizontal,
+  Plane,
 } from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
+import { CITIES, HOME_CITY, listDestinations, resolveCityId } from "@/lib/lego-city/cities";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { BrandLogo } from "@/components/site-chrome";
 import Joystick from "./joystick";
@@ -206,7 +208,43 @@ function Postcards({ onClose }) {
   );
 }
 
-function LandmarkCard({ landmark, onClose, compact = false }) {
+function TravelPanel({ current, onFly, onClose }) {
+  const places = listDestinations();
+  return (
+    <div className={styles.travel} role="dialog" aria-label="Departures">
+      <header className={styles.cardHead}>
+        <p className={styles.eyebrow}>
+          <Plane size={14} aria-hidden="true" /> Departures
+        </p>
+        <button type="button" className={styles.iconButton} onClick={onClose} aria-label="Close departures">
+          <X size={16} />
+        </button>
+      </header>
+      <h2>Where to?</h2>
+      <ul className={styles.destinations}>
+        {places.map((c) => {
+          const here = c.id === current;
+          const ready = !!c.spec;
+          return (
+            <li key={c.id}>
+              <div>
+                <strong>{c.name}</strong>
+                <small>
+                  {c.country} · {c.blurb}
+                </small>
+              </div>
+              <button type="button" disabled={here || !ready} onClick={() => onFly(c.id)}>
+                {here ? "You are here" : ready ? (c.id === HOME_CITY ? "Fly home" : "Fly") : "Soon"}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+function LandmarkCard({ landmark, onClose, onTravel, compact = false }) {
   const data = useMemo(() => resolveLandmark(landmark), [landmark]);
   if (!data) return null;
   return (
@@ -253,6 +291,11 @@ function LandmarkCard({ landmark, onClose, compact = false }) {
           ))}
         </ul>
       )}
+      {data.action === "travel" && onTravel && (
+        <button type="button" className={styles.cta} onClick={onTravel}>
+          <Plane size={15} aria-hidden="true" /> {data.cta}
+        </button>
+      )}
       {data.href && data.cta && data.external && (
         <a className={styles.cta} href={data.href} target={data.href.startsWith("mailto:") ? undefined : "_blank"} rel="noreferrer">
           {data.cta}
@@ -285,14 +328,23 @@ export default function LegoCity() {
   const [touch, setTouch] = useState(false);
   const [outfit, setOutfit] = useState("red");
   const [menu, setMenu] = useState(false);
+  const [cityId, setCityId] = useState(null);
+  const [showTravel, setShowTravel] = useState(false);
+  const [flight, setFlight] = useState(null);
 
   useEffect(() => {
     setTouch(window.matchMedia("(pointer: coarse)").matches);
+    setCityId(resolveCityId(new URLSearchParams(window.location.search).get("city")));
   }, []);
 
   useEffect(() => {
+    if (!cityId) return undefined;
     let app;
     let cancelled = false;
+    setState(null);
+    setStatus("loading");
+    setOpen(null);
+    setLandmarks([]);
     if (!supportsWebGL()) {
       setStatus("unsupported");
       return undefined;
@@ -301,6 +353,7 @@ export default function LegoCity() {
       .then(({ CityApp }) => {
         if (cancelled || !containerRef.current) return;
         app = new CityApp(containerRef.current, {
+          cityId,
           minimapCanvas: minimapRef.current,
           reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
           quality:
@@ -328,7 +381,30 @@ export default function LegoCity() {
       app?.dispose();
       appRef.current = null;
     };
+  }, [cityId]);
+
+  const travel = useCallback((id) => {
+    const place = CITIES.find((c) => c.id === id);
+    if (!place?.spec) return;
+    setShowTravel(false);
+    setOpen(null);
+    setFlight({ name: place.name, home: id === HOME_CITY });
+    window.setTimeout(() => {
+      const url = new URL(window.location.href);
+      if (id === HOME_CITY) url.searchParams.delete("city");
+      else url.searchParams.set("city", id);
+      window.history.replaceState(null, "", url);
+      setCityId(id);
+    }, 900);
   }, []);
+
+  // the flight overlay lifts once the new city is built (or failed to build)
+  useEffect(() => {
+    if (!flight || (status !== "ready" && status !== "error")) return undefined;
+    if (cityId && CITIES.find((c) => c.id === cityId)?.name !== flight.name) return undefined;
+    const t = window.setTimeout(() => setFlight(null), 600);
+    return () => window.clearTimeout(t);
+  }, [flight, status, cityId]);
 
   // cards for the current stop (ride) or proximity (walk)
   const stopId = state?.stop?.id;
@@ -352,6 +428,7 @@ export default function LegoCity() {
         setShowHelp(false);
         setShowPostcards(false);
         setShowSky(false);
+        setShowTravel(false);
       }
       if (e.key === "?") setShowHelp((v) => !v);
     };
@@ -361,6 +438,7 @@ export default function LegoCity() {
 
   const app = appRef.current;
   const ready = status === "ready" && state?.ready;
+  const isHome = state?.city?.home ?? true;
   const stops = app?.city.route.stops ?? [];
   const current = landmarks[cardIndex] ?? landmarks[0] ?? null;
 
@@ -399,7 +477,7 @@ export default function LegoCity() {
         <Link href="/classic" className={styles.brand} aria-label="Hector Mendoza, classic portfolio">
           <BrandLogo />
           <span>
-            <strong>Pilleland</strong>
+            <strong>{state?.city?.name ?? "Pilleland"}</strong>
             <small>Hector Mendoza · Software Engineer</small>
           </span>
         </Link>
@@ -512,13 +590,29 @@ export default function LegoCity() {
           <button
             type="button"
             className={styles.pill}
-            onClick={() => setShowPostcards((v) => !v)}
-            aria-expanded={showPostcards}
-            title="Blender renders of the city"
+            onClick={() => {
+              setShowTravel((v) => !v);
+              setMenu(false);
+            }}
+            aria-expanded={showTravel}
+            disabled={!ready}
+            title="Departures: fly to another city"
           >
-            <ImageIcon size={15} aria-hidden="true" />
-            <span>Postcards</span>
+            <Plane size={15} aria-hidden="true" />
+            <span>Travel</span>
           </button>
+          {isHome && (
+            <button
+              type="button"
+              className={styles.pill}
+              onClick={() => setShowPostcards((v) => !v)}
+              aria-expanded={showPostcards}
+              title="Blender renders of the city"
+            >
+              <ImageIcon size={15} aria-hidden="true" />
+              <span>Postcards</span>
+            </button>
+          )}
           <button type="button" className={styles.pill} onClick={() => setShowHelp((v) => !v)} aria-expanded={showHelp} aria-label="Controls help">
             ?
           </button>
@@ -602,9 +696,9 @@ export default function LegoCity() {
                   Side
                 </button>
                 <span className={styles.viewerSep} aria-hidden="true" />
-                <a className={styles.viewerView} href="/city/lego-city.glb" download title="Download the glTF model">
+                {isHome && (<a className={styles.viewerView} href="/city/lego-city.glb" download title="Download the glTF model">
                   <Download size={14} aria-hidden="true" /> glTF
-                </a>
+                </a>)}
               </>
             )}
           </nav>
@@ -687,7 +781,7 @@ export default function LegoCity() {
               ))}
             </div>
           )}
-          <LandmarkCard landmark={current} compact />
+          <LandmarkCard landmark={current} compact onTravel={() => setShowTravel(true)} />
           <button type="button" className={styles.more} onClick={() => setOpen(current)}>
             Open {current.title}
           </button>
@@ -697,11 +791,20 @@ export default function LegoCity() {
       {/* full card */}
       {open && (
         <div className={styles.cardWrap}>
-          <LandmarkCard landmark={open} onClose={() => setOpen(null)} />
+          <LandmarkCard landmark={open} onClose={() => setOpen(null)} onTravel={() => { setOpen(null); setShowTravel(true); }} />
         </div>
       )}
 
       {showPostcards && <Postcards onClose={() => setShowPostcards(false)} />}
+      {showTravel && <TravelPanel current={cityId} onFly={travel} onClose={() => setShowTravel(false)} />}
+
+      {/* flight transition between cities */}
+      {flight && (
+        <div className={styles.flight} role="status" aria-live="polite">
+          <Plane size={36} aria-hidden="true" />
+          <strong>{flight.home ? "Flying home…" : `Flying to ${flight.name}…`}</strong>
+        </div>
+      )}
 
       {showSky && state?.sky && <SkyPanel sky={state.sky} app={app} onClose={() => setShowSky(false)} />}
 
@@ -747,12 +850,18 @@ export default function LegoCity() {
               <span className={styles.brick} aria-hidden="true" /> Welcome to
             </p>
             <h1 className={styles.title}>
-              <span>Pille</span><span>land</span>
+              {isHome ? (
+                <>
+                  <span>Pille</span><span>land</span>
+                </>
+              ) : (
+                <span>{state?.city?.name ?? ""}</span>
+              )}
             </h1>
             <p>
-              A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of
-              my story. Ride the tram for the guided tour, get off and walk anywhere, or spin the whole set around
-              like a model.
+              {isHome
+                ? "A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of my story. Ride the tram for the guided tour, get off and walk anywhere, or spin the whole set around like a model."
+                : `${state?.city?.tagline ?? ""} Ride the tram, get off and walk anywhere, or spin the whole set around like a model.`}
             </p>
             {ready && (
               <div className={styles.picker} role="radiogroup" aria-label="Pick your minifig">
@@ -794,7 +903,7 @@ export default function LegoCity() {
                   <i />
                   <i />
                 </span>
-                Building {reducedMotion ? "" : "36,000 studs"}…
+                Building {reducedMotion ? "" : "thousands of studs"}…
               </div>
             )}
             <small>
