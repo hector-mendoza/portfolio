@@ -35,6 +35,7 @@ import {
   RefreshCw,
   MoreHorizontal,
   Plane,
+  ScanFace,
 } from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
 import { CITIES, HOME_CITY, listDestinations, resolveCityId } from "@/lib/lego-city/cities";
@@ -167,6 +168,7 @@ const HOME_POSTCARDS = [
   { file: "station", title: "Central Station", note: "Where every visit starts" },
   { file: "square", title: "Mendoza Square", note: "Fountain and the brick sign" },
   { file: "night", title: "After dark", note: "Lamps, windows, and the Ferris wheel" },
+  { file: "minifig", title: "Meet the locals", note: "A minifig up close, printed face and all" },
 ];
 
 function postcardsFor(cityId) {
@@ -575,6 +577,18 @@ export default function LegoCity() {
               <span>{state?.autoplay ? "Touring" : "Paused"}</span>
             </button>
           ) : (
+            <>
+            <button
+              type="button"
+              className={styles.pill}
+              onClick={() => app?.setCloseUp(!state?.closeUp)}
+              aria-pressed={!!state?.closeUp}
+              disabled={!ready}
+              title="Close-up of your minifig (C)"
+            >
+              <ScanFace size={15} aria-hidden="true" />
+              <span>Close-up</span>
+            </button>
             <button
               type="button"
               className={styles.pill}
@@ -585,6 +599,7 @@ export default function LegoCity() {
               <Eye size={15} aria-hidden="true" />
               <span>{state?.view === "first" ? "1st person" : "3rd person"}</span>
             </button>
+            </>
           )}
           <button
             type="button"
@@ -723,7 +738,7 @@ export default function LegoCity() {
               <ArrowUp size={22} />
             </button>
           )}
-          {!touch && <div className={styles.hint}>WASD walk · Shift run · Space jump · drag to look · E enter/talk · Tab ride</div>}
+          {!touch && <div className={styles.hint}>WASD walk · Shift run · Space jump · drag to look · E enter/talk · C close-up · Tab ride</div>}
           {state?.talkable && !state.talk && !open && (
             <button type="button" className={styles.enter} onClick={() => app?.startTalk()}>
               <span className={styles.key}>E</span> Talk to {state.talkable.name}
