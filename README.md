@@ -40,7 +40,7 @@ The result is a fast, accessible site that reads like a product — not a templa
 
 | Piece | Where |
 | --- | --- |
-| City spec: 25 lots on a 5×5 grid, districts, tram line and stops | `lib/lego-city/spec.js` |
+| City spec: 49 lots on a 7×7 grid (25 portfolio buildings plus an outer ring and the airport), districts, tram line and stops | `lib/lego-city/spec.js` |
 | Live sky: sun position, WMO weather mapping, clock (pure, tested) | `lib/lego-city/environment.js` |
 | Sky controller, rain/snow shaders, night lights | `lib/lego-city/three/environment-controller.js`, `weather-fx.js`, `night-lights.js` |
 | Scale: 1 unit = 1 stud; minifig 5 studs; storey 6 bricks (7.2); doors 5 bricks; roads 16 studs | `lib/lego-city/layout.js` |
