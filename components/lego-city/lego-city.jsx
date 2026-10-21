@@ -162,15 +162,24 @@ const OUTFITS = [
   { id: "white", torso: "white", legs: "dark-bluish-gray", hex: "#F4F4F4", label: "White" },
 ];
 
-const POSTCARDS = [
+const HOME_POSTCARDS = [
   { file: "overview", title: "The whole city", note: "Cycles render, 1920×1080" },
   { file: "station", title: "Central Station", note: "Where every visit starts" },
   { file: "square", title: "Mendoza Square", note: "Fountain and the brick sign" },
   { file: "night", title: "After dark", note: "Lamps, windows, and the Ferris wheel" },
 ];
 
-function Postcards({ onClose }) {
+function postcardsFor(cityId) {
+  if (cityId === HOME_CITY) return HOME_POSTCARDS;
+  return [
+    { file: `${cityId}-overview`, title: "The whole city", note: "Cycles render, 1920×1080" },
+    { file: `${cityId}-landmark`, title: "Up close", note: "A landmark, built from bricks" },
+  ];
+}
+
+function Postcards({ onClose, cityId = HOME_CITY, cityName = "Pilleland" }) {
   const [index, setIndex] = useState(0);
+  const POSTCARDS = useMemo(() => postcardsFor(cityId), [cityId]);
   const card = POSTCARDS[index];
   return (
     <div className={styles.postcards} role="dialog" aria-label="Blender postcards">
@@ -183,7 +192,7 @@ function Postcards({ onClose }) {
         </button>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/city/renders/${card.file}.png`} alt={`${card.title}: Pilleland rendered in Blender`} />
+      <img src={`/city/renders/${card.file}.png`} alt={`${card.title}: ${cityName} rendered in Blender`} />
       <div className={styles.postcardNav}>
         <button type="button" className={styles.iconButton} onClick={() => setIndex((index + POSTCARDS.length - 1) % POSTCARDS.length)} aria-label="Previous postcard">
           <ChevronLeft size={18} />
@@ -199,10 +208,11 @@ function Postcards({ onClose }) {
       <p className={styles.postcardFoot}>
         The same spec builds the city in Three.js (what you are walking through) and in Blender via{" "}
         <code>tools/blender/build_lego_city.py</code>.{" "}
-        <a href="/city/lego-city.glb" download>
-          Download the glTF model
-        </a>
-        .
+        {cityId === HOME_CITY && (
+          <a href="/city/lego-city.glb" download>
+            Download the glTF model
+          </a>
+        )}
       </p>
     </div>
   );
@@ -601,18 +611,16 @@ export default function LegoCity() {
             <Plane size={15} aria-hidden="true" />
             <span>Travel</span>
           </button>
-          {isHome && (
-            <button
-              type="button"
-              className={styles.pill}
-              onClick={() => setShowPostcards((v) => !v)}
-              aria-expanded={showPostcards}
-              title="Blender renders of the city"
-            >
-              <ImageIcon size={15} aria-hidden="true" />
-              <span>Postcards</span>
-            </button>
-          )}
+          <button
+            type="button"
+            className={styles.pill}
+            onClick={() => setShowPostcards((v) => !v)}
+            aria-expanded={showPostcards}
+            title="Blender renders of the city"
+          >
+            <ImageIcon size={15} aria-hidden="true" />
+            <span>Postcards</span>
+          </button>
           <button type="button" className={styles.pill} onClick={() => setShowHelp((v) => !v)} aria-expanded={showHelp} aria-label="Controls help">
             ?
           </button>
@@ -795,7 +803,7 @@ export default function LegoCity() {
         </div>
       )}
 
-      {showPostcards && <Postcards onClose={() => setShowPostcards(false)} />}
+      {showPostcards && <Postcards key={cityId} onClose={() => setShowPostcards(false)} cityId={cityId ?? HOME_CITY} cityName={state?.city?.name} />}
       {showTravel && <TravelPanel current={cityId} onFly={travel} onClose={() => setShowTravel(false)} />}
 
       {/* flight transition between cities */}

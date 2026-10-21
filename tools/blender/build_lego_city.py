@@ -52,6 +52,7 @@ def parse_args():
     ap.add_argument("--scale", type=int, default=100, help="render size percentage of 1920x1080")
     ap.add_argument("--engine", default="CYCLES")
     ap.add_argument("--shots", default="overview,station,square,night")
+    ap.add_argument("--prefix", default="", help="filename prefix for postcards, e.g. paris-")
     ap.add_argument("--auto-shots", action="store_true", help="frame overview/night/landmark shots from the city bounds (for travel cities)")
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--no-glb", action="store_true")
@@ -449,7 +450,7 @@ def render_shots(args, mats, names):
         add_world_and_lights(night)
         mats.set_night(night)
         make_camera(loc, target, lens)
-        scene.render.filepath = os.path.join(args.out, f"{name}.png")
+        scene.render.filepath = os.path.join(args.out, f"{args.prefix}{name}.png")
         print(f"rendering {name} -> {scene.render.filepath}")
         bpy.ops.render.render(write_still=True)
 
