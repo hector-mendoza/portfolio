@@ -19,7 +19,7 @@ Or with the `bpy` pip module:
 Flags:
   --no-render       build + export only
   --no-glb          skip the glTF export
-  --shots a,b,c     subset of postcard names (overview, station, square, night)
+  --shots a,b,c     subset of postcard names (overview, station, square, night, minifig)
   --engine CYCLES|BLENDER_EEVEE_NEXT
   --baseplate-studs include the ~36k baseplate studs in the glTF (bigger file)
 """
@@ -51,7 +51,7 @@ def parse_args():
     ap.add_argument("--samples", type=int, default=64)
     ap.add_argument("--scale", type=int, default=100, help="render size percentage of 1920x1080")
     ap.add_argument("--engine", default="CYCLES")
-    ap.add_argument("--shots", default="overview,station,square,night")
+    ap.add_argument("--shots", default="overview,station,square,night,minifig")
     ap.add_argument("--prefix", default="", help="filename prefix for postcards, e.g. paris-")
     ap.add_argument("--auto-shots", action="store_true", help="frame overview/night/landmark shots from the city bounds (for travel cities)")
     ap.add_argument("--no-render", action="store_true")
@@ -387,6 +387,7 @@ SHOTS = {
     # name: (location in studs [x, y, z] three.js coords, look-at target, lens mm, night)
     "overview": ((260, 360, 360), (0, 0, 10), 40, False),
     "station": ((50, 30, 180), (0, 10, 112), 45, False),
+    "minifig": ((2.5, 5.2, 123), (-3, 3.1, 104), 75, False),
     "square": ((-30, 20, 52), (0, 8, -6), 38, False),
     "night": ((-250, 110, 250), (0, 12, 0), 45, True),
 }
@@ -493,7 +494,7 @@ def main():
     if args.auto_shots:
         SHOTS.clear()
         SHOTS.update(auto_shots(parts))
-        if args.shots == "overview,station,square,night":
+        if args.shots == "overview,station,square,night,minifig":
             args.shots = "overview,landmark,night"
     mats = Materials(parts["palette"])
     meshes = Meshes()
