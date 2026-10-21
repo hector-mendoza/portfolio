@@ -41,3 +41,7 @@ next-env.d.ts
 
 .vscode/
 .idea/
+
+# per-city Blender exports (generated on demand)
+/public/city/*/
+!/public/city/renders/

@@ -52,6 +52,7 @@ def parse_args():
     ap.add_argument("--scale", type=int, default=100, help="render size percentage of 1920x1080")
     ap.add_argument("--engine", default="CYCLES")
     ap.add_argument("--shots", default="overview,station,square,night")
+    ap.add_argument("--auto-shots", action="store_true", help="frame overview/night/landmark shots from the city bounds (for travel cities)")
     ap.add_argument("--no-render", action="store_true")
     ap.add_argument("--no-glb", action="store_true")
     ap.add_argument("--baseplate-studs", action="store_true")
@@ -390,6 +391,20 @@ SHOTS = {
 }
 
 
+def auto_shots(parts):
+    """Postcards framed from the city's own size, for cities other than Pilleland."""
+    b = float(parts.get("bounds", 150))
+    shots = {
+        "overview": ((b * 1.35, b * 1.8, b * 1.8), (0, 0, b * 0.05), 40, False),
+        "night": ((-b * 1.3, b * 0.6, b * 1.2), (0, b * 0.08, 0), 45, True),
+    }
+    lms = [lm for lm in parts.get("landmarks", []) if lm.get("kind") not in ("station", "residential", "park")]
+    if lms:
+        lm = lms[0]
+        shots["landmark"] = ((lm["x"] + 26, 24, lm["z"] + 46), (lm["x"], 9, lm["z"]), 38, False)
+    return shots
+
+
 def make_camera(loc, target, lens):
     cam_data = bpy.data.cameras.new("Postcard")
     cam_data.lens = lens
@@ -474,6 +489,11 @@ def main():
     clear_scene()
     scene = bpy.context.scene
     scene.unit_settings.system = "METRIC"
+    if args.auto_shots:
+        SHOTS.clear()
+        SHOTS.update(auto_shots(parts))
+        if args.shots == "overview,station,square,night":
+            args.shots = "overview,landmark,night"
     mats = Materials(parts["palette"])
     meshes = Meshes()
     build(parts, mats, meshes, args.baseplate_studs)
