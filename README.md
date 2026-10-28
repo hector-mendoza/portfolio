@@ -42,6 +42,7 @@ The result is a fast, accessible site that reads like a product — not a templa
 | --- | --- |
 | City spec: 49 lots on a 7×7 grid (25 portfolio buildings plus an outer ring and the airport), districts, tram line and stops | `lib/lego-city/spec.js` |
 | Travel cities: Madrid, Paris, Rome, Punta Cana (4×4 grids with landmark builders, rivers and sea); `?city=<id>`, departures board, flights | `lib/lego-city/cities.js`, `cities/*.js`, `builders-world.js` |
+| Blueprints: minifig sheet and a plan of every city as SVG, from the real brick geometry via `three-edge-projection` (pinned GitHub commit, isolated dev package) | `tools/blueprint/`, `lib/lego-city/blueprint.js`, `public/city/blueprints/` |
 | Per-city Blender export: `node tools/city/export-parts.mjs --city paris`, then `build_lego_city.py --parts public/city/paris/city-parts.json --auto-shots` | `tools/city/export-parts.mjs`, `tools/blender/build_lego_city.py` |
 | Live sky: sun position, WMO weather mapping, clock (pure, tested) | `lib/lego-city/environment.js` |
 | Sky controller, rain/snow shaders, night lights | `lib/lego-city/three/environment-controller.js`, `weather-fx.js`, `night-lights.js` |

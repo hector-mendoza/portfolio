@@ -741,6 +741,14 @@
   background: #cfe9ff;
 }
 
+/* blueprint drawings keep their own proportions instead of the postcard crop */
+.postcards img[src$=".svg"] {
+  aspect-ratio: auto;
+  max-height: 58vh;
+  object-fit: contain;
+  background: #0c3b6e;
+}
+
 .postcardNav {
   display: flex;
   align-items: center;
