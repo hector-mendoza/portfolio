@@ -380,7 +380,7 @@ export default function LegoCity() {
   const [drafted, setDrafted] = useState(false); // the blueprint stays up for a beat, even on a fast load
 
   useEffect(() => {
-    const id = setTimeout(() => setDrafted(true), 3200);
+    const id = setTimeout(() => setDrafted(true), 900);
     return () => clearTimeout(id);
   }, []);
 
