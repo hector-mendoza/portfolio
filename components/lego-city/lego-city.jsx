@@ -354,6 +354,12 @@ export default function LegoCity() {
   const [cityId, setCityId] = useState(null);
   const [showTravel, setShowTravel] = useState(false);
   const [flight, setFlight] = useState(null);
+  const [drafted, setDrafted] = useState(false); // the blueprint stays up for a beat, even on a fast load
+
+  useEffect(() => {
+    const id = setTimeout(() => setDrafted(true), 1600);
+    return () => clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     setTouch(window.matchMedia("(pointer: coarse)").matches);
@@ -493,6 +499,13 @@ export default function LegoCity() {
   return (
     <div className={styles.shell} data-mode={mode} data-night={state?.night ? "true" : "false"}>
       <div ref={containerRef} className={styles.canvas} />
+      {cityId && (
+        <div className={styles.skeleton} data-done={ready && drafted ? "true" : "false"} aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={`/city/blueprints/${cityId}.svg`} alt="" draggable={false} />
+          <i className={styles.scan} />
+        </div>
+      )}
       <div className={styles.vignette} aria-hidden="true" />
 
       {/* top bar */}
