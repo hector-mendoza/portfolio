@@ -169,6 +169,8 @@ const HOME_POSTCARDS = [
   { file: "square", title: "Mendoza Square", note: "Fountain and the brick sign" },
   { file: "night", title: "After dark", note: "Lamps, windows, and the Ferris wheel" },
   { file: "minifig", title: "Meet the locals", note: "A minifig up close, printed face and all" },
+  { src: "/city/blueprints/pilleland.svg", title: "Blueprint: the city", note: "Plan view, drawn from the bricks" },
+  { src: "/city/blueprints/minifig.svg", title: "Blueprint: the minifig", note: "Front, side, back and top" },
 ];
 
 function postcardsFor(cityId) {
@@ -176,6 +178,7 @@ function postcardsFor(cityId) {
   return [
     { file: `${cityId}-overview`, title: "The whole city", note: "Cycles render, 1920×1080" },
     { file: `${cityId}-landmark`, title: "Up close", note: "A landmark, built from bricks" },
+    { src: `/city/blueprints/${cityId}.svg`, title: "Blueprint", note: "Plan view, drawn from the bricks" },
   ];
 }
 
@@ -187,14 +190,14 @@ function Postcards({ onClose, cityId = HOME_CITY, cityName = "Pilleland" }) {
     <div className={styles.postcards} role="dialog" aria-label="Blender postcards">
       <header className={styles.cardHead}>
         <p className={styles.eyebrow}>
-          <span className={styles.brick} aria-hidden="true" /> Rendered in Blender
+          <span className={styles.brick} aria-hidden="true" /> {card.src ? "Drawn with three-edge-projection" : "Rendered in Blender"}
         </p>
         <button type="button" className={styles.iconButton} onClick={onClose} aria-label="Close postcards">
           <X size={16} />
         </button>
       </header>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={`/city/renders/${card.file}.png`} alt={`${card.title}: ${cityName} rendered in Blender`} />
+      <img src={card.src ?? `/city/renders/${card.file}.png`} alt={card.src ? `${card.title} of ${cityName}, a blueprint line drawing` : `${card.title}: ${cityName} rendered in Blender`} />
       <div className={styles.postcardNav}>
         <button type="button" className={styles.iconButton} onClick={() => setIndex((index + POSTCARDS.length - 1) % POSTCARDS.length)} aria-label="Previous postcard">
           <ChevronLeft size={18} />
@@ -210,6 +213,14 @@ function Postcards({ onClose, cityId = HOME_CITY, cityName = "Pilleland" }) {
       <p className={styles.postcardFoot}>
         The same spec builds the city in Three.js (what you are walking through) and in Blender via{" "}
         <code>tools/blender/build_lego_city.py</code>.{" "}
+        {card.src && (
+          <>
+            <a href={card.src} target="_blank" rel="noreferrer">
+              Open the blueprint full size
+            </a>
+            {cityId === HOME_CITY ? " · " : ""}
+          </>
+        )}
         {cityId === HOME_CITY && (
           <a href="/city/lego-city.glb" download>
             Download the glTF model

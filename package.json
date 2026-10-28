@@ -13,7 +13,9 @@
     "sanity": "sanity dev",
     "sanity:deploy": "sanity deploy",
     "city:compile": "node tools/city/export-parts.mjs",
-    "city:blender": "blender -b -P tools/blender/build_lego_city.py -- --parts public/city/city-parts.json --out public/city/renders --glb public/city/lego-city.glb"
+    "city:blender": "blender -b -P tools/blender/build_lego_city.py -- --parts public/city/city-parts.json --out public/city/renders --glb public/city/lego-city.glb",
+    "city:blueprints:install": "npm --prefix tools/blueprint install",
+    "city:blueprints": "node tools/blueprint/export-blueprints.mjs"
   },
   "overrides": {
     "@sanity/workbench-cli": {

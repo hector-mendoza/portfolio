@@ -1,0 +1,11 @@
+{
+  "name": "pilleland-blueprint-tool",
+  "private": true,
+  "type": "module",
+  "description": "Dev-only tool that draws Pilleland and its minifigs as 2D line blueprints. Kept out of the site's own dependencies on purpose.",
+  "devDependencies": {
+    "clipper2-js": "0.9.0",
+    "three-edge-projection": "git+https://github.com/gkjohnson/three-edge-projection.git#3ac00e1d7bb87bf417ddbd93a5cc7c683a2d0567",
+    "three-mesh-bvh": "0.9.17"
+  }
+}

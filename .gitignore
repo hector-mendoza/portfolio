@@ -45,3 +45,7 @@ next-env.d.ts
 # per-city Blender exports (generated on demand)
 /public/city/*/
 !/public/city/renders/
+!/public/city/blueprints/
+
+# blueprint tool dependencies (install with `npm run city:blueprints:install`)
+/tools/blueprint/node_modules
