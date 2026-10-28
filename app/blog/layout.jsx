@@ -6,6 +6,7 @@ export const metadata = {
   title: "Blog | Hector Mendoza",
   description:
     "Articles on web development, design, and building products — from a senior software engineer based in Morelia, Mexico.",
+  alternates: { canonical: "/blog" },
   openGraph: {
     title: "Blog | Hector Mendoza",
     description:

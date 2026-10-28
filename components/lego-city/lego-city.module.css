@@ -1051,7 +1051,8 @@
   animation: rise 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.introCard h1 {
+.introCard h1,
+.introCard h2 {
   margin: 0.3rem 0 0.6rem;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
