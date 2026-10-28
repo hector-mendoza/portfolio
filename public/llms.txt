@@ -2,6 +2,13 @@
 
 > Senior Software Engineer & Lead Developer based in Morelia, Mexico. Head of Web Integrations at UrVenue. 8+ years crafting performant, accessible, and visually polished web experiences.
 
+## Key pages
+
+- [Pilleland, the interactive 3D portfolio](https://www.hectormendoza.me/): a LEGO-style city built from bricks in Three.js; every building is a project, a job or a chapter. Ride the tram, walk as a minifig, or fly to Madrid, Paris, Rome and Punta Cana.
+- [About and FAQ](https://www.hectormendoza.me/about): plain-text profile, experience, projects and answers to common questions.
+- [Classic portfolio](https://www.hectormendoza.me/classic): the single-page version.
+- [Blog](https://www.hectormendoza.me/blog): articles on web development, design and building products.
+
 ## About
 
 Hector Mendoza is a Senior Web Developer and Lead Developer with 8+ years of experience. Currently serving as Head of Web Integrations at UrVenue, where he leads web integrations strategy and execution for enterprise venue technology clients. Previously Lead Developer and Office Manager at Once Interactive Inc., collaborating with 50+ international companies across e-commerce, hospitality, and corporate sectors. Holds a Master's degree in Computer Science (Mobile App Development) from Universidad Vasco de Quiroga.

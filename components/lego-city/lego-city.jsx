@@ -509,7 +509,7 @@ export default function LegoCity() {
     return (
       <div className={styles.fallback}>
         <BrandLogo className={styles.fallbackLogo} />
-        <h1>Pilleland needs WebGL.</h1>
+        <h2>Pilleland needs WebGL.</h2>
         <p>
           This portfolio is a 3D LEGO® city rendered in your browser. Your device couldn&apos;t start it, but
           everything in the city also lives on the classic page.
@@ -913,7 +913,7 @@ export default function LegoCity() {
             <p className={styles.eyebrow}>
               <span className={styles.brick} aria-hidden="true" /> Welcome to
             </p>
-            <h1 className={styles.title}>
+            <h2 className={styles.title}>
               {isHome ? (
                 <>
                   <span>Pille</span><span>land</span>
@@ -921,7 +921,7 @@ export default function LegoCity() {
               ) : (
                 <span>{state?.city?.name ?? ""}</span>
               )}
-            </h1>
+            </h2>
             <p>
               {isHome
                 ? "A brick-built portfolio you can travel through. Every building is a project, a job, or a chapter of my story. Ride the tram for the guided tour, get off and walk anywhere, or spin the whole set around like a model."
@@ -971,7 +971,7 @@ export default function LegoCity() {
               </div>
             )}
             <small>
-              Prefer a plain page? <Link href="/classic">Open the classic portfolio</Link>.
+              Prefer a plain page? <Link href="/classic">Open the classic portfolio</Link> or read <Link href="/about">about Hector</Link>.
             </small>
           </div>
         </div>

@@ -8,7 +8,7 @@ const LegoCity = dynamic(() => import("./lego-city"), {
   loading: () => (
     <div className={styles.intro} aria-busy="true">
       <div className={styles.introCard}>
-        <h1>Pilleland</h1>
+        <h2>Pilleland</h2>
         <p>Unpacking the bricks…</p>
       </div>
     </div>

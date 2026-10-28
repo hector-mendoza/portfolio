@@ -9,6 +9,8 @@ import {
   getPostSlugs,
 } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
+import JsonLd from "@/components/seo/json-ld";
+import { articleJsonLd } from "@/lib/site";
 import styles from "../blog.module.css";
 
 export const revalidate = 60;
@@ -33,6 +35,8 @@ export async function generateMetadata({ params }) {
   return {
     title: `${post.title} | Hector Mendoza`,
     description: post.description,
+    alternates: { canonical: `/blog/${post.slug}` },
+    twitter: { card: "summary_large_image", title: post.title, description: post.description, ...(coverImage ? { images: [coverImage] } : {}) },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -58,6 +62,7 @@ export default async function BlogPostPage({ params }) {
 
   return (
     <main className={styles.page} id="top">
+      <JsonLd data={articleJsonLd({ ...post, image: coverUrl ?? undefined })} />
       <article className={styles.article}>
         <BlogBackLink />
 
