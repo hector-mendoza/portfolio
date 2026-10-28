@@ -45,7 +45,7 @@
   background: #0c3b6e;
   overflow: hidden;
   pointer-events: none;
-  transition: opacity 0.9s ease;
+  transition: opacity 1.4s ease;
 }
 
 .skeleton[data-done="true"] {
