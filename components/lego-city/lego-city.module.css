@@ -45,12 +45,11 @@
   background: #0c3b6e;
   overflow: hidden;
   pointer-events: none;
-  transition: opacity 1.6s ease 0.2s, transform 1.6s ease 0.2s;
+  transition: opacity 0.9s ease;
 }
 
 .skeleton[data-done="true"] {
   opacity: 0;
-  transform: scale(1.04);
 }
 
 .skeleton svg {
