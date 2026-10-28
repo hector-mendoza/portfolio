@@ -173,6 +173,29 @@ const HOME_POSTCARDS = [
   { src: "/city/blueprints/minifig.svg", title: "Blueprint: the minifig", note: "Front, side, back and top" },
 ];
 
+/** The city's plan drawing, inlined so its lines can be traced like a plotter pen while the bricks load. */
+function BlueprintSkeleton({ cityId, done }) {
+  const [markup, setMarkup] = useState("");
+  useEffect(() => {
+    let live = true;
+    fetch(`/city/blueprints/${cityId}.svg`)
+      .then((r) => (r.ok ? r.text() : ""))
+      .then((t) => live && setMarkup(t.replace(/<path /g, '<path pathLength="1" ')))
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [cityId]);
+  return (
+    <div
+      className={styles.skeleton}
+      data-done={done ? "true" : "false"}
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: markup }}
+    />
+  );
+}
+
 function postcardsFor(cityId) {
   if (cityId === HOME_CITY) return HOME_POSTCARDS;
   return [
@@ -357,7 +380,7 @@ export default function LegoCity() {
   const [drafted, setDrafted] = useState(false); // the blueprint stays up for a beat, even on a fast load
 
   useEffect(() => {
-    const id = setTimeout(() => setDrafted(true), 1600);
+    const id = setTimeout(() => setDrafted(true), 3200);
     return () => clearTimeout(id);
   }, []);
 
@@ -499,13 +522,7 @@ export default function LegoCity() {
   return (
     <div className={styles.shell} data-mode={mode} data-night={state?.night ? "true" : "false"}>
       <div ref={containerRef} className={styles.canvas} />
-      {cityId && (
-        <div className={styles.skeleton} data-done={ready && drafted ? "true" : "false"} aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`/city/blueprints/${cityId}.svg`} alt="" draggable={false} />
-          <i className={styles.scan} />
-        </div>
-      )}
+      {cityId && <BlueprintSkeleton cityId={cityId} done={ready && drafted} />}
       <div className={styles.vignette} aria-hidden="true" />
 
       {/* top bar */}
