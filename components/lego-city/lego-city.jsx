@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 import { resolveLandmark } from "@/lib/lego-city/content";
 import { CITIES, HOME_CITY, listDestinations, resolveCityId } from "@/lib/lego-city/cities";
+import { sanitizeSvgMarkup } from "@/lib/sanitize-svg";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { BrandLogo } from "@/components/site-chrome";
 import Joystick from "./joystick";
@@ -180,7 +181,7 @@ function BlueprintSkeleton({ cityId, done }) {
     let live = true;
     fetch(`/city/blueprints/${cityId}.svg`)
       .then((r) => (r.ok ? r.text() : ""))
-      .then((t) => live && setMarkup(t.replace(/<path /g, '<path pathLength="1" ')))
+      .then((t) => live && setMarkup(sanitizeSvgMarkup(t)))
       .catch(() => {});
     return () => {
       live = false;

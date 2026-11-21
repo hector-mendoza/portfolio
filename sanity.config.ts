@@ -14,7 +14,10 @@ export default defineConfig({
   plugins: [
     structureTool(),
     codeInput(),
-    visionTool({ defaultApiVersion: sanityApiVersion }),
+    // Vision runs arbitrary GROQ — keep it out of production builds.
+    ...(process.env.NODE_ENV === "development"
+      ? [visionTool({ defaultApiVersion: sanityApiVersion })]
+      : []),
   ],
   schema: {
     types: schemaTypes,
