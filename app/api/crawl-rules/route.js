@@ -2,6 +2,8 @@ export const runtime = "edge";
 
 const ROBOTS_TXT = `User-agent: *
 Allow: /
+Disallow: /bones
+Disallow: /studio
 
 User-agent: GPTBot
 Allow: /

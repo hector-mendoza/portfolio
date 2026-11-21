@@ -1,4 +1,5 @@
 import { PortableText } from "@portabletext/react";
+import { safeHref } from "@/lib/safe-href";
 import { urlForImage } from "@/sanity/lib/image";
 
 const components = {
@@ -40,7 +41,11 @@ const components = {
       </code>
     ),
     link: ({ children, value }) => {
-      const href = value?.href ?? "#";
+      const href = safeHref(value?.href);
+      if (!href) {
+        return <span>{children}</span>;
+      }
+
       const isExternal = href.startsWith("http");
 
       return (

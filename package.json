@@ -21,7 +21,7 @@
     "@sanity/workbench-cli": {
       "@module-federation/vite": {
         "@module-federation/dts-plugin": {
-          "undici": "^7.30.0",
+          "undici": "^7.30.1",
           "adm-zip": "^0.6.1"
         }
       }

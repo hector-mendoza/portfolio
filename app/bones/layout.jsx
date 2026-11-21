@@ -1,6 +1,11 @@
 import BoneyardProvider from "@/components/boneyard-provider";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 
+export const metadata = {
+  robots: { index: false, follow: false },
+  title: "Boneyard skeletons",
+};
+
 export default function BonesLayout({ children }) {
   return (
     <div
